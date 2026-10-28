@@ -1,25 +1,19 @@
-# 国家队公开持仓与ETF净申赎追踪研究 | National-team flow research
+# 国家队公开资金跟踪 → 沪深300成分股研究 → ETF基准验证
 
-**2026-10-28 项目主线已纠偏**：用户目标是追踪中央汇金等可核实机构公开持仓与国家队关注ETF的真实份额净申赎，并检验公开信号之后跟随是否有收益。详见[ADR-0003](wiki/decisions/ADR-0003-national-team-pivot.md)与[首要任务 Issue #3](https://github.com/lican1213/a-share-momentum-runner/issues/3)。旧三日动量系统继续作为历史研究分支，**不是国家队交易信号**。尚未部署官方ETF份额管线，不能把旧运行报告当成国家队买卖记录。
+项目目标：跟踪公开证据支持的中央汇金等国家队持仓变动，以及**固定四只沪深300ETF**（510300、510310、510330、159919）真实清算份额、NAV与5日资金强度；再映射成分股潜在配置敞口，验证是否比直接买沪深300ETF更有成本后超额收益。原三日技术追涨模型已降为历史研究分支。
 
+## 已真实跑通（2026-10-28）
 
-## 对抗式审计（2026-10-28）与真实ETF数据
-[完整对抗式审计AUD](wiki/audits/AUD-2026-10-28-red-team.md) · [实际官方份额和NAV采集](national_team/live_etf_sources.py) · [真实源数据运行及故障](records/national_team_etf/2026-10-28/40698907834-a1.json) · [5/10/20日配对股票与ETF收益引擎](national_team/forward_evaluation.py)。
+- [真实四ETF份额/NAV原始记录](records/national_team_etf/2026-10-28/40702172792-a1.json)：4只基金、7个连续交易日；2026-10-27整体净申购份额×当日NAV代理为**+56.12203530亿元**，不是国家队个人账户净买入。
+- [独立跨运行合并](records/national_team_merged/2026-10-28/40702572594-a1.json)：6份有出处的原始记录、0个同日同证券金额冲突、7个四ETF齐备交易日。
+- [真实股票研究排名](records/national_team_watch/2026-10-28/40702172792-a1.json)：中证指数公开CSI300权重、真实个股历史成交额与相对强度；首次30只大权重股票覆盖42.19%的指数权重。它是**指数权重代理，不是ETF真实PCF、不是中央汇金逐股订单**。
+- [独立红队历史记录与合成反例测试](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40704384352)包括原始四ETF逐笔数据资金值重算及故意篡改后的失败测试。新的[SSE带超时原生接口](national_team/sse_direct.py)、150只股票研究池、[S1/S2事件冻结](national_team/paper_events.py)、[纸面收益追踪](national_team/live_paper_tracker.py)和[独立审计门槛](national_team/audit_gate.py)需以其**最新对应SHA的实际Actions运行**为准。
 
-当前已拿到三只沪市核心ETF的交易所份额（AKShare标准化）；历史NAV来自东方财富，需要基金管理人公告交叉核对；深市159919历史日频连接异常，最新基金列表份额无交易日，不回填历史。三沪ETF对2026-10-27日净申购金额代理为**56.54849760亿元**，不能归因于中央汇金。完整四ETF、国家队本人交易身份、PCF选股与超额收益仍未验证。
+**尚待验证**：基金管理人原始PCF（当前[官方HTML采集尝试](records/national_team_pcf/2026-10-28/40702172792-a1.json)尚未解析出完整日期和成分）；国家队法定主体真实增减持、原始两个沪深300流通市值分母、正式净值与拆并事件交叉核对、真实未触碰5/10/20交易日S0/S1/S2成本后超额收益。不得把“单测通过”当成“策略稳定盈利”。
 
-## 机会优先的股票研究扫描（B9）
-[opportunity_scan.py](national_team/opportunity_scan.py)：少一份ETF PCF或少几只股票日线时仍可对**真实可验证的部分**排序，公开覆盖比例；净流出同样提示风险。低流动性、短上市年限、较大相对涨幅只作风险标签，不再一刀切。原 [stock_selection.py](national_team/stock_selection.py) 保留为严格审计版本。两者都不直接提交券商订单。
+## 最新审计和代码入口
 
-**已验证**：[26项合成数据测试](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40697156501)；ETF/PCF官方数据采集及真实选股收益仍需运行数据测试。
-
-## 交易策略主线：资金入场线索之后选什么股票？
-[ADR-0004 选股决策](wiki/decisions/ADR-0004-stock-selection-after-flow.md) · [EXP-0003 ETF基准S0 vs 股票S1/S2](wiki/experiments/EXP-0003-etf-to-stock.md) · [股票映射代码](national_team/stock_selection.py)。
-
-国家队相关ETF净申赎 → 按当时PCF/持仓权重映射至股票潜在配置敞口 → 以股票20日成交额归一、相对强度分层 → 研究同日同成本5/10/20交易日是否跑赢直接买沪深300ETF。资金流不等于国家队本人的真实订单；代码尚未得到官方PCF/真实股票数据支持，**不能给当前买入名单**。
-
-## 核心：原始国家队ETF资金进出指标已经恢复
-[最初四只ETF（510300/510310/510330/159919）资金因子、两类市场覆盖率和五日净申赎强度](wiki/data/original-four-etf-indicator.md)。9ETF是扩展观察池，国家队基金持有人披露是低频身份核验。原始入金出金信号与市场风险环境需要**合并使用**，不能将ETF总申赎误认为中央汇金具体账户当日成交。当前仅提交公式和合成数据测试，尚无国家队专用ETF实际取数结果。
+[2026-10-28 E2E对抗式审计](wiki/audits/AUD-2026-10-28-e2e-release-gate.md) · [原始四ETF指标合同](wiki/data/original-four-etf-indicator.md) · [主线决策ADR-0004](wiki/decisions/ADR-0004-stock-selection-after-flow.md) · [持续运行与真实数据留档Actions](https://github.com/lican1213/a-share-momentum-runner/actions/workflows/national-team-live.yml) · [独立算术单测](https://github.com/lican1213/a-share-momentum-runner/actions/workflows/national-team-factors.yml)。
 
 ## Knowledge base / 第二大脑（Agent先读这里）
 
