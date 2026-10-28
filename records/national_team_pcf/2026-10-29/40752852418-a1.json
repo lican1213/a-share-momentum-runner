@@ -1,0 +1,15 @@
+{
+  "status": "SSE_PCF_FETCHED_BUT_NOT_VERIFIED",
+  "run_id": "40752852418",
+  "attempt": "1",
+  "captured_at": "2026-10-29T03:20:53.396612+08:00",
+  "exchange_url": "https://www.sse.com.cn/disclosure/fund/etflist/",
+  "sources": {},
+  "errors": [
+    "510300:HTTPError:403 Client Error: Forbidden for url: https://www.sse.com.cn/disclosure/fund/etflist/detail.shtml?etfClass=03&fundid=510300&type=008",
+    "510310:HTTPError:403 Client Error: Forbidden for url: https://www.sse.com.cn/disclosure/fund/etflist/detail.shtml?etfClass=03&fundid=510310&type=008",
+    "510330:HTTPError:403 Client Error: Forbidden for url: https://www.sse.com.cn/disclosure/fund/etflist/detail.shtml?etfClass=03&fundid=510330&type=008"
+  ],
+  "source_kind": "ORIGINAL_EXCHANGE_HTTP_PCF_NOT_INDEX_WEIGHTS",
+  "usable_pcf_count": 0
+}
