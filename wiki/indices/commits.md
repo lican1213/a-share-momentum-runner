@@ -12,6 +12,9 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-29 | [695c7fa9bb](https://github.com/lican1213/a-share-momentum-runner/commit/695c7fa9bb76b5de553f5c7a3f0ba0868618721f) | Can Li | feat(pcf): audit official ChinaAMC 510330 issuer basket even when SSE HTML contains no dated components |
+| 2026-10-29 | [4b9987f6df](https://github.com/lican1213/a-share-momentum-runner/commit/4b9987f6df5e17eb1b6aa8eea3ab3308fa30d951) | Can Li | fix(pcf): accept issuer official security-quantity column and keep its direct URL as provenance |
+| 2026-10-28 | [b4c54ad784](https://github.com/lican1213/a-share-momentum-runner/commit/b4c54ad7849249b777076b1177658f8f82cbc7cb) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-29 | [0794f0d0d3](https://github.com/lican1213/a-share-momentum-runner/commit/0794f0d0d3b8952dfcd7c6ba51735e15a859aaeb) | Can Li | test(execution): NaN trading volume never confirms available execution |
 | 2026-10-29 | [9ed88b03df](https://github.com/lican1213/a-share-momentum-runner/commit/9ed88b03df24dfdeb81c625801b60c028f27d809) | Can Li | fix(execution): reject NaN/Infinity OHLC and volume during paper execution screening |
 | 2026-10-28 | [080bd067d0](https://github.com/lican1213/a-share-momentum-runner/commit/080bd067d0a63e6d9d9fb319c52c1cda5fb484f6) | github-actions[bot] | data: archive actual ETF provider attempt 40787672785 [skip ci] |
