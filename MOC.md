@@ -21,6 +21,7 @@
 - [ADR-0001 Research-only 决策](wiki/decisions/ADR-0001-no-trade.md)
 - [ADR-0002 数据证据与失败关闭](wiki/decisions/ADR-0002-evidence.md)
 - [INC-0001 初次部署、403、接口与QuantStats错误](wiki/incidents/INC-0001-bootstrapping.md)
+- [CTR-0001 被证伪的原因诊断与相互矛盾的结论](wiki/contradictions/CTR-0001.md)
 - [维护时间日志](wiki/log.md)
 
 ## 4. 后续Agent操作
