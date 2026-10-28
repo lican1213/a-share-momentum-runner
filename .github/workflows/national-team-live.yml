@@ -64,6 +64,13 @@ jobs:
             --merged "records/national_team_merged/${date_beijing}/$file" \
             --watch "records/national_team_watch/${date_beijing}/$file" \
             --frozen "records/national_team_events/${date_beijing}/$file"
+      - name: Rebuild Agent LLM Wiki MOC from actual national-team run evidence
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/wiki_sync.py
+          python scripts/wiki_lint.py
       - name: Persist unique run evidence to Git history
         if: always()
         shell: bash
@@ -71,7 +78,7 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- records/national_team_etf/ records/national_team_merged/ records/national_team_watch/ records/national_team_events/ records/national_team_paper/ records/national_team_pcf/ records/national_team_audits/
+          git add -- wiki/indices/ wiki/compiled/ records/national_team_etf/ records/national_team_merged/ records/national_team_watch/ records/national_team_events/ records/national_team_paper/ records/national_team_pcf/ records/national_team_audits/
           if git diff --staged --quiet; then
             echo 'NO_ETF_EVIDENCE_GENERATED'; exit 0
           fi
