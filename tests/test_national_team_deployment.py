@@ -18,6 +18,7 @@ def test_production_evidence_commits_only_append_only_records():
     assert "wiki/compiled" not in line and "wiki/indices" not in line
     assert "records/national_team_watch/" in line
     assert "records/national_team_audits/" in line
+    assert "git restore -- wiki/indices/ wiki/compiled/" in s
     assert s.index("Independent red-team integrity audit")<s.index("Persist unique run evidence")
 
 def test_derived_wiki_uses_separate_clean_checkout_and_retry():
