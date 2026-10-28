@@ -22,6 +22,8 @@ updated: 2026-10-28
 
 | B8 资金→股票研究框架 | [stock_selection.py](../../national_team/stock_selection.py) · [EXP-0003](../experiments/EXP-0003-etf-to-stock.md) | 核心ETF净申购→当时权重/PCF→股票潜在资金敞口/ADV20与相对强度；S0 ETF基准 vs S1/S2股票观察 | [CI 40693488577](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40693488577)：16项**合成数据**测试通过；真实收益未验证、无授权买入 |
 
+| B9 机会优先选股扫描 | [opportunity_scan.py](../../national_team/opportunity_scan.py) · [ADR-0004](../decisions/ADR-0004-stock-selection-after-flow.md) | 部分可追溯篮子/股票数据排名、资金净赎回风险、任意低流动性与IPO阈值改风险标签，交易执行另外审计 | [CI 40697156501](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40697156501)：26项**合成数据**单元测试通过，尚无真实资金/PCF选股收益证据 |
+
 ## 当前研究标识
 - **策略代码**：`strategy.py` 中的三日突破和交易规则，逻辑版本与证据运行的代码 SHA 绑定，不独立宣称“v0.2盈利”。
 - **执行器标签**：`runner.py` 当前可能仍报告 `daily-bar research runner v0.1`；该文本不能替代 GitSHA，也不意味着整个仓库停留在最初版本。
