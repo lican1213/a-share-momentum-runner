@@ -62,3 +62,12 @@ def test_required_event_dedupe_and_tz():
         evaluate_frozen_event(dict(EVENT,candidate_symbols=["600036","600036"]),days,px)
     with pytest.raises(ValueError,match="timezone"):
         evaluate_frozen_event(dict(EVENT,first_public_at="2026-10-02T22:00:00"),days,px)
+
+
+def test_utc_publication_date_is_converted_to_exchange_local_date():
+    days,px=fixture()
+    # 2026-10-02 23:30 UTC is 2026-10-03 07:30 China local.
+    event=dict(EVENT,first_public_at="2026-10-02T23:30:00Z")
+    r=evaluate_frozen_event(event,days,px)
+    assert r["entry_session"]=="2026-10-04"
+    assert r["first_public_at"].startswith("2026-10-03T07:30:00")
