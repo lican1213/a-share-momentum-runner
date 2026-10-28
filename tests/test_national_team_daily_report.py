@@ -91,3 +91,15 @@ def test_duplicate_current_run_retains_first_immutable_s2_cohort():
     assert d["latest_ranked_stock_date"]=="2026-10-28"
     assert d["S2_frozen_observation"]==["600000","601816","601166","600519","000333"]
     assert d.get("S2_immutable_event_id","").endswith("S2_FLOW_PLUS_PRICE_STRENGTH") or not d["S2_restored_from_earlier_immutable_event"]
+
+
+def test_primary_report_restores_original_v2_freeze_and_keeps_v1_history():
+    day, filename, d = compile_latest(ROOT)
+    assert d["v2_cohort_status"] == "ORIGINAL_FREEZE_VERIFIED"
+    assert d["v2_funding_date"] == "2026-10-27"
+    assert d["v2_s1_frozen_symbols"] == ["601825","600000","601229","601166","600519"]
+    assert d["v2_s2_frozen_symbols"] == ["600309","601919","600660","601012","601838"]
+    assert d["v2_frozen_at"].startswith("2026-10-28T23:46:43")
+    assert d["v2_s2_frozen_symbols"] != d["S2_frozen_observation"]
+    prose=human_readable(d)
+    assert "V2 独立选股" in prose and "V1 旧版" in prose
