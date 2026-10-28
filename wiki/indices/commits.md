@@ -12,6 +12,8 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-28 | [58cc03066e](https://github.com/lican1213/a-share-momentum-runner/commit/58cc03066ef83daa3e08eba978c39b8d419b71a0) | github-actions[bot] | data: archive actual ETF provider attempt 40787773755 [skip ci] |
+| 2026-10-28 | [2d8bbbf6a5](https://github.com/lican1213/a-share-momentum-runner/commit/2d8bbbf6a5bd35b319ca180fff7b78f3dbd0fe61) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-29 | [695c7fa9bb](https://github.com/lican1213/a-share-momentum-runner/commit/695c7fa9bb76b5de553f5c7a3f0ba0868618721f) | Can Li | feat(pcf): audit official ChinaAMC 510330 issuer basket even when SSE HTML contains no dated components |
 | 2026-10-29 | [4b9987f6df](https://github.com/lican1213/a-share-momentum-runner/commit/4b9987f6df5e17eb1b6aa8eea3ab3308fa30d951) | Can Li | fix(pcf): accept issuer official security-quantity column and keep its direct URL as provenance |
 | 2026-10-28 | [b4c54ad784](https://github.com/lican1213/a-share-momentum-runner/commit/b4c54ad7849249b777076b1177658f8f82cbc7cb) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
