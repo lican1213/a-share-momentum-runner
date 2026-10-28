@@ -85,6 +85,8 @@ def scan_opportunities(
             weights = {str(s): _number(v, f"{etf} {s} weight") for s, v in weights_raw.items()}
             if any(len(s) != 6 or not s.isdigit() for s in weights):
                 raise DataGateError("bad stock symbol")
+            if any(weight < 0 for weight in weights.values()):
+                raise DataGateError("negative ETF constituent weights are invalid")
             total_weight = sum(weights.values(), Decimal(0))
             if not Decimal("0.70") <= total_weight <= Decimal("1.01"):
                 raise DataGateError(f"weight coverage insufficient: {total_weight}")
@@ -167,12 +169,22 @@ def scan_opportunities(
     negative_exposure = [x for x in candidates if Decimal(x["signed_implied_exposure_cny"]) < 0]
     by_exposure = sorted(positive_exposure, key=lambda r: (
         -Decimal(r["signed_exposure_to_adv20"]), r["symbol"]))[:top_n]
+    # Direction-specific candidate ranking. A stock with net NEGATIVE implied
+    # fund pressure must never appear as a flow-confirmed inflow candidate.
     by_strength = sorted(candidates, key=lambda r: (
+        -Decimal(r["relative_strength20"]),
+        -Decimal(r["signed_exposure_to_adv20"]), r["symbol"]))[:top_n]
+    inflow_confirmed_strength = sorted(positive_exposure, key=lambda r: (
         -Decimal(r["relative_strength20"]),
         -Decimal(r["signed_exposure_to_adv20"]), r["symbol"]))[:top_n]
     outflow_risk = sorted(negative_exposure, key=lambda r: (
         Decimal(r["signed_exposure_to_adv20"]), r["symbol"]))[:top_n]
     total = sum(flows.values(), Decimal(0))
+    partial_total = sum((flows[e] for e in accepted), Decimal(0))
+    missing_total = total - partial_total
+    full_coverage = len(accepted) == len(CORE_FOUR) and all(
+        r["weight_coverage"] >= Decimal("0.999") for r in accepted.values()
+    )
     if not accepted:
         status = "NO_VERIFIABLE_BASKET_EXPOSURE"
     elif total > 0:
@@ -189,14 +201,24 @@ def scan_opportunities(
         "accepted_etf_baskets": sorted(accepted),
         "basket_source_age_days": {e: rec["age_days"] for e, rec in accepted.items()},
         "missing_or_rejected_baskets": basket_failures,
-        "abs_flow_coverage_ratio": format(coverage, "f"),
-        "estimated_weighted_coverage_ratio": format(effective_coverage, "f"),
+        "abs_flow_coverage_ratio": format(coverage, "f") if all_flow else None,
+        "estimated_weighted_coverage_ratio": format(effective_coverage, "f") if all_flow else None,
+        "basket_count_coverage": f"{len(accepted)}/{len(CORE_FOUR)}",
+        "is_complete_four_etf_weight_mapping": full_coverage,
+        "mapped_etf_signed_flow_cny": format(partial_total, "f"),
+        "unmapped_etf_signed_flow_cny": format(missing_total, "f"),
+        "mapped_flow_sign_conflicts_with_full_basket": (partial_total * total < 0),
         "coverage_warning": "partial fund and constituent exposures are NOT scaled to all four ETFs",
         "stock_scan_count": len(ranked), "stock_skipped": len(skipped),
         "stock_skipped_details": skipped[:50],
         "potential_inflow_watchlist": by_exposure if total > 0 else [],
+        "inflow_confirmed_relative_strength_watchlist": inflow_confirmed_strength if total > 0 else [],
         "relative_strength_watchlist": by_strength,
+        "relative_strength_watchlist_is_flow_agnostic": True,
         "potential_outflow_watchlist": outflow_risk,
+        "ranking_scope": "mapped subset only, exposure can be revised by missing constituent weights",
+        "research_ranking_ready": bool(ranked),
+        "benchmark_returns_verified": False,
         "risk_tags_are_ranking_metadata_not_arbitrary_universal_exclusions": True,
         "live_broker_orders": False, "investor_identity_inferred": False,
         "evaluation_goal": "paired after-cost 5/10/20 day excess return vs direct CSI300 ETF holding",
