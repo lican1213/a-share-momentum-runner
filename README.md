@@ -3,6 +3,11 @@
 **2026-10-28 项目主线已纠偏**：用户目标是追踪中央汇金等可核实机构公开持仓与国家队关注ETF的真实份额净申赎，并检验公开信号之后跟随是否有收益。详见[ADR-0003](wiki/decisions/ADR-0003-national-team-pivot.md)与[首要任务 Issue #3](https://github.com/lican1213/a-share-momentum-runner/issues/3)。旧三日动量系统继续作为历史研究分支，**不是国家队交易信号**。尚未部署官方ETF份额管线，不能把旧运行报告当成国家队买卖记录。
 
 
+## 对抗式审计（2026-10-28）与真实ETF数据
+[完整对抗式审计AUD](wiki/audits/AUD-2026-10-28-red-team.md) · [实际官方份额和NAV采集](national_team/live_etf_sources.py) · [真实源数据运行及故障](records/national_team_etf/2026-10-28/40698907834-a1.json) · [5/10/20日配对股票与ETF收益引擎](national_team/forward_evaluation.py)。
+
+当前已拿到三只沪市核心ETF的交易所份额和NAV；深市159919历史日频连接异常，最新基金列表份额无交易日，不回填历史。三沪ETF对2026-10-27日净申购金额代理为**56.54849760亿元**，不能归因于中央汇金。完整四ETF、国家队本人交易身份、PCF选股与超额收益仍未验证。
+
 ## 机会优先的股票研究扫描（B9）
 [opportunity_scan.py](national_team/opportunity_scan.py)：少一份ETF PCF或少几只股票日线时仍可对**真实可验证的部分**排序，公开覆盖比例；净流出同样提示风险。低流动性、短上市年限、较大相对涨幅只作风险标签，不再一刀切。原 [stock_selection.py](national_team/stock_selection.py) 保留为严格审计版本。两者都不直接提交券商订单。
 
