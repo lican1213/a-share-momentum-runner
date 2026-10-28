@@ -190,8 +190,10 @@ def historical_trades(df: pd.DataFrame, symbol: str, commission=0.00025,
                 "status": "execution_censored", "locked_sessions": locked_sessions,
                 "daily_proxy_not_1450": True,
             })
-            eligible_index = j + 4  # do not pretend position can be reused
-            continue
+            # Position is still open after T+3. Without subsequent
+            # executable fill evidence, subsequent entries on this symbol
+            # would be fictitious: stop replay for this symbol.
+            break
         net = net_after_costs(fill, exit_px, commission, stamp, slippage)
         # Daily OHLC extrema on stop/target exit day may occur AFTER exit;
         # these are NON-path-consistent, NOT precise realized MAE/MFE.
