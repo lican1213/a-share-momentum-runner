@@ -1,0 +1,21 @@
+{
+  "status": "PAPER_EVALUATION_ATTEMPTED",
+  "asof": "2026-10-28",
+  "source_events": 2,
+  "assessed_events": 2,
+  "model": "NEXT_EXECUTABLE_OPEN_OHLC_SCENARIO_NOT_LIVE_ORDER",
+  "result_records": [
+    {
+      "id": "NT-bd5a340716cee70d49c9-S1_FLOW_OVER_ADV20",
+      "status": "NOT_MATURED_YET",
+      "source_event": "records/national_team_events/2026-10-28/40703474509-a1.json"
+    },
+    {
+      "id": "NT-bd5a340716cee70d49c9-S2_FLOW_PLUS_PRICE_STRENGTH",
+      "status": "NOT_MATURED_YET",
+      "source_event": "records/national_team_events/2026-10-28/40703474509-a1.json"
+    }
+  ],
+  "errors": [],
+  "calculation_never_backdates_data_discovery": true
+}
