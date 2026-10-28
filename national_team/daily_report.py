@@ -123,7 +123,7 @@ def latest_artifact(folder:Path):
 def compile_latest(root:Path=ROOT):
     # Choose latest watch for which all same-run companions exist.
     for watch_path in sorted((root/"records/national_team_watch").glob("*/*.json"),
-                             key=lambda p:p.stat().st_mtime,reverse=True):
+                             key=lambda p:(p.parent.name,p.stem),reverse=True):
         stem=watch_path.name;day=watch_path.parent.name
         required={
           "merged":root/"records/national_team_merged"/day/stem,
