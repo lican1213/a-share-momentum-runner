@@ -170,6 +170,43 @@ def supplement_prior_full_four(digest:dict,root:Path,*,signal_public_at:str)->di
     return digest
 
 
+def recover_original_frozen_s2(digest:dict,root:Path,*,public_at:str)->dict:
+    """Restore an already-frozen S2 list when a later run marks it duplicate.
+
+    Do NOT create a new signal from the latest rank or replace the first
+    prospective cohort. A newer run must never backdate or overwrite the first.
+    """
+    if digest.get("S2_frozen_observation"):
+        digest["S2_restored_from_earlier_immutable_event"]=False
+        return digest
+    from national_team.core_flow_factors import utc_aware
+    current=utc_aware(public_at,"current watch capture")
+    day=digest.get("latest_ranked_stock_date")
+    possible=[]
+    for p in (root/"records/national_team_events").glob("*/*.json"):
+        try:
+            obj=json.loads(p.read_text(encoding="utf-8"))
+            for ev in obj.get("events",[]):
+                if ev.get("strategy_id")!="S2_FLOW_PLUS_PRICE_STRENGTH":
+                    continue
+                if ev.get("funding_underlying_day")!=day:
+                    continue
+                when=utc_aware(ev.get("first_public_at"),"S2 first publication")
+                if when>current:continue
+                if not ev.get("candidate_symbols"):continue
+                possible.append((when,p,ev))
+        except (OSError,ValueError,KeyError):
+            continue
+    if not possible:return digest
+    when,p,event=min(possible,key=lambda z:z[0])
+    digest["S2_frozen_observation"]=list(event["candidate_symbols"])
+    digest["S2_restored_from_earlier_immutable_event"]=True
+    digest["S2_immutable_event_id"]=event["id"]
+    digest["S2_immutable_event_source"]=str(p.relative_to(root))
+    digest["S2_original_frozen_at"]=when.isoformat()
+    return digest
+
+
 def compile_latest(root:Path=ROOT):
     # Choose latest watch for which all same-run companions exist.
     for watch_path in sorted((root/"records/national_team_watch").glob("*/*.json"),
@@ -189,6 +226,7 @@ def compile_latest(root:Path=ROOT):
             result=compile_digest(inputs["merged"],watch,inputs["events"],inputs["paper"],inputs["audit"],holder)
             public_at=watch.get("event_first_public_no_earlier_than") or inputs["merged"]["first_observed_no_earlier_than"]
             result=supplement_prior_full_four(result,root,signal_public_at=public_at)
+            result=recover_original_frozen_s2(result,root,public_at=public_at)
             from national_team.holder_evidence import reconcile_latest_total_historical_holders
             total_path=root/"data/national_team_holders/159919-2026H1-fund-total.json"
             if total_path.is_file():
@@ -207,8 +245,8 @@ def main():
     folder.mkdir(parents=True,exist_ok=True)
     # v2 is a new immutable interpretation, not an overwrite of the older
     # v1 snapshot: both research reports remain inspectable by future agents.
-    jsonfile=folder/stem.replace(".json","-v3.json")
-    mdfile=folder/stem.replace(".json","-v3.md")
+    jsonfile=folder/stem.replace(".json","-v4.json")
+    mdfile=folder/stem.replace(".json","-v4.md")
     if not jsonfile.exists():
         jsonfile.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     if not mdfile.exists():
