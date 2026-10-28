@@ -22,7 +22,7 @@ import akshare as ak
 import pandas as pd
 import quantstats as qs
 
-from strategy import candidate_at, historical_trades, normalize, signal_id
+from strategy import candidate_at, historical_trades, normalize, signal_id, signal_funnel
 from research_validation import chronological_diagnostic, summarize
 from market_context import live_context
 
@@ -206,6 +206,7 @@ def main() -> int:
         audit["universe_snapshot_note"] = "capture time is fetch time, not exchange quote time"
         audit["market_context"] = live_context(ak, expected)
         candidates, all_trades, verified = [], [], []
+        signal_funnels = {}
         problems = []
         raw_hashes = {}
         start_date = (now.date() - timedelta(days=920)).strftime("%Y%m%d")
@@ -229,11 +230,12 @@ def main() -> int:
                     candidates.append({"symbol": sym, "name": item["name"],
                                        "signal_id": signal_id(sym, signal), **signal})
                 all_trades.extend(historical_trades(bars, sym))
+                signal_funnels[sym] = signal_funnel(bars)
             except Exception as exc:
                 problems.append({"symbol": sym, "error": f"{type(exc).__name__}: {exc}"})
         audit.update(verified_symbols=len(verified), failed_symbols=problems,
                      snapshot_symbols=len(universe), sha256_histories=raw_hashes,
-                     historical_replay_trades=len(all_trades),
+                     historical_replay_trades=len(all_trades), signal_funnels_by_symbol=signal_funnels,
                      historical_replay_closed=sum(t.get("net_return") is not None for t in all_trades),
                      historical_replay_execution_censored=sum(t.get("status") == "execution_censored" for t in all_trades))
         if len(verified) < 5:
