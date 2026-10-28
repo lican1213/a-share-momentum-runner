@@ -74,6 +74,9 @@ updated: 2026-10-28
 - [forward_evaluation.py](../national_team/forward_evaluation.py)新增S0 ETF vs 股票候选5/10/20日配对净收益、同/次日开盘时间门槛、成熟期与无法成交截断；当前仅算术测试，尚未获得真实PCF事件后的独立样本。
 - 原指标新增企业行动/拆分是否核实标记。接下来P0依旧是159919日频、PCF成分股时点数据、官方市值分母及真实选股收益闭环。
 
+## 2026-10-28：真实数据源口径最后校正
+- 已确认原始ETF份额来自交易所接口，**历史NAV来自东方财富抓取，并非基金管理人官方一手净值公告**；已在[审计报告](audits/AUD-2026-10-28-red-team.md)中明确需对照基金管理人官方净值/拆并信息。部分三沪ETF流量56.55亿元是研究代理，不升级为一手确认国家队增持。
+
 ## 未来添加新事件的格式
 `YYYY-MM-DD HH:mm +08:00 | actor | question | change/why | prior SHA → new SHA | evidence run | results/limitations | linked EXP/ADR/INC | status`
 
