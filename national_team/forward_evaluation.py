@@ -5,6 +5,7 @@ This is an evaluation primitive, not evidence of a validated strategy.
 """
 from __future__ import annotations
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from decimal import Decimal, InvalidOperation
 
 HORIZONS=(5,10,20)
@@ -35,6 +36,7 @@ def evaluate_frozen_event(event,trade_sessions,prices,*,benchmark="510300",
     if benchmark in names: raise ValueError("benchmark cannot be stock candidate")
     published=datetime.fromisoformat(str(event["first_public_at"]).replace("Z","+00:00"))
     if published.tzinfo is None: raise ValueError("publication time needs timezone")
+    published=published.astimezone(ZoneInfo("Asia/Shanghai"))
     if list(trade_sessions)!=sorted(set(trade_sessions)):
         raise ValueError("exchange session list must be unique sorted")
     entry_candidates=[i for i,d in enumerate(trade_sessions) if d>published.date().isoformat()]
