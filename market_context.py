@@ -70,13 +70,24 @@ def live_context(ak, asof: date, snapshot: pd.DataFrame | None = None) -> dict:
         "indices": {}, "breadth": {},
     }
     for name, sym in INDEX_CODES.items():
-        try:
-            df = ak.index_zh_a_hist(symbol=sym, period="daily",
-                                    start_date=(asof - pd.Timedelta(days=150)).strftime("%Y%m%d"),
-                                    end_date=(asof + pd.Timedelta(days=1)).strftime("%Y%m%d"))
-            out["indices"][name] = {"status": "OK", **compute_index(df, asof)}
-        except Exception as exc:
-            out["indices"][name] = {"status": "FAILED", "error": f"{type(exc).__name__}: {exc}"[:420]}
+        problems = []
+        for provider in ("AKShare Eastmoney", "AKShare Sina"):
+            try:
+                if provider == "AKShare Eastmoney":
+                    df = ak.index_zh_a_hist(
+                        symbol=sym, period="daily",
+                        start_date=(asof - pd.Timedelta(days=150)).strftime("%Y%m%d"),
+                        end_date=(asof + pd.Timedelta(days=1)).strftime("%Y%m%d"))
+                else:
+                    # Sina accepts exchange-prefixed symbols: sh000300, sh000852.
+                    df = ak.stock_zh_index_daily(symbol="sh" + sym)
+                out["indices"][name] = {"status": "OK", **compute_index(df, asof),
+                                        "provider_used": provider}
+                break
+            except Exception as exc:
+                problems.append(f"{provider}: {type(exc).__name__}: {exc}"[:250])
+        else:
+            out["indices"][name] = {"status": "FAILED", "errors": problems}
     try:
         frame = snapshot if snapshot is not None else ak.stock_zh_a_spot_em()
         out["breadth"] = {"status": "OK", **compute_breadth(frame, asof)}
