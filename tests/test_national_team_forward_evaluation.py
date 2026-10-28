@@ -69,5 +69,15 @@ def test_utc_publication_date_is_converted_to_exchange_local_date():
     # 2026-10-02 23:30 UTC is 2026-10-03 07:30 China local.
     event=dict(EVENT,first_public_at="2026-10-02T23:30:00Z")
     r=evaluate_frozen_event(event,days,px)
-    assert r["entry_session"]=="2026-10-04"
+    assert r["entry_session"]=="2026-10-03"
     assert r["first_public_at"].startswith("2026-10-03T07:30:00")
+
+
+def test_premarket_disclosed_pcf_same_session_but_postopen_next_session():
+    days,px=fixture()
+    e=dict(EVENT,first_public_at="2026-10-03T08:30:00+08:00")
+    a=evaluate_frozen_event(e,days,px)
+    assert a["entry_session"]=="2026-10-03"
+    e["first_public_at"]="2026-10-03T09:35:00+08:00"
+    b=evaluate_frozen_event(e,days,px)
+    assert b["entry_session"]=="2026-10-04"
