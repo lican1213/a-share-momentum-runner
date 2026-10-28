@@ -69,7 +69,12 @@ def partial_flow_to_stocks(record:Mapping,weight_observation:Mapping,
     wts={s:Decimal(str(v)) for s,v in weight_observation["weights"].items()}
     part=record.get("funding_event",{}).get("partial_funding") or record.get("partial_SSE_three_only")
     factor=record.get("funding_event",{}).get("four_etf_factor")
-    if factor is not None:
+    # Use the most RECENT funding event for stock selection. A valid
+    # full-four factor from Oct27 must remain available for the core index,
+    # but may NOT be mislabeled as the partial Oct28 stock signal.
+    partial_date=(part or {}).get("period",["",""])[-1]
+    full_date=(factor or {}).get("trade_date","")
+    if factor is not None and (not part or full_date>=partial_date):
         flows={s:Decimal(str(v)) for s,v in factor["per_etf_daily_flow_proxy_cny"].items()}
         fund_scope=list(CORE_FOUR)
         data_scope="FOUR_ETF_DATED_SHARE_FLOW"
