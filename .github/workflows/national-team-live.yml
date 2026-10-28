@@ -3,23 +3,9 @@ on:
   push:
     branches: [main]
     paths:
-      - 'national_team/live_etf_sources.py'
-      - 'national_team/szse_json.py'
-      - 'national_team/event_pipeline.py'
-      - 'national_team/index_proxy.py'
-      - 'national_team/live_stock_watch.py'
-      - 'national_team/pcf_official.py'
-      - 'national_team/record_merge.py'
-      - 'national_team/paper_events.py'
-      - 'national_team/live_paper_tracker.py'
-      - 'national_team/audit_gate.py'
-      - 'tests/test_national_team_audit_gate.py'
-      - 'tests/test_national_team_paper_events.py'
-      - 'tests/test_national_team_paper_tracker.py'
-      - 'tests/test_national_team_record_merge.py tests/test_national_team_paper_events.py tests/test_national_team_paper_tracker.py tests/test_national_team_audit_gate.py'
-      - 'tests/test_national_team_pcf_official.py'
-      - 'tests/test_national_team_index_proxy.py tests/test_national_team_pcf_official.py tests/test_national_team_record_merge.py'
-      - 'tests/test_national_team_exchange_sources.py'
+      - 'national_team/**'
+      - 'tests/test_national_team_*.py'
+      - 'tests/test_szse_json.py'
       - '.github/workflows/national-team-live.yml'
   workflow_dispatch:
   schedule:
@@ -44,7 +30,7 @@ jobs:
       - name: Install actual data provider
         run: python -m pip install 'akshare>=1.17.0,<2' 'pandas>=2.2,<3' 'openpyxl>=3.1,<4' 'pytest>=8,<10' 'exchange-calendars==4.13.1' 'xlrd>=2,<3'
       - name: Check exchange unit/schema normalization
-        run: python -m pytest -q tests/test_national_team_exchange_sources.py tests/test_szse_json.py tests/test_national_team_event_pipeline.py tests/test_national_team_index_proxy.py
+        run: python -m pytest -q tests/test_national_team_*.py tests/test_szse_json.py
       - name: Collect actual four-ETF shares and NAV with provenance
         run: python -m national_team.live_etf_sources
       - name: Reconcile previous immutable ETF source runs (no fake backdating)
