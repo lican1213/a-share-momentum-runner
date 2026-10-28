@@ -29,6 +29,14 @@ TZ = ZoneInfo("Asia/Shanghai")
 ALLOWED = re.compile(r"^(000|001|002|003|600|601|603|605)[0-9]{3}$")
 PHASES = {"pre": (8, 30), "mid": (12, 30), "close": (17, 30)}
 MAX_UNIVERSE = 15
+# Explicit, fixed, liquid main-board fallback WATCHLIST, not the whole market.
+FALLBACK_WATCHLIST = [
+    ("600036", "招商银行"), ("601398", "工商银行"), ("600519", "贵州茅台"),
+    ("600276", "恒瑞医药"), ("600030", "中信证券"), ("601899", "紫金矿业"),
+    ("000001", "平安银行"), ("002475", "立讯精密"), ("002241", "歌尔股份"),
+    ("002415", "海康威视"), ("600887", "伊利股份"),
+    ("601318", "中国平安"),
+]
 logger = logging.getLogger("runner")
 
 
@@ -95,6 +103,27 @@ def fetch_universe(asof: datetime) -> list[dict]:
              "snapshot_capture": asof.isoformat()} for _, r in df.iterrows()]
 
 
+def fetch_history(symbol: str, start_date: str, end_date: str) -> tuple[pd.DataFrame, str]:
+    """Try Eastmoney, then Sina. Both are real remote data; no synthetic fallback."""
+    failures = []
+    for source in ("Eastmoney", "Sina"):
+        try:
+            if source == "Eastmoney":
+                data = ak.stock_zh_a_hist(symbol=symbol, period="daily",
+                                          start_date=start_date, end_date=end_date, adjust="")
+            else:
+                prefixed = ("sh" if symbol.startswith("6") else "sz") + symbol
+                data = ak.stock_zh_a_daily(symbol=prefixed, start_date=start_date,
+                                           end_date=end_date, adjust="")
+            if data is None or data.empty:
+                raise ValueError("empty history")
+            normalize(data)  # Fail provider schema/price quality BEFORE accepting fallback.
+            return data, source
+        except Exception as exc:
+            failures.append(f"{source}:{type(exc).__name__}:{exc}")
+    raise RuntimeError("All historical providers failed: " + " | ".join(failures)[:500])
+
+
 def akquant_smoke_test(df: pd.DataFrame, symbol: str) -> dict:
     """Actually calls AKQuant on genuine day bars, but this is only an API smoke test."""
     import akquant as aq
@@ -151,7 +180,15 @@ def main() -> int:
         audit["required_history_date"] = str(expected)
         if args.phase == "close" and now.hour < 16:
             raise ValueError("close phase before verified EOD publication window")
-        universe = fetch_universe(now)
+        try:
+            universe = fetch_universe(now)
+            audit["universe_source"] = "AKShare Eastmoney snapshot"
+        except Exception as exc:
+            # Predefined universe contains real exchange symbols, but is not
+            # claimed to be dynamically ranked by today's turnover.
+            universe = [{"symbol": x, "name": n} for x, n in FALLBACK_WATCHLIST]
+            audit["universe_source"] = "fixed disclosed main-board watchlist fallback"
+            audit["universe_fallback_reason"] = repr(exc)
         audit["universe_size"] = len(universe)
         audit["universe_method"] = "top turnover non-ST main-board from AKShare snapshot"
         audit["data_providers"] = ["AKShare stock_zh_a_spot_em (Eastmoney)",
@@ -167,17 +204,14 @@ def main() -> int:
         for item in universe:
             sym = item["symbol"]
             try:
-                raw = ak.stock_zh_a_hist(symbol=sym, period="daily", start_date=start_date,
-                                         end_date=end_date, adjust="")
-                if raw is None or raw.empty:
-                    raise ValueError("empty history")
+                raw, provider = fetch_history(sym, start_date, end_date)
                 raw_hashes[sym] = hashlib.sha256(raw.to_csv(index=False).encode("utf-8")).hexdigest()
                 bars = normalize(raw)
                 latest = bars.iloc[-1]["date"].date()
                 if latest != expected:
                     raise ValueError(f"history stale/future: {latest}, expected {expected}")
                 verified.append({"symbol": sym, "name": item["name"],
-                                 "last_bar_date": str(latest), "bar_count": len(bars)})
+                                 "last_bar_date": str(latest), "bar_count": len(bars), "provider": provider})
                 if clean_first is None:
                     clean_first = (sym, bars)
                 signal = candidate_at(bars, len(bars) - 1)
