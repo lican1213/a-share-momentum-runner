@@ -144,6 +144,25 @@ def collect(ak, asof: date, run_id: str, attempt: str, out_root: Path):
                 latest.to_csv(index=False).encode()).hexdigest()
         except Exception as alt:
             result["errors"].append(f"SZSE_LATEST_UNDATED:{type(alt).__name__}:{str(alt)[:220]}")
+    # Independent official dated JSON fallback. The per-fund endpoint uses
+    # 10,000-share units, unlike AKShare's already-normalized SSE/whole-SZSE.
+    # No fabricated disclosure timestamp: first known publication is capture.
+    sz_dates = [d for d,r in result["observations_by_date"].items() if "159919" in r]
+    if not sz_dates:
+        try:
+            from national_team.szse_json import fetch_one_szse_fund, LANDING
+            dated = fetch_one_szse_fund("159919",(asof-timedelta(days=21)).isoformat(),
+                                        asof.isoformat())
+            for day, shares in dated.items():
+                result["observations_by_date"].setdefault(day,{})["159919"] = {
+                    "shares":shares,"shares_source":"SZSE_DATED_JSON",
+                    "shares_source_url":LANDING,
+                    "first_observed_at":datetime.now(ZoneInfo("Asia/Shanghai")).isoformat()
+                }
+            result["SZSE_DATED_JSON"]={"count":len(dated),"status":"OK" if dated else "EMPTY",
+                                      "unit_conversion":"official current_size ten_thousand_shares x 10000"}
+        except Exception as exc:
+            result["errors"].append(f"SZSE_DATED_JSON:{type(exc).__name__}:{str(exc)[:240]}")
     # SSE API needs one request per calendar day; weekends/holidays may be empty.
     for day in dates[-12:]:
         try:
