@@ -1,7 +1,7 @@
 """Real archived source regression: digest cannot relabel partial ETF flow as full."""
 from pathlib import Path
 import json,copy
-from national_team.daily_report import compile_digest,human_readable,compile_latest
+from national_team.daily_report import compile_digest,human_readable,compile_latest,supplement_prior_full_four
 from national_team.holder_evidence import evidence_as_known_at
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -60,3 +60,21 @@ def test_latest_saved_complete_evidence_can_be_discovered_without_network():
     assert day>="2026-10-28"
     assert filename.endswith(".json")
     assert digest["audit_status"].startswith("RESEARCH_")
+
+
+def test_prior_complete_four_is_recovered_from_independently_audited_archived_run():
+    day,filename,d=compile_latest(ROOT)
+    assert d["latest_full_four_funding_date"]=="2026-10-27"
+    assert d["full_four_daily_flow_cny"]=="5612203530.000000"
+    assert d["full_four_factor_carried_forward"] is True
+    assert "national_team_merged" in d["full_four_prior_source_path"]
+    assert d["latest_partial_funding_dates"]==["2026-10-27","2026-10-28"]
+    assert d["latest_partial_flow_cny"]=="1670914440.000000"
+    assert "不得" not in human_readable(d) or "不可相加" in human_readable(d)
+
+
+def test_future_discovered_complete_four_cannot_backdate_into_old_signal():
+    d=compile_digest(*inputs())
+    v=supplement_prior_full_four(d,ROOT,signal_public_at="2026-10-28T00:00:00+08:00")
+    assert v["full_four_factor_carried_forward"] is False
+    assert v["latest_full_four_funding_date"] is None
