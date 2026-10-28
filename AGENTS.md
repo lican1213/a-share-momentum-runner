@@ -2,7 +2,7 @@
 
 **Read before any modification:** [MOC.md](MOC.md) → [KNOWLEDGE.md](KNOWLEDGE.md) → [wiki/compiled/briefing.md](wiki/compiled/briefing.md) → [wiki/index.md](wiki/index.md).
 
-This repository is a research-only China A-share 3-session momentum prototype. **No validated tradable strategy and no broker execution.** Do not turn research candidates into recommendations.
+**Project P0 was changed on 2026-10-28 to evidence-based national-team ownership and ETF subscription/redemption tracking**, per [ADR-0003](wiki/decisions/ADR-0003-national-team-pivot.md) and [Issue #3](https://github.com/lican1213/a-share-momentum-runner/issues/3). The original 3-session momentum prototype is a historical side experiment. **No validated tradable strategy and no broker execution.** Never attribute whole-ETF net creations/redemptions to Central Huijin without holder-level disclosure. Do not turn research candidates into recommendations.
 
 ## Source hierarchy
 1. Authoritative evidence: per-run [records/](records/) JSON, code at its `source_commit_sha`, GitHub Actions job logs, tests, issues. Each record is a snapshot, not an actual fill.
