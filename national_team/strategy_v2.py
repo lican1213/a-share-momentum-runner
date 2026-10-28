@@ -58,7 +58,9 @@ def build(watch, merged, *, observed_at, source_watch, source_merged, source_com
     if not full:
         return {"status": "FOUR_ETF_NOT_COMPLETE", "model_version": VERSION,
                 "reported_partial_scope": (merged.get("funding_event") or {}).get("partial_funding"),
-                "events": [], "trade_authorized": False}
+                "events": [], "trade_authorized": False, "paper_only": True,
+                "strategy_first_public_at": timestamp.isoformat(), "benchmark": BENCHMARK,
+                "source_watch": source_watch, "source_merged": source_merged}
     if tuple(full.get("codes", [])) != CORE_FOUR:
         raise ValueError("four-ETF constituent set changed")
     flows_raw = full["per_etf_daily_flow_proxy_cny"]
@@ -75,7 +77,10 @@ def build(watch, merged, *, observed_at, source_watch, source_merged, source_com
         raise ValueError("future fund/stock session or reversed observation dates")
     if (timestamp.date() - fund_date).days > 4:
         return {"status": "STALE_FOUR_ETF_FACTOR", "model_version": VERSION,
-                "flow_date": fund_date.isoformat(), "events": [], "trade_authorized": False}
+                "flow_date": fund_date.isoformat(), "events": [], "trade_authorized": False,
+                "paper_only": True, "strategy_first_public_at": timestamp.isoformat(),
+                "benchmark": BENCHMARK, "source_watch": source_watch,
+                "source_merged": source_merged}
     rows = watch.get("stock_snapshots") or {}
     coverage = sum((weights.get(symbol, Decimal(0)) for symbol in rows), Decimal(0))
     if coverage <= 0:
