@@ -64,7 +64,6 @@ def check_funding(raw:dict)->dict:
 
 def check_stock_watch(watch:dict,funding:dict)->dict:
     ranking=watch.get("research_ranking") or {}
-    if ranking.get("status") if False else False:pass
     if watch.get("status")!="INDEX_PROXY_RESEARCH_WATCHLIST":
         return {"result":"NO_RANKING_TO_AUDIT","verified":False}
     if ranking.get("not_actual_ETF_PCF") is not True:
@@ -127,6 +126,9 @@ def audit(bundle:dict)->dict:
     # than overwriting official exchange data in place.
     if not isinstance(merged.get("sources_used"),list) or not merged["sources_used"]:
         raise AuditViolation("composite without source run IDs")
+    if not any(str(original.get("run_id"))==str(r.get("run_id"))
+               for r in merged["sources_used"]):
+        raise AuditViolation("merged data omits current raw-source provenance")
     if merged.get("trade_orders_authorized") is not False:
         raise AuditViolation("source snapshot authorizes trading unexpectedly")
     funds=check_funding(merged)
