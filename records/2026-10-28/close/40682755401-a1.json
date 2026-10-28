@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "github_run_id": "40682755401",
+  "source_commit_sha": "11ed96a3a144e3738c1c993884c7fa85d5bedb6b",
+  "collected_beijing_time": "2026-10-28T19:49:34.094736+08:00",
+  "phase": "close",
+  "audit_sha256": "42b985f46d7e4e237e4e662d1fe2b7d8fb55bb9cc0e91780723ddcd684fc6b9a",
+  "audit": {
+    "started_at": "2026-10-28T19:48:53.634708+08:00",
+    "phase": "close",
+    "timezone": "Asia/Shanghai",
+    "implementation": "daily-bar research runner v0.1",
+    "dependencies": {
+      "python": "3.11.17",
+      "akshare": "1.20.2",
+      "akquant": "0.3.71",
+      "quantstats": "0.0.86",
+      "pandas": "2.3.3"
+    },
+    "status": "COMPUTED_RESEARCH_ONLY",
+    "limitations": [
+      "AKShare snapshot has no verified per-row exchange timestamp",
+      "daily OHLC can only approximate T+3 close, not 14:50 executable price",
+      "selected current watchlist produces survivorship-biased replay",
+      "historical OHLC cannot resolve every intraday order-fill sequence",
+      "not a whole-A-share backtest; no brokerage trades or actual portfolio"
+    ],
+    "calendar_source": "AKShare Sina live holiday calendar",
+    "required_history_date": "2026-10-28",
+    "universe_source": "fixed disclosed main-board watchlist fallback",
+    "universe_fallback_reason": "ConnectionError(ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))",
+    "universe_size": 12,
+    "universe_method": "fixed-name disclosed watchlist; NOT current turnover ranked",
+    "data_providers": [
+      "AKShare stock_zh_a_spot_em (Eastmoney)",
+      "AKShare stock_zh_a_hist (Eastmoney)",
+      "AKShare tool_trade_date_hist_sina (Sina)"
+    ],
+    "universe_snapshot_note": "capture time is fetch time, not exchange quote time",
+    "verified_symbols": 12,
+    "failed_symbols": [],
+    "snapshot_symbols": 12,
+    "sha256_histories": {
+      "600036": "61600dcf4153ebc2f9ca4ae38e735d1b319d90fe08d0ff652a658bbc68967823",
+      "601398": "5cc1b575f4d22b156472a2a22b5c73505899d97256a4965e465cacf6d846db75",
+      "600519": "553a49d66065fa97e28a203e65d6918fe145d4fd5799af37d892ba03648bcfc7",
+      "600276": "edf56d1f582c02435546c4d883bdf4529f3f7e2d8fa1f71998cf2abe0554ec54",
+      "600030": "ea6e50fe9f404f70a86f72ca15b72c73360bb291ab686077108b46447a46ec74",
+      "601899": "c5418ac7fc596070baaec55be75324f64e19b5363e0e5cb1b6b15e7b711d4c45",
+      "000001": "3aa9e5415ddb428fa0301953b630a1ddae536e20aed4adb92b68de4dbda3f32d",
+      "002475": "53fd159010cf6640db3cac5332e9747e032499c7715d5f710351f914480a492e",
+      "002241": "ff7b1845144881bee362fc03ba7362091f82015c8f1a1cf91c4b438fccb8ba40",
+      "002415": "e2fde53f3315b8bf0e2997b98c245f6467342ae494ce386dbd100394e6c9ecf3",
+      "600887": "77b0630d0dd58bbaa983a15fe1234a2a400ea2ccd17a44016d218b9ff6eeb2d0",
+      "601318": "f523e3055be16149eedbf0067dd9745fedee9b1fc38eae349e58f59cf3e5f81b"
+    },
+    "historical_replay_trades": 45,
+    "historical_replay_closed": 45,
+    "historical_replay_execution_censored": 0,
+    "akquant_smoke": {
+      "status": "success",
+      "engine": "AKQuant",
+      "test": "simple-candle API smoke only",
+      "is_3day_strategy_backtest": false,
+      "result_excerpt": "BacktestResult:\n                                            Value\nname                                             \nstart_time              2024-04-22 00:00:00+08:00\nend_time                2026-10-28 00:00:00+08:00\nduration                        919 days, 0:00:00\ntotal_bars                                    610\nclosed_trade_count                          141.0\nexecution_count                             283.0\nopen_position_count                           1.0\ninitial_market_value              "
+    },
+    "exploratory_history": {
+      "closed": 45,
+      "censored": 0,
+      "win_rate": 0.422222,
+      "mean_net_return": -0.002769,
+      "median_net_return": -0.0139743,
+      "profit_factor": 0.76699,
+      "mean_r_multiple": -0.238088,
+      "target_hit_fraction": 0.377778,
+      "timeout_fraction": 0.044444,
+      "matched_passive_baseline": {
+        "n": 45,
+        "mean_net_return": 0.001751
+      },
+      "status": "RESEARCH_ONLY_BIASED_UNIVERSE",
+      "trade_count": 45,
+      "winning_fraction": 0.422222,
+      "mean_trade_return": -0.002769
+    },
+    "historical_time_split": {
+      "cutoff": "2026-05-01",
+      "embargo_starts": "2026-04-21",
+      "train": {
+        "closed": 32,
+        "censored": 0,
+        "win_rate": 0.4375,
+        "mean_net_return": -0.0022187,
+        "median_net_return": -0.0131559,
+        "profit_factor": 0.81924,
+        "mean_r_multiple": -0.197878,
+        "target_hit_fraction": 0.4375,
+        "timeout_fraction": 0.0,
+        "matched_passive_baseline": {
+          "n": 32,
+          "mean_net_return": 0.0072258
+        },
+        "status": "RESEARCH_ONLY_BIASED_UNIVERSE"
+      },
+      "holdout": {
+        "closed": 12,
+        "censored": 0,
+        "win_rate": 0.333333,
+        "mean_net_return": -0.0079889,
+        "median_net_return": -0.0139743,
+        "profit_factor": 0.32478,
+        "mean_r_multiple": -0.658628,
+        "target_hit_fraction": 0.166667,
+        "timeout_fraction": 0.166667,
+        "matched_passive_baseline": {
+          "n": 12,
+          "mean_net_return": -0.0199627
+        },
+        "status": "RESEARCH_ONLY_BIASED_UNIVERSE"
+      },
+      "excluded_boundary_trades": 1,
+      "method": "prespecified date split, no fit/tuning, non-blind historical diagnostic",
+      "valid_oos": false,
+      "invalidating_biases": [
+        "current fixed-name universe: survivorship/look-ahead membership selection",
+        "not full point-in-time A-share cross-section",
+        "daily OHLC does not establish T+3 14:50 fill",
+        "historical signals not deposited as contemporaneous immutable observations",
+        "matched passive baseline is same selected trades, not independently benchmarked portfolio"
+      ],
+      "trade_authorization": false
+    },
+    "quantstats_trade_sequence_max_drawdown": -0.13022155705533367,
+    "quantstats_warning": "trade-sequence only, NOT actual portfolio max drawdown",
+    "model_validation": {
+      "out_of_sample_passed": false,
+      "survivorship_bias_addressed": false,
+      "intraday_T3_exit_validated": false,
+      "research_only": true,
+      "risk_decision": "NEGATIVE_MEAN_RETURN_REVIEW"
+    },
+    "ended_at": "2026-10-28T19:49:33.734375+08:00"
+  },
+  "signals": {
+    "status": "RESEARCH_ONLY_NOT_TRADE_AUTHORIZED",
+    "asof": "2026-10-28",
+    "phase": "close",
+    "signals": [],
+    "research_candidates": [],
+    "historical_provider_by_symbol": {
+      "600036": "Sina",
+      "601398": "Sina",
+      "600519": "Sina",
+      "600276": "Sina",
+      "600030": "Sina",
+      "601899": "Sina",
+      "000001": "Sina",
+      "002475": "Sina",
+      "002241": "Sina",
+      "002415": "Sina",
+      "600887": "Sina",
+      "601318": "Sina"
+    },
+    "original_price_basis": "unadjusted daily OHLC; NOT verified intraday price",
+    "no_actual_fills": true,
+    "intraday_activation_unknown": true,
+    "out_of_sample_validated": false,
+    "automated_trade_signals_authorized": false
+  },
+  "record_type": "automated_observation_not_actual_trade",
+  "no_real_portfolio_position_implied": true,
+  "github_run_attempt": 1
+}
