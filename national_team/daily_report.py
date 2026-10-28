@@ -98,7 +98,12 @@ def human_readable(d)->str:
       f"- 最新部分资金日期：{' → '.join(d['latest_partial_funding_dates']) if d['latest_partial_funding_dates'] else '无'}，覆盖{','.join(d['latest_partial_fund_scope']) or '无'}，合计 {amt(d['latest_partial_flow_cny'])}",
       "- 四ETF日期与最新部分资金日期可能不同，不可相加或写成同一个交易日。",
       f"- 完整四ETF是否来自先前独立重算的归档：{'是，参见来源路径 '+d.get('full_four_prior_source_path','') if d.get('full_four_factor_carried_forward') else '否或无足额资料'}","",
-      "## S1 资金敞口／成交额研究观察",
+      "## V2 独立选股：首次冻结组合",
+      f"- 资金事件日：{d.get('v2_funding_date') or '无'}；初始冻结时间：{d.get('v2_frozen_at') or '无'}",
+      f"- V2 S1（ETF资金强度/ADV20）：{', '.join(d.get('v2_s1_frozen_symbols') or []) or '无'}",
+      f"- V2 S2（全部股票池，20日相对强度0%-10%）：{', '.join(d.get('v2_s2_frozen_symbols') or []) or '无'}",
+      "- V2仅供前瞻纸面观察，尚无经验证的超额收益。","",
+      "## V1 旧版候选历史记录（不与V2合并）",
       f"- 股票研究日期：{d['latest_ranked_stock_date'] or '无'}；实际覆盖 {d['ranked_stocks_count']}只；指数权重池占比 {pct(d['index_weight_coverage'])}",
     ]
     if d["S1_observation"]:
