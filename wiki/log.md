@@ -85,6 +85,11 @@ updated: 2026-10-28
 - 实际PCF官方页面HTML暂未提供可解析的日期和全量篮子；保留“指数权重代理”降级标签。未经验证的国家队主体持股和真正的5/10/20日独立净超额收益不标成已完成。
 - 生产可靠性修复：SSE直连原接口设明确HTTPS超时/重试，避免AKShare无超时阻断调度；最新150股池和红队自动执行须查最新Actions的完成状态。
 
+## 2026-10-28：B12 最新150只真实股票运行与双时点反例修复
+- [实际生产run 40706300084](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40706300084)已完成，150只真实股票的成交额与相对强度、正式CSI300权重代理覆盖83.015%、S1/S2两条冻结研究名单和未成熟纸面收益、红队审计PARTIAL通过均有原始JSON。
+- 原新旧项目的关键矛盾被抓出：2026-10-28仅3只沪市ETF可得、2026-10-27仍有7个交易日完整四ETF。修复保留10-27完整因子及10-28三沪ETF净申购+1670914440元作为**不同交易日的两条序列**，不可混用。[真实证据反例回归40707718330](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40707718330)：81项通过，包含金额/日期篡改失败测试。
+- [真实数据冻结→红队复现run 40707145019](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40707145019)2项通过，不是盈利证明。最新模型修复后还须看整条生产Actions的同代码SHA和资金审计状态。
+
 ## 未来添加新事件的格式
 `YYYY-MM-DD HH:mm +08:00 | actor | question | change/why | prior SHA → new SHA | evidence run | results/limitations | linked EXP/ADR/INC | status`
 
