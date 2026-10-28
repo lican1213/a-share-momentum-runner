@@ -139,3 +139,47 @@ def test_unknown_trade_status_keeps_research_ranking_with_risk_label():
     o=scan_opportunities(m,b,s,decision_cutoff="2026-10-28T08:30:00+08:00")
     item=next(x for x in o["potential_inflow_watchlist"] if x["symbol"]=="600036")
     assert "TRADE_STATUS_UNKNOWN" in item["risk_tags"]
+
+
+def test_mixed_fund_flows_never_label_negative_exposure_as_inflow_confirmed_strength():
+    m,b,s=fixture()
+    m["per_etf_daily_flow_proxy_cny"]={
+        "510300":"2000000","510310":"-3000000",
+        "510330":"5000000","159919":"0",
+    }
+    m["daily_net_creation_proxy_cny"]="4000000"
+    b["510300"]["weights"]={"600519":"1.0"}
+    b["510310"]["weights"]={"600036":"1.0"}
+    b["510330"]["weights"]={"000001":"1.0"}
+    b["159919"]["weights"]={"600519":"1.0"}
+    o=scan_opportunities(m,b,s,decision_cutoff="2026-10-28T08:30:00+08:00")
+    assert o["status"]=="INFLOW_RESEARCH_SCAN"
+    assert {x["symbol"] for x in o["inflow_confirmed_relative_strength_watchlist"]}=={"600519","000001"}
+    assert [x["symbol"] for x in o["potential_outflow_watchlist"]]==["600036"]
+
+
+def test_partial_covered_flows_can_contradict_full_basket_direction():
+    m,b,s=fixture()
+    m["per_etf_daily_flow_proxy_cny"]={
+        "510300":"12000000","510310":"-10000000",
+        "510330":"-4000000","159919":"-1000000",
+    }
+    m["daily_net_creation_proxy_cny"]="-3000000"
+    del b["510300"]
+    o=scan_opportunities(m,b,s,decision_cutoff="2026-10-28T08:30:00+08:00")
+    assert o["mapped_flow_sign_conflicts_with_full_basket"] is False
+    # Full basket is negative; mapped subset negative: no contradiction.
+    assert o["unmapped_etf_signed_flow_cny"]=="12000000"
+    m["per_etf_daily_flow_proxy_cny"]["510300"]="20000000"
+    m["daily_net_creation_proxy_cny"]="5000000"
+    o=scan_opportunities(m,b,s,decision_cutoff="2026-10-28T08:30:00+08:00")
+    assert o["mapped_flow_sign_conflicts_with_full_basket"] is True
+    assert o["potential_inflow_watchlist"]==[]
+
+
+def test_illegal_negative_constituent_weight_is_not_an_accepted_basket():
+    m,b,s=fixture()
+    b["510300"]["weights"]={"600519":"1.1","600036":"-0.1"}
+    o=scan_opportunities(m,b,s,decision_cutoff="2026-10-28T08:30:00+08:00")
+    assert "510300" in o["missing_or_rejected_baskets"]
+    assert "negative ETF constituent" in o["missing_or_rejected_baskets"]["510300"]
