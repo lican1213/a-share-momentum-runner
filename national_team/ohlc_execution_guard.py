@@ -14,7 +14,7 @@ def conservative_ohlc_bar(opening, high, low, closing, volume, previous_close=No
     if not (low<=min(opening,closing)<=max(opening,closing)<=high):
         raise ValueError("inconsistent OHLC high/low")
     suspended=float(volume)==0
-    one_price=abs(high-low)<=max(1e-9,1e-7*close)
+    one_price=abs(high-low)<=max(1e-9,1e-7*closing)
     pct=(opening/float(previous_close)-1) if previous_close is not None and float(previous_close)>0 else None
     possible_up=bool(one_price and pct is not None and pct>=.045)
     possible_down=bool(one_price and pct is not None and pct<=-.045)
