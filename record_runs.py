@@ -42,7 +42,11 @@ def make_record(output: Path, run_id: str, sha: str, phase: str) -> tuple[Path, 
         "record_type": "automated_observation_not_actual_trade",
         "no_real_portfolio_position_implied": True,
     }
-    dest = Path("records") / now.strftime("%Y-%m-%d") / phase / f"{run_id}.json"
+    attempt = int(os.getenv("GITHUB_RUN_ATTEMPT", "1"))
+    if attempt < 1 or attempt > 1000:
+        raise ValueError("invalid run attempt")
+    record["github_run_attempt"] = attempt
+    dest = Path("records") / now.strftime("%Y-%m-%d") / phase / f"{run_id}-a{attempt}.json"
     dest.parent.mkdir(parents=True, exist_ok=True)
     if dest.exists():
         raise FileExistsError(f"never rewrite old run record: {dest}")
