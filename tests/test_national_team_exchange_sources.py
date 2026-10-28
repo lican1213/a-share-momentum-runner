@@ -46,3 +46,26 @@ def test_nav_date_must_match_shares_exactly():
                      "单位净值":[3.95,4.1]})
     r=history_nav(df,"510300",{"2026-10-22"})
     assert r=={"2026-10-22":"4.1"}
+
+
+def test_undated_szse_fallback_is_never_backdated_to_exchange_daily_series(tmp_path):
+    from datetime import date
+    from national_team.live_etf_sources import collect
+
+    class BlockedDaily:
+        def fund_scale_daily_szse(self, **kwargs):
+            raise ConnectionError("official historic daily endpoint unavailable")
+        def fund_etf_scale_szse(self):
+            return pd.DataFrame({"基金代码":["159919"],"基金份额":[10396116676]})
+        def fund_etf_scale_sse(self, **kwargs):
+            return pd.DataFrame(columns=["基金代码","统计日期","基金份额"])
+        def fund_etf_fund_info_em(self, **kwargs):
+            return pd.DataFrame(columns=["净值日期","单位净值"])
+
+    path,r=collect(BlockedDaily(),date(2026,10,28),"909001","1",tmp_path)
+    assert path.exists()
+    assert r["latest_undated_szse_snapshot"]["shares"]=="10396116676"
+    assert r["latest_undated_szse_snapshot"]["observation_exchange_trading_date"] is None
+    assert r["observations_by_date"]=={}
+    assert r["status"]=="ATTEMPTED_NO_COMPLETE_FACTOR"
+    assert not r["factor_arithmetic_possible"]
