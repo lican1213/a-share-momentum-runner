@@ -208,9 +208,8 @@ def main() -> int:
             }
             # QuantStats on a sequential hypothetical trade series, explicitly
             # not comparable to an actual calendar-day portfolio drawdown.
-            import numpy as np
-            sequential_equity = pd.Series(np.cumprod(1 + returns.to_numpy()))
-            audit["quantstats_trade_sequence_max_drawdown"] = float(qs.stats.max_drawdown(sequential_equity))
+            # QuantStats max_drawdown expects RETURNS, not equity levels.
+            audit["quantstats_trade_sequence_max_drawdown"] = float(qs.stats.max_drawdown(returns.reset_index(drop=True)))
             audit["quantstats_warning"] = "trade-sequence only, NOT actual portfolio max drawdown"
         audit["status"] = "COMPUTED_WITH_LIMITATIONS"
         audit["ended_at"] = datetime.now(TZ).isoformat()
