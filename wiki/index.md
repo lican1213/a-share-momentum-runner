@@ -8,6 +8,10 @@ updated: 2026-10-28
 
 [返回根MOC](../MOC.md) · [当前简报](compiled/briefing.md) · [维护协议](../KNOWLEDGE.md)
 
+## 机会优先的研究入口
+- [主动选股扫描器](../national_team/opportunity_scan.py)：部分真实篮子/个股数据可形成带覆盖率和风险标签的研究排名，资金流出也追踪；只将已知错误或未来数据拒绝。
+- [ADR-0004纠偏说明](decisions/ADR-0004-stock-selection-after-flow.md)：研究机会发现与交易授权分开，历史严格审计器留作复现。
+
 ## 真正的收益策略（优先跟踪）
 - [ADR-0004 ETF资金变化之后选哪些股票](decisions/ADR-0004-stock-selection-after-flow.md)
 - [EXP-0003 S0直接ETF vs S1资金冲击选股 vs S2价格确认选股](experiments/EXP-0003-etf-to-stock.md)
