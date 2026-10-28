@@ -6,6 +6,10 @@ on:
       - 'records/**'
       - 'README.md'
       - 'skills/**'
+      - 'wiki/**'
+      - 'AGENTS.md'
+      - 'KNOWLEDGE.md'
+      - 'MOC.md'
   workflow_dispatch:
   schedule:
     - cron: '30 0 * * 1-5'
