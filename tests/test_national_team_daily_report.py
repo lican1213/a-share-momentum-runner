@@ -62,12 +62,18 @@ def test_latest_saved_complete_evidence_can_be_discovered_without_network():
     assert digest["audit_status"].startswith("RESEARCH_")
 
 
-def test_prior_complete_four_is_recovered_from_independently_audited_archived_run():
+def test_latest_complete_four_can_be_from_same_run_or_independently_audited_archive():
     day,filename,d=compile_latest(ROOT)
     assert d["latest_full_four_funding_date"]=="2026-10-27"
     assert d["full_four_daily_flow_cny"]=="5612203530.000000"
-    assert d["full_four_factor_carried_forward"] is True
-    assert "national_team_merged" in d["full_four_prior_source_path"]
+    # Either the current 4ETF+3ETF combined run contains the older complete
+    # factor itself, or it must be restored from a separately audited run.
+    if d["full_four_factor_carried_forward"]:
+        assert "national_team_merged" in d["full_four_prior_source_path"]
+    else:
+        assert d["source_paths"]["merged"].startswith("records/national_team_merged/")
+        current=json.loads((ROOT/d["source_paths"]["merged"]).read_text(encoding="utf-8"))
+        assert current["funding_event"]["four_etf_factor"]["trade_date"]=="2026-10-27"
     assert d["latest_partial_funding_dates"]==["2026-10-27","2026-10-28"]
     assert d["latest_partial_flow_cny"]=="1670914440.000000"
     assert "不得" not in human_readable(d) or "不可相加" in human_readable(d)
