@@ -52,10 +52,19 @@ def reconcile_funding_snapshot(raw:Mapping,sessions:Sequence[str])->dict:
                 "per_fund_proxy_cny":{c:format(v,"f") for c,v in flows.items()},
                 "fund_count_coverage":"3/4",
                 "market_session_adjacency_verified":True}
-    if len(effective_sessions)<6:
+    # A newest-day three-ETF observation must not erase yesterday's valid
+    # complete FOUR-ETF five-day factor. Each stream retains its own date.
+    full_dates=set(out["complete_four_days"])
+    last_full=next((d for d in reversed(effective_sessions) if d in full_dates),None)
+    if last_full is None:
+        if out["partial_funding"] is not None:out["status"]="PARTIAL_FUNDING_ONLY"
         return out
-    last6=list(effective_sessions[-6:])
-    if any(d not in out["complete_four_days"] for d in last6):
+    last_full_idx=effective_sessions.index(last_full)
+    if last_full_idx<5:
+        if out["partial_funding"] is not None:out["status"]="PARTIAL_FUNDING_ONLY"
+        return out
+    last6=list(effective_sessions[last_full_idx-5:last_full_idx+1])
+    if any(d not in full_dates for d in last6):
         if out["partial_funding"] is not None:out["status"]="PARTIAL_FUNDING_ONLY"
         return out
     factor_panel={}
@@ -75,10 +84,13 @@ def reconcile_funding_snapshot(raw:Mapping,sessions:Sequence[str])->dict:
     if not f.get("five_day"):
         raise ValueError("six-session factor did not compute")
     out["four_etf_factor"]=f
-    out["status"]="FULL_FOUR_ETF_SHARES_NAV_OBSERVED_RESEARCH"
+    out["latest_complete_four_etf_factor_date"]=f["trade_date"]
+    out["status"]=("PARTIAL_LATEST_WITH_PRIOR_FULL_FOUR_FACTOR"
+                   if f["trade_date"]!=effective_date
+                   else "FULL_FOUR_ETF_SHARES_NAV_OBSERVED_RESEARCH")
     out["verified_consecutive_session_flow"]=True
     out["factor_quality"]={
-        "exchange_shares_via_akshare":True,
+        "exchange_shares_via_official_providers":True,
         "NAV_from_Eastmoney_not_original_fund_report":True,
         "corporate_actions_explicitly_verified":f["corporate_actions_explicitly_verified"],
         "market_float_denominators_available":False,
