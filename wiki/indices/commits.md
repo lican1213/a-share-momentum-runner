@@ -12,6 +12,8 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-28 | [cca94efe1c](https://github.com/lican1213/a-share-momentum-runner/commit/cca94efe1c58b5f9f65191028b95b9f2dc53dd06) | Can Li | audit(report): preserve independently recomputed latest full four-ETF day alongside newer partial flows; source timestamp and v2 immutable versioning |
+| 2026-10-28 | [7456251de0](https://github.com/lican1213/a-share-momentum-runner/commit/7456251de0c5f66476c32b1246a10a0c1b114833) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-28 | [ec1c5897e9](https://github.com/lican1213/a-share-momentum-runner/commit/ec1c5897e9cc819ad772963b16287fe88e72958b) | Can Li | fix(wiki): generated national-team daily briefing includes mandatory unique frontmatter and ISO date |
 | 2026-10-28 | [01ac45d4a2](https://github.com/lican1213/a-share-momentum-runner/commit/01ac45d4a25817bf6f0cea5500a5dff33530ac8b) | Can Li | ci(report): immediately verify daily digest generation on workflow changes and new holder evidence, besides post-live trigger |
 | 2026-10-28 | [8a73ef2a2b](https://github.com/lican1213/a-share-momentum-runner/commit/8a73ef2a2bb09df5aed3f0ca53e88d458554f784) | Can Li | docs(B13): preserve verified evidence/holders/report workflow and release boundaries in AGENTS.md |
