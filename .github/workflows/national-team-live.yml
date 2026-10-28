@@ -76,6 +76,9 @@ jobs:
           set -euo pipefail
           python scripts/wiki_sync.py
           python scripts/wiki_lint.py
+      # Wiki/compiled and indices are derived mutable summaries. Never commit
+      # them together with immutable source evidence: concurrent modifications
+      # to those paths previously produced Git rebase conflicts.
       - name: Persist unique run evidence to Git history
         if: always()
         shell: bash
@@ -83,7 +86,7 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- wiki/indices/ wiki/compiled/ records/national_team_etf/ records/national_team_merged/ records/national_team_watch/ records/national_team_events/ records/national_team_paper/ records/national_team_pcf/ records/national_team_audits/
+          git add -- records/national_team_etf/ records/national_team_merged/ records/national_team_watch/ records/national_team_events/ records/national_team_paper/ records/national_team_pcf/ records/national_team_audits/
           if git diff --staged --quiet; then
             echo 'NO_ETF_EVIDENCE_GENERATED'; exit 0
           fi
