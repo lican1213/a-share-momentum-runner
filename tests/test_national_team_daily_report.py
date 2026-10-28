@@ -78,3 +78,10 @@ def test_future_discovered_complete_four_cannot_backdate_into_old_signal():
     v=supplement_prior_full_four(d,ROOT,signal_public_at="2026-10-28T00:00:00+08:00")
     assert v["full_four_factor_carried_forward"] is False
     assert v["latest_full_four_funding_date"] is None
+
+
+def test_duplicate_current_run_retains_first_immutable_s2_cohort():
+    day,filename,d=compile_latest(ROOT)
+    assert d["latest_ranked_stock_date"]=="2026-10-28"
+    assert d["S2_frozen_observation"]==["600000","601816","601166","600519","000333"]
+    assert d.get("S2_immutable_event_id","").endswith("S2_FLOW_PLUS_PRICE_STRENGTH") or not d["S2_restored_from_earlier_immutable_event"]
