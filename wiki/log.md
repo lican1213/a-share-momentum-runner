@@ -49,6 +49,12 @@ updated: 2026-10-28
 - [代码实现](../national_team/core_flow_factors.py)与[合成数据测试](../tests/test_national_team_factors.py)验证算术和发布时间门槛，不代表ETF官方取数已完成；9ETF与国家队持仓确认作为扩展交叉验证，旧三日追涨保留历史证据。
 - [ADR-0003](decisions/ADR-0003-national-team-pivot.md)已补充最初设计而非替代指标。
 
+## 2026-10-28：原始国家队资金指标工程化并停止旧追涨定时计算
+- [核心四ETF Python实现](../national_team/core_flow_factors.py)与[真实执行的算术CI](https://github.com/lican1213/a-share-momentum-runner/actions/workflows/national-team-factors.yml)；公式验证使用合成fixture，不代表官方ETF份额或净值已被成功抓取。
+- 恢复原四只 510300/510310/510330/159919，日度净申赎、5日累计/期初AUM、两种覆盖率、终点NAV差法敏感性；要求份额、NAV、AUM独立发布时间及来源。
+- 将旧三日动量Workflow改为手动/代码变更CI，取消旧的每日三次定时执行；其历史数据、H01/H04结果仍保留。用户的ChatGPT三时段报告仍运行，核心改为四ETF资金指标＋国家队公开持仓。
+- 国家队专用官方份额、NAV及沪深300流通市值实时抓取仍**未完成**；根据[Issue #3](https://github.com/lican1213/a-share-momentum-runner/issues/3)执行，不得把纯算术单测报告为国家队已被监测到的资金行为。
+
 ## 未来添加新事件的格式
 `YYYY-MM-DD HH:mm +08:00 | actor | question | change/why | prior SHA → new SHA | evidence run | results/limitations | linked EXP/ADR/INC | status`
 
