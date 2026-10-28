@@ -1,5 +1,15 @@
 # MOC — 国家队资金跟踪与跟随收益研究第二大脑
 
+## 2026-10-29 B17 修复与验收进度
+
+- **V2日报与V1历史分栏**：[报告编译代码](national_team/daily_report.py)从首次不可回写V2事件及对应策略JSON恢复S1/S2，避免将旧版V1 S2误当主模型；[最新日报](wiki/compiled/national_team_daily.md)已通过真实Wiki生成任务，显示V2 S2为600309/601919/600660/601012/601838，旧版600000/601816/601166/600519/000333单列历史。
+- **成交情景修复**：[OHLC审慎过滤](national_team/ohlc_execution_guard.py)与[实际行情接入](national_team/live_paper_tracker.py)：此前仅依日成交量假设能按开盘价买/卖的缺陷，改为读取高低价、上一交易日收盘价；出现疑似一字涨停/跌停则按不可成交处理，并保留每条记录仅为OHLC情景、非真实券商成交的证据。
+- **资金源改进**：[ETF采集](national_team/live_etf_sources.py)对上交所HTTP403启用本轮熔断，缩减无效重试，并增加按具体交易日的AKShare SSE后备采集；逐基金/日期保留来源哈希与冲突记录，不用未知份额填充。没有稳定的官方PCF、全部日期SSE/SZSE网络可达性尚不可被单元测试替代。
+- **披露时点纠正**：[ETF定时采集](.github/workflows/national-team-live.yml)调整为北京时间每周二至周六09:15、[V2冻结](.github/workflows/national-team-strategy-v2.yml)调整为10:15，避免在官方每日份额未公布前将缺数误当新交易信号。源更新通常在T+1上午，见[Tushare数据文档](https://tushare.pro/document/2?doc_id=408)；具体日期必须依真实归档确认。
+- **工程测试不是收益验证**：[118项通过的CI 40787840541](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40787840541)已覆盖V2日报分流等回归，独立实盘成交和扣成本超额收益仍为OPEN。新增[二级份额规范化器](national_team/tushare_share_fallback.py)仅为待授权数据接口的单元适配基础，**尚未接入生产，绝不报告为已取得Tushare数据**。
+
+
+
 **Agent starts here.** [操作规则](KNOWLEDGE.md) · [AGENTS入口](AGENTS.md) · [Wiki总索引](wiki/index.md) · [一页当前状态](wiki/compiled/briefing.md)
 
 ## B16：真实四ETF资金驱动的独立选股V2首次运行成功（2026-10-28）
