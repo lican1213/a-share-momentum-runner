@@ -27,6 +27,7 @@
 ## 4. 后续Agent操作
 - [交接指南（接手必读）](wiki/operations/handoff.md)
 - [MOC/Wiki维护规范](KNOWLEDGE.md)
+- [Claude Code入口](CLAUDE.md) · [Gemini CLI入口](GEMINI.md) · [GitHub Copilot入口](.github/copilot-instructions.md)
 - [实验模板](wiki/templates/experiment.md) · [决策模板](wiki/templates/decision.md)
 - [GitHub连接器部署Skill](skills/github-connector-write-deploy/SKILL.md)
 - `python scripts/wiki_lint.py` 与 `python -m pytest -q`
