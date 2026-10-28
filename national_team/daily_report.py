@@ -207,6 +207,49 @@ def recover_original_frozen_s2(digest:dict,root:Path,*,public_at:str)->dict:
     return digest
 
 
+
+def attach_v2_freezes(digest, root, public_at):
+    """Pick the earliest real V2 frozen event for the current full-four flow day."""
+    from national_team.core_flow_factors import utc_aware
+    cutoff=utc_aware(public_at,"digest cutoff")
+    flow_day=digest.get("latest_full_four_funding_date")
+    by_strategy={}
+    for path in (root/"records/national_team_events").glob("*/*-v2.json"):
+        try:
+            block=json.loads(path.read_text(encoding="utf-8"))
+            if block.get("model_version")!="NT_FLOW_PIT_V2_20261028":continue
+            strategy_path=root/block["source_strategy"]
+            strategy=json.loads(strategy_path.read_text(encoding="utf-8"))
+            if strategy.get("flow_date")!=flow_day:continue
+            for event in block.get("events",[]):
+                if event.get("funding_underlying_day")!=flow_day:continue
+                when=utc_aware(event["first_public_at"],"V2 first freeze")
+                if when>cutoff:continue
+                key=event["strategy_id"]
+                name=("s1_ranked" if key=="S1_FLOW_OVER_ADV20" else
+                      "s2_ranked" if key=="S2_INDEPENDENT_RELATIVE_CONFIRMATION" else None)
+                if not name:continue
+                symbols=[row["symbol"] for row in strategy.get(name,[])]
+                if not symbols or symbols!=event.get("candidate_symbols"):continue
+                prior=by_strategy.get(key)
+                if prior is None or when<prior[0]:
+                    by_strategy[key]=(when,symbols,event["id"],str(path.relative_to(root)))
+        except (OSError,ValueError,KeyError,TypeError):
+            continue
+    digest["v2_cohort_status"]="ORIGINAL_FREEZE_VERIFIED" if by_strategy else "NO_MATCHING_V2_FREEZE"
+    digest["v2_funding_date"]=flow_day if by_strategy else None
+    digest["v2_s1_frozen_symbols"]=by_strategy.get("S1_FLOW_OVER_ADV20",(None,[],None,None))[1]
+    digest["v2_s2_frozen_symbols"]=by_strategy.get("S2_INDEPENDENT_RELATIVE_CONFIRMATION",(None,[],None,None))[1]
+    digest["v2_frozen_at"]=min((r[0] for r in by_strategy.values()),default=None)
+    if digest["v2_frozen_at"] is not None:
+        digest["v2_frozen_at"]=digest["v2_frozen_at"].isoformat()
+    digest["v2_event_ids"]={k:v[2] for k,v in by_strategy.items()}
+    digest["v2_event_sources"]={k:v[3] for k,v in by_strategy.items()}
+    digest["v2_alpha_confirmed"]=False
+    return digest
+
+
+
 def compile_latest(root:Path=ROOT):
     # Choose latest watch for which all same-run companions exist.
     for watch_path in sorted((root/"records/national_team_watch").glob("*/*.json"),
@@ -227,6 +270,7 @@ def compile_latest(root:Path=ROOT):
             public_at=watch.get("event_first_public_no_earlier_than") or inputs["merged"]["first_observed_no_earlier_than"]
             result=supplement_prior_full_four(result,root,signal_public_at=public_at)
             result=recover_original_frozen_s2(result,root,public_at=public_at)
+            result=attach_v2_freezes(result,root,public_at=public_at)
             from national_team.holder_evidence import reconcile_latest_total_historical_holders
             total_path=root/"data/national_team_holders/159919-2026H1-fund-total.json"
             if total_path.is_file():
