@@ -20,7 +20,7 @@ updated: 2026-10-29
 - V2真实首次可得时刻：2026-10-28T23:46:43.818303+08:00，底层四ETF资金日：2026-10-27；S1资金/成交额研究组 **601825, 600000, 601229, 601166, 600519**；S2独立价格确认研究组 **600309, 601919, 600660, 601012, 601838**。
 - V2仅以资金为择时触发（CSI300代理权重跨ETF相同，不能辨识逐股票实际买盘）；5/10/20日净超额收益待未来真实行情成熟；旧V1组合不可替换初始冻结股单。
 - 最近PCF采集尝试：[run 40752852418](../../records/national_team_pcf/2026-10-29/40752852418-a1.json)；状态 `SSE_PCF_FETCHED_BUT_NOT_VERIFIED`；日期 2026-10-29。
-- 最近纸面事件冻结：[run 40752852418-a1](../../records/national_team_events/2026-10-29/40752852418-a1.json)；状态 `ALL_EVENTS_DUPLICATE_PREVIOUSLY_FROZEN`；日期 2026-10-29。
+- 最近纸面事件冻结：[run 40787782816-a1-v2](../../records/national_team_events/2026-10-29/40787782816-a1-v2.json)；状态 `NO_NEW_V2_EVENTS`；日期 2026-10-29。
 - 最近纸面收益观察：[run 40752852418-a1](../../records/national_team_paper/2026-10-29/40752852418-a1.json)；状态 `PAPER_EVALUATION_ATTEMPTED`；日期 2026-10-29。
 - 最近独立实跑红队审计：[run 40752852418-a1](../../records/national_team_audits/2026-10-29/40752852418-a1.json)；状态 `RESEARCH_PRIOR_FOUR_CURRENT_PARTIAL_AUDITED`；日期 2026-10-29。
 

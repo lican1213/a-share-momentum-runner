@@ -12,6 +12,9 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-29 | [b6b264a50a](https://github.com/lican1213/a-share-momentum-runner/commit/b6b264a50af5ad30569802a7ffe748603159671e) | Can Li | test(digest): primary V2 frozen lists remain distinct from legacy V1 stock selection |
+| 2026-10-28 | [1dd3f45d85](https://github.com/lican1213/a-share-momentum-runner/commit/1dd3f45d85cf4ed95de5d9af315aed54b60e2fec) | github-actions[bot] | data: archived four-ETF V2 candidate freeze 40787782816 [skip ci] |
+| 2026-10-28 | [1749318e80](https://github.com/lican1213/a-share-momentum-runner/commit/1749318e80ce3822288dd86a7396c5e02206ac7b) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-29 | [0f51707693](https://github.com/lican1213/a-share-momentum-runner/commit/0f51707693da4fce75133ef981f7a3777d10670e) | Can Li | fix: run V2 stock selection after scheduled next-morning ETF data capture |
 | 2026-10-29 | [5c17c9ce18](https://github.com/lican1213/a-share-momentum-runner/commit/5c17c9ce184da79bec9893ec5ba1a046a0e8ab00) | Can Li | fix: align daily source refresh with next-morning ETF publication |
 | 2026-10-29 | [aa0313829f](https://github.com/lican1213/a-share-momentum-runner/commit/aa0313829f1ba2f5f1f6965d8aad6c27927078ce) | Can Li | fix(data): SSE HTTP403 circuit breaker plus dated AKShare fallback preserving unit and source-conflict ledger |
