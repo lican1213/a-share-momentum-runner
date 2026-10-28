@@ -12,6 +12,7 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-28 | [c328610c74](https://github.com/lican1213/a-share-momentum-runner/commit/c328610c74e8620fe8a29d7712c62c2028ea4b24) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-28 | [1816c72291](https://github.com/lican1213/a-share-momentum-runner/commit/1816c7229113ca9d9f77dbd0a4ddd4416881230c) | github-actions[bot] | data: archive actual ETF provider attempt 40752852418 [skip ci] |
 | 2026-10-28 | [4c7019bbec](https://github.com/lican1213/a-share-momentum-runner/commit/4c7019bbecf9d951aac18922329b050c8530a1c2) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-28 | [f842855abe](https://github.com/lican1213/a-share-momentum-runner/commit/f842855abe2498d688d26d4ab8a6add10a02cffd) | github-actions[bot] | data: archive actual ETF provider attempt 40719964906 [skip ci] |
