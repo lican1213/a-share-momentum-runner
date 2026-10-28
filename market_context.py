@@ -50,7 +50,8 @@ def compute_breadth(raw: pd.DataFrame, asof: date) -> dict[str, Any]:
         raise ValueError(f"breadth snapshot only {len(change)} rows; not full A-share breadth")
     return {
         "source": "AKShare stock_zh_a_spot_em (Eastmoney), price-change snapshot",
-        "capture_date": str(asof),
+        "capture_time_local": datetime.now().astimezone().isoformat(),
+        "session_alignment": "not verified against asof daily K-line date",
         "quote_exchange_timestamp": None,
         "advancers": int((change > 0).sum()),
         "decliners": int((change < 0).sum()),
