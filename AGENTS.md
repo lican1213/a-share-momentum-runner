@@ -28,4 +28,4 @@ For significant source changes, **documentation and evidence updates are part of
 - `RESEARCH_ONLY_NOT_TRADE_AUTHORIZED`: zero executable trade signals.
 - Do not sweep parameters across the inspected 45-trade sample and claim future performance.
 
-Agent handoff details: [wiki/operations/handoff.md](wiki/operations/handoff.md). 
+Agent handoff details: [wiki/operations/handoff.md](wiki/operations/handoff.md). Other agent loaders: [CLAUDE.md](CLAUDE.md), [GEMINI.md](GEMINI.md), [Copilot instructions](.github/copilot-instructions.md); this file remains canonical. 
