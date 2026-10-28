@@ -8,6 +8,11 @@ updated: 2026-10-28
 
 [返回根MOC](../MOC.md) · [当前简报](compiled/briefing.md) · [维护协议](../KNOWLEDGE.md)
 
+## 当前最高优先级——国家队资金行为
+- [ADR-0003 主线重定向](decisions/ADR-0003-national-team-pivot.md)
+- [国家队官方份额与持有人MVP](https://github.com/lican1213/a-share-momentum-runner/issues/3)
+- 旧动量实验详见EXP-0001与EXP-0002，作为历史基准存档，不继续主导开发。
+
 ## 项目知识
 - [研究现状](overview.md)
 - [模型版本登记](models/registry.md)
