@@ -85,6 +85,20 @@ def collect(out_root:Path,run_id:str,attempt:str,*,getter=None)->tuple[Path,dict
             out["sources"][code]=item
         except Exception as exc:
             out["errors"].append(f"{code}:{type(exc).__name__}:{str(exc)[:200]}")
+    # Public original issuer PCF page: currently a separate, dated issuer
+    # filing. It may lag today's session; keep its original older date.
+    if out["sources"].get("510330",{}).get("status")!="OFFICIAL_DATED_PCF_COMPONENTS_CAPTURED":
+        try:
+            issuer_html=getter(ISSUER_510330,{})
+            issuer=parse_official_html(
+                issuer_html,"510330",datetime.now(ZoneInfo("Asia/Shanghai")).isoformat(),
+                source_url=ISSUER_510330)
+            issuer["issuer_original"]=True
+            issuer["http_response_sha256"]=hashlib.sha256(
+                issuer_html.encode()).hexdigest()
+            out["sources"]["510330_ISSUER"]=issuer
+        except Exception as exc:
+            out["errors"].append("510330_ISSUER:"+type(exc).__name__+":"+str(exc)[:170])
     good=sum(v.get("status")=="OFFICIAL_DATED_PCF_COMPONENTS_CAPTURED" for v in out["sources"].values())
     out["status"]="SSE_DATED_PCF_CAPTURED" if good else "SSE_PCF_FETCHED_BUT_NOT_VERIFIED"
     out["usable_pcf_count"]=good
