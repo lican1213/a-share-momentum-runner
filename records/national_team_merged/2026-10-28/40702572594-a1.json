@@ -1,0 +1,1843 @@
+{
+  "schema": 1,
+  "status": "FULL_FOUR_ETF_SHARES_NAV_OBSERVED_RESEARCH",
+  "run_id": "40702572594",
+  "asof_requested": "2026-10-28",
+  "run_attempt": "1",
+  "first_observed_no_earlier_than": "2026-10-28T22:07:23.642061+08:00",
+  "capture_completed_beijing": "2026-10-28T22:07:23.642061+08:00",
+  "unit": "raw_shares",
+  "observations_by_date": {
+    "2026-10-19": {
+      "510300": {
+        "shares": "29195587700.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "4.2473",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "510310": {
+        "shares": "16948544000.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "4.1268",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "510330": {
+        "shares": "8719449800.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "4.4298",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "159919": {
+        "shares": "6986016600.00",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "shares_first_observed_at": "2026-10-28T22:02:41.728329+08:00",
+        "nav": "4.434",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "nav_first_observed_at": "2026-10-28T22:02:41.728329+08:00"
+      }
+    },
+    "2026-10-20": {
+      "510300": {
+        "shares": "29400787700.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "4.2245",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "510310": {
+        "shares": "17028644000.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "4.1043",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "510330": {
+        "shares": "9623949800.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "4.4049",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "159919": {
+        "shares": "7342416600.00",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "shares_first_observed_at": "2026-10-28T22:02:41.728329+08:00",
+        "nav": "4.4097",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "nav_first_observed_at": "2026-10-28T22:02:41.728329+08:00"
+      }
+    },
+    "2026-10-21": {
+      "510300": {
+        "shares": "30199087700.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "4.1856",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "510310": {
+        "shares": "17062844000.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "4.0664",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "510330": {
+        "shares": "9702249800.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "4.3645",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "159919": {
+        "shares": "7565616600.00",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "shares_first_observed_at": "2026-10-28T22:02:41.728329+08:00",
+        "nav": "4.369",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "nav_first_observed_at": "2026-10-28T22:02:41.728329+08:00"
+      }
+    },
+    "2026-10-22": {
+      "510300": {
+        "shares": "32729887700.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "4.1093",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "510310": {
+        "shares": "17115044000.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "3.9922",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "510330": {
+        "shares": "10532949800.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "4.2848",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "159919": {
+        "shares": "9767916600.00",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "shares_first_observed_at": "2026-10-28T22:02:41.728329+08:00",
+        "nav": "4.289",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "nav_first_observed_at": "2026-10-28T22:02:41.728329+08:00"
+      }
+    },
+    "2026-10-23": {
+      "510300": {
+        "shares": "35242687700.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "4.1811",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "510310": {
+        "shares": "18359744000.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "4.063",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "510330": {
+        "shares": "11908149800.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "4.3603",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "159919": {
+        "shares": "9987516600.00",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "shares_first_observed_at": "2026-10-28T22:02:41.728329+08:00",
+        "nav": "4.3652",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "nav_first_observed_at": "2026-10-28T22:02:41.728329+08:00"
+      }
+    },
+    "2026-10-26": {
+      "510300": {
+        "shares": "35446987700.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "4.1797",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "510310": {
+        "shares": "21601544000.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "4.0618",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "510330": {
+        "shares": "13254549800.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "4.3587",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "159919": {
+        "shares": "10406016600.00",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "shares_first_observed_at": "2026-10-28T22:02:41.728329+08:00",
+        "nav": "4.3637",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "nav_first_observed_at": "2026-10-28T22:02:41.728329+08:00"
+      }
+    },
+    "2026-10-27": {
+      "510300": {
+        "shares": "36238087700.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "4.1259",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "510310": {
+        "shares": "21926444000.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "4.0093",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "510330": {
+        "shares": "13507449800.0",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "shares_first_observed_at": "2026-10-28T21:39:24.510528+08:00",
+        "nav": "4.303",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+        "nav_first_observed_at": "2026-10-28T21:39:24.510528+08:00"
+      },
+      "159919": {
+        "shares": "10396116600.00",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "shares_first_observed_at": "2026-10-28T22:02:41.728329+08:00",
+        "nav": "4.3077",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "nav_first_observed_at": "2026-10-28T22:02:41.728329+08:00"
+      }
+    },
+    "2026-10-16": {
+      "159919": {
+        "shares": "6929316600.00",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "shares_first_observed_at": "2026-10-28T22:02:41.728329+08:00",
+        "nav": "4.4289",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "nav_first_observed_at": "2026-10-28T22:02:41.728329+08:00"
+      }
+    },
+    "2026-10-15": {
+      "159919": {
+        "shares": "6851916600.00",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "shares_first_observed_at": "2026-10-28T22:02:41.728329+08:00",
+        "nav": "4.4226",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "nav_first_observed_at": "2026-10-28T22:02:41.728329+08:00"
+      }
+    },
+    "2026-10-14": {
+      "159919": {
+        "shares": "6839316600.00",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "shares_first_observed_at": "2026-10-28T22:02:41.728329+08:00",
+        "nav": "4.4774",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "nav_first_observed_at": "2026-10-28T22:02:41.728329+08:00"
+      }
+    },
+    "2026-10-13": {
+      "159919": {
+        "shares": "6848316600.00",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "shares_first_observed_at": "2026-10-28T22:02:41.728329+08:00",
+        "nav": "4.5389",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "nav_first_observed_at": "2026-10-28T22:02:41.728329+08:00"
+      }
+    },
+    "2026-10-12": {
+      "159919": {
+        "shares": "6844716600.00",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "shares_first_observed_at": "2026-10-28T22:02:41.728329+08:00",
+        "nav": "4.5519",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "nav_first_observed_at": "2026-10-28T22:02:41.728329+08:00"
+      }
+    },
+    "2026-10-09": {
+      "159919": {
+        "shares": "6856416600.00",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "shares_first_observed_at": "2026-10-28T22:02:41.728329+08:00",
+        "nav": "4.583",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "nav_first_observed_at": "2026-10-28T22:02:41.728329+08:00"
+      }
+    },
+    "2026-10-08": {
+      "159919": {
+        "shares": "6878916600.00",
+        "shares_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "shares_first_observed_at": "2026-10-28T22:02:41.728329+08:00",
+        "nav": "4.5753",
+        "nav_source_path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+        "nav_first_observed_at": "2026-10-28T22:02:41.728329+08:00"
+      }
+    }
+  },
+  "sources_used": [
+    {
+      "run_id": "40698385410",
+      "path": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+      "capture": "2026-10-28T21:39:24.510528+08:00",
+      "collector_status": "ATTEMPTED_NO_COMPLETE_FACTOR"
+    },
+    {
+      "run_id": "40698827238",
+      "path": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+      "capture": "2026-10-28T21:42:20.235480+08:00",
+      "collector_status": "ATTEMPTED_NO_COMPLETE_FACTOR"
+    },
+    {
+      "run_id": "40698907834",
+      "path": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+      "capture": "2026-10-28T21:44:30.487866+08:00",
+      "collector_status": "PARTIAL_SSE_THREE_WITH_NAV_ONLY"
+    },
+    {
+      "run_id": "40699495997",
+      "path": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+      "capture": "2026-10-28T21:47:45.383621+08:00",
+      "collector_status": "PARTIAL_SSE_THREE_WITH_NAV_ONLY"
+    },
+    {
+      "run_id": "40701896342",
+      "path": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+      "capture": "2026-10-28T22:02:41.728329+08:00",
+      "collector_status": "ATTEMPTED_NO_COMPLETE_FACTOR"
+    },
+    {
+      "run_id": "40702572594",
+      "path": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+      "capture": "2026-10-28T22:07:23.306202+08:00",
+      "collector_status": "FOUR_ETF_FACTOR_OBSERVED_AFTER_CAPTURE_NOT_HISTORICAL_PIT"
+    }
+  ],
+  "row_provenance": {
+    "2026-10-19": {
+      "510300": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "510310": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "510330": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "159919": [
+        {
+          "source_run": "40701896342",
+          "file": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+          "capture": "2026-10-28T22:02:41.728329+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ]
+    },
+    "2026-10-20": {
+      "510300": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "510310": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "510330": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "159919": [
+        {
+          "source_run": "40701896342",
+          "file": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+          "capture": "2026-10-28T22:02:41.728329+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ]
+    },
+    "2026-10-21": {
+      "510300": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "510310": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "510330": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "159919": [
+        {
+          "source_run": "40701896342",
+          "file": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+          "capture": "2026-10-28T22:02:41.728329+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ]
+    },
+    "2026-10-22": {
+      "510300": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "510310": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "510330": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "159919": [
+        {
+          "source_run": "40701896342",
+          "file": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+          "capture": "2026-10-28T22:02:41.728329+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ]
+    },
+    "2026-10-23": {
+      "510300": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "510310": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "510330": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "159919": [
+        {
+          "source_run": "40701896342",
+          "file": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+          "capture": "2026-10-28T22:02:41.728329+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ]
+    },
+    "2026-10-26": {
+      "510300": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "510310": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "510330": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "159919": [
+        {
+          "source_run": "40701896342",
+          "file": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+          "capture": "2026-10-28T22:02:41.728329+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ]
+    },
+    "2026-10-27": {
+      "510300": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "510310": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "510330": [
+        {
+          "source_run": "40698385410",
+          "file": "records/national_team_etf/2026-10-28/40698385410-a1.json",
+          "capture": "2026-10-28T21:39:24.510528+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698827238",
+          "file": "records/national_team_etf/2026-10-28/40698827238-a1.json",
+          "capture": "2026-10-28T21:42:20.235480+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40698907834",
+          "file": "records/national_team_etf/2026-10-28/40698907834-a1.json",
+          "capture": "2026-10-28T21:44:30.487866+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40699495997",
+          "file": "records/national_team_etf/2026-10-28/40699495997-a1.json",
+          "capture": "2026-10-28T21:47:45.383621+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ],
+      "159919": [
+        {
+          "source_run": "40701896342",
+          "file": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+          "capture": "2026-10-28T22:02:41.728329+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ]
+    },
+    "2026-10-16": {
+      "159919": [
+        {
+          "source_run": "40701896342",
+          "file": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+          "capture": "2026-10-28T22:02:41.728329+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ]
+    },
+    "2026-10-15": {
+      "159919": [
+        {
+          "source_run": "40701896342",
+          "file": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+          "capture": "2026-10-28T22:02:41.728329+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ]
+    },
+    "2026-10-14": {
+      "159919": [
+        {
+          "source_run": "40701896342",
+          "file": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+          "capture": "2026-10-28T22:02:41.728329+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ]
+    },
+    "2026-10-13": {
+      "159919": [
+        {
+          "source_run": "40701896342",
+          "file": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+          "capture": "2026-10-28T22:02:41.728329+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ]
+    },
+    "2026-10-12": {
+      "159919": [
+        {
+          "source_run": "40701896342",
+          "file": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+          "capture": "2026-10-28T22:02:41.728329+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ]
+    },
+    "2026-10-09": {
+      "159919": [
+        {
+          "source_run": "40701896342",
+          "file": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+          "capture": "2026-10-28T22:02:41.728329+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ]
+    },
+    "2026-10-08": {
+      "159919": [
+        {
+          "source_run": "40701896342",
+          "file": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+          "capture": "2026-10-28T22:02:41.728329+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        },
+        {
+          "source_run": "40702572594",
+          "file": "records/national_team_etf/2026-10-28/40702572594-a1.json",
+          "capture": "2026-10-28T22:07:23.306202+08:00",
+          "fields": [
+            "shares",
+            "nav"
+          ]
+        }
+      ]
+    }
+  },
+  "conflicts": [],
+  "conflicted_date_code_pairs": 0,
+  "undated_SZSE_snapshots_excluded": true,
+  "point_in_time_policy": "historical provider data first knowable at MAX source capture; no backwards signals",
+  "national_team_identity_proven": false,
+  "trade_orders_authorized": false,
+  "funding_event": {
+    "status": "FULL_FOUR_ETF_SHARES_NAV_OBSERVED_RESEARCH",
+    "funds": [
+      "510300",
+      "510310",
+      "510330",
+      "159919"
+    ],
+    "asof": "2026-10-28",
+    "first_available_at": "2026-10-28T22:07:23.642061+08:00",
+    "provider_run_id": "40702572594",
+    "publication_time_policy": "historical observations first available after this capture",
+    "verified_consecutive_session_flow": true,
+    "series_kind": "ETF_NET_CREATION_PROXY_NOT_HUIJIN_ACCOUNT_ORDERS",
+    "history_sessions": [
+      "2026-10-08",
+      "2026-10-09",
+      "2026-10-12",
+      "2026-10-13",
+      "2026-10-14",
+      "2026-10-15",
+      "2026-10-16",
+      "2026-10-19",
+      "2026-10-20",
+      "2026-10-21",
+      "2026-10-22",
+      "2026-10-23",
+      "2026-10-26",
+      "2026-10-27",
+      "2026-10-28"
+    ],
+    "complete_four_days": [
+      "2026-10-19",
+      "2026-10-20",
+      "2026-10-21",
+      "2026-10-22",
+      "2026-10-23",
+      "2026-10-26",
+      "2026-10-27"
+    ],
+    "missing_by_day": {
+      "2026-10-08": [
+        "510300",
+        "510310",
+        "510330"
+      ],
+      "2026-10-09": [
+        "510300",
+        "510310",
+        "510330"
+      ],
+      "2026-10-12": [
+        "510300",
+        "510310",
+        "510330"
+      ],
+      "2026-10-13": [
+        "510300",
+        "510310",
+        "510330"
+      ],
+      "2026-10-14": [
+        "510300",
+        "510310",
+        "510330"
+      ],
+      "2026-10-15": [
+        "510300",
+        "510310",
+        "510330"
+      ],
+      "2026-10-16": [
+        "510300",
+        "510310",
+        "510330"
+      ]
+    },
+    "partial_funding": {
+      "period": [
+        "2026-10-26",
+        "2026-10-27"
+      ],
+      "funds": [
+        "510300",
+        "510310",
+        "510330"
+      ],
+      "net_creation_proxy_cny": "5654849760.00000",
+      "per_fund_proxy_cny": {
+        "510300": "3263999490.00000",
+        "510310": "1302621570.00000",
+        "510330": "1088228700.0000"
+      },
+      "fund_count_coverage": "3/4",
+      "market_session_adjacency_verified": true
+    },
+    "four_etf_factor": {
+      "indicator_version": "NT-CORE4-20261027-v1.0",
+      "basket_name": "core_csi300_four",
+      "codes": [
+        "510300",
+        "510310",
+        "510330",
+        "159919"
+      ],
+      "trade_date": "2026-10-27",
+      "prior_date": "2026-10-26",
+      "decision_cutoff": "2026-10-28T22:07:23.642061+08:00",
+      "unit_money": "CNY",
+      "fund_aum_cny": "340330325937.850000",
+      "aum_is_partially_estimated": true,
+      "shares_times_nav_estimate_cny": "340330325937.850000",
+      "ordinary_float_coverage_ratio": null,
+      "free_float_coverage_ratio": null,
+      "coverage_ratios_are_not_national_team_holdings": true,
+      "corporate_actions_explicitly_verified": false,
+      "corporate_action_unknown_dates_codes": [
+        "2026-10-20:159919",
+        "2026-10-20:510300",
+        "2026-10-20:510310",
+        "2026-10-20:510330",
+        "2026-10-21:159919",
+        "2026-10-21:510300",
+        "2026-10-21:510310",
+        "2026-10-21:510330",
+        "2026-10-22:159919",
+        "2026-10-22:510300",
+        "2026-10-22:510310",
+        "2026-10-22:510330",
+        "2026-10-23:159919",
+        "2026-10-23:510300",
+        "2026-10-23:510310",
+        "2026-10-23:510330",
+        "2026-10-26:159919",
+        "2026-10-26:510300",
+        "2026-10-26:510310",
+        "2026-10-26:510330",
+        "2026-10-27:159919",
+        "2026-10-27:510300",
+        "2026-10-27:510310",
+        "2026-10-27:510330"
+      ],
+      "daily_share_changes": {
+        "510300": "791100000.0",
+        "510310": "324900000.0",
+        "510330": "252900000.0",
+        "159919": "-9900000.00"
+      },
+      "per_etf_daily_flow_proxy_cny": {
+        "510300": "3263999490.00000",
+        "510310": "1302621570.00000",
+        "510330": "1088228700.0000",
+        "159919": "-42646230.000000"
+      },
+      "daily_net_creation_proxy_cny": "5612203530.000000",
+      "five_day": {
+        "start": "2026-10-20",
+        "end": "2026-10-27",
+        "net_creation_cny_daily_sum": "78257382120.000000",
+        "net_creation_cny_endpoint_nav": "77711889600.000000",
+        "initial_aum_cny": "268864682162.890000",
+        "net_creation_pct_initial_aum": "0.2910660540851112994085114550",
+        "endpoint_pct_initial_aum": "0.2890371802456327592695454133",
+        "hypothetical_abs_3pct_alert": true,
+        "threshold_is_unvalidated": true,
+        "method_difference_warning": "daily NAV-weighted flow and endpoint-NAV flow are different proxies; retain both"
+      },
+      "investor_identity_attributable": false,
+      "trade_signal_authorized": false,
+      "missing_denominator_is_null": true,
+      "method_note": "ETF-wide primary issuance/redemption proxy; no investor identity or actual broker cash flow proven"
+    },
+    "latest_available_trading_day": "2026-10-27",
+    "factor_quality": {
+      "exchange_shares_via_akshare": true,
+      "NAV_from_Eastmoney_not_original_fund_report": true,
+      "corporate_actions_explicitly_verified": false,
+      "market_float_denominators_available": false,
+      "first_available_at": "2026-10-28T22:07:23.642061+08:00",
+      "national_team_investor_identified": false
+    }
+  }
+}
