@@ -8,6 +8,12 @@ updated: 2026-10-28
 
 [返回根MOC](../MOC.md) · [当前简报](compiled/briefing.md) · [维护协议](../KNOWLEDGE.md)
 
+## B16真实四ETF→V2独立股票名单与前瞻收益跟踪
+- [EXP-0004研究协议与结构限制](experiments/EXP-0004-four-etf-strategy-v2.md) · [正式V2选股代码](../national_team/strategy_v2.py) · [GitHub实际完整运行40719359363](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40719359363)
+- [固定两组V2研究股与完整排名原始证据](../records/national_team_strategy/2026-10-28/40719359363-a1-v2.json) · [第一次前瞻冻结事件](../records/national_team_events/2026-10-28/40719359363-a1-v2.json) · [专用自动化](../.github/workflows/national-team-strategy-v2.yml)
+- [20日到期覆盖修复](../national_team/live_paper_tracker.py)：保留最近60自然日中至多64个冻结事件，缓存同股票OHLC源；不再让后续两组/天把前八条尚未成熟结果挤掉。
+- 研究股单尚非国家队逐股订单；相同中证权重无法用四ETF金额区分股票，只能验证资金事件择时对S1/S2是否有超额收益。
+
 ## 最新端到端资金—选股—对抗审计
 - [B11/E2E实际运行与红队审计](audits/AUD-2026-10-28-e2e-release-gate.md)
 - [实测四ETF资金份额及NAV](../records/national_team_etf/2026-10-28/40702172792-a1.json)
