@@ -32,6 +32,12 @@ updated: 2026-10-28
 ## 2026-10-28：错误诊断与知识矛盾归档（本次）
 - 新建 [CTR-0001](contradictions/CTR-0001.md) 追踪交易日历误诊、QuantStats实际错误、行情来源字段纠正、H01相对改进仍亏损等。旧错误不能在摘要中被静默抹去。
 
+## 2026-10-28：MOC自动维护与跨Agent接入通过真实CI（本次补记）
+- [Wiki校验 run 40688051721](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40688051721)：19个Wiki页面ID唯一，所有内部链接存在，Python维护脚本语法检查成功。
+- [行情与Wiki同步 run 40687425222](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40687425222)：20项确定性单测、真实数据执行成功、`WIKI_SYNC_OK records=13 views=3`，自动生成 `wiki/indices/runs.md`、`wiki/indices/commits.md`、`wiki/compiled/briefing.md` 并提交Git。
+- 新增Claude/Gemini/Copilot入口均指向AGENTS/MOC，避免多Agent指令漂移。
+- **界限**：LLM Wiki文档会被Agent依协议维护；自动脚本仅刷新**结构化可验证的运行事实和Git索引**，不会自动生成或擅自修改科学结论。**交易授权继续OFF。**
+
 ## 未来添加新事件的格式
 `YYYY-MM-DD HH:mm +08:00 | actor | question | change/why | prior SHA → new SHA | evidence run | results/limitations | linked EXP/ADR/INC | status`
 
