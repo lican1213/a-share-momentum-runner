@@ -8,6 +8,11 @@ updated: 2026-10-28
 
 [返回根MOC](../MOC.md) · [当前简报](compiled/briefing.md) · [维护协议](../KNOWLEDGE.md)
 
+## 原始资金指标与国家队身份交叉验证
+- [2026-10-27四ETF原始资金进出指标与双市值覆盖率](data/original-four-etf-indicator.md)
+- [最新合并决策：ADR-0003](decisions/ADR-0003-national-team-pivot.md)
+- [公式代码和单元测试](../national_team/core_flow_factors.py)（尚非真实行情运行）
+
 ## 当前最高优先级——国家队资金行为
 - [ADR-0003 主线重定向](decisions/ADR-0003-national-team-pivot.md)
 - [国家队官方份额与持有人MVP](https://github.com/lican1213/a-share-momentum-runner/issues/3)
