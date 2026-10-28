@@ -173,7 +173,12 @@ def collect(ak, asof: date, run_id: str, attempt: str, out_root: Path):
     except Exception as exc:
         result["errors"].append(f"SSE_CALENDAR:{type(exc).__name__}:{str(exc)[:130]}")
         sse_days={d for d in dates[-15:] if date.fromisoformat(d).weekday()<5}
-    for day in [d for d in dates[-15:] if d in sse_days]:
+    sse_attempt_days=[d for d in dates[-15:] if d in sse_days]
+    # Do not repeatedly hammer an exchange endpoint after a clear 403.
+    sse_permission_denied=False
+    for day in sse_attempt_days:
+        if sse_permission_denied:
+            break
         try:
             rows = fetch_sse_direct(day,attempts=2,timeout=10)
             result["raw_input_hashes"][f"SSE_DIRECT:{day}"] = hashlib.sha256(
@@ -184,6 +189,32 @@ def collect(ak, asof: date, run_id: str, attempt: str, out_root: Path):
                          "shares_source_url":SSE_URL} for k,v in rows.items()})
         except Exception as exc:
             result["errors"].append(f"SSE_DIRECT:{day}:{type(exc).__name__}:{str(exc)[:165]}")
+            if "403" in str(exc) or "Forbidden" in str(exc):
+                sse_permission_denied=True
+                result["SSE_DIRECT_CIRCUIT_OPEN"]="HTTP_403_NO_FURTHER_REQUESTS_THIS_RUN"
+    # Separate AKShare provider path. Its documented normalization is already
+    # raw shares; never multiply the SSE values twice. Do not overwrite any
+    # previously obtained official daily figures with contradictory values.
+    fallback_days=sse_attempt_days[-8:]
+    for day in fallback_days:
+        if all(code in result["observations_by_date"].get(day,{}) for code in SSE_CODES):
+            continue
+        try:
+            frame=ak.fund_etf_scale_sse(date=day.replace("-",""))
+            rows=normalized_day(frame,day,SSE_CODES,"akshare.sse.normalized_shares")
+            result["raw_input_hashes"][f"SSE_AKSHARE:{day}"]=hashlib.sha256(
+                frame.to_csv(index=False).encode()).hexdigest()
+            for code,shares in rows.items():
+                item=result["observations_by_date"].setdefault(day,{}).get(code)
+                if item and item["shares"]!=shares:
+                    result["errors"].append(f"SSE_SOURCE_CONFLICT:{day}:{code}:excluded")
+                    continue
+                if not item:
+                    result["observations_by_date"][day][code]={
+                        "shares":shares,"shares_source":"SSE_AKSHARE_DATED",
+                        "shares_source_url":SSE_URL}
+        except Exception as exc:
+            result["errors"].append(f"SSE_AKSHARE:{day}:{type(exc).__name__}:{str(exc)[:150]}")
     candidates = {day for day in result["observations_by_date"] if day <= asof.isoformat()}
     for code in CORE_FOUR:
         try:
