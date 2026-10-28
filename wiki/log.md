@@ -90,6 +90,13 @@ updated: 2026-10-28
 - 原新旧项目的关键矛盾被抓出：2026-10-28仅3只沪市ETF可得、2026-10-27仍有7个交易日完整四ETF。修复保留10-27完整因子及10-28三沪ETF净申购+1670914440元作为**不同交易日的两条序列**，不可混用。[真实证据反例回归40707718330](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40707718330)：81项通过，包含金额/日期篡改失败测试。
 - [真实数据冻结→红队复现run 40707145019](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40707145019)2项通过，不是盈利证明。最新模型修复后还须看整条生产Actions的同代码SHA和资金审计状态。
 
+## 2026-10-28 B14：从失败运行到完整验收及重大汇金持仓一致性反证
+- [运行40710985962](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40710985962) 的真实150股数据采集、模型独立红队与永久`records/`写回都成功。失败原因曾是工作流频繁取消与Wiki动态文件/未暂存文件导致rebase冲突，已拆成两个独立任务；`git restore wiki/indices wiki/compiled`后再提交原始证据。
+- [统一决策简报](compiled/national_team_daily.md)（本页位于wiki/，相对链接为`compiled/national_team_daily.md`）：一份文件展示10月27日完整四ETF+56.12亿元、10月28日三沪ETF+16.71亿元和真实150股票S1/S2观察。事前首次可得时点与回测未成熟状态仍清晰。
+- [2026-06-30整只159919份额](../data/national_team_holders/159919-2026H1-fund-total.json)：69.39216676亿份，远低于2025年两汇金法人合计354.98494985亿份。历史持仓不能继续当现在仓位；红队标不一致性，尚不能识别具体谁在何日减持。原报告参考[2026年中期报告](https://static.cninfo.com.cn/finalpage/2026-08-31/1225528257.PDF)。
+- [源数据报告B14](../records/national_team_daily/2026-10-28/40710985962-a1-v4.json)附当轮审计状态、来源与当时股票名单；旧v1/v2/v3版本不覆盖。
+- 尚需ETF真实PCF、2026汇金法人当期持仓、样本外真实股票ETF配对收益来决定盈利Gate，而不是继续增加无证据因子。
+
 ## 未来添加新事件的格式
 `YYYY-MM-DD HH:mm +08:00 | actor | question | change/why | prior SHA → new SHA | evidence run | results/limitations | linked EXP/ADR/INC | status`
 
