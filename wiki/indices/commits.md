@@ -12,6 +12,25 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-28 | [c2df57a1e7](https://github.com/lican1213/a-share-momentum-runner/commit/c2df57a1e729c29f3d988cb722cfa85c5e8e2b25) | Can Li | feat(national-team): restore original four CSI300 ETF flow, 5d intensity, dual float coverage with point-in-time guards |
+| 2026-10-28 | [5aed19694f](https://github.com/lican1213/a-share-momentum-runner/commit/5aed19694fd5e8751953729807fae090fbf9915d) | Can Li | docs: align README.md with P0 national-team research mission |
+| 2026-10-28 | [c51fd4085a](https://github.com/lican1213/a-share-momentum-runner/commit/c51fd4085a13d71fc1275b32a56b09f3a5178ed6) | Can Li | docs: align wiki/log.md with P0 national-team research mission |
+| 2026-10-28 | [0f29f20651](https://github.com/lican1213/a-share-momentum-runner/commit/0f29f20651475f84429197996dc270697e746319) | Can Li | docs: align wiki/open-questions.md with P0 national-team research mission |
+| 2026-10-28 | [1e673fa89d](https://github.com/lican1213/a-share-momentum-runner/commit/1e673fa89d3a54bd2fe921fd25f4906af03bb900) | Can Li | docs: align AGENTS.md with P0 national-team research mission |
+| 2026-10-28 | [e552fa5964](https://github.com/lican1213/a-share-momentum-runner/commit/e552fa59648a6442237361ea49ee4cd33e603cc7) | Can Li | docs: reflect national-team tracking as P0 in wiki/index.md |
+| 2026-10-28 | [dc437c181c](https://github.com/lican1213/a-share-momentum-runner/commit/dc437c181c43ce7475883c87201ee93455441d3b) | Can Li | docs: reflect national-team tracking as P0 in MOC.md |
+| 2026-10-28 | [3b6a4d1213](https://github.com/lican1213/a-share-momentum-runner/commit/3b6a4d12135e5a1ac61987aa1e4ab6d2601511ec) | Can Li | docs(strategy): pivot primary mission to evidence-based national-team holdings and ETF creation/redemption monitoring |
+| 2026-10-28 | [4b2651dcf2](https://github.com/lican1213/a-share-momentum-runner/commit/4b2651dcf2e33c3b404959af9054517ce509b559) | Can Li | docs(wiki): audit B6 completion and preserve tested run IDs in curated change log |
+| 2026-10-28 | [835870a117](https://github.com/lican1213/a-share-momentum-runner/commit/835870a11789252399d9ce61923a379b22bcb9d4) | github-actions[bot] | audit: persist run 40687920738 attempt 1 [skip ci] |
+| 2026-10-28 | [3958cbe9f9](https://github.com/lican1213/a-share-momentum-runner/commit/3958cbe9f94ad7026ce0ac79de7a46bf840c90fa) | Can Li | docs(wiki): close B6 model-knowledge governance milestone with verified CI evidence |
+| 2026-10-28 | [3accb218aa](https://github.com/lican1213/a-share-momentum-runner/commit/3accb218aacf0eda840c26f59693b45983e3f0db) | Can Li | docs(agents): register cross-agent entrypoints in .github/workflows/wiki.yml |
+| 2026-10-28 | [b934a0c214](https://github.com/lican1213/a-share-momentum-runner/commit/b934a0c214cedc100cf67b95e27178878258df69) | Can Li | docs(agents): register cross-agent entrypoints in .github/workflows/ashare.yml |
+| 2026-10-28 | [a7a3201b91](https://github.com/lican1213/a-share-momentum-runner/commit/a7a3201b9105cedc41a1d9e44d7af50821a21489) | Can Li | docs(agents): register cross-agent entrypoints in AGENTS.md |
+| 2026-10-28 | [18c94e26b0](https://github.com/lican1213/a-share-momentum-runner/commit/18c94e26b05a0638dc4cd2c6695d9577b283b77f) | Can Li | docs(agents): register cross-agent entrypoints in MOC.md |
+| 2026-10-28 | [28d1819ac3](https://github.com/lican1213/a-share-momentum-runner/commit/28d1819ac35c34a10fa7ea1e6e0f5beb47d562dc) | Can Li | docs(agents): route .github/copilot-instructions.md to MOC/AGENTS canonical knowledge base |
+| 2026-10-28 | [83851ce168](https://github.com/lican1213/a-share-momentum-runner/commit/83851ce168d5a8d45d9b651376fd4f81125078ab) | Can Li | docs(agents): route GEMINI.md to MOC/AGENTS canonical knowledge base |
+| 2026-10-28 | [70104558a1](https://github.com/lican1213/a-share-momentum-runner/commit/70104558a16bd64ffe562ee7573fee06877fadb9) | Can Li | docs(agents): route CLAUDE.md to MOC/AGENTS canonical knowledge base |
+| 2026-10-28 | [55c4b77d46](https://github.com/lican1213/a-share-momentum-runner/commit/55c4b77d46c2612dfe98c32950eb911698433927) | Can Li | docs(wiki): normalize historical evidence path in model version registry |
 | 2026-10-28 | [1036fd5cd3](https://github.com/lican1213/a-share-momentum-runner/commit/1036fd5cd3165c2bfbef9532be548ee33a4cdfb4) | Can Li | docs(wiki): render Markdown inline code without literal escape slashes |
 | 2026-10-28 | [3578a15799](https://github.com/lican1213/a-share-momentum-runner/commit/3578a157993eea59f3bc1d698627fccd17a8e039) | github-actions[bot] | audit: persist run 40687425222 attempt 1 [skip ci] |
 | 2026-10-28 | [92812da997](https://github.com/lican1213/a-share-momentum-runner/commit/92812da997f800118f26a36b01bdfff4bdc12883) | Can Li | docs(wiki): crosslink CTR-0001 from wiki/log.md |
