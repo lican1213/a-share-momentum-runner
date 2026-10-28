@@ -2,18 +2,26 @@
 
 **Agent starts here.** [操作规则](KNOWLEDGE.md) · [AGENTS入口](AGENTS.md) · [Wiki总索引](wiki/index.md) · [一页当前状态](wiki/compiled/briefing.md)
 
+## B11—B12 当前进展：真实四ETF → 股票候选 → 独立审计
+
+**[E2E审计报告](wiki/audits/AUD-2026-10-28-e2e-release-gate.md)** · [四ETF真实来源](records/national_team_etf/2026-10-28/40702172792-a1.json) · [跨运行完整资金快照](records/national_team_merged/2026-10-28/40702572594-a1.json) · [30只真实股票观察排名](records/national_team_watch/2026-10-28/40702172792-a1.json) · [完整量化CI](https://github.com/lican1213/a-share-momentum-runner/actions/workflows/national-team-factors.yml) · [最新源采集Actions](https://github.com/lican1213/a-share-momentum-runner/actions/workflows/national-team-live.yml)
+
+**已完成**：四只固定沪深300ETF的交易日份额及NAV、日/5日资金指标、SSE/SZSE相互备份与多run合并、CSI300正式指数权重及实际股票ADV20研究排名、S1/S2候选冻结与5/10/20日纸面评价器、基于真实落盘数据的独立红队重算及篡改失败测试。公开持仓身份与ETF实际PCF尚未贯通；当前股票排名是**指数权重研究代理**，不是国家队逐股订单。独立样本外盈利能力仍未得到验证。
+
+**最新开发注记**：新增[带超时的SSE原生取数器](national_team/sse_direct.py)，不让AKShare阻塞本轮采集；扩大股票研究池至150只，需以最新完整生产Actions完成记录为最终运行验收。任何Agent必须区分旧版真实运行成功和最新版未完成的运行。
+
 ## 研究纪律纠偏：主动发现机会，不让数据缺口清空研究名单
 **[研究主扫描器 opportunity_scan.py](national_team/opportunity_scan.py)**：已核实的部分ETF篮子、个股数据可以继续排序，完整列出覆盖比例与风险标签；资金净流出也产生撤退风险名单。停牌/ST等已明确不可交易者单列。历史上过于严格的[stock_selection.py](national_team/stock_selection.py)保留为全量证据审计版而非唯一研究入口。真正实盘订单另行验证，不阻断研究输出。
 
 ## 2026-10-28 对抗式审计结论与真实行情落地
 **[P0/P1审计完整报告](wiki/audits/AUD-2026-10-28-red-team.md)** · **[真实ETF数据采集器](national_team/live_etf_sources.py)** · **[真实数据运行日志](https://github.com/lican1213/a-share-momentum-runner/actions/workflows/national-team-live.yml)** · **[前瞻配对收益计算](national_team/forward_evaluation.py)**
 
-三个沪市ETF份额和NAV已通过实际取数，159919历史日频受深交所接口连接重置影响；最新无日期深市份额快照已留档但不回填历史。原四ETF整体资金因子和真实PCF选股的5/10/20日超额收益**尚未闭环**。机会排序允许部分可审计数据并标覆盖率，资金流出股票不混入正向资金选股名单。不得把“工作流成功”错说为“完整资金指标成功”。
+**阶段结论已由B11更新**：独立深交所按日期JSON接口已取得159919历史份额，四ETF份额/NAV和资金指标已真实计算；但国家队本人持仓核验、ETF真实PCF、成本后独立超额收益仍未完成。以顶部E2E审计和run证据为准。
 
 ## P0 策略核心：资金信号后如何选股、是否跑赢买ETF
 **[ADR-0004 资金→股票映射与ETF基准](wiki/decisions/ADR-0004-stock-selection-after-flow.md)** · **[EXP-0003 S0 ETF基准 vs S1资金冲击 vs S2相对强度](wiki/experiments/EXP-0003-etf-to-stock.md)** · **[研究代码](national_team/stock_selection.py)**
 
-**国家队资金进出指标是触发器，不是最终交易策略。** 从核心四ETF份额变化和披露持仓出发，按当时PCF/成分权重映射到股票，比较股票20日成交额与相对强度；最关键的盈利证据是公开信号之后5/10/20交易日是否持续跑赢低成本沪深300ETF。未获取真实PCF/股票日数据前，不能提供真实选股名单。
+**国家队资金进出指标是触发器，不是最终交易策略。** 从核心四ETF份额变化和披露持仓出发，按当时PCF/成分权重映射到股票，比较股票20日成交额与相对强度；最关键的盈利证据是公开信号之后5/10/20交易日是否持续跑赢低成本沪深300ETF。股票真实日线与指数权重代理排名已取得，但不能将其称为ETF真实PCF对应买单，也不能据此断言已经跑赢ETF。
 
 ## P0 原始四ETF入金/出金指标 + 国家队持仓联合追踪（2026-10-28恢复）
 **[原始四ETF资金指标、5日强度及双市值覆盖率](wiki/data/original-four-etf-indicator.md)** · **[指标Python实现](national_team/core_flow_factors.py)** · **[ADR-0003整合决策](wiki/decisions/ADR-0003-national-team-pivot.md)**
