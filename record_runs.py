@@ -30,13 +30,26 @@ def make_record(output: Path, run_id: str, sha: str, phase: str) -> tuple[Path, 
         digest = None
     signals_file = output / "signals.json"
     signals = json.loads(signals_file.read_text("utf-8")) if signals_file.exists() else None
+    trades_file = output / "historical_trades_exploratory.json"
+    if trades_file.exists():
+        trade_payload = trades_file.read_bytes()
+        # Research trades are synthetic execution proxies, NOT actual fills.
+        # For current 12-name scope, preserve all underlying replay rows.
+        if len(trade_payload) > 2_000_000:
+            raise ValueError("trade replay exceeds 2MB; would violate complete archival gate")
+        trades_archive = json.loads(trade_payload)
+        trades_digest = hashlib.sha256(trade_payload).hexdigest()
+    else:
+        trades_archive, trades_digest = None, None
     record = {
-        "schema_version": 1,
+        "schema_version": 2,
         "github_run_id": run_id,
         "source_commit_sha": sha,
         "collected_beijing_time": now.isoformat(),
         "phase": phase,
         "audit_sha256": digest,
+        "historical_trades_sha256": trades_digest,
+        "historical_replay": trades_archive,
         "audit": state,
         "signals": signals,
         "record_type": "automated_observation_not_actual_trade",
