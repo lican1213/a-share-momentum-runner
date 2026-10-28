@@ -112,7 +112,7 @@ def human_readable(d)->str:
           f"- 2025年中报所列汇金两主体合计：{Decimal(fund_alert['historical_two_Huijin_entities_shares'])/Decimal(100000000):.2f}亿份；2026年6月底**整只基金**总份额：{Decimal(fund_alert['new_whole_fund_total_shares'])/Decimal(100000000):.2f}亿份。",
           f"- 旧持仓合计超过后期整个基金总份额至少 {Decimal(fund_alert['prior_combined_holdings_exceed_new_total_by_shares'])/Decimal(100000000):.2f}亿份。不能把2025年汇金持仓写成2026年仍然持有，也不能用基金总份额反推出各法人具体减持日期。",
           "- 需要核对2026年基金持有人明细与任何ETF份额折算；这是一条身份有效性**红队异常**，不是推定某主体当天实际卖单。"])
-    lines+=["","## S2 与验证状态",
+    lines+=["","## Historical S2 and validation status",
       "- 冻结S2："+(", ".join(d["S2_frozen_observation"]) if d["S2_frozen_observation"] else "无新增冻结事件"),
       "- 现有纸面观察："+(", ".join(f"{x['event_id']}:{x['status']}" for x in d["paper_results"]) if d["paper_results"] else "未找到成熟结果"),
       "- 5/10/20交易日扣成本、样本外能否跑赢直接买沪深300ETF：**尚未证实**。","",
