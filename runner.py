@@ -47,14 +47,26 @@ def versions() -> dict:
     return out
 
 
-def trade_days() -> list:
-    df = ak.tool_trade_date_hist_sina()
-    if "trade_date" not in df.columns or df.empty:
-        raise ValueError("Sina trading-day feed has no trade_date")
-    days = sorted(set(pd.to_datetime(df["trade_date"]).dt.date))
-    if len(days) < 100:
-        raise ValueError("too few trade dates")
-    return days
+def trade_days(now: datetime) -> tuple[list, str]:
+    """Primary: live Sina trade-date feed; backup: exchange_calendars XSHG."""
+    try:
+        df = ak.tool_trade_date_hist_sina()
+        if "trade_date" not in df.columns or df.empty:
+            raise ValueError("Sina trade calendar missing trade_date")
+        days = sorted(set(pd.to_datetime(df["trade_date"]).dt.date))
+        if len(days) < 100 or days[-1] < now.date():
+            raise ValueError("Sina calendar stale or incomplete")
+        return days, "AKShare Sina live holiday calendar"
+    except Exception as exc:
+        logger.warning("Sina calendar unavailable: %r; trying exchange_calendars XSHG", exc)
+        import exchange_calendars as xcals
+        cal = xcals.get_calendar("XSHG")
+        start = pd.Timestamp(now.date() - timedelta(days=360))
+        end = pd.Timestamp(now.date() + timedelta(days=15))
+        days = [x.date() for x in cal.sessions_in_range(start, end)]
+        if len(days) < 100 or days[-1] < now.date():
+            raise RuntimeError("backup XSHG calendar incomplete; stop, no signal")
+        return days, "exchange_calendars XSHG third-party fallback; verify against SSE notices"
 
 
 def fetch_universe(asof: datetime) -> list[dict]:
@@ -126,7 +138,8 @@ def main() -> int:
     }
     write_json(out / "audit.json", audit)
     try:
-        days = trade_days()
+        days, calendar_source = trade_days(now)
+        audit["calendar_source"] = calendar_source
         today = now.date()
         if today not in days:
             audit.update(status="MARKET_CLOSED", reason="not in verified trading-day list",
