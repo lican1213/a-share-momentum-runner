@@ -2,6 +2,13 @@
 
 **Agent starts here.** [操作规则](KNOWLEDGE.md) · [AGENTS入口](AGENTS.md) · [Wiki总索引](wiki/index.md) · [一页当前状态](wiki/compiled/briefing.md)
 
+## B14 最新事实：真实生产链路通过，旧汇金持仓被新总份额证伪
+
+- **[真实生产通过 run 40710985962](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40710985962)**：150股真实OHLC/ADV20，资金来源合并、S1/S2冻结校验、独立红队`RESEARCH_PRIOR_FOUR_CURRENT_PARTIAL_AUDITED`及**`ETF_SOURCE_RECORD_PERSISTED`写回全部成功；先前连续`cancelled`与Wiki同提交rebase冲突/未暂存文件失败已修复并列入测试。
+- **[每日可读研究简报](wiki/compiled/national_team_daily.md)** 与[原始B14版本](records/national_team_daily/2026-10-28/40710985962-a1-v4.json)：10月27日完整四ETF+56.12亿元；10月28日仅沪市三ETF+16.71亿元（不混日）；股票150只、83.02%指数权重覆盖；S1/S2保持第一次冻结候选，尚未成熟净超额收益。
+- **身份红队关键证伪**：2025年6月30日159919两家汇金法人合计持有354.98494985亿份，但[2026年6月30日整个基金总份额](data/national_team_holders/159919-2026H1-fund-total.json)仅约69.39216676亿份；**2025历史持仓不能延续为2026年有效仓位判断**。请独立核对份额折算与2026报告具体法人持仓，不能凭整个ETF份额变化证明某个国家队账户哪天卖出。身份一致性[测试](tests/test_national_team_stale_holder_total.py)与[日报模块](national_team/daily_report.py)已接入。
+- 本轮`CI`和Wiki版本都真实验证。**实际ETF PCF仍未获取有效可核对明细**，股票映射仍是指数权重代理；5/10/20交易日样本外股票超额收益未验证，所以策略不标已盈利。
+
 ## B13 当前交付：不可回写证据→国家队身份→每日股票策略简报
 
 **[B13对抗审计](wiki/audits/AUD-2026-10-28-e2e-release-gate.md)** · [持有人证据：159919的2024/2025中报](data/national_team_holders/159919-2024H1-2025H1.json) · [持仓变化校验](national_team/holder_evidence.py) · [资金与个股研究简报生成器](national_team/daily_report.py) · [原始运行证据与派生Wiki分离的任务](.github/workflows/national-team-wiki-sync.yml)。
