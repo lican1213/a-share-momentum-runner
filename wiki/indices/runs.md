@@ -8,7 +8,7 @@ updated: 2026-10-28
 
 Automatically regenerated from **actual recorded JSON files**, newest first. A recorded JSON is an execution observation and not an independently confirmed green Actions result.
 
-[返回MOC](../../MOC.md) · [原始记录目录](../../records/)
+[返回MOC](../../MOC.md) · [国家队新主线运行索引](national-team.md) · [原始记录目录](../../records/)
 
 | Recorded Beijing time | Phase | Run / attempt | Audit status | Validated symbols | Research signals | File |
 | --- | --- | --- | --- | ---: | ---: | --- |

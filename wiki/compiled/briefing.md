@@ -4,19 +4,23 @@ type: overview
 status: maintained
 updated: 2026-10-28
 ---
-# Agent自动简报（最新实际留档）
+# 国家队资金→成分股研究 Agent 最新证据简报
 
-[返回根MOC](../../MOC.md) · [全量运行记录](../indices/runs.md) · [模型台账](../models/registry.md) · [开放问题](../open-questions.md)
+[根MOC](../../MOC.md) · [国家队所有实跑记录](../indices/national-team.md) · [模型演进](../models/registry.md) · [红队审计](../audits/AUD-2026-10-28-e2e-release-gate.md)
 
-**硬性交易授权：未通过；任何研究观察不构成买入指令。**
+**主线：中央汇金等法定主体披露（低频） × 固定四沪深300ETF资金份额（高频） → 指数/PCF对应股票 → S0 ETF基准 vs S1/S2选股组合。**
 
-本页由实际run JSON生成，**不包含未曾执行的回测，也不承诺GitHub任务此刻在线**。
+- 最新ETF源采集尝试：[run 40706300084](../../records/national_team_etf/2026-10-28/40706300084-a1.json)；状态 \`SHARES_NAV_HISTORY_OBSERVED_NOT_PIT_HISTORICAL_SIGNALS\`；日期 2026-10-28。
+- 最近可完整核验四ETF份额/NAV的历史记录：[run 40702572594](../../records/national_team_merged/2026-10-28/40702572594-a1.json)；状态 \`FULL_FOUR_ETF_SHARES_NAV_OBSERVED_RESEARCH\`；日期 2026-10-28。
+- 最近完整基金资金研究日：**2026-10-27**；合计当日净份额×NAV代理 **5612203530.000000 元**；这不是汇金个人账户当日买入。
+- 最近完整5日资金强度：**0.2910660540851112994085114550**；基金NAV尚需发行人原件复核、份额拆并需独立验证；极值应标异常而非直接买点。
+- 最近真实指数权重代理股票观察名单：[run 40706300084](../../records/national_team_watch/2026-10-28/40706300084-a1.json)；状态 \`INDEX_PROXY_RESEARCH_WATCHLIST\`；日期 2026-10-28。
+- 最新实测股票样本数：**150**；指数权重覆盖约 **0.83015**；指数权重非ETF真实PCF，且未证明个股跟随收益。
+- 最近PCF采集尝试：[run 40706300084](../../records/national_team_pcf/2026-10-28/40706300084-a1.json)；状态 \`SSE_PCF_FETCHED_BUT_NOT_VERIFIED\`；日期 2026-10-28。
+- 最近纸面事件冻结：[run 40706300084-a1](../../records/national_team_events/2026-10-28/40706300084-a1.json)；状态 \`FROZEN_PROSPECTIVE_RESEARCH_EVENTS\`；日期 2026-10-28。
+- 最近纸面收益观察：[run 40706300084-a1](../../records/national_team_paper/2026-10-28/40706300084-a1.json)；状态 \`PAPER_EVALUATION_ATTEMPTED\`；日期 2026-10-28。
+- 最近独立实跑红队审计：[run 40706300084-a1](../../records/national_team_audits/2026-10-28/40706300084-a1.json)；状态 \`RESEARCH_PARTIAL_SOURCES_AUDITED\`；日期 2026-10-28。
 
-- 最新持久化run：[40690241082](../../records/2026-10-28/close/40690241082-a1.json)；时段 close；记录时间 2026-10-28T20:47:35.705914+08:00.
-- 输入代码SHA：[f1585e6c152f](https://github.com/lican1213/a-share-momentum-runner/commit/f1585e6c152f827a7cbac67eda0f098abfeabc27)；不保证等于当前HEAD.
-- 审计执行状态：`COMPUTED_RESEARCH_ONLY`；截止行情：2026-10-28.
-- 有效个股数：12；研究回放完成交易：45；执行截断：0.
-- 历史代理交易平均净收益：-0.002769；历史胜率：0.422222（为比例值，非百分数）.
-- 大盘数据门槛：False；历史股票池偏差解决：False；独立OOS验证通过：False.
-- 正式交易信号：0；信号状态：`RESEARCH_ONLY_NOT_TRADE_AUTHORIZED`.
-- 研究结论：基于当前固定存续股票池的历史日K代理，非真实成交，且不可推断未来盈利。要评估改动，读EXP/ADR/INC与对应run JSON。
+**投资结果状态：暂无独立样本外净超额收益验证；不推断任何国家队真实账户买卖、已成交订单或必然盈利。**
+
+自动页面仅汇总已保存的证据。最新综合workflow是否为绿色，仍需单独查GitHub Actions对应SHA。
