@@ -12,6 +12,11 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-28 | [f1585e6c15](https://github.com/lican1213/a-share-momentum-runner/commit/f1585e6c152f827a7cbac67eda0f098abfeabc27) | Can Li | ci(national-team): independently test restored original four-ETF funding indicators; never mislabel as live data |
+| 2026-10-28 | [3db4c16307](https://github.com/lican1213/a-share-momentum-runner/commit/3db4c163070a733939a99cf7278396834c044185) | github-actions[bot] | audit: persist run 40689971783 attempt 1 [skip ci] |
+| 2026-10-28 | [03909011a5](https://github.com/lican1213/a-share-momentum-runner/commit/03909011a5f22fed67a2a577e2de1e7d793a19e9) | Can Li | docs(ADR-0003): reinstate original 4-ETF funding intensity and ordinary/free float ratios into national-team monitoring |
+| 2026-10-28 | [d4971e8c40](https://github.com/lican1213/a-share-momentum-runner/commit/d4971e8c406b41e6d703adbbb7d575c35e5120a2) | Can Li | docs(national-team): recover exact original four-ETF share/NAV flow and dual float-cover indicator with extended-basket separation |
+| 2026-10-28 | [fdf90a0169](https://github.com/lican1213/a-share-momentum-runner/commit/fdf90a0169a129e7852aac6e77217f4f9a5de49e) | Can Li | test(national-team): enforce four ETF baseline, daily/5d formulas, dual market denominators and availability gates |
 | 2026-10-28 | [c2df57a1e7](https://github.com/lican1213/a-share-momentum-runner/commit/c2df57a1e729c29f3d988cb722cfa85c5e8e2b25) | Can Li | feat(national-team): restore original four CSI300 ETF flow, 5d intensity, dual float coverage with point-in-time guards |
 | 2026-10-28 | [5aed19694f](https://github.com/lican1213/a-share-momentum-runner/commit/5aed19694fd5e8751953729807fae090fbf9915d) | Can Li | docs: align README.md with P0 national-team research mission |
 | 2026-10-28 | [c51fd4085a](https://github.com/lican1213/a-share-momentum-runner/commit/c51fd4085a13d71fc1275b32a56b09f3a5178ed6) | Can Li | docs: align wiki/log.md with P0 national-team research mission |

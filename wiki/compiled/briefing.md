@@ -12,8 +12,8 @@ updated: 2026-10-28
 
 本页由实际run JSON生成，**不包含未曾执行的回测，也不承诺GitHub任务此刻在线**。
 
-- 最新持久化run：[40689971783](../../records/2026-10-28/close/40689971783-a1.json)；时段 close；记录时间 2026-10-28T20:43:45.686132+08:00.
-- 输入代码SHA：[c2df57a1e729](https://github.com/lican1213/a-share-momentum-runner/commit/c2df57a1e729c29f3d988cb722cfa85c5e8e2b25)；不保证等于当前HEAD.
+- 最新持久化run：[40690241082](../../records/2026-10-28/close/40690241082-a1.json)；时段 close；记录时间 2026-10-28T20:47:35.705914+08:00.
+- 输入代码SHA：[f1585e6c152f](https://github.com/lican1213/a-share-momentum-runner/commit/f1585e6c152f827a7cbac67eda0f098abfeabc27)；不保证等于当前HEAD.
 - 审计执行状态：`COMPUTED_RESEARCH_ONLY`；截止行情：2026-10-28.
 - 有效个股数：12；研究回放完成交易：45；执行截断：0.
 - 历史代理交易平均净收益：-0.002769；历史胜率：0.422222（为比例值，非百分数）.
