@@ -39,8 +39,10 @@ def freeze_watch(watch:dict,*,source_path:str,model_sha:str)->dict:
     with_strength.sort(key=lambda r:(-Decimal(r["relative_strength20"]),
                                       -Decimal(r["signed_exposure_over_adv20"]),r["symbol"]))
     s2=[r["symbol"] for r in with_strength[:5]]
-    key=f"{source_path}|{model_sha}|{captured}|{','.join(s1)}"
-    base=hashlib.sha256(key.encode()).hexdigest()[:20]
+    # Stable economic event identity: multiple reruns or source refreshes
+    # of the SAME fund settlement day must never count as independent trials.
+    # The FIRST frozen prospective ranking is the immutable cohort.
+    base=hashlib.sha256(f"CSI300_CORE4|{asof}|INDEX_PROXY_V1".encode()).hexdigest()[:20]
     events=[]
     for strat,portfolio in (("S1_FLOW_OVER_ADV20",s1),("S2_FLOW_PLUS_PRICE_STRENGTH",s2)):
         if not portfolio:continue
@@ -77,8 +79,21 @@ def main():
     target=Path(args.out)/stamp.date().isoformat()/f"{run}-a{attempt}.json"
     if target.exists():raise FileExistsError("refuse rewrite original frozen event")
     target.parent.mkdir(parents=True,exist_ok=True)
+    existing_ids=set()
+    for old in Path(args.out).glob("*/*.json"):
+        try:
+            prior=json.loads(old.read_text(encoding="utf-8"))
+            existing_ids.update(e.get("id") for e in prior.get("events",[]))
+        except (OSError,ValueError):
+            continue
     try:
         out=freeze_watch(watch,source_path=str(path),model_sha=os.environ.get("GITHUB_SHA","unknown"))
+        if out.get("events"):
+            original=len(out["events"])
+            out["events"]=[e for e in out["events"] if e["id"] not in existing_ids]
+            out["duplicate_already_frozen"]=original-len(out["events"])
+            if not out["events"]:
+                out["status"]="ALL_EVENTS_DUPLICATE_PREVIOUSLY_FROZEN"
     except Exception as exc:
         out={"status":"FREEZE_FAILED","reason":f"{type(exc).__name__}:{str(exc)[:230]}",
              "source_watch":str(path),"no_broker_orders":True}
