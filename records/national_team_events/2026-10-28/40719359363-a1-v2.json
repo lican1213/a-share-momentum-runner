@@ -1,0 +1,71 @@
+{
+  "status": "FROZEN_V2_PROSPECTIVE",
+  "model_version": "NT_FLOW_PIT_V2_20261028",
+  "source_strategy": "records/national_team_strategy/2026-10-28/40719359363-a1-v2.json",
+  "events": [
+    {
+      "id": "NT2-84cff95303c56c57d176-S1_FLOW_OVER_ADV20",
+      "strategy_id": "S1_FLOW_OVER_ADV20",
+      "model_version": "NT_FLOW_PIT_V2_20261028",
+      "candidate_symbols": [
+        "601825",
+        "600000",
+        "601229",
+        "601166",
+        "600519"
+      ],
+      "first_public_at": "2026-10-28T23:46:43.818303+08:00",
+      "frozen_by_commit": "d13723f4cf9ce34d60c45dbeb7dc2e429b978b3e",
+      "funding_underlying_day": "2026-10-27",
+      "stock_data_day": "2026-10-28",
+      "benchmark_etf": "510300",
+      "source_watch": "records/national_team_watch/2026-10-28/40710985962-a1.json",
+      "source_merged": "records/national_team_merged/2026-10-28/40710985962-a1.json",
+      "source_kind": "CSI300_INDEX_PROXY_NOT_ETF_PCF",
+      "ETF_PCF_verified": false,
+      "central_huijin_order_verified": false,
+      "broker_trades_authorized": false,
+      "portfolio_weight_rule": "EQUAL_WEIGHT_INITIAL_FIVE; UNFILLED_ALLOCATION_STAYS_CASH",
+      "planned_entry": "FIRST_EXCHANGE_OPEN_AFTER_FIRST_PUBLIC_AVAILABILITY",
+      "holding_sessions": [
+        5,
+        10,
+        20
+      ],
+      "paper_cost_model": "3bps EACH_SIDE COMMISSION + 5bps EACH_SIDE SLIPPAGE + STOCK 5bps SELL STAMP"
+    },
+    {
+      "id": "NT2-84cff95303c56c57d176-S2_INDEPENDENT_RELATIVE_CONFIRMATION",
+      "strategy_id": "S2_INDEPENDENT_RELATIVE_CONFIRMATION",
+      "model_version": "NT_FLOW_PIT_V2_20261028",
+      "candidate_symbols": [
+        "600309",
+        "601919",
+        "600660",
+        "601012",
+        "601838"
+      ],
+      "first_public_at": "2026-10-28T23:46:43.818303+08:00",
+      "frozen_by_commit": "d13723f4cf9ce34d60c45dbeb7dc2e429b978b3e",
+      "funding_underlying_day": "2026-10-27",
+      "stock_data_day": "2026-10-28",
+      "benchmark_etf": "510300",
+      "source_watch": "records/national_team_watch/2026-10-28/40710985962-a1.json",
+      "source_merged": "records/national_team_merged/2026-10-28/40710985962-a1.json",
+      "source_kind": "CSI300_INDEX_PROXY_NOT_ETF_PCF",
+      "ETF_PCF_verified": false,
+      "central_huijin_order_verified": false,
+      "broker_trades_authorized": false,
+      "portfolio_weight_rule": "EQUAL_WEIGHT_INITIAL_FIVE; UNFILLED_ALLOCATION_STAYS_CASH",
+      "planned_entry": "FIRST_EXCHANGE_OPEN_AFTER_FIRST_PUBLIC_AVAILABILITY",
+      "holding_sessions": [
+        5,
+        10,
+        20
+      ],
+      "paper_cost_model": "3bps EACH_SIDE COMMISSION + 5bps EACH_SIDE SLIPPAGE + STOCK 5bps SELL STAMP"
+    }
+  ],
+  "duplicate_previously_frozen": 0,
+  "no_broker_orders": true
+}
