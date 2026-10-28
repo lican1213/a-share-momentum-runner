@@ -16,7 +16,7 @@ updated: 2026-10-28
 | B3 禁止实盘信号 | [6a377585](https://github.com/lican1213/a-share-momentum-runner/commit/6a37758538a8) | 将 `research_candidates` 与 `signals=[]` 分离，明确只做研究 | [ADR-0001](../decisions/ADR-0001-no-trade.md) |
 | B4 回测边界及账本 | [11ed96a3](https://github.com/lican1213/a-share-momentum-runner/commit/11ed96a3a144), [958d142b](https://github.com/lican1213/a-share-momentum-runner/commit/958d142b4e32), [cfc8c4c6](https://github.com/lican1213/a-share-momentum-runner/commit/cfc8c4c645d9) | 限价涨跌停代理、不可成交审查、Horizon分割、逐笔JSON和哈希、Git留档 | [运行40683070796](../../records/2026-10-28/close/40683070796-a1.json) |
 | B5 退出归因 / 市场条件 | [3ab42308](https://github.com/lican1213/a-share-momentum-runner/commit/3ab4230818bc) | 退出诊断、H01双指数MA条件、16项测试 | [运行40685553957](../../records/2026-10-28/close/40685553957-a1.json)；H01通过组仍亏损 |
-| B6 LLM Wiki 知识治理 | 本次新增 `AGENTS.md`、`KNOWLEDGE.md`、`MOC.md`、`wiki/` | 对历史模型、证据、决策、事故可发现性与可追溯性治理，**不改变交易逻辑** | 新Wiki CI需实际通过后才能标记完成 |
+| B6 LLM Wiki 知识治理 | [MOC commit 6ea4826a](https://github.com/lican1213/a-share-momentum-runner/commit/6ea4826a6ae2)、[自动同步CI commit ea6039b8](https://github.com/lican1213/a-share-momentum-runner/commit/ea6039b8b75a) | Agent多端入口、模型/实验/决策/事故Wiki、运行和提交索引自动更新，**不改变交易策略** | [Wiki验证40688051721](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40688051721)19页/无断链；[全量运行40687425222](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40687425222)20项单测且自动索引13条记录已通过 |
 
 ## 当前研究标识
 - **策略代码**：`strategy.py` 中的三日突破和交易规则，逻辑版本与证据运行的代码 SHA 绑定，不独立宣称“v0.2盈利”。
