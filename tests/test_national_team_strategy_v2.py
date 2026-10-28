@@ -118,3 +118,17 @@ def test_methodology_records_common_index_weights_no_claim_of_identity():
     assert out["limitations"]["index_weight_proxy_identical_for_all_four_etfs"] is True
     assert out["limitations"]["funding_only_times_entries_not_cross_sectional_rank"] is True
     assert out["trade_authorized"] is False
+
+
+def test_refreshed_stock_date_same_economic_four_etf_event_has_same_identity():
+    watch, merged = evidence()
+    original = run(watch, merged)
+    watch["funding_date"] = "2026-10-29"
+    watch["event_first_public_no_earlier_than"] = "2026-10-29T23:00:00+08:00"
+    for r in watch["stock_snapshots"].values():
+        r["data_date"] = "2026-10-29"
+        r["first_observed_at"] = "2026-10-29T22:59:00+08:00"
+    refreshed = run(watch, merged, at="2026-10-29T23:30:00+08:00")
+    assert [e["id"] for e in original["events"]] == [e["id"] for e in refreshed["events"]]
+    assert refreshed["flow_date"] == original["flow_date"] == "2026-10-27"
+    assert refreshed["stock_data_date"] != original["stock_data_date"]
