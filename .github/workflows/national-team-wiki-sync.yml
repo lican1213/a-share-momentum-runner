@@ -33,9 +33,10 @@ jobs:
           for try in 1 2 3 4 5; do
             git fetch origin main
             git reset --hard origin/main
+            python -m national_team.daily_report
             python scripts/wiki_sync.py
             python scripts/wiki_lint.py
-            git add -- wiki/indices/ wiki/compiled/
+            git add -- wiki/indices/ wiki/compiled/ records/national_team_daily/
             if git diff --staged --quiet; then
               echo 'WIKI_INDEX_ALREADY_CURRENT'
               exit 0
