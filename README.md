@@ -1,4 +1,6 @@
-# A-share momentum runner | 中国A股三日追涨研究引擎
+# 国家队公开持仓与ETF净申赎追踪研究 | National-team flow research
+
+**2026-10-28 项目主线已纠偏**：用户目标是追踪中央汇金等可核实机构公开持仓与国家队关注ETF的真实份额净申赎，并检验公开信号之后跟随是否有收益。详见[ADR-0003](wiki/decisions/ADR-0003-national-team-pivot.md)与[首要任务 Issue #3](https://github.com/lican1213/a-share-momentum-runner/issues/3)。旧三日动量系统继续作为历史研究分支，**不是国家队交易信号**。尚未部署官方ETF份额管线，不能把旧运行报告当成国家队买卖记录。
 
 
 ## Knowledge base / 第二大脑（Agent先读这里）
