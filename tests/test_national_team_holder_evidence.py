@@ -10,7 +10,6 @@ def original():
 def test_exact_huijin_two_legal_entities_and_genuine_period_comparison():
     obj=verify_ledger(original())
     assert obj["holder_records"]==4
-    invest,asset={r["entity"]:r for r in obj["comparisons"]}.values() if False else (None,None)
     rows={r["entity"]:r for r in obj["comparisons"]}
     assert rows["中央汇金投资有限责任公司"]["change_in_reported_shares"]=="0"
     assert rows["中央汇金资产管理有限责任公司"]["change_in_reported_shares"]=="15141224273"
