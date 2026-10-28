@@ -26,6 +26,7 @@ from strategy import candidate_at, historical_trades, normalize, signal_id, sign
 from research_validation import chronological_diagnostic, summarize
 from market_context import live_context
 from edge_diagnostics import diagnose
+from regime_study import regime_study
 
 
 TZ = ZoneInfo("Asia/Shanghai")
@@ -269,6 +270,7 @@ def main() -> int:
             "out_of_sample_validated": False, "automated_trade_signals_authorized": False})
         audit["exploratory_history"] = summarize(all_trades)
         audit["exit_edge_diagnostics"] = diagnose(all_trades)
+        audit["H01_regime_exploration"] = regime_study(all_trades, audit["market_context"])
         audit["historical_time_split"] = chronological_diagnostic(all_trades, expected)
         closed = [x for x in all_trades if x.get("net_return") is not None]
         if closed:
