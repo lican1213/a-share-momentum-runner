@@ -61,6 +61,12 @@ updated: 2026-10-28
 - [EXP-0003](experiments/EXP-0003-etf-to-stock.md)、[stock_selection.py](../national_team/stock_selection.py) 已提交；[实际测试 40693488577](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40693488577)通过**16项合成数据单测**，不代表真实PCF/国家队持仓数据已抓到，更不代表有可盈利股票名单。
 - 旧三日追涨不重新激活。要实现后半段需先补官方ETF份额、历史PCF/权重和点时股票20日成交额等真实数据，全部证据可追踪到时点和原始来源。
 
+## 2026-10-28：对抗式审计纠正过度防御的选股门槛
+- 用户要求剔除过度防御、过于保守导致无机会的算法。审计证实旧`stock_selection.py`要求四只ETF完整PCF+全部成分股数据齐备，否则停止；固定ADV1亿元、上市250日、相对强度0%～10%也未经检验就作为硬门槛；负向资金直接清空名单。
+- 新主研究入口 [opportunity_scan.py](../national_team/opportunity_scan.py) 把机会排序和成交审计分层：核实的部分资金来源可生成带覆盖率的研究名单、缺股票时其余股票继续、负向资金出金也排名、任意未验证阈值仅标注风险。保留旧严格版用于审计/复现。
+- [GitHub实际测试](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40697156501) **26项合成数据单元测试全部通过**；此验证是算法的能力，不等于实时国家队选股或获利实验，实际ETF份额/PCF的采集仍待开发。
+- 核心方向始终：四ETF入金/出金→成分股增量相对交易容量→5/10/20日成本后相对直接ETF的超额收益。执行订单独立控制，不应限制Agent输出待验证的研究机会。
+
 ## 未来添加新事件的格式
 `YYYY-MM-DD HH:mm +08:00 | actor | question | change/why | prior SHA → new SHA | evidence run | results/limitations | linked EXP/ADR/INC | status`
 
