@@ -84,7 +84,7 @@ def generate(root:Path,*,now:str, records:list[tuple[str,Path,dict]]|None=None)-
     paper=last_for(records,"national_team_paper")
     pcf=last_for(records,"national_team_pcf")
     red=last_for(records,"national_team_audits")
-    v2=last_for(records,"national_team_strategy",lambda r:r.get("model_version")=="NT_FLOW_PIT_V2_20261028" and r.get("status")=="FROZEN_PROSPECTIVE_RESEARCH")
+    v2=last_for(records,"national_team_strategy",lambda r:r.get("model_version")=="NT_FLOW_PIT_V2_20261028" and r.get("status")=="FROZEN_PROSPECTIVE_RESEARCH" and r.get("new_event_count",0)>0)
     info=[
         "[根MOC](../../MOC.md) · [国家队所有实跑记录](../indices/national-team.md) · "
         "[模型演进](../models/registry.md) · [红队审计](../audits/AUD-2026-10-28-e2e-release-gate.md)",
