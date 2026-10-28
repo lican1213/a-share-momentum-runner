@@ -1,0 +1,51 @@
+name: Rebuild national-team MOC indices after source evidence is archived
+on:
+  workflow_run:
+    workflows: ["National-team four ETF actual exchange data collection"]
+    types: [completed]
+  workflow_dispatch:
+  schedule:
+    - cron: '20 15 * * 1-5'
+permissions:
+  contents: write
+concurrency:
+  group: national-team-wiki-derived-index
+  cancel-in-progress: false
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Rebuild derived Wiki from most recent pushed evidence without rewrite conflicts
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for try in 1 2 3 4 5; do
+            git fetch origin main
+            git reset --hard origin/main
+            python scripts/wiki_sync.py
+            python scripts/wiki_lint.py
+            git add -- wiki/indices/ wiki/compiled/
+            if git diff --staged --quiet; then
+              echo 'WIKI_INDEX_ALREADY_CURRENT'
+              exit 0
+            fi
+            git commit -m 'docs(wiki): rebuild indexes from archived national-team evidence [skip ci]'
+            if git push origin HEAD:main; then
+              echo 'NATIONAL_TEAM_WIKI_INDEX_PERSISTED'
+              exit 0
+            fi
+            sleep 2
+          done
+          echo 'Could not persist derived Wiki summary; raw evidence is unaffected' >&2
+          exit 1
