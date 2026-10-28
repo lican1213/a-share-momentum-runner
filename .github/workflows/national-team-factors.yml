@@ -7,6 +7,7 @@ on:
       - 'tests/test_national_team_factors.py'
       - 'tests/test_national_team_stock_selection.py'
       - 'tests/test_national_team_opportunity_scan.py'
+      - 'tests/test_national_team_forward_evaluation.py'
       - '.github/workflows/national-team-factors.yml'
   workflow_dispatch:
 permissions:
@@ -23,7 +24,7 @@ jobs:
       - name: Install pytest only
         run: python -m pip install pytest==8.4.2
       - name: Original funds + beneficiary stock mapping tests (synthetic fixtures only)
-        run: python -m pytest -q tests/test_national_team_factors.py tests/test_national_team_stock_selection.py tests/test_national_team_opportunity_scan.py
+        run: python -m pytest -q tests/test_national_team_factors.py tests/test_national_team_stock_selection.py tests/test_national_team_opportunity_scan.py tests/test_national_team_forward_evaluation.py
       - name: Evidence classification
         run: |
           echo "These tests validate arithmetic and data gates only."
