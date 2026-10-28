@@ -17,6 +17,14 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | Four-fund merged funding | 2026-10-28 | 40706300084 | PARTIAL_FUNDING_ONLY | [JSON](../../records/national_team_merged/2026-10-28/40706300084-a1.json) |
 | CSI300 stock research watches | 2026-10-28 | 40706300084 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-10-28/40706300084-a1.json) |
 | Official exchange PCF attempts | 2026-10-28 | 40706300084 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-10-28/40706300084-a1.json) |
+| ETF source attempts | 2026-10-28 | 40705446928 | SHARES_NAV_HISTORY_OBSERVED_NOT_PIT_HISTORICAL_SIGNALS | [JSON](../../records/national_team_etf/2026-10-28/40705446928-a1.json) |
+| Four-fund merged funding | 2026-10-28 | 40705446928 | PARTIAL_FUNDING_ONLY | [JSON](../../records/national_team_merged/2026-10-28/40705446928-a1.json) |
+| CSI300 stock research watches | 2026-10-28 | 40705446928 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-10-28/40705446928-a1.json) |
+| Official exchange PCF attempts | 2026-10-28 | 40705446928 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-10-28/40705446928-a1.json) |
+| ETF source attempts | 2026-10-28 | 40703474509 | ATTEMPTED_NO_COMPLETE_FACTOR | [JSON](../../records/national_team_etf/2026-10-28/40703474509-a1.json) |
+| Four-fund merged funding | 2026-10-28 | 40703474509 | FULL_FOUR_ETF_SHARES_NAV_OBSERVED_RESEARCH | [JSON](../../records/national_team_merged/2026-10-28/40703474509-a1.json) |
+| CSI300 stock research watches | 2026-10-27 | 40703474509 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-10-28/40703474509-a1.json) |
+| Official exchange PCF attempts | 2026-10-28 | 40703474509 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-10-28/40703474509-a1.json) |
 | ETF source attempts | 2026-10-28 | 40702572594 | FOUR_ETF_FACTOR_OBSERVED_AFTER_CAPTURE_NOT_HISTORICAL_PIT | [JSON](../../records/national_team_etf/2026-10-28/40702572594-a1.json) |
 | Four-fund merged funding | 2026-10-28 | 40702572594 | FULL_FOUR_ETF_SHARES_NAV_OBSERVED_RESEARCH | [JSON](../../records/national_team_merged/2026-10-28/40702572594-a1.json) |
 | CSI300 stock research watches | 2026-10-27 | 40702572594 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-10-28/40702572594-a1.json) |
@@ -32,4 +40,9 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | Frozen paper-event cohorts | 2026-10-28 | 40706300084-a1 | FROZEN_PROSPECTIVE_RESEARCH_EVENTS | [JSON](../../records/national_team_events/2026-10-28/40706300084-a1.json) |
 | Matured paper outcomes | 2026-10-28 | 40706300084-a1 | PAPER_EVALUATION_ATTEMPTED | [JSON](../../records/national_team_paper/2026-10-28/40706300084-a1.json) |
 | Independent research integrity audit | 2026-10-28 | 40706300084-a1 | RESEARCH_PARTIAL_SOURCES_AUDITED | [JSON](../../records/national_team_audits/2026-10-28/40706300084-a1.json) |
+| Frozen paper-event cohorts | 2026-10-28 | 40705446928-a1 | FROZEN_PROSPECTIVE_RESEARCH_EVENTS | [JSON](../../records/national_team_events/2026-10-28/40705446928-a1.json) |
+| Matured paper outcomes | 2026-10-28 | 40705446928-a1 | PAPER_EVALUATION_ATTEMPTED | [JSON](../../records/national_team_paper/2026-10-28/40705446928-a1.json) |
+| Independent research integrity audit | 2026-10-28 | 40705446928-a1 | RESEARCH_PARTIAL_SOURCES_AUDITED | [JSON](../../records/national_team_audits/2026-10-28/40705446928-a1.json) |
+| Frozen paper-event cohorts | 2026-10-28 | 40703474509-a1 | FROZEN_PROSPECTIVE_RESEARCH_EVENTS | [JSON](../../records/national_team_events/2026-10-28/40703474509-a1.json) |
+| Matured paper outcomes | 2026-10-28 | 40703474509-a1 | PAPER_EVALUATION_ATTEMPTED | [JSON](../../records/national_team_paper/2026-10-28/40703474509-a1.json) |
 | CSI300 stock research watches | 2026-10-28 | 40701896342-a1 | WATCHLIST_BUILD_UNAVAILABLE | [JSON](../../records/national_team_watch/2026-10-28/40701896342-a1.json) |
