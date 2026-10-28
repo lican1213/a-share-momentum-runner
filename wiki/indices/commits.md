@@ -12,6 +12,8 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-28 | [97df59f69f](https://github.com/lican1213/a-share-momentum-runner/commit/97df59f69fe5b72f9b7a16cf4dfefb4d9f0d673d) | github-actions[bot] | data: archive actual ETF provider attempt 40788353267 [skip ci] |
+| 2026-10-28 | [9feedffecc](https://github.com/lican1213/a-share-momentum-runner/commit/9feedffecc92e85d707217c03ec4935bbdb9def1) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-28 | [58cc03066e](https://github.com/lican1213/a-share-momentum-runner/commit/58cc03066ef83daa3e08eba978c39b8d419b71a0) | github-actions[bot] | data: archive actual ETF provider attempt 40787773755 [skip ci] |
 | 2026-10-28 | [2d8bbbf6a5](https://github.com/lican1213/a-share-momentum-runner/commit/2d8bbbf6a5bd35b319ca180fff7b78f3dbd0fe61) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-29 | [695c7fa9bb](https://github.com/lican1213/a-share-momentum-runner/commit/695c7fa9bb76b5de553f5c7a3f0ba0868618721f) | Can Li | feat(pcf): audit official ChinaAMC 510330 issuer basket even when SSE HTML contains no dated components |

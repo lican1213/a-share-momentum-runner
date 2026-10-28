@@ -1,0 +1,221 @@
+{
+  "schema": 1,
+  "status": "EVIDENCE_BACKED_RESEARCH_DIGEST",
+  "original_four_funds": [
+    "510300",
+    "510310",
+    "510330",
+    "159919"
+  ],
+  "asof_requested": "2026-10-29",
+  "latest_full_four_funding_date": "2026-10-27",
+  "full_four_daily_flow_cny": "5612203530.000000",
+  "full_four_five_day_intensity": "0.2910660540851112994085114550",
+  "latest_partial_funding_dates": [
+    "2026-10-27",
+    "2026-10-28"
+  ],
+  "latest_partial_fund_scope": [
+    "510300",
+    "510310",
+    "510330"
+  ],
+  "latest_partial_flow_cny": "1670914440.000000",
+  "latest_ranked_stock_date": "2026-10-28",
+  "ranked_stocks_count": 150,
+  "index_weight_coverage": "0.83015",
+  "fund_flow_scope": "PARTIAL_SSE_THREE_EXCLUDES_159919",
+  "S1_observation": [
+    {
+      "symbol": "601825",
+      "benchmark_weight": "0.00201",
+      "implied_index_exposure_cny": "3358538.02440000000",
+      "signed_exposure_over_adv20": "0.01384492248573513827118968665",
+      "adv20_cny": "242582652.8",
+      "relative_strength20": "0.1092601694487938081416742190",
+      "source_url": "https://finance.sina.com.cn/realstock/company/",
+      "stock_data_date": "2026-10-28"
+    },
+    {
+      "symbol": "600000",
+      "benchmark_weight": "0.0051",
+      "implied_index_exposure_cny": "8521663.6440000000",
+      "signed_exposure_over_adv20": "0.01162047413627024543546037882",
+      "adv20_cny": "733331836.9",
+      "relative_strength20": "0.1909790564774153500375523980",
+      "source_url": "https://finance.sina.com.cn/realstock/company/",
+      "stock_data_date": "2026-10-28"
+    },
+    {
+      "symbol": "601229",
+      "benchmark_weight": "0.00392",
+      "implied_index_exposure_cny": "6549984.60480000000",
+      "signed_exposure_over_adv20": "0.01153304748455356501608920030",
+      "adv20_cny": "567931816.25",
+      "relative_strength20": "0.0782922918125006419429466351",
+      "source_url": "https://finance.sina.com.cn/realstock/company/",
+      "stock_data_date": "2026-10-28"
+    },
+    {
+      "symbol": "601166",
+      "benchmark_weight": "0.01234",
+      "implied_index_exposure_cny": "20619084.18960000000",
+      "signed_exposure_over_adv20": "0.01145164252123303510006190691",
+      "adv20_cny": "1800535089.3",
+      "relative_strength20": "0.1690128371528309923353704300",
+      "source_url": "https://finance.sina.com.cn/realstock/company/",
+      "stock_data_date": "2026-10-28"
+    },
+    {
+      "symbol": "600519",
+      "benchmark_weight": "0.03178",
+      "implied_index_exposure_cny": "53101660.90320000000",
+      "signed_exposure_over_adv20": "0.01136087722254680022453620069",
+      "adv20_cny": "4674081047.0",
+      "relative_strength20": "0.1627507113545534519775662600",
+      "source_url": "https://finance.sina.com.cn/realstock/company/",
+      "stock_data_date": "2026-10-28"
+    }
+  ],
+  "S2_frozen_observation": [
+    "600000",
+    "601816",
+    "601166",
+    "600519",
+    "000333"
+  ],
+  "paper_results": [
+    {
+      "event_id": "NT-97c649b2aec78ac94133-S1_FLOW_OVER_ADV20",
+      "status": "NOT_MATURED_YET",
+      "horizon_statuses": {}
+    },
+    {
+      "event_id": "NT-97c649b2aec78ac94133-S2_FLOW_PLUS_PRICE_STRENGTH",
+      "status": "NOT_MATURED_YET",
+      "horizon_statuses": {}
+    },
+    {
+      "event_id": "NT-bd5a340716cee70d49c9-S1_FLOW_OVER_ADV20",
+      "status": "NOT_MATURED_YET",
+      "horizon_statuses": {}
+    },
+    {
+      "event_id": "NT-bd5a340716cee70d49c9-S2_FLOW_PLUS_PRICE_STRENGTH",
+      "status": "NOT_MATURED_YET",
+      "horizon_statuses": {}
+    },
+    {
+      "event_id": "NT2-84cff95303c56c57d176-S1_FLOW_OVER_ADV20",
+      "status": "NOT_MATURED_YET",
+      "horizon_statuses": {}
+    },
+    {
+      "event_id": "NT2-84cff95303c56c57d176-S2_INDEPENDENT_RELATIVE_CONFIRMATION",
+      "status": "NOT_MATURED_YET",
+      "horizon_statuses": {}
+    }
+  ],
+  "last_known_legal_holder": {
+    "status": "PUBLISHED_PERIOD_END_HOLDINGS",
+    "cutoff": "2026-10-29",
+    "fund_code": "159919",
+    "holder_records": 4,
+    "periods": [
+      "2024-06-30",
+      "2025-06-30"
+    ],
+    "comparisons": [
+      {
+        "fund_code": "159919",
+        "entity": "中央汇金投资有限责任公司",
+        "from_period_end": "2024-06-30",
+        "to_period_end": "2025-06-30",
+        "source_first_public_date": "2025-08-29",
+        "previous_shares": "19543686916",
+        "current_shares": "19543686916",
+        "change_in_reported_shares": "0",
+        "direction": "UNCHANGED",
+        "not_trade_date_or_fill_price": true,
+        "evidence": "LEGAL_HOLDER_PERIOD_END_REPORT"
+      },
+      {
+        "fund_code": "159919",
+        "entity": "中央汇金资产管理有限责任公司",
+        "from_period_end": "2024-06-30",
+        "to_period_end": "2025-06-30",
+        "source_first_public_date": "2025-08-29",
+        "previous_shares": "813583796",
+        "current_shares": "15954808069",
+        "change_in_reported_shares": "15141224273",
+        "direction": "INCREASE",
+        "not_trade_date_or_fill_price": true,
+        "evidence": "LEGAL_HOLDER_PERIOD_END_REPORT"
+      }
+    ],
+    "latest_period_end": "2025-06-30",
+    "latest_report_public_at": "2025-08-29",
+    "do_not_attribute_ETF_daily_shares_to_specific_investor": true
+  },
+  "legal_holder_data_is_current_day_trading_activity": false,
+  "fund_flow_identifies_a_specific_national_team_investor": false,
+  "stock_weight_source": "CSI300_LATEST_INDEX_WEIGHT_PROXY_NOT_ETF_PCF",
+  "independent_after_cost_alpha_validated": false,
+  "audit_status": "RESEARCH_PRIOR_FOUR_CURRENT_PARTIAL_AUDITED",
+  "audit_approved_candidate_display": true,
+  "warning": "CSI300 index weights are NOT real ETF PCF execution; event stocks are for prospective observation",
+  "full_four_factor_carried_forward": false,
+  "S2_restored_from_earlier_immutable_event": true,
+  "S2_immutable_event_id": "NT-97c649b2aec78ac94133-S2_FLOW_PLUS_PRICE_STRENGTH",
+  "S2_immutable_event_source": "records/national_team_events/2026-10-28/40706300084-a1.json",
+  "S2_original_frozen_at": "2026-10-28T22:33:40.488463+08:00",
+  "v2_cohort_status": "ORIGINAL_FREEZE_VERIFIED",
+  "v2_funding_date": "2026-10-27",
+  "v2_s1_frozen_symbols": [
+    "601825",
+    "600000",
+    "601229",
+    "601166",
+    "600519"
+  ],
+  "v2_s2_frozen_symbols": [
+    "600309",
+    "601919",
+    "600660",
+    "601012",
+    "601838"
+  ],
+  "v2_frozen_at": "2026-10-28T23:46:43.818303+08:00",
+  "v2_event_ids": {
+    "S1_FLOW_OVER_ADV20": "NT2-84cff95303c56c57d176-S1_FLOW_OVER_ADV20",
+    "S2_INDEPENDENT_RELATIVE_CONFIRMATION": "NT2-84cff95303c56c57d176-S2_INDEPENDENT_RELATIVE_CONFIRMATION"
+  },
+  "v2_event_sources": {
+    "S1_FLOW_OVER_ADV20": "records/national_team_events/2026-10-28/40719359363-a1-v2.json",
+    "S2_INDEPENDENT_RELATIVE_CONFIRMATION": "records/national_team_events/2026-10-28/40719359363-a1-v2.json"
+  },
+  "v2_alpha_confirmed": false,
+  "latest_fund_total_holder_consistency": {
+    "status": "HISTORICAL_NATIONAL_TEAM_HOLDINGS_EXCEED_NEW_TOTAL",
+    "legal_holder_snapshot_asof": "2025-06-30",
+    "new_fund_total_period": "2026-06-30",
+    "new_fund_total_first_public_date": "2026-08-31",
+    "historical_two_Huijin_entities_shares": "35498494985",
+    "new_whole_fund_total_shares": "6939216676",
+    "prior_combined_holdings_exceed_new_total_by_shares": "28559278309",
+    "new_total_is_identity_specific": false,
+    "can_assert_prior_named_holdings_unchanged_in_new_period": false,
+    "proved_exact_sale_dates_or_counterparties": false,
+    "corporate_action_comparability_requires_verification": true,
+    "fund_report_source": "https://static.cninfo.com.cn/finalpage/2026-08-31/1225528257.PDF",
+    "interpretation": "Past named positions cannot both remain unchanged at latest fund total; no identified investor-level trades are inferred."
+  },
+  "latest_fund_total_original_source": "https://static.cninfo.com.cn/finalpage/2026-08-31/1225528257.PDF",
+  "source_paths": {
+    "merged": "records/national_team_merged/2026-10-29/40788353267-a1.json",
+    "events": "records/national_team_events/2026-10-29/40788353267-a1.json",
+    "paper": "records/national_team_paper/2026-10-29/40788353267-a1.json",
+    "audit": "records/national_team_audits/2026-10-29/40788353267-a1.json",
+    "watch": "records/national_team_watch/2026-10-29/40788353267-a1.json"
+  }
+}
