@@ -50,7 +50,7 @@ def load_history(ak,code,start,end):
                 "exit_blocked":False if v>0 else True}
     return out,source,hashlib.sha256(df.to_csv(index=False).encode()).hexdigest()
 
-def assess(ak,events_root:Path,asof:date,max_events:int=8)->dict:
+def assess(ak,events_root:Path,asof:date,max_events:int=64)->dict:
     asof_s=asof.isoformat()
     paths=list(events_root.glob("*/*.json"))
     candidates=[]
@@ -65,10 +65,26 @@ def assess(ak,events_root:Path,asof:date,max_events:int=8)->dict:
     unique={}
     for e,p in candidates:
         unique.setdefault(e["id"],(e,str(p)))
-    events=list(unique.values())[-max_events:]
+    # Two frozen portfolios per trading day over >=20 sessions: last eight
+    # silently censored mature 20-session outcomes. Keep a rolling 60 calendar
+    # day PIT window (including holidays), capped for source-call control.
+    window=[]
+    for e,p in unique.values():
+        try:
+            pub=datetime.fromisoformat(e["first_public_at"]).astimezone(BEIJING)
+            age=(asof-pub.date()).days
+            if 0<=age<=60:
+                window.append((e,p))
+        except (ValueError,KeyError,TypeError):
+            continue
+    events=window[-max_events:]
+    first_start=min((datetime.fromisoformat(e["first_public_at"]).astimezone(BEIJING).date()
+                     -timedelta(days=4) for e,_ in events),default=asof).strftime("%Y%m%d")
+    price_cache={}
     out={"status":"NO_FROZEN_PAPER_EVENTS" if not events else "PAPER_EVALUATION_ATTEMPTED",
          "asof":asof_s,"source_events":len(unique),
-         "assessed_events":len(events),
+         "assessed_events":len(events),"eligible_60d_window_count":len(window),
+         "max_events":max_events,
          "model":"NEXT_EXECUTABLE_OPEN_OHLC_SCENARIO_NOT_LIVE_ORDER",
          "result_records":[],"errors":[],
          "calculation_never_backdates_data_discovery":True}
@@ -91,9 +107,14 @@ def assess(ak,events_root:Path,asof:date,max_events:int=8)->dict:
             prices={};sources={}
             for symbol in names:
                 try:
-                    prices[symbol],src,sha=load_history(
-                        ak,symbol,start_day.replace("-",""),asof_s.replace("-",""))
+                    # Once per instrument per run; individual event evaluation
+                    # still uses its own prospective entry date and horizon.
+                    if symbol not in price_cache:
+                        price_cache[symbol]=load_history(
+                            ak,symbol,first_start,asof_s.replace("-",""))
+                    prices[symbol],src,sha=price_cache[symbol]
                     sources[symbol]={"source":src,"raw_sha256":sha,
+                                     "historical_query_start":first_start,
                                      "first_observed_at":datetime.now(BEIJING).isoformat()}
                 except Exception as exc:
                     out["errors"].append(f"{e_id}:{symbol}:{type(exc).__name__}:{str(exc)[:160]}")
@@ -110,7 +131,7 @@ def main():
     p=argparse.ArgumentParser()
     p.add_argument("--events",default="records/national_team_events")
     p.add_argument("--out",default="records/national_team_paper")
-    p.add_argument("--max-events",type=int,default=8)
+    p.add_argument("--max-events",type=int,default=64)
     a=p.parse_args()
     now=datetime.now(BEIJING)
     run=os.environ.get("GITHUB_RUN_ID","local")
