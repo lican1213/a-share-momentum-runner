@@ -1,5 +1,5 @@
 akshare>=1.17.0,<2
-akquant==0.3.73
+akquant==0.3.71
 quantstats>=0.0.62,<1
 pandas>=2.2.0,<3
 numpy>=2.2.2,<3
