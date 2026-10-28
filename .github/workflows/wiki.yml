@@ -14,6 +14,8 @@ on:
       - '!wiki/compiled/**'
       - 'scripts/wiki_lint.py'
       - 'scripts/wiki_sync.py'
+      - 'scripts/national_team_wiki.py'
+      - 'tests/test_wiki_national_team_sync.py'
       - '.github/workflows/wiki.yml'
   workflow_dispatch:
 permissions:
@@ -29,5 +31,13 @@ jobs:
           python-version: '3.11'
       - name: Check MOC graph, page metadata and internal links
         run: python scripts/wiki_lint.py
+      - name: Verify national-team MOC generator on adversarial source fixtures
+        run: |
+          python -m pip install pytest==8.4.2
+          python -m pytest -q tests/test_wiki_national_team_sync.py
+      - name: Reconstruct current second-brain views from actual persisted evidence
+        run: |
+          python scripts/wiki_sync.py
+          python scripts/wiki_lint.py
       - name: Syntax check Wiki utilities
-        run: python -m py_compile scripts/wiki_lint.py scripts/wiki_sync.py
+        run: python -m py_compile scripts/wiki_lint.py scripts/wiki_sync.py scripts/national_team_wiki.py
