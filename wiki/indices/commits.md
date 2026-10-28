@@ -12,6 +12,12 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-28 | [b53b846a38](https://github.com/lican1213/a-share-momentum-runner/commit/b53b846a38fb18e5c322eefdbb2777418bfcb78a) | Can Li | fix(P0): retain last six-session complete four-ETF factor even when newer day has only partial three-ETF shares |
+| 2026-10-28 | [2b1eca73e0](https://github.com/lican1213/a-share-momentum-runner/commit/2b1eca73e01d8d94df7c77445411e42b79f893b5) | github-actions[bot] | data: archive actual ETF provider attempt 40706300084 [skip ci] |
+| 2026-10-28 | [df07b30f55](https://github.com/lican1213/a-share-momentum-runner/commit/df07b30f55cd44ccecdf159b06f703f7e0962841) | Can Li | ci(release): fast real-source E2E adversarial audit replay independent of live stock provider availability |
+| 2026-10-28 | [fa81ff556b](https://github.com/lican1213/a-share-momentum-runner/commit/fa81ff556bf2342cbd32021054f0930f96072732) | Can Li | test(release): replay true archived 4ETF cashflow and 30-stock observations through frozen S1/S2 and independent adversarial audit |
+| 2026-10-28 | [13825a9961](https://github.com/lican1213/a-share-momentum-runner/commit/13825a99619ace65a229ea19134fbf91e6966ace) | Can Li | ci(wiki): run real national-team MOC synthesis, provenance link integrity and adversarial generated-briefing tests |
+| 2026-10-28 | [b1a2560b6b](https://github.com/lican1213/a-share-momentum-runner/commit/b1a2560b6b0b9acef90f2a9d173124a892466c0f) | Can Li | test(wiki): confirm Agent briefing distinguishes latest failed ETF attempt vs last complete real funds and keeps links auditable |
 | 2026-10-28 | [464562d20e](https://github.com/lican1213/a-share-momentum-runner/commit/464562d20ef291fbb55873319d26d0e70c766b01) | Can Li | ci(wiki): regenerate and persist national-team MOC evidence, not just old momentum snapshot after each live run |
 | 2026-10-28 | [0171f2021f](https://github.com/lican1213/a-share-momentum-runner/commit/0171f2021fe1545522de023fa438575b9e3dcdb6) | Can Li | fix(wiki): auto-brief agents on national-team actual funds and stock evidence, superseding old three-day momentum as primary |
 | 2026-10-28 | [eb8eb0a228](https://github.com/lican1213/a-share-momentum-runner/commit/eb8eb0a228385d066ffbd1812340a5f8d8261f65) | Can Li | feat(wiki): maintain authoritative national-team source, merged-fund, stock, PCF and paper-event MOC summary separate from legacy momentum |

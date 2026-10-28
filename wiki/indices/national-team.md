@@ -12,6 +12,7 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 
 | Source class | Trade/record date | Run ID | Recorded status | Evidence |
 | --- | --- | --- | --- | --- |
+| ETF source attempts | 2026-10-28 | 40707446444 | FOUR_ETF_FACTOR_OBSERVED_AFTER_CAPTURE_NOT_HISTORICAL_PIT | [JSON](../../records/national_team_etf/2026-10-28/40707446444-a1.json) |
 | ETF source attempts | 2026-10-28 | 40706300084 | SHARES_NAV_HISTORY_OBSERVED_NOT_PIT_HISTORICAL_SIGNALS | [JSON](../../records/national_team_etf/2026-10-28/40706300084-a1.json) |
 | Four-fund merged funding | 2026-10-28 | 40706300084 | PARTIAL_FUNDING_ONLY | [JSON](../../records/national_team_merged/2026-10-28/40706300084-a1.json) |
 | CSI300 stock research watches | 2026-10-28 | 40706300084 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-10-28/40706300084-a1.json) |
