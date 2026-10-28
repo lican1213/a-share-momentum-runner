@@ -128,7 +128,7 @@ def build(watch, merged, *, observed_at, source_watch, source_merged, source_com
     valid = total > 0 and intensity > 0
     if valid:
         cohort = hashlib.sha256(
-            f"{VERSION}|{fund_date}|{stock_date}|{scope}".encode()).hexdigest()[:20]
+            f"{VERSION}|{fund_date}|{scope}".encode()).hexdigest()[:20]
         for sid, picks in (("S1_FLOW_OVER_ADV20", s1),
                            ("S2_INDEPENDENT_RELATIVE_CONFIRMATION", s2)):
             if not picks:
@@ -190,13 +190,25 @@ def main():
                    source_watch=args.watch, source_merged=args.merged,
                    source_commit=os.environ.get("GITHUB_SHA", "local"))
     existing = set()
+    # Independent studies share an economic ETF-flow date. A fresher stock
+    # snapshot MUST NOT mint a second event for the SAME four-fund flow date.
+    existing_economic_cohorts = set()
     for path in Path(args.event_out).glob("*/*.json"):
         try:
-            existing.update(e["id"] for e in json.loads(path.read_text(encoding="utf-8")).get("events", []))
+            for e in json.loads(path.read_text(encoding="utf-8")).get("events", []):
+                existing.add(e["id"])
+                existing_economic_cohorts.add(
+                    (e.get("model_version"), e.get("funding_underlying_day"),
+                     e.get("strategy_id")))
         except (OSError, ValueError, KeyError, TypeError):
             continue
     generated = report.pop("events")
-    new_events = [e for e in generated if e["id"] not in existing]
+    new_events = [
+        e for e in generated
+        if e["id"] not in existing and
+        (e["model_version"], e["funding_underlying_day"],
+         e["strategy_id"]) not in existing_economic_cohorts
+    ]
     report["frozen_candidate_cohorts"] = generated
     report["new_event_count"] = len(new_events)
     report["previously_frozen_event_count"] = len(generated) - len(new_events)
