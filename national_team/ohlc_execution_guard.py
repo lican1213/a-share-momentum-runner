@@ -5,12 +5,13 @@ the opening or closing auction. A price-limit one-price bar is censored,
 not simulated as a filled order.
 """
 from __future__ import annotations
+from math import isfinite
 
 def conservative_ohlc_bar(opening, high, low, closing, volume, previous_close=None):
-    values=(opening,high,low,closing)
-    if any(x is None or float(x)<=0 for x in values) or float(volume)<0:
-        raise ValueError("nonpositive or missing OHLC/negative volume")
-    opening,high,low,closing=(float(v) for v in values)
+    values=[float(v) for v in (opening,high,low,closing,volume)]
+    if not all(isfinite(v) for v in values) or min(values[:4])<=0 or values[4]<0:
+        raise ValueError("OHLC and volume must be finite, nonnegative volume")
+    opening,high,low,closing,volume=values
     if not (low<=min(opening,closing)<=max(opening,closing)<=high):
         raise ValueError("inconsistent OHLC high/low")
     suspended=float(volume)==0
