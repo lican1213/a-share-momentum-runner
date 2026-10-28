@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 
 from research_validation import chronological_diagnostic, summarize
-from strategy import historical_trades, normalize, signal_id, candidate_at
+from strategy import historical_trades, normalize, signal_id, candidate_at, signal_funnel
 
 
 def make_bars(n=270):
@@ -74,3 +74,13 @@ def test_censored_excluded_from_win_rate():
     assert result["closed"] == 1
     assert result["censored"] == 1
     assert result["win_rate"] == 0
+
+
+def test_historical_signal_funnel_partition_and_no_future_leakage():
+    bars = normalize(make_bars(270))
+    c = signal_funnel(bars)
+    assert c["issued"] >= 1
+    assert (c["issued"] == c["triggered_candidate"] + c["not_triggered"]
+            + c["gap_above_max_chase"] + c["one_price_limit_up"]
+            + c["unresolved_insufficient_future"])
+    assert 0 <= c["historical_trigger_fraction"] <= 1
