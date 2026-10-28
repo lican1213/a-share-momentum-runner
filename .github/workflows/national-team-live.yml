@@ -9,8 +9,10 @@ on:
       - 'national_team/index_proxy.py'
       - 'national_team/live_stock_watch.py'
       - 'national_team/pcf_official.py'
+      - 'national_team/record_merge.py'
+      - 'tests/test_national_team_record_merge.py'
       - 'tests/test_national_team_pcf_official.py'
-      - 'tests/test_national_team_index_proxy.py tests/test_national_team_pcf_official.py'
+      - 'tests/test_national_team_index_proxy.py tests/test_national_team_pcf_official.py tests/test_national_team_record_merge.py'
       - 'tests/test_national_team_exchange_sources.py'
       - '.github/workflows/national-team-live.yml'
   workflow_dispatch:
@@ -39,12 +41,14 @@ jobs:
         run: python -m pytest -q tests/test_national_team_exchange_sources.py tests/test_szse_json.py tests/test_national_team_event_pipeline.py tests/test_national_team_index_proxy.py
       - name: Collect actual four-ETF shares and NAV with provenance
         run: python -m national_team.live_etf_sources
+      - name: Reconcile previous immutable ETF source runs (no fake backdating)
+        run: python -m national_team.record_merge
       - name: Build real CSI300 index-weight stock watchlist (index proxy, not ETF PCF)
         shell: bash
         run: |
           set -euo pipefail
           date_beijing=$(TZ=Asia/Shanghai date +%F)
-          src="records/national_team_etf/${date_beijing}/${GITHUB_RUN_ID}-a${GITHUB_RUN_ATTEMPT}.json"
+          src="records/national_team_merged/${date_beijing}/${GITHUB_RUN_ID}-a${GITHUB_RUN_ATTEMPT}.json"
           python -m national_team.live_stock_watch --source "$src" --max-stocks 30
       - name: Collect original official SSE PCF for three Shanghai core funds
         run: python -m national_team.pcf_official
@@ -55,7 +59,7 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- records/national_team_etf/ records/national_team_watch/ records/national_team_pcf/
+          git add -- records/national_team_etf/ records/national_team_merged/ records/national_team_watch/ records/national_team_pcf/
           if git diff --staged --quiet; then
             echo 'NO_ETF_EVIDENCE_GENERATED'; exit 0
           fi
@@ -76,6 +80,7 @@ jobs:
           name: nt-etf-actual-source-${{ github.run_id }}-a${{ github.run_attempt }}
           path: |
             records/national_team_etf/
+            records/national_team_merged/
             records/national_team_watch/
             records/national_team_pcf/
           if-no-files-found: warn
