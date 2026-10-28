@@ -17,6 +17,7 @@ CATEGORIES={
     "national_team_events":"Frozen paper-event cohorts",
     "national_team_paper":"Matured paper outcomes",
     "national_team_audits":"Independent research integrity audit",
+    "national_team_strategy":"Prospective four-ETF V2 stock cohorts",
 }
 
 def enumerate_records(root:Path)->list[tuple[str,Path,dict]]:
@@ -83,6 +84,7 @@ def generate(root:Path,*,now:str, records:list[tuple[str,Path,dict]]|None=None)-
     paper=last_for(records,"national_team_paper")
     pcf=last_for(records,"national_team_pcf")
     red=last_for(records,"national_team_audits")
+    v2=last_for(records,"national_team_strategy",lambda r:r.get("model_version")=="NT_FLOW_PIT_V2_20261028" and r.get("status")=="FROZEN_PROSPECTIVE_RESEARCH")
     info=[
         "[根MOC](../../MOC.md) · [国家队所有实跑记录](../indices/national-team.md) · "
         "[模型演进](../models/registry.md) · [红队审计](../audits/AUD-2026-10-28-e2e-release-gate.md)",
@@ -117,6 +119,16 @@ def generate(root:Path,*,now:str, records:list[tuple[str,Path,dict]]|None=None)-
         info.append(f"- 最新实测股票样本数：**{ranking.get('ranked_from_n_stocks','未知')}**；"
                     f"指数权重覆盖约 **{r.get('pool_weight_coverage','未知')}**；"
                     "指数权重非ETF真实PCF，且未证明个股跟随收益。")
+    info.append(bullet("最近四ETF独立V2前瞻选股",v2))
+    if v2 is not None:
+        _,v2_path,v2_record=v2
+        s1=[x["symbol"] for x in v2_record.get("s1_ranked",[])]
+        s2=[x["symbol"] for x in v2_record.get("s2_ranked",[])]
+        info.append(f"- V2真实首次可得时刻：{v2_record.get('strategy_first_public_at')}，底层四ETF资金日：{v2_record.get('flow_date')}；"
+                    f"S1资金/成交额研究组 **{', '.join(s1)}**；"
+                    f"S2独立价格确认研究组 **{', '.join(s2)}**。")
+        info.append("- V2仅以资金为择时触发（CSI300代理权重跨ETF相同，不能辨识逐股票实际买盘）；"
+                    "5/10/20日净超额收益待未来真实行情成熟；旧V1组合不可替换初始冻结股单。")
     for label,item in [
         ("最近PCF采集尝试",pcf),("最近纸面事件冻结",frozen),
         ("最近纸面收益观察",paper),("最近独立实跑红队审计",red)]:
