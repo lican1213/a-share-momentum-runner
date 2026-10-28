@@ -129,3 +129,16 @@ def test_official_AUM_must_have_its_own_source_and_public_timestamp():
     panel[DAYS[-1]][CORE_FOUR[0]]["aum_published_at"] = "2026-10-27T19:00:00+08:00"
     with pytest.raises(DataGateError, match="AUM not public"):
         calculate(panel, DAYS, DAYS[-1], decision_cutoff=CUTOFF)
+
+
+def test_unknown_etf_corporate_action_is_flagged_not_silently_accepted_as_verified():
+    p=sample_panel()
+    result=calculate(p,DAYS,DAYS[-1],decision_cutoff=CUTOFF)
+    assert result["corporate_actions_explicitly_verified"] is False
+    assert len(result["corporate_action_unknown_dates_codes"])>=8
+    for day in DAYS:
+        for code in CORE_FOUR:
+            p[day][code]["corporate_action"]="none"
+    checked=calculate(p,DAYS,DAYS[-1],decision_cutoff=CUTOFF)
+    assert checked["corporate_actions_explicitly_verified"] is True
+    assert checked["corporate_action_unknown_dates_codes"]==[]
