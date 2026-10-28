@@ -10,6 +10,9 @@ on:
       - 'AGENTS.md'
       - 'KNOWLEDGE.md'
       - 'MOC.md'
+      - 'CLAUDE.md'
+      - 'GEMINI.md'
+      - '.github/copilot-instructions.md'
   workflow_dispatch:
   schedule:
     - cron: '30 0 * * 1-5'
