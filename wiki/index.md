@@ -1,0 +1,37 @@
+---
+id: MOC-WIKI
+type: moc
+status: maintained
+updated: 2026-10-28
+---
+# Wiki 总索引（Map of Content）
+
+[返回根MOC](../MOC.md) · [当前简报](compiled/briefing.md) · [维护协议](../KNOWLEDGE.md)
+
+## 项目知识
+- [研究现状](overview.md)
+- [模型版本登记](models/registry.md)
+- [数据与回测口径](data/contracts.md)
+- [来源目录](sources/catalog.md)
+- [未解决的问题](open-questions.md)
+
+## 为什么这么做（决策）
+- [ADR-0001 不开放交易指令](decisions/ADR-0001-no-trade.md)
+- [ADR-0002 原始证据优先，失败关闭](decisions/ADR-0002-evidence.md)
+
+## 试了什么（实验）
+- [EXP-0001 基线结果与出场机制](experiments/EXP-0001-baseline.md)
+- [EXP-0002 H01市场趋势门槛](experiments/EXP-0002-regime.md)
+
+## 哪里错过（故障）
+- [INC-0001 权限与行情、回撤索引错误](incidents/INC-0001-bootstrapping.md)
+
+## 何时做的（时间索引）
+- [Wiki维护日志](log.md)
+- [Actions运行账本索引](indices/runs.md)
+- [Git提交时间线](indices/commits.md)
+
+## Agent如何继续
+- [操作与交接](operations/handoff.md)
+- [实验页模板](templates/experiment.md)
+- [决策页模板](templates/decision.md)
