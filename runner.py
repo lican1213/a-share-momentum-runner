@@ -263,7 +263,10 @@ def main() -> int:
             # QuantStats on a sequential hypothetical trade series, explicitly
             # not comparable to an actual calendar-day portfolio drawdown.
             # QuantStats max_drawdown expects RETURNS, not equity levels.
-            audit["quantstats_trade_sequence_max_drawdown"] = float(qs.stats.max_drawdown(returns.reset_index(drop=True)))
+            # QuantStats 0.0.86 max_drawdown requires datetime-like index.
+            # The synthetic index encodes TRADE SEQUENCE, not actual market dates.
+            seq = pd.Series(returns.to_numpy(), index=pd.date_range("2000-01-01", periods=len(returns), freq="D"))
+            audit["quantstats_trade_sequence_max_drawdown"] = float(qs.stats.max_drawdown(seq))
             audit["quantstats_warning"] = "trade-sequence only, NOT actual portfolio max drawdown"
         audit["status"] = "COMPUTED_WITH_LIMITATIONS"
         audit["ended_at"] = datetime.now(TZ).isoformat()
