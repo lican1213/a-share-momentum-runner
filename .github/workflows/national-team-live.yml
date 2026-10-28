@@ -1,0 +1,63 @@
+name: National-team four ETF actual exchange data collection
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'national_team/live_etf_sources.py'
+      - 'tests/test_national_team_exchange_sources.py'
+      - '.github/workflows/national-team-live.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '0 14 * * 1-5'
+permissions:
+  contents: write
+concurrency:
+  group: nt-etf-actual-shares
+  cancel-in-progress: false
+jobs:
+  four-etf-data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install actual data provider
+        run: python -m pip install 'akshare>=1.17.0,<2' 'pandas>=2.2,<3' 'openpyxl>=3.1,<4' 'pytest>=8,<10'
+      - name: Check exchange unit/schema normalization
+        run: python -m pytest -q tests/test_national_team_exchange_sources.py
+      - name: Collect actual four-ETF shares and NAV with provenance
+        run: python -m national_team.live_etf_sources
+      - name: Persist unique run evidence to Git history
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- records/national_team_etf/
+          if git diff --staged --quiet; then
+            echo 'NO_ETF_EVIDENCE_GENERATED'; exit 0
+          fi
+          git commit -m "data: archive actual ETF provider attempt $GITHUB_RUN_ID [skip ci]"
+          for n in 1 2 3 4; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              echo 'ETF_SOURCE_RECORD_PERSISTED'; exit 0
+            fi
+            sleep 2
+          done
+          echo 'ETF evidence push unavailable' >&2
+          exit 2
+      - name: Upload source evidence even on incomplete ETF data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nt-etf-actual-source-${{ github.run_id }}-a${{ github.run_attempt }}
+          path: records/national_team_etf/
+          if-no-files-found: warn
+          retention-days: 90
