@@ -81,8 +81,12 @@ def live_context(ak, asof: date, snapshot: pd.DataFrame | None = None) -> dict:
                 else:
                     # Sina accepts exchange-prefixed symbols: sh000300, sh000852.
                     df = ak.stock_zh_index_daily(symbol="sh" + sym)
-                out["indices"][name] = {"status": "OK", **compute_index(df, asof),
-                                        "provider_used": provider}
+                out["indices"][name] = {
+                    "status": "OK", **compute_index(df, asof),
+                    "source": ("AKShare stock_zh_index_daily (Sina)" if provider == "AKShare Sina"
+                               else "AKShare index_zh_a_hist (Eastmoney)"),
+                    "provider_used": provider
+                }
                 break
             except Exception as exc:
                 problems.append(f"{provider}: {type(exc).__name__}: {exc}"[:250])
