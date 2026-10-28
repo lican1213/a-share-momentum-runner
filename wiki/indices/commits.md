@@ -12,6 +12,14 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-28 | [1036fd5cd3](https://github.com/lican1213/a-share-momentum-runner/commit/1036fd5cd3165c2bfbef9532be548ee33a4cdfb4) | Can Li | docs(wiki): render Markdown inline code without literal escape slashes |
+| 2026-10-28 | [3578a15799](https://github.com/lican1213/a-share-momentum-runner/commit/3578a157993eea59f3bc1d698627fccd17a8e039) | github-actions[bot] | audit: persist run 40687425222 attempt 1 [skip ci] |
+| 2026-10-28 | [92812da997](https://github.com/lican1213/a-share-momentum-runner/commit/92812da997f800118f26a36b01bdfff4bdc12883) | Can Li | docs(wiki): crosslink CTR-0001 from wiki/log.md |
+| 2026-10-28 | [2d82c34b3b](https://github.com/lican1213/a-share-momentum-runner/commit/2d82c34b3bff0dc462da9154dd6601461d9db019) | Can Li | docs(wiki): crosslink CTR-0001 from wiki/index.md |
+| 2026-10-28 | [0cadae366d](https://github.com/lican1213/a-share-momentum-runner/commit/0cadae366d00f4f7e73269e2f65457924b1d7ff0) | Can Li | docs(wiki): crosslink CTR-0001 from MOC.md |
+| 2026-10-28 | [2bb2632593](https://github.com/lican1213/a-share-momentum-runner/commit/2bb2632593b36ce6a7e102d685c9503ce5d82265) | Can Li | docs(wiki): explicitly preserve contradicted diagnoses, source labels and profitable-model false inferences |
+| 2026-10-28 | [288e85634e](https://github.com/lican1213/a-share-momentum-runner/commit/288e85634e613c8cbac364461e9aaf3a44db9f1b) | github-actions[bot] | audit: persist run 40687194031 attempt 1 [skip ci] |
+| 2026-10-28 | [420e70ed7d](https://github.com/lican1213/a-share-momentum-runner/commit/420e70ed7df36900f6e622e9a6b31d6f02b45b3c) | Can Li | docs: make LLM Wiki MOC and model upgrade timeline discoverable from repository landing page |
 | 2026-10-28 | [c8c07589d5](https://github.com/lican1213/a-share-momentum-runner/commit/c8c07589d57b501ce171eb4e498180d2af517692) | Can Li | ci(wiki): add lightweight MOC link/frontmatter workflow for docs edits |
 | 2026-10-28 | [ea6039b8b7](https://github.com/lican1213/a-share-momentum-runner/commit/ea6039b8b75ac7109a181036965b0ebc777c22ae) | Can Li | ci(wiki): verify MOC, sync runs/commits/briefing after real Actions, preserve all run records |
 | 2026-10-28 | [6c364697c2](https://github.com/lican1213/a-share-momentum-runner/commit/6c364697c25af0cd023e71260c14fc5e73dbfc26) | Can Li | test(wiki): verify all MOC links, frontmatter and missing-link detection |

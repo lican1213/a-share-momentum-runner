@@ -12,7 +12,9 @@ Automatically regenerated from **actual recorded JSON files**, newest first. A r
 
 | Recorded Beijing time | Phase | Run / attempt | Audit status | Validated symbols | Research signals | File |
 | --- | --- | --- | --- | ---: | ---: | --- |
+| 2026-10-28T20:28:59.568428+08:00 | close | 40687920738-a1 | COMPUTED_RESEARCH_ONLY | 12 | 0 | [source](../../records/2026-10-28/close/40687920738-a1.json) |
 | 2026-10-28T20:26:24.506592+08:00 | close | 40687425222-a1 | COMPUTED_RESEARCH_ONLY | 12 | 0 | [source](../../records/2026-10-28/close/40687425222-a1.json) |
+| 2026-10-28T20:24:32.364665+08:00 | close | 40687194031-a1 | COMPUTED_RESEARCH_ONLY | 12 | 0 | [source](../../records/2026-10-28/close/40687194031-a1.json) |
 | 2026-10-28T20:22:19.304698+08:00 | close | 40686966171-a1 | COMPUTED_RESEARCH_ONLY | 12 | 0 | [source](../../records/2026-10-28/close/40686966171-a1.json) |
 | 2026-10-28T20:20:14.969563+08:00 | close | 40686670888-a1 | COMPUTED_RESEARCH_ONLY | 12 | 0 | [source](../../records/2026-10-28/close/40686670888-a1.json) |
 | 2026-10-28T20:18:16.473213+08:00 | close | 40686425789-a1 | COMPUTED_RESEARCH_ONLY | 12 | 0 | [source](../../records/2026-10-28/close/40686425789-a1.json) |
