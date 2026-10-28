@@ -8,6 +8,15 @@ updated: 2026-10-28
 
 [返回根MOC](../MOC.md) · [当前简报](compiled/briefing.md) · [维护协议](../KNOWLEDGE.md)
 
+## 最新端到端资金—选股—对抗审计
+- [B11/E2E实际运行与红队审计](audits/AUD-2026-10-28-e2e-release-gate.md)
+- [实测四ETF资金份额及NAV](../records/national_team_etf/2026-10-28/40702172792-a1.json)
+- [多运行无冲突合并7个完整交易日](../records/national_team_merged/2026-10-28/40702572594-a1.json)
+- [指数权重代理的30只股票实测研究名单](../records/national_team_watch/2026-10-28/40702172792-a1.json)
+- [上交所带超时官方接口](../national_team/sse_direct.py)、[深交所按代码日期JSON](../national_team/szse_json.py)、[数据冲突隔离](../national_team/record_merge.py)
+- [纸面事件冻结](../national_team/paper_events.py)、[未来收益评估](../national_team/live_paper_tracker.py)、[原始数据独立重算审计](../national_team/audit_gate.py)
+- 官方PCF和国家队法定主体确认、真实前瞻超额收益仍需独立检验。
+
 ## 机会优先的研究入口
 - [主动选股扫描器](../national_team/opportunity_scan.py)：部分真实篮子/个股数据可形成带覆盖率和风险标签的研究排名，资金流出也追踪；只将已知错误或未来数据拒绝。
 - [ADR-0004纠偏说明](decisions/ADR-0004-stock-selection-after-flow.md)：研究机会发现与交易授权分开，历史严格审计器留作复现。
@@ -21,12 +30,12 @@ updated: 2026-10-28
 ## 真正的收益策略（优先跟踪）
 - [ADR-0004 ETF资金变化之后选哪些股票](decisions/ADR-0004-stock-selection-after-flow.md)
 - [EXP-0003 S0直接ETF vs S1资金冲击选股 vs S2价格确认选股](experiments/EXP-0003-etf-to-stock.md)
-- [股票映射源码](../national_team/stock_selection.py)（只有合成数据测试通过，暂无真实策略回报）
+- [股票映射源码](../national_team/stock_selection.py)（旧严格研究模块；B11另有真实市场指数权重代理名单，尚无成熟收益）
 
 ## 原始资金指标与国家队身份交叉验证
 - [2026-10-27四ETF原始资金进出指标与双市值覆盖率](data/original-four-etf-indicator.md)
 - [最新合并决策：ADR-0003](decisions/ADR-0003-national-team-pivot.md)
-- [公式代码和单元测试](../national_team/core_flow_factors.py)（尚非真实行情运行）
+- [公式代码和单元测试](../national_team/core_flow_factors.py)（B11已与真实ETF份额和NAV结合运行）
 
 ## 当前最高优先级——国家队资金行为
 - [ADR-0003 主线重定向](decisions/ADR-0003-national-team-pivot.md)
