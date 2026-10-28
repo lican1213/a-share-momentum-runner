@@ -72,6 +72,7 @@ def validate_observation(row: Mapping[str, Any], code: str, date: str,
     return {
         "shares": shares, "nav": nav, "aum": aum,
         "aum_is_estimate": row.get("aum") is None,
+        "corporate_action_explicitly_checked": row.get("corporate_action") is not None,
         "published_at": published_at,
         "nav_published_at": nav_published_at,
         "source_url": str(row["source_url"]),
@@ -120,6 +121,7 @@ def calculate(
         raise DataGateError("dates must be unique chronological exchange sessions including target")
     cutoff = utc_aware(decision_cutoff, "decision_cutoff") if decision_cutoff is not None else None
     at = trading_dates.index(date)
+    unverified_actions = set()
     if at < 1:
         raise DataGateError("at least prior one actual trading session is required")
 
@@ -130,6 +132,8 @@ def calculate(
             if data is None:
                 raise DataGateError(f"{code} {day}: missing ETF shares/NAV, no basket imputation")
             result[code] = validate_observation(data, code, day, cutoff)
+            if not result[code]["corporate_action_explicitly_checked"]:
+                unverified_actions.add(f"{day}:{code}")
         return result
 
     today = rows(date)
@@ -189,6 +193,8 @@ def calculate(
         "ordinary_float_coverage_ratio": fmt(current_aum / d_ord) if d_ord else None,
         "free_float_coverage_ratio": fmt(current_aum / d_free) if d_free else None,
         "coverage_ratios_are_not_national_team_holdings": True,
+        "corporate_actions_explicitly_verified": not bool(unverified_actions),
+        "corporate_action_unknown_dates_codes": sorted(unverified_actions),
         "daily_share_changes": {c: fmt(day_delta[c]) for c in codes},
         "per_etf_daily_flow_proxy_cny": {c: fmt(day_delta[c] * today[c]["nav"]) for c in codes},
         "daily_net_creation_proxy_cny": fmt(one_day),
