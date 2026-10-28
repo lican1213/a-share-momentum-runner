@@ -106,6 +106,12 @@ def human_readable(d)->str:
             ratio=Decimal(str(x["signed_exposure_over_adv20"]))*100
             lines.append(f"{rank}. {x['symbol']}：潜在指数敞口/ADV20 {ratio:.2f}%（并非真实买盘）")
     else: lines.append("- 没有通过当前研究证据的观察名单。")
+    fund_alert=d.get("latest_fund_total_holder_consistency") or {}
+    if fund_alert.get("status")=="HISTORICAL_NATIONAL_TEAM_HOLDINGS_EXCEED_NEW_TOTAL":
+        lines.extend(["", "## 重要身份冲突：不得沿用旧汇金仓位",
+          f"- 2025年中报所列汇金两主体合计：{Decimal(fund_alert['historical_two_Huijin_entities_shares'])/Decimal(100000000):.2f}亿份；2026年6月底**整只基金**总份额：{Decimal(fund_alert['new_whole_fund_total_shares'])/Decimal(100000000):.2f}亿份。",
+          f"- 旧持仓合计超过后期整个基金总份额至少 {Decimal(fund_alert['prior_combined_holdings_exceed_new_total_by_shares'])/Decimal(100000000):.2f}亿份。不能把2025年汇金持仓写成2026年仍然持有，也不能用基金总份额反推出各法人具体减持日期。",
+          "- 需要核对2026年基金持有人明细与任何ETF份额折算；这是一条身份有效性**红队异常**，不是推定某主体当天实际卖单。"])
     lines+=["","## S2 与验证状态",
       "- 冻结S2："+(", ".join(d["S2_frozen_observation"]) if d["S2_frozen_observation"] else "无新增冻结事件"),
       "- 现有纸面观察："+(", ".join(f"{x['event_id']}:{x['status']}" for x in d["paper_results"]) if d["paper_results"] else "未找到成熟结果"),
@@ -183,6 +189,13 @@ def compile_latest(root:Path=ROOT):
             result=compile_digest(inputs["merged"],watch,inputs["events"],inputs["paper"],inputs["audit"],holder)
             public_at=watch.get("event_first_public_no_earlier_than") or inputs["merged"]["first_observed_no_earlier_than"]
             result=supplement_prior_full_four(result,root,signal_public_at=public_at)
+            from national_team.holder_evidence import reconcile_latest_total_historical_holders
+            total_path=root/"data/national_team_holders/159919-2026H1-fund-total.json"
+            if total_path.is_file():
+                total=read(total_path)
+                result["latest_fund_total_holder_consistency"]=reconcile_latest_total_historical_holders(
+                    holder,total,public_at[:10])
+                result["latest_fund_total_original_source"]=total.get("source_url")
             result["source_paths"]={k:str(p.relative_to(root)) for k,p in required.items()}
             result["source_paths"]["watch"]=str(watch_path.relative_to(root))
             return day,stem,result
@@ -194,8 +207,8 @@ def main():
     folder.mkdir(parents=True,exist_ok=True)
     # v2 is a new immutable interpretation, not an overwrite of the older
     # v1 snapshot: both research reports remain inspectable by future agents.
-    jsonfile=folder/stem.replace(".json","-v2.json")
-    mdfile=folder/stem.replace(".json","-v2.md")
+    jsonfile=folder/stem.replace(".json","-v3.json")
+    mdfile=folder/stem.replace(".json","-v3.md")
     if not jsonfile.exists():
         jsonfile.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     if not mdfile.exists():
