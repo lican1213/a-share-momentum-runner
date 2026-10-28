@@ -122,7 +122,28 @@ def collect(ak, asof: date, run_id: str, attempt: str, out_root: Path):
                 result["observations_by_date"].setdefault(day, {}).update(
                     {k: {"shares": v, "shares_source": "SZSE"} for k,v in rows.items()})
     except Exception as exc:
-        result["errors"].append(f"SZSE:{type(exc).__name__}:{str(exc)[:220]}")
+        result["errors"].append(f"SZSE_DAILY:{type(exc).__name__}:{str(exc)[:220]}")
+        # SZSE separate FUND LIST API supplies a latest snapshot, but NO
+        # declared observation trading date. Preserve it as UNDATED only;
+        # never silently backdate to the requested trading session.
+        try:
+            latest = ak.fund_etf_scale_szse()
+            subset = latest[latest["基金代码"].astype(str).str.zfill(6).eq("159919")]
+            if len(subset) != 1:
+                raise ValueError(f"expected one 159919 row, found {len(subset)}")
+            share = as_canonical_shares(subset.iloc[0]["基金份额"], "akshare.szse.raw_shares")
+            result["latest_undated_szse_snapshot"] = {
+                "fund_code": "159919", "shares": share,
+                "first_observed_at": now.isoformat(),
+                "observation_exchange_trading_date": None,
+                "cannot_calculate_daily_share_change": True,
+                "url": "https://fund.szse.cn/marketdata/fundslist/index.html",
+                "api": "akshare.fund_etf_scale_szse",
+            }
+            result["raw_input_hashes"]["SZSE_LATEST_UNDATED"] = hashlib.sha256(
+                latest.to_csv(index=False).encode()).hexdigest()
+        except Exception as alt:
+            result["errors"].append(f"SZSE_LATEST_UNDATED:{type(alt).__name__}:{str(alt)[:220]}")
     # SSE API needs one request per calendar day; weekends/holidays may be empty.
     for day in dates[-12:]:
         try:
