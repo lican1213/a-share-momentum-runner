@@ -197,7 +197,7 @@ def main() -> int:
             audit["universe_source"] = "fixed disclosed main-board watchlist fallback"
             audit["universe_fallback_reason"] = repr(exc)
         audit["universe_size"] = len(universe)
-        audit["universe_method"] = "top turnover non-ST main-board from AKShare snapshot"
+        audit["universe_method"] = ("historical turnover selected" if audit["universe_source"] == "AKShare Eastmoney snapshot" else "fixed-name disclosed watchlist; NOT current turnover ranked")
         audit["data_providers"] = ["AKShare stock_zh_a_spot_em (Eastmoney)",
                                   "AKShare stock_zh_a_hist (Eastmoney)",
                                   "AKShare tool_trade_date_hist_sina (Sina)"]
@@ -246,13 +246,18 @@ def main() -> int:
                    {"data": all_trades,
                     "warning": "CURRENT universe and daily T+3-close proxy; not unbiased OOS results"})
         candidates.sort(key=lambda x: (x["volume_multiple"], x["return5"]), reverse=True)
-        # Signals reference last verified daily close, not a live intra-day fill.
-        signals = candidates[:3]
+        # Research candidates can be calculated on real bars, but a selected
+        # present-day universe with T+3 close proxy has NO validated OOS edge.
+        research_candidates = candidates[:3]
+        signals = []  # hard trade gate: not actionable until independently validated
         write_json(out / "signals.json", {
-            "status": "computed_from_actual_daily_data",
+            "status": "RESEARCH_ONLY_NOT_TRADE_AUTHORIZED",
             "asof": str(expected), "phase": args.phase,
-            "signals": signals, "source": "AKShare Eastmoney unadjusted daily OHLC",
-            "no_actual_fills": True, "intraday_activation_unknown": True})
+            "signals": signals, "research_candidates": research_candidates,
+            "historical_provider_by_symbol": {x["symbol"]: x["provider"] for x in verified},
+            "original_price_basis": "unadjusted daily OHLC; NOT verified intraday price",
+            "no_actual_fills": True, "intraday_activation_unknown": True,
+            "out_of_sample_validated": False, "automated_trade_signals_authorized": False})
         if all_trades:
             returns = pd.Series([float(x["net_return"]) for x in all_trades])
             audit["exploratory_history"] = {
@@ -268,7 +273,14 @@ def main() -> int:
             seq = pd.Series(returns.to_numpy(), index=pd.date_range("2000-01-01", periods=len(returns), freq="D"))
             audit["quantstats_trade_sequence_max_drawdown"] = float(qs.stats.max_drawdown(seq))
             audit["quantstats_warning"] = "trade-sequence only, NOT actual portfolio max drawdown"
-        audit["status"] = "COMPUTED_WITH_LIMITATIONS"
+        audit["model_validation"] = {
+            "out_of_sample_passed": False,
+            "survivorship_bias_addressed": False,
+            "intraday_T3_exit_validated": False,
+            "research_only": True,
+            "risk_decision": ("NEGATIVE_MEAN_RETURN_REVIEW" if all_trades and audit["exploratory_history"]["mean_trade_return"] <= 0 else "UNVALIDATED_NOT_AUTHORIZED"),
+        }
+        audit["status"] = "COMPUTED_RESEARCH_ONLY"
         audit["ended_at"] = datetime.now(TZ).isoformat()
         write_json(out / "audit.json", audit)
         print(json.dumps({"status": audit["status"], "verified": len(verified),
