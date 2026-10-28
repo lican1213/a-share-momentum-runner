@@ -1,0 +1,9 @@
+{
+  "status": "WATCHLIST_BUILD_UNAVAILABLE",
+  "errors": [
+    "ValueError:no paired dated shares and NAV; cannot map investment exposure"
+  ],
+  "input_etf_record": "records/national_team_etf/2026-10-28/40701896342-a1.json",
+  "capture_time": "2026-10-28T22:02:42.700152+08:00",
+  "no_broker_orders": true
+}
