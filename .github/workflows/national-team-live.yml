@@ -10,7 +10,11 @@ on:
       - 'national_team/live_stock_watch.py'
       - 'national_team/pcf_official.py'
       - 'national_team/record_merge.py'
-      - 'tests/test_national_team_record_merge.py'
+      - 'national_team/paper_events.py'
+      - 'national_team/live_paper_tracker.py'
+      - 'tests/test_national_team_paper_events.py'
+      - 'tests/test_national_team_paper_tracker.py'
+      - 'tests/test_national_team_record_merge.py tests/test_national_team_paper_events.py tests/test_national_team_paper_tracker.py'
       - 'tests/test_national_team_pcf_official.py'
       - 'tests/test_national_team_index_proxy.py tests/test_national_team_pcf_official.py tests/test_national_team_record_merge.py'
       - 'tests/test_national_team_exchange_sources.py'
@@ -50,6 +54,15 @@ jobs:
           date_beijing=$(TZ=Asia/Shanghai date +%F)
           src="records/national_team_merged/${date_beijing}/${GITHUB_RUN_ID}-a${GITHUB_RUN_ATTEMPT}.json"
           python -m national_team.live_stock_watch --source "$src" --max-stocks 30
+      - name: Freeze first-observed S1 and S2 paper events (no backdated trades)
+        shell: bash
+        run: |
+          set -euo pipefail
+          date_beijing=$(TZ=Asia/Shanghai date +%F)
+          source="records/national_team_watch/${date_beijing}/${GITHUB_RUN_ID}-a${GITHUB_RUN_ATTEMPT}.json"
+          python -m national_team.paper_events --source "$source"
+      - name: Recheck matured frozen paper events with authentic price histories
+        run: python -m national_team.live_paper_tracker --max-events 8
       - name: Collect original official SSE PCF for three Shanghai core funds
         run: python -m national_team.pcf_official
       - name: Persist unique run evidence to Git history
@@ -59,7 +72,7 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- records/national_team_etf/ records/national_team_merged/ records/national_team_watch/ records/national_team_pcf/
+          git add -- records/national_team_etf/ records/national_team_merged/ records/national_team_watch/ records/national_team_events/ records/national_team_paper/ records/national_team_pcf/
           if git diff --staged --quiet; then
             echo 'NO_ETF_EVIDENCE_GENERATED'; exit 0
           fi
@@ -82,6 +95,8 @@ jobs:
             records/national_team_etf/
             records/national_team_merged/
             records/national_team_watch/
+            records/national_team_events/
+            records/national_team_paper/
             records/national_team_pcf/
           if-no-files-found: warn
           retention-days: 90
