@@ -12,6 +12,12 @@ updated: 2026-10-28
 - [主动选股扫描器](../national_team/opportunity_scan.py)：部分真实篮子/个股数据可形成带覆盖率和风险标签的研究排名，资金流出也追踪；只将已知错误或未来数据拒绝。
 - [ADR-0004纠偏说明](decisions/ADR-0004-stock-selection-after-flow.md)：研究机会发现与交易授权分开，历史严格审计器留作复现。
 
+## 本轮对抗审计与真实数据证据
+- [AUD-2026-10-28 P0/P1系统审计与修复](audits/AUD-2026-10-28-red-team.md)
+- [2026-10-28真实四ETF采集尝试账本](../records/national_team_etf/2026-10-28/40698907834-a1.json)
+- [ETF份额/净值真实采集代码](../national_team/live_etf_sources.py)
+- [5/10/20日股票与ETF配对收益计算](../national_team/forward_evaluation.py)
+
 ## 真正的收益策略（优先跟踪）
 - [ADR-0004 ETF资金变化之后选哪些股票](decisions/ADR-0004-stock-selection-after-flow.md)
 - [EXP-0003 S0直接ETF vs S1资金冲击选股 vs S2价格确认选股](experiments/EXP-0003-etf-to-stock.md)
