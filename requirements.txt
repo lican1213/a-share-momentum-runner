@@ -4,3 +4,4 @@ quantstats>=0.0.62,<1
 pandas>=2.2.0,<3
 numpy>=2.2.2,<3
 pytest>=8,<10
+exchange-calendars>=4.6,<5
