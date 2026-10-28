@@ -56,6 +56,8 @@ def test_undated_szse_fallback_is_never_backdated_to_exchange_daily_series(tmp_p
     def offline_failure(*args,**kwargs):
         raise ConnectionError('mocked SZSE JSON unavailable')
     monkeypatch.setattr(endpoint,'fetch_one_szse_fund',offline_failure)
+    import national_team.sse_direct as official
+    monkeypatch.setattr(official,'fetch_sse_direct',offline_failure)
 
     class BlockedDaily:
         def fund_scale_daily_szse(self, **kwargs):
