@@ -28,7 +28,7 @@ updated: 2026-10-28
 
 ## 一手证据摘录（不是模型盈利实绩）
 - [真实ETF抓取run 40698385410](../../records/national_team_etf/2026-10-28/40698385410-a1.json)：沪市510300/510310/510330多个交易日总份额与NAV真实返回；深市`159919`日频接口 `ConnectionResetError`。工作流`conclusion=success`只证明采集脚本成功记录了**部分数据**，并非四ETF资金因子成功。
-- [备用数据run 40698907834](../../records/national_team_etf/2026-10-28/40698907834-a1.json)：157? 不做硬编码数量猜测，请直接核对本次原始JSON中的`latest_undated_szse_snapshot`；三只沪市ETF对2026-10-27的日净申购代理合计 `5654849760`元。**不是国家队直接账户买入，也不是四ETF合计**。
+- [备用数据run 40698907834](../../records/national_team_etf/2026-10-28/40698907834-a1.json)：请直接核对本次原始JSON中的`latest_undated_szse_snapshot`；三只沪市ETF对2026-10-27的日净申购代理合计 `5654849760`元。**不是国家队直接账户买入，也不是四ETF合计**。
 - [四ETF指标+扫描器CI 40699272218](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40699272218)：**37项纯合成单元测试**成功；不能把这个数字当真实收益验证。
 - [后续回归CI](https://github.com/lican1213/a-share-momentum-runner/actions/workflows/national-team-factors.yml)：继续验证新测试及分组，不用旧版的成功替代最新源码的成功。
 
