@@ -5,6 +5,7 @@ on:
     paths:
       - 'national_team/**'
       - 'tests/test_national_team_factors.py'
+      - 'tests/test_national_team_stock_selection.py'
       - '.github/workflows/national-team-factors.yml'
   workflow_dispatch:
 permissions:
@@ -20,9 +21,9 @@ jobs:
           python-version: '3.11'
       - name: Install pytest only
         run: python -m pip install pytest==8.4.2
-      - name: Original 2026-10-27 indicator tests (synthetic fixtures only)
-        run: python -m pytest -q tests/test_national_team_factors.py
+      - name: Original funds + beneficiary stock mapping tests (synthetic fixtures only)
+        run: python -m pytest -q tests/test_national_team_factors.py tests/test_national_team_stock_selection.py
       - name: Evidence classification
         run: |
           echo "These tests validate arithmetic and data gates only."
-          echo "NO live ETF shares were fetched and NO state-backed entity trades were inferred."
+          echo "NO live ETF shares or ETF PCF basket weights were fetched. NO state-backed entity trades or profitable signals were inferred."
