@@ -3,9 +3,14 @@ on:
   push:
     branches: [main]
     paths:
-      - 'national_team/**'
-      - 'tests/test_national_team_*.py'
-      - 'tests/test_szse_json.py'
+      - 'national_team/live_etf_sources.py'
+      - 'national_team/record_merge.py'
+      - 'national_team/live_stock_watch.py'
+      - 'national_team/live_paper_tracker.py'
+      - 'national_team/paper_events.py'
+      - 'national_team/pcf_official.py'
+      - 'national_team/szse_json.py'
+      - 'national_team/sse_direct.py'
       - '.github/workflows/national-team-live.yml'
   workflow_dispatch:
   schedule:
@@ -14,7 +19,7 @@ permissions:
   contents: write
 concurrency:
   group: nt-etf-live-v2-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   four-etf-data:
     runs-on: ubuntu-latest
