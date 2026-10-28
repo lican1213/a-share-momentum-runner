@@ -2,6 +2,11 @@
 
 **Agent starts here.** [操作规则](KNOWLEDGE.md) · [AGENTS入口](AGENTS.md) · [Wiki总索引](wiki/index.md) · [一页当前状态](wiki/compiled/briefing.md)
 
+## P0 原始四ETF入金/出金指标 + 国家队持仓联合追踪（2026-10-28恢复）
+**[原始四ETF资金指标、5日强度及双市值覆盖率](wiki/data/original-four-etf-indicator.md)** · **[指标Python实现](national_team/core_flow_factors.py)** · **[ADR-0003整合决策](wiki/decisions/ADR-0003-national-team-pivot.md)**
+
+原指标固定510300、510310、510330、159919；扩展九ETF作为横向比较，中央汇金等持有人披露用于低频身份确认，大盘状态用于风险过滤。**不能把ETF总净申购算成汇金当日买入。** 原三日追涨仅作旧实验，不是模型中心。
+
 ## P0 现行唯一主线（2026-10-28明确纠偏）
 **[ADR-0003 国家队跟踪重定向](wiki/decisions/ADR-0003-national-team-pivot.md)** · **[国家队ETF官方数据MVP Issue #3](https://github.com/lican1213/a-share-momentum-runner/issues/3)**
 
