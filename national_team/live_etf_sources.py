@@ -260,7 +260,11 @@ def collect(ak, asof: date, run_id: str, attempt: str, out_root: Path):
         sessions=exchange_sessions(asof.isoformat(),lookback_days=21)
         result["funding_event"]=reconcile_funding_snapshot(result,sessions)
         if result["funding_event"]["four_etf_factor"] is not None:
-            result["status"]="FOUR_ETF_FACTOR_OBSERVED_AFTER_CAPTURE_NOT_HISTORICAL_PIT"
+            result["status"]=(
+                "PRIOR_FULL_FOUR_AND_LATEST_PARTIAL_OBSERVED"
+                if result["funding_event"]["status"]=="PARTIAL_LATEST_WITH_PRIOR_FULL_FOUR_FACTOR"
+                else "FOUR_ETF_FACTOR_OBSERVED_AFTER_CAPTURE_NOT_HISTORICAL_PIT"
+            )
             result["factor_arithmetic_possible"]=True
     except Exception as exc:
         result["errors"].append(f"CALENDAR_OR_EVENT:{type(exc).__name__}:{str(exc)[:230]}")
