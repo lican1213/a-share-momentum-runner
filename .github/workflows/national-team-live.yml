@@ -53,7 +53,7 @@ jobs:
           set -euo pipefail
           date_beijing=$(TZ=Asia/Shanghai date +%F)
           src="records/national_team_merged/${date_beijing}/${GITHUB_RUN_ID}-a${GITHUB_RUN_ATTEMPT}.json"
-          python -m national_team.live_stock_watch --source "$src" --max-stocks 30
+          python -m national_team.live_stock_watch --source "$src" --max-stocks 150
       - name: Freeze first-observed S1 and S2 paper events (no backdated trades)
         shell: bash
         run: |
