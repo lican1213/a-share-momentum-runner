@@ -12,6 +12,11 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-28 | [1df1191766](https://github.com/lican1213/a-share-momentum-runner/commit/1df11917660d1905b55a8c0717a065c67d3cabac) | Can Li | data(holders): anchor 2026-06-30 159919 total shares from fund original 8.1, flag prior 2025 Huijin holdings as stale |
+| 2026-10-28 | [d47c7a23cd](https://github.com/lican1213/a-share-momentum-runner/commit/d47c7a23cd3e93c6a2416783c7bd46d05fbd0c9c) | Can Li | test(live): require Git worktree cleanup before rebase to prevent hidden unstaged Wiki failures |
+| 2026-10-28 | [cd56bd9aa5](https://github.com/lican1213/a-share-momentum-runner/commit/cd56bd9aa52ef182c8af1f66c8a5875505c1f208) | Can Li | fix(live): restore unstaged derived Wiki summaries before rebase so immutable source evidence can push |
+| 2026-10-28 | [8600adb6be](https://github.com/lican1213/a-share-momentum-runner/commit/8600adb6bec9f025690290661e6546f1ae25b61a) | Can Li | test(report): real archived full four-ETF Oct27 remains next to Oct28 partial; reject pre-publication carry-forward |
+| 2026-10-28 | [89459c5028](https://github.com/lican1213/a-share-momentum-runner/commit/89459c5028639aa252e5b10d87042e6d686ba120) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-28 | [cca94efe1c](https://github.com/lican1213/a-share-momentum-runner/commit/cca94efe1c58b5f9f65191028b95b9f2dc53dd06) | Can Li | audit(report): preserve independently recomputed latest full four-ETF day alongside newer partial flows; source timestamp and v2 immutable versioning |
 | 2026-10-28 | [7456251de0](https://github.com/lican1213/a-share-momentum-runner/commit/7456251de0c5f66476c32b1246a10a0c1b114833) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-28 | [ec1c5897e9](https://github.com/lican1213/a-share-momentum-runner/commit/ec1c5897e9cc819ad772963b16287fe88e72958b) | Can Li | fix(wiki): generated national-team daily briefing includes mandatory unique frontmatter and ISO date |
