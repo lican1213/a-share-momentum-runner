@@ -2,6 +2,8 @@
 
 **Read before any modification:** [MOC.md](MOC.md) → [KNOWLEDGE.md](KNOWLEDGE.md) → [wiki/compiled/briefing.md](wiki/compiled/briefing.md) → [wiki/index.md](wiki/index.md).
 
+**Mandatory original-factor continuity:** read [original 2026-10-27 fixed four-ETF factor contract](wiki/data/original-four-etf-indicator.md) BEFORE changing any national-team monitoring code. Never quietly replace the four CSI300 ETF factor series with an expanded nine-index basket; preserve separate AUM/ordinary-float/free-float ratios and distinguish daily NAV-weighted sums from endpoint NAV. Fund-wide subscriptions do not identify a particular investor. Synthetic arithmetic tests do not prove live ETF data collection.
+
 **Project P0 was changed on 2026-10-28 to evidence-based national-team ownership and ETF subscription/redemption tracking**, per [ADR-0003](wiki/decisions/ADR-0003-national-team-pivot.md) and [Issue #3](https://github.com/lican1213/a-share-momentum-runner/issues/3). The original 3-session momentum prototype is a historical side experiment. **No validated tradable strategy and no broker execution.** Never attribute whole-ETF net creations/redemptions to Central Huijin without holder-level disclosure. Do not turn research candidates into recommendations.
 
 ## Source hierarchy
