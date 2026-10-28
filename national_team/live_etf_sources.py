@@ -1,0 +1,205 @@
+"""Collect ACTUAL exchange ETF total shares, and published NAV where available.
+
+AKShare SSE fund_etf_scale_sse ALREADY converts official '10,000 shares'
+to raw shares (*10000); SZSE fund_scale_daily_szse is already raw shares.
+Never apply *10000 to AKShare SSE output again.
+
+Capture time is an upper bound on first public availability: never claim a
+historical trade signal was known earlier than its first archived observation.
+"""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import os
+from datetime import datetime, timedelta, date
+from decimal import Decimal, InvalidOperation
+from pathlib import Path
+from zoneinfo import ZoneInfo
+
+CORE_FOUR = ("510300", "510310", "510330", "159919")
+SSE_CODES = set(CORE_FOUR[:3])
+SZSE_CODES = {"159919"}
+SSE_URL = "https://www.sse.com.cn/assortment/fund/etf/list/scale/"
+SZSE_URL = "https://www.szse.cn/market/fund/volume/etf/index.html"
+NAV_URL = "https://fundf10.eastmoney.com/jjjz_{code}.html"
+
+
+def as_canonical_shares(value: object, source: str) -> str:
+    """Both supported AKShare provider outputs are already in SHARES."""
+    if source not in {"akshare.sse.normalized_shares", "akshare.szse.raw_shares"}:
+        raise ValueError("unsupported source/unit; check upstream interface implementation")
+    try:
+        n = Decimal(str(value).replace(",", ""))
+    except (InvalidOperation, TypeError, ValueError):
+        raise ValueError("missing invalid share value") from None
+    if not n.is_finite() or n < 0:
+        raise ValueError("nonfinite/negative ETF shares")
+    return format(n, "f")
+
+
+def normalized_day(frame, target: str, codes: set[str], source: str) -> dict:
+    required = {"基金代码", "基金份额"}
+    if not required.issubset(frame.columns):
+        raise ValueError(f"{source}: missing code/share fields")
+    column = "统计日期" if source.startswith("akshare.sse") else "日期"
+    if column not in frame.columns:
+        raise ValueError(f"{source}: date column missing")
+    records: dict[str, str] = {}
+    for _, row in frame.iterrows():
+        code = str(row["基金代码"]).split(".")[0].zfill(6)
+        if code not in codes:
+            continue
+        obs_day = str(row[column])[:10]
+        if obs_day != target:
+            continue
+        if code in records:
+            raise ValueError(f"{source}: duplicate {code} {target}")
+        records[code] = as_canonical_shares(row["基金份额"], source)
+    return records
+
+
+def history_nav(frame, code: str, dates: set[str]) -> dict[str, str]:
+    if not {"净值日期", "单位净值"}.issubset(frame.columns):
+        raise ValueError(f"{code}: invalid ETF NAV source schema")
+    out = {}
+    for _, row in frame.iterrows():
+        d = str(row["净值日期"])[:10]
+        if d not in dates:
+            continue
+        if d in out:
+            raise ValueError(f"{code}: duplicate NAV date {d}")
+        raw = str(row["单位净值"])
+        try:
+            n = Decimal(raw)
+        except InvalidOperation:
+            raise ValueError(f"{code}: invalid NAV {d}")
+        if not n.is_finite() or n <= 0:
+            raise ValueError(f"{code}: nonpositive NAV {d}")
+        out[d] = format(n, "f")
+    return out
+
+
+def collect(ak, asof: date, run_id: str, attempt: str, out_root: Path):
+    now = datetime.now(ZoneInfo("Asia/Shanghai"))
+    if asof > now.date():
+        raise ValueError("no future date observations")
+    dates = [(asof - timedelta(days=n)).isoformat() for n in range(21)]
+    dates.reverse()
+    # Retrieval of past dates TODAY does not establish that those dates'
+    # values were available to someone at that historical time.
+    result = {
+        "schema": 1, "status": "ATTEMPTED_NO_COMPLETE_FACTOR",
+        "run_id": run_id, "run_attempt": attempt,
+        "capture_time_beijing": now.isoformat(),
+        "first_observed_no_earlier_than": now.isoformat(),
+        "asof_requested": asof.isoformat(),
+        "core_codes": list(CORE_FOUR),
+        "unit": "raw_shares",
+        "sources": {
+            "SSE": {"url": SSE_URL, "api": "akshare.fund_etf_scale_sse",
+                    "normalization": "AKShare already *10000 from official 10,000-share display"},
+            "SZSE": {"url": SZSE_URL, "api": "akshare.fund_scale_daily_szse",
+                     "normalization": "AKShare output already raw shares"},
+            "NAV": {"url_template": NAV_URL,
+                    "api": "akshare.fund_etf_fund_info_em",
+                    "normalization": "CNY per fund share; may be unavailable"},
+        },
+        "observations_by_date": {}, "raw_input_hashes": {}, "errors": [],
+        "availability_status": "historical data first captured NOW, not earlier public event timestamps",
+        "investor_identity": "UNATTRIBUTED_TO_HUIJIN_OR_ANY_OTHER_ENTITY",
+        "trade_signal_authorized": False,
+    }
+    start = (asof - timedelta(days=21)).strftime("%Y%m%d")
+    end = asof.strftime("%Y%m%d")
+    try:
+        df = ak.fund_scale_daily_szse(start_date=start, end_date=end, symbol="ETF")
+        result["raw_input_hashes"]["SZSE"] = hashlib.sha256(df.to_csv(index=False).encode()).hexdigest()
+        for day in dates:
+            rows = normalized_day(df, day, SZSE_CODES, "akshare.szse.raw_shares")
+            if rows:
+                result["observations_by_date"].setdefault(day, {}).update(
+                    {k: {"shares": v, "shares_source": "SZSE"} for k,v in rows.items()})
+    except Exception as exc:
+        result["errors"].append(f"SZSE:{type(exc).__name__}:{str(exc)[:220]}")
+    # SSE API needs one request per calendar day; weekends/holidays may be empty.
+    for day in dates[-12:]:
+        try:
+            df = ak.fund_etf_scale_sse(date=day.replace("-", ""))
+            result["raw_input_hashes"][f"SSE:{day}"] = hashlib.sha256(df.to_csv(index=False).encode()).hexdigest()
+            rows = normalized_day(df, day, SSE_CODES, "akshare.sse.normalized_shares")
+            if rows:
+                result["observations_by_date"].setdefault(day, {}).update(
+                    {k: {"shares": v, "shares_source": "SSE"} for k,v in rows.items()})
+        except Exception as exc:
+            result["errors"].append(f"SSE:{day}:{type(exc).__name__}:{str(exc)[:140]}")
+    candidates = {day for day in result["observations_by_date"] if day <= asof.isoformat()}
+    for code in CORE_FOUR:
+        try:
+            frame = ak.fund_etf_fund_info_em(fund=code, start_date=start, end_date=end)
+            result["raw_input_hashes"][f"NAV:{code}"] = hashlib.sha256(frame.to_csv(index=False).encode()).hexdigest()
+            nav_rows = history_nav(frame, code, candidates)
+            for day, nav in nav_rows.items():
+                if code in result["observations_by_date"][day]:
+                    result["observations_by_date"][day][code]["nav"] = nav
+                    result["observations_by_date"][day][code]["nav_source"] = "fund_etf_fund_info_em: Eastmoney"
+        except Exception as exc:
+            result["errors"].append(f"NAV:{code}:{type(exc).__name__}:{str(exc)[:200]}")
+
+    complete_shares = sorted(d for d, fund in result["observations_by_date"].items()
+                             if set(CORE_FOUR).issubset(fund))
+    complete_nav = sorted(d for d in complete_shares if all(
+        "nav" in result["observations_by_date"][d][code] for code in CORE_FOUR))
+    result["dates_with_four_shares"] = complete_shares
+    result["dates_with_four_shares_and_nav"] = complete_nav
+    if complete_shares:
+        last = complete_shares[-1]
+        result["latest_complete_shares_date"] = last
+        idx = complete_shares.index(last)
+        if idx:
+            prev = complete_shares[idx-1]
+            # Delta is valid only if immediately previous exchange trading day;
+            # with exchange calendar unavailable label adjacent observation,
+            # not automatically consecutive MARKET sessions.
+            result["last_two_complete_observation_dates"] = [prev,last]
+            result["last_pair_share_changes"] = {
+                code: format(Decimal(result["observations_by_date"][last][code]["shares"]) -
+                             Decimal(result["observations_by_date"][prev][code]["shares"]), "f")
+                for code in CORE_FOUR
+            }
+            result["last_pair_trading_day_consecutiveness_verified"] = False
+        result["status"] = "SHARES_OBSERVED_NO_VERIFIED_TRADE_SIGNAL"
+    if len(complete_nav) >= 6:
+        result["status"] = "SHARES_NAV_HISTORY_OBSERVED_NOT_PIT_HISTORICAL_SIGNALS"
+        result["factor_arithmetic_possible"] = True
+    else:
+        result["factor_arithmetic_possible"] = False
+    folder = out_root / asof.isoformat()
+    folder.mkdir(parents=True, exist_ok=True)
+    filename = f"{run_id}-a{attempt}.json"
+    target = folder / filename
+    if target.exists():
+        raise FileExistsError(f"do not overwrite existing evidence: {target}")
+    target.write_text(json.dumps(result, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
+    return target, result
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--asof", default=datetime.now(ZoneInfo("Asia/Shanghai")).date().isoformat())
+    parser.add_argument("--out", default="records/national_team_etf")
+    args = parser.parse_args()
+    import akshare as ak
+    result_path, result = collect(ak, date.fromisoformat(args.asof),
+                                   os.environ.get("GITHUB_RUN_ID", "local"),
+                                   os.environ.get("GITHUB_RUN_ATTEMPT", "1"), Path(args.out))
+    print(json.dumps({"status": result["status"],
+                      "complete_shares_days": len(result["dates_with_four_shares"]),
+                      "complete_nav_days": len(result["dates_with_four_shares_and_nav"]),
+                      "error_count": len(result["errors"]),
+                      "record": str(result_path)}, ensure_ascii=False))
+
+
+if __name__ == "__main__":
+    main()
