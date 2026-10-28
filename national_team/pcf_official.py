@@ -12,9 +12,10 @@ from zoneinfo import ZoneInfo
 
 PCF_BASE="https://www.sse.com.cn/disclosure/fund/etflist/detail.shtml"
 CODES=("510300","510310","510330")
+ISSUER_510330="https://accountquery.chinaamc.com/jgb/zszq/etfssqd/?fundcode=510330&type=new"
 EXCHANGE="https://www.sse.com.cn/disclosure/fund/etflist/"
 
-def parse_official_html(html:str,code:str,first_observed:str)->dict:
+def parse_official_html(html:str,code:str,first_observed:str,*,source_url=None)->dict:
     """Parse source HTML tables *only* when actual dated data is in response."""
     import pandas as pd
     from bs4 import BeautifulSoup
@@ -36,7 +37,7 @@ def parse_official_html(html:str,code:str,first_observed:str)->dict:
     for table in tables:
         table.columns=[str(x).replace("\n","").replace(" ","") for x in table.columns]
         symbol=next((col for col in table.columns if "证券代码" in col),None)
-        quantity=next((col for col in table.columns if "股票数量" in col or "成份股数量" in col),None)
+        quantity=next((col for col in table.columns if "股票数量" in col or "成份股数量" in col or "证券数量" in col),None)
         if symbol is None or quantity is None:continue
         flag=next((col for col in table.columns if "现金替代标志" in col),None)
         for _,row in table.iterrows():
@@ -59,7 +60,7 @@ def parse_official_html(html:str,code:str,first_observed:str)->dict:
         raise ValueError("duplicate PCF security symbol")
     return {"status":"OFFICIAL_DATED_PCF_COMPONENTS_CAPTURED","code":code,
             "pcf_date":day,"first_observed_at":first_observed,
-            "source_url":PCF_BASE+f"?etfClass=03&fundid={code}&type=008",
+            "source_url":source_url or PCF_BASE+f"?etfClass=03&fundid={code}&type=008",
             "component_count":len(components),"components":components,
             "component_stock_values_and_PCF_weights_not_yet_verified":True}
 
