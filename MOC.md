@@ -2,6 +2,11 @@
 
 **Agent starts here.** [操作规则](KNOWLEDGE.md) · [AGENTS入口](AGENTS.md) · [Wiki总索引](wiki/index.md) · [一页当前状态](wiki/compiled/briefing.md)
 
+## P0 策略核心：资金信号后如何选股、是否跑赢买ETF
+**[ADR-0004 资金→股票映射与ETF基准](wiki/decisions/ADR-0004-stock-selection-after-flow.md)** · **[EXP-0003 S0 ETF基准 vs S1资金冲击 vs S2相对强度](wiki/experiments/EXP-0003-etf-to-stock.md)** · **[研究代码](national_team/stock_selection.py)**
+
+**国家队资金进出指标是触发器，不是最终交易策略。** 从核心四ETF份额变化和披露持仓出发，按当时PCF/成分权重映射到股票，比较股票20日成交额与相对强度；最关键的盈利证据是公开信号之后5/10/20交易日是否持续跑赢低成本沪深300ETF。未获取真实PCF/股票日数据前，不能提供真实选股名单。
+
 ## P0 原始四ETF入金/出金指标 + 国家队持仓联合追踪（2026-10-28恢复）
 **[原始四ETF资金指标、5日强度及双市值覆盖率](wiki/data/original-four-etf-indicator.md)** · **[指标Python实现](national_team/core_flow_factors.py)** · **[ADR-0003整合决策](wiki/decisions/ADR-0003-national-team-pivot.md)**
 
