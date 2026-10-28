@@ -12,6 +12,11 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-28 | [95bbff5f1e](https://github.com/lican1213/a-share-momentum-runner/commit/95bbff5f1ec9a91da6a1df59f742e5c328a9f030) | Can Li | test(holders): clean period-by-period validation without unused temporary binding |
+| 2026-10-28 | [5d1a8b9f44](https://github.com/lican1213/a-share-momentum-runner/commit/5d1a8b9f44b73f6133353888bea5aa668cb604be) | Can Li | test(holders): original 159919 Huijin legal names, Aug-2025 first knowable time and net share changes |
+| 2026-10-28 | [776c27cfd5](https://github.com/lican1213/a-share-momentum-runner/commit/776c27cfd5666e4db7ef3463e2893ccd021aa286) | Can Li | feat(holders): verify legal-entity identity, publication-time snapshots and period-on-period Huijin holdings without attributing ETF daily flows |
+| 2026-10-28 | [fca5a96bdd](https://github.com/lican1213/a-share-momentum-runner/commit/fca5a96bdd33fd585bae34d6b414ee35ee401945) | Can Li | data(holders): seed real 159919 Huijin Investment/Asset Management period-end legal entity holdings with official report provenance |
+| 2026-10-28 | [992bd0e851](https://github.com/lican1213/a-share-momentum-runner/commit/992bd0e851a0e3435e486c57bf968daef4eb8017) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-28 | [8c5959a116](https://github.com/lican1213/a-share-momentum-runner/commit/8c5959a1161203d837c492f5b46e32a9d1ea515e) | github-actions[bot] | data: archive actual ETF provider attempt 40705446928 [skip ci] |
 | 2026-10-28 | [35433f8c82](https://github.com/lican1213/a-share-momentum-runner/commit/35433f8c82923a721262a816fde2aac92488306f) | Can Li | ci(wiki): rebuild derived MOC from immutable evidence in separate retryable job after actual source run |
 | 2026-10-28 | [f4a58467a5](https://github.com/lican1213/a-share-momentum-runner/commit/f4a58467a53c2a61d4099494c1329e38b303a3b6) | Can Li | fix(persist): archive immutable run JSON separately; avoid wiki/compiled rebase conflicts erasing successful live data |
