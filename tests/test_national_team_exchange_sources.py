@@ -48,9 +48,14 @@ def test_nav_date_must_match_shares_exactly():
     assert r=={"2026-10-22":"4.1"}
 
 
-def test_undated_szse_fallback_is_never_backdated_to_exchange_daily_series(tmp_path):
+def test_undated_szse_fallback_is_never_backdated_to_exchange_daily_series(tmp_path,monkeypatch):
     from datetime import date
     from national_team.live_etf_sources import collect
+    # All unit tests must remain offline, including newer JSON fallbacks.
+    import national_team.szse_json as endpoint
+    def offline_failure(*args,**kwargs):
+        raise ConnectionError('mocked SZSE JSON unavailable')
+    monkeypatch.setattr(endpoint,'fetch_one_szse_fund',offline_failure)
 
     class BlockedDaily:
         def fund_scale_daily_szse(self, **kwargs):
