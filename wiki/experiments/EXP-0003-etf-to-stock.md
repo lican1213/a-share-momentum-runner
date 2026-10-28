@@ -22,6 +22,11 @@ updated: 2026-10-28
 
 **身份标记**：上述研究只能称 `ETF_CREATION_PROXY`，不能仅凭ETF流量认定中央汇金真实买入。国家队直接增持需要另行匹配披露的持仓主体。
 
+## 升级B9：不再让研究名单被全量数据门槛锁死
+新增 [机会优先扫描器](../../national_team/opportunity_scan.py)：原严格 `stock_selection.py` 保留作为全数据审计对照，但新研究入口允许可追溯的部分ETF组合和部分成分股，明确资金覆盖率、篮子权重覆盖、时间延迟、风险标记。流出事件继续生成撤退风险名单；低ADV/上市不足250日/相对20日上涨超过10%等未经证实的固定门槛只做警示，不再强制拒绝生成研究候选。已知停牌、ST、无法买入仍单列，不放入适合入场的排名。资金身份及真实披露日期的校验不降低标准。
+
+[GitHub Actions 40697156501](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40697156501) 的26项合成数据测试全部通过，**尚无真实收益验证**。以前本页“必须四ETF PCF+全部股票同日齐备才能筛选”的规定仅对应*旧严格审计器*，不能阻碍新扫描器形成部分数据下的研究排名。
+
 ## 当前实际执行范围
 - [GitHub运行 40693488577](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40693488577)：**16项确定性单元测试通过**，覆盖固定四ETF公式和新资金-股票映射、行情时点、篮子完整性、排除条件、无交易授权。**全部使用人工合成测试数据**，不是历史收益研究，更未实际抓取股票PCF、未生成真实候选榜单。
 - [股票映射代码](../../national_team/stock_selection.py) 只返回两组research watchlists及筛选失败原因，输出中 `broker_trade_authorized=false`、`identifies_investor=false`。
