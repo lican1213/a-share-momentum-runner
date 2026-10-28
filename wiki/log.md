@@ -67,6 +67,13 @@ updated: 2026-10-28
 - [GitHub实际测试](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40697156501) **26项合成数据单元测试全部通过**；此验证是算法的能力，不等于实时国家队选股或获利实验，实际ETF份额/PCF的采集仍待开发。
 - 核心方向始终：四ETF入金/出金→成分股增量相对交易容量→5/10/20日成本后相对直接ETF的超额收益。执行订单独立控制，不应限制Agent输出待验证的研究机会。
 
+## 2026-10-28：对抗式P0/P1全链路审计与修复
+- 已归档[审计报告](audits/AUD-2026-10-28-red-team.md)。原来仅有合成数据测试；新增[真实交易所份额+NAV数据采集器](../national_team/live_etf_sources.py)与独立Actions，首次[run 40698385410](../records/national_team_etf/2026-10-28/40698385410-a1.json)：沪市三ETF及NAV真实取数、深市159919日频连接重置。禁止拿此输出冒充四ETF完整指标。
+- [run 40698907834](../records/national_team_etf/2026-10-28/40698907834-a1.json)确认三沪ETF在2026-10-26→27净申购代理合计5654849760元，另有159919**日期未确定**的最新份额，只可按捕获时间留档。
+- [opportunity_scan.py](../national_team/opportunity_scan.py)已将资金向正/向负股分离、补足未映射净流量/权重覆盖与冲突标记，阻止因缺数据把负敞口误判正向买点。
+- [forward_evaluation.py](../national_team/forward_evaluation.py)新增S0 ETF vs 股票候选5/10/20日配对净收益、同/次日开盘时间门槛、成熟期与无法成交截断；当前仅算术测试，尚未获得真实PCF事件后的独立样本。
+- 原指标新增企业行动/拆分是否核实标记。接下来P0依旧是159919日频、PCF成分股时点数据、官方市值分母及真实选股收益闭环。
+
 ## 未来添加新事件的格式
 `YYYY-MM-DD HH:mm +08:00 | actor | question | change/why | prior SHA → new SHA | evidence run | results/limitations | linked EXP/ADR/INC | status`
 
