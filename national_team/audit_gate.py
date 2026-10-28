@@ -80,6 +80,15 @@ def check_stock_watch(watch:dict,funding:dict)->dict:
             raise AuditViolation("stock watch claims four-fund flow with no four-fund factor")
         if Decimal(ranking["known_ETF_net_flow_proxy_cny"])!=Decimal(factor["daily_net_creation_proxy_cny"]):
             raise AuditViolation("stock watch net flow disagrees with original factor")
+    if ranking.get("data_scope")=="PARTIAL_SSE_THREE_EXCLUDES_159919":
+        latest=(funding.get("funding_event") or {}).get("partial_funding") or {}
+        if not latest:
+            raise AuditViolation("partial three-ETF stock watch has no source funding record")
+        if Decimal(str(latest.get("net_creation_proxy_cny")))!=Decimal(
+                str(ranking["known_ETF_net_flow_proxy_cny"])):
+            raise AuditViolation("stock watch partial source flow disagrees with ETF fund shares")
+        if watch.get("funding_date")!=latest.get("period",[])[-1]:
+            raise AuditViolation("stock watch partial event date disagrees with latest source")
     wts=watch.get("index_weight",{}).get("weights",{})
     checked=0
     for section in ("candidates","outflow_risk"):
