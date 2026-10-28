@@ -104,7 +104,7 @@ def fetch_universe(asof: datetime) -> list[dict]:
 
 
 def fetch_history(symbol: str, start_date: str, end_date: str) -> tuple[pd.DataFrame, str]:
-    """Try Eastmoney, then Sina. Both are real remote data; no synthetic fallback."""
+    """Try Eastmoney, Sina, then BaoStock; each provider must return valid OHLC."""
     failures = []
     for source in ("Eastmoney", "Sina"):
         try:
@@ -121,7 +121,14 @@ def fetch_history(symbol: str, start_date: str, end_date: str) -> tuple[pd.DataF
             return data, source
         except Exception as exc:
             failures.append(f"{source}:{type(exc).__name__}:{exc}")
-    raise RuntimeError("All historical providers failed: " + " | ".join(failures)[:500])
+    try:
+        from market_data import baostock_daily
+        data = baostock_daily(symbol, start_date, end_date)
+        normalize(data)
+        return data, "BaoStock direct (not AKShare)"
+    except Exception as exc:
+        failures.append(f"BaoStock:{type(exc).__name__}:{exc}")
+    raise RuntimeError("All historical providers failed: " + " | ".join(failures)[:750])
 
 
 def akquant_smoke_test(df: pd.DataFrame, symbol: str) -> dict:
