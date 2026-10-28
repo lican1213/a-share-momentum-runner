@@ -99,6 +99,7 @@ def scan_opportunities(
     covered_flow = sum((abs(flows[e]) for e in accepted), Decimal(0))
     all_flow = sum((abs(v) for v in flows.values()), Decimal(0))
     coverage = covered_flow / all_flow if all_flow else Decimal(0)
+    effective_coverage = (sum((abs(flows[e]) * accepted[e]["weight_coverage"] for e in accepted), Decimal(0)) / all_flow) if all_flow else Decimal(0)
     potential: dict[str, Decimal] = {}
     for etf, rec in accepted.items():
         for symbol, weight in rec["weights"].items():
@@ -162,12 +163,14 @@ def scan_opportunities(
             "source_url": row["source_url"],
         })
     candidates = [x for x in ranked if not x["tradability_known_blocked"]]
-    by_exposure = sorted(candidates, key=lambda r: (
+    positive_exposure = [x for x in candidates if Decimal(x["signed_implied_exposure_cny"]) > 0]
+    negative_exposure = [x for x in candidates if Decimal(x["signed_implied_exposure_cny"]) < 0]
+    by_exposure = sorted(positive_exposure, key=lambda r: (
         -Decimal(r["signed_exposure_to_adv20"]), r["symbol"]))[:top_n]
     by_strength = sorted(candidates, key=lambda r: (
         -Decimal(r["relative_strength20"]),
         -Decimal(r["signed_exposure_to_adv20"]), r["symbol"]))[:top_n]
-    outflow_risk = sorted(candidates, key=lambda r: (
+    outflow_risk = sorted(negative_exposure, key=lambda r: (
         Decimal(r["signed_exposure_to_adv20"]), r["symbol"]))[:top_n]
     total = sum(flows.values(), Decimal(0))
     if not accepted:
@@ -187,6 +190,7 @@ def scan_opportunities(
         "basket_source_age_days": {e: rec["age_days"] for e, rec in accepted.items()},
         "missing_or_rejected_baskets": basket_failures,
         "abs_flow_coverage_ratio": format(coverage, "f"),
+        "estimated_weighted_coverage_ratio": format(effective_coverage, "f"),
         "coverage_warning": "partial fund and constituent exposures are NOT scaled to all four ETFs",
         "stock_scan_count": len(ranked), "stock_skipped": len(skipped),
         "stock_skipped_details": skipped[:50],
