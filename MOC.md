@@ -2,6 +2,12 @@
 
 **Agent starts here.** [操作规则](KNOWLEDGE.md) · [AGENTS入口](AGENTS.md) · [Wiki总索引](wiki/index.md) · [一页当前状态](wiki/compiled/briefing.md)
 
+## B16：真实四ETF资金驱动的独立选股V2首次运行成功（2026-10-28）
+
+- **[V2真实Github运行40719359363](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40719359363)成功**：18项策略/评价对抗测试，2026-10-27完整四ETF真实净申赎代理+56.12亿元，2026-10-28实际150只股票样本（覆盖83.015%），同一数据源生成新版本两个前瞻冻结股票组合；源码 [strategy_v2.py](national_team/strategy_v2.py)，[EXP-0004完整协议](wiki/experiments/EXP-0004-four-etf-strategy-v2.md)。
+- **[首次策略原始JSON](records/national_team_strategy/2026-10-28/40719359363-a1-v2.json)**、[两组首次冻结事件](records/national_team_events/2026-10-28/40719359363-a1-v2.json)：S1为601825/600000/601229/601166/600519；独立S2为600309/601919/600660/601012/601838。冻结首次可用策略时点2026-10-28 23:46（北京时间），资金底层交易日不是股票成交日。V2有[自动每日运行及Git原件归档](.github/workflows/national-team-strategy-v2.yml)。
+- **结构限制必须传给后续Agent**：四ETF若仅用同一个CSI300权重代理，资金规模不会影响股票横截面排序，**ETF净申赎仅充当时间触发器**。真实PCF、2026法人主体身份与5/10/20日S1/S2相对直接持有510300的净超额收益还没有证实，真实交易授权依旧OFF。
+
 ## B14 最新事实：真实生产链路通过，旧汇金持仓被新总份额证伪
 
 - **[真实生产通过 run 40710985962](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40710985962)**：150股真实OHLC/ADV20，资金来源合并、S1/S2冻结校验、独立红队`RESEARCH_PRIOR_FOUR_CURRENT_PARTIAL_AUDITED`及**`ETF_SOURCE_RECORD_PERSISTED`写回全部成功；先前连续`cancelled`与Wiki同提交rebase冲突/未暂存文件失败已修复并列入测试。
