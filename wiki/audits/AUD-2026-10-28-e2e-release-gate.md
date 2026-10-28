@@ -6,6 +6,15 @@ updated: 2026-10-28
 ---
 # 国家队ETF→成分股：端到端红队审计、真实数据与上线门槛（2026-10-28）
 
+## B12 增量验收：150只股票真实行情、冻结事件和跨日期数据保留
+
+- [GitHub实际综合生产run 40706300084](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40706300084) **成功完成**：78项当版单测、ETF原始采集、8份历史源合并（0冲突）、150只真实个股OHLC/ADV20覆盖CSI300权重**83.015%**、同一交易日2条S1/S2冻结观察名单、纸面跟踪记录（均**未到期**）、官方PCF抓取尝试和独立红队审计（`RESEARCH_PARTIAL_SOURCES_AUDITED`，不是所有资金指标全覆盖）。
+- 当次四ETF全量研究数据在2026-10-27仍完整：**+5,612,203,530元**；次交易日2026-10-28只有三只沪市ETF最新份额/NAV，三只合计净申购代理 **+1,670,914,440元**，**不能**加上未知159919为“当日四只合计”。原实现因最新缺深市而让前一交易日完整因子消失，本轮对抗审计已修复。最新三ETF可用于次日资金方向研究；前一完整四ETF因子按**它自己的10月27日**保存。
+- [真实反例回归CI 40707718330](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40707718330)：**81项测试通过**，独立核对Oct27四ETF与Oct28三ETF不同日期及资金值、库存权重和审计标签；对混淆金额的篡改实施拒绝。**修复后完整网络生产任务**仍需匹配后续具体Actions运行而不能借用旧绿色任务。
+- [真实市场账本E2E离线重放run 40707145019](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40707145019)：利用不可回写的实际四ETF和30股记录依次冻结S1/S2、独立验算资金及股票排名，2项真实证据重放成功；不代表样本外盈利。
+- [B12数据日拆分与红队审计源码](../../national_team/event_pipeline.py)、[资金→股票最新时点选择](../../national_team/index_proxy.py)、[独立资金/排名审计](../../national_team/audit_gate.py)。
+- 最新生产源**SSE直接HTTPS接口现设明确10秒超时并最多2次尝试**，避免AKShare无超时长挂。模型编译测试已通过，但长期可靠性仍须新交易日观察。
+
 ## 执行判定
 
 **研究数据与算术层：在已验收的快照范围内 PASS。真实交易策略盈利层：NOT VERIFIED。** CI中74项单元及真实持久化市场记录检查通过（[GitHub Actions run 40704384352](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40704384352)）。实际四ETF真实数据+指数权重+30只股票日行情已跑通（[run 40702172792](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40702172792)）。跨不同来源运行的6份ETF账本合并，0份额冲突、7个四ETF完整交易日，已通过[run 40702572594](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40702572594)独立验收。
