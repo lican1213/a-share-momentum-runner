@@ -6,12 +6,19 @@ updated: 2026-10-28
 ---
 # 新Agent上手与交接：最短可复现路径
 
+## 当前主要项目（旧三日动量不再是主线）
+
+1. [MOC](../../MOC.md) → [B11/E2E红队审计](../audits/AUD-2026-10-28-e2e-release-gate.md) → [四ETF真实资金记录](../../records/national_team_etf/2026-10-28/40702172792-a1.json) → [真实股票指数代理观察名单](../../records/national_team_watch/2026-10-28/40702172792-a1.json)。
+2. 资金指标用[core_flow_factors.py](../../national_team/core_flow_factors.py)、[szse_json.py](../../national_team/szse_json.py)、[sse_direct.py](../../national_team/sse_direct.py)、[record_merge.py](../../national_team/record_merge.py)；股票、纸面评价与审计用 [live_stock_watch.py](../../national_team/live_stock_watch.py)、[paper_events.py](../../national_team/paper_events.py)、[live_paper_tracker.py](../../national_team/live_paper_tracker.py)、[audit_gate.py](../../national_team/audit_gate.py)。
+3. 最新正式Actions见[国家队真实采集](https://github.com/lican1213/a-share-momentum-runner/actions/workflows/national-team-live.yml)与[独立单元审计](https://github.com/lican1213/a-share-momentum-runner/actions/workflows/national-team-factors.yml)。复核精确代码SHA、完整源记录、红队状态、连续交易日，不能只看绿色workflow。
+4. 先证明资金源与选股排名准确，再评价5/10/20日S0 ETF基准、S1和S2股票组合；当前只有OHLC模拟评价接口、没有稳定正超额收益证据。PCF与中央汇金真实持仓仍需另行取得。
+
 ## 15分钟阅读顺序
 1. [根MOC](../../MOC.md) 和 [AGENTS](../../AGENTS.md)；
 2. [一页研究状态](../compiled/briefing.md)、[模型台账](../models/registry.md)；
 3. [源证据索引](../indices/runs.md) → 最新成功的 `records/` 文件，检查run ID/commit SHA与数据源；
-4. [EXP-0001](../experiments/EXP-0001-baseline.md)、[EXP-0002](../experiments/EXP-0002-regime.md)、[事故史](../incidents/INC-0001-bootstrapping.md)；
-5. [发行门槛](https://github.com/lican1213/a-share-momentum-runner/issues/1) 与 [研究待办](https://github.com/lican1213/a-share-momentum-runner/issues/2)。
+4. [EXP-0003资金→成分股](../experiments/EXP-0003-etf-to-stock.md)、[最新E2E红队审计](../audits/AUD-2026-10-28-e2e-release-gate.md)、[事故史](../incidents/INC-0001-bootstrapping.md)；EXP-0001/0002为旧三日突破历史支线；
+5. [当前国家队P0策略任务](https://github.com/lican1213/a-share-momentum-runner/issues/3)；旧Issue1/2仅作历史。
 
 ## 安全执行检查
 ```bash
