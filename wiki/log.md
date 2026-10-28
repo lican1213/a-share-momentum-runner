@@ -55,6 +55,12 @@ updated: 2026-10-28
 - 将旧三日动量Workflow改为手动/代码变更CI，取消旧的每日三次定时执行；其历史数据、H01/H04结果仍保留。用户的ChatGPT三时段报告仍运行，核心改为四ETF资金指标＋国家队公开持仓。
 - 国家队专用官方份额、NAV及沪深300流通市值实时抓取仍**未完成**；根据[Issue #3](https://github.com/lican1213/a-share-momentum-runner/issues/3)执行，不得把纯算术单测报告为国家队已被监测到的资金行为。
 
+## 2026-10-28：策略重点确认为“国家队资金信号之后的成分股选择”
+- 用户指出核心不是单纯监控国家队，而是**国家队相关资金信号后筛选并跟踪相应股票，争取跟随收益**。
+- [ADR-0004](decisions/ADR-0004-stock-selection-after-flow.md) 固定两条身份路径（具体国家队公司持仓与ETF一级市场全体净申赎不能混淆），提出资金份额 × 当时ETF权重→股票潜在敞口/20日成交额，另检验相对沪深300强势。必须对比直接持有ETF，研究5/10/20日扣成本超额收益。
+- [EXP-0003](experiments/EXP-0003-etf-to-stock.md)、[stock_selection.py](../national_team/stock_selection.py) 已提交；[实际测试 40693488577](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40693488577)通过**16项合成数据单测**，不代表真实PCF/国家队持仓数据已抓到，更不代表有可盈利股票名单。
+- 旧三日追涨不重新激活。要实现后半段需先补官方ETF份额、历史PCF/权重和点时股票20日成交额等真实数据，全部证据可追踪到时点和原始来源。
+
 ## 未来添加新事件的格式
 `YYYY-MM-DD HH:mm +08:00 | actor | question | change/why | prior SHA → new SHA | evidence run | results/limitations | linked EXP/ADR/INC | status`
 
