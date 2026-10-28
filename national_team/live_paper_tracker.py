@@ -10,6 +10,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from national_team.forward_evaluation import evaluate_frozen_event
+from national_team.ohlc_execution_guard import conservative_ohlc_bar
 from national_team.event_pipeline import exchange_sessions
 
 BEIJING=ZoneInfo("Asia/Shanghai")
@@ -35,19 +36,27 @@ def load_history(ak,code,start,end):
         day,opening,closing,volume="date","open","close","volume"
     if not all(c in df.columns for c in (day,opening,closing,volume)):
         raise ValueError("unknown market OHLC schema")
+    high_col="最高" if "最高" in df.columns else "high"
+    low_col="最低" if "最低" in df.columns else "low"
+    if high_col not in df.columns or low_col not in df.columns:
+        raise ValueError("high/low required for price-limit fill screening")
     out={}
-    for _,r in df.iterrows():
-        d=str(r[day])[:10]
-        if d>date.fromisoformat(end).isoformat() or d<date.fromisoformat(start).isoformat():
-            continue
+    prev_close=None
+    data=df.copy()
+    data["_session"]=data[day].astype(str).str[:10]
+    data=data.sort_values("_session")
+    for _,r in data.iterrows():
+        d=r["_session"]
         if d in out:raise ValueError(f"{code}: duplicate OHLC day")
         o=float(r[opening]);c=float(r[closing]);v=float(r[volume])
         if not (o>0 and c>0 and v>=0):
             raise ValueError(f"{code} invalid OHLC/volume {d}")
-        out[d]={"open":str(o),"close":str(c),
-                # A nonzero day volume alone does NOT establish an exact fill.
-                "entry_blocked":False if v>0 else True,
-                "exit_blocked":False if v>0 else True}
+        if d>date.fromisoformat(end).isoformat():
+            continue
+        guard=conservative_ohlc_bar(o,r[high_col],r[low_col],c,v,prev_close)
+        if d>=date.fromisoformat(start).isoformat():
+            out[d]={"open":str(o),"close":str(c),**guard}
+        prev_close=c
     return out,source,hashlib.sha256(df.to_csv(index=False).encode()).hexdigest()
 
 def assess(ak,events_root:Path,asof:date,max_events:int=64)->dict:
