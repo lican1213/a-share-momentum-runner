@@ -60,7 +60,15 @@ def validate_observation(row: Mapping[str, Any], code: str, date: str,
     nav_published_at = utc_aware(row.get("nav_published_at"), f"{code} {date} NAV")
     if cutoff is not None and max(published_at, nav_published_at) > cutoff:
         raise DataGateError(f"{code} {date}: shares/NAV not public before inference cutoff")
-    aum = dec(row["aum"], f"{code} {date} aum") if row.get("aum") is not None else shares * nav
+    if row.get("aum") is not None:
+        if not str(row.get("aum_source_url", "")).startswith("https://"):
+            raise DataGateError(f"{code} {date}: official AUM requires a source URL")
+        aum_published = utc_aware(row.get("aum_published_at"), f"{code} {date} AUM")
+        if cutoff is not None and aum_published > cutoff:
+            raise DataGateError(f"{code} {date}: AUM not public before inference cutoff")
+        aum = dec(row["aum"], f"{code} {date} aum")
+    else:
+        aum = shares * nav
     return {
         "shares": shares, "nav": nav, "aum": aum,
         "aum_is_estimate": row.get("aum") is None,
