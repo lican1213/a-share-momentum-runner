@@ -3,6 +3,11 @@
 **2026-10-28 项目主线已纠偏**：用户目标是追踪中央汇金等可核实机构公开持仓与国家队关注ETF的真实份额净申赎，并检验公开信号之后跟随是否有收益。详见[ADR-0003](wiki/decisions/ADR-0003-national-team-pivot.md)与[首要任务 Issue #3](https://github.com/lican1213/a-share-momentum-runner/issues/3)。旧三日动量系统继续作为历史研究分支，**不是国家队交易信号**。尚未部署官方ETF份额管线，不能把旧运行报告当成国家队买卖记录。
 
 
+## 机会优先的股票研究扫描（B9）
+[opportunity_scan.py](national_team/opportunity_scan.py)：少一份ETF PCF或少几只股票日线时仍可对**真实可验证的部分**排序，公开覆盖比例；净流出同样提示风险。低流动性、短上市年限、较大相对涨幅只作风险标签，不再一刀切。原 [stock_selection.py](national_team/stock_selection.py) 保留为严格审计版本。两者都不直接提交券商订单。
+
+**已验证**：[26项合成数据测试](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40697156501)；ETF/PCF官方数据采集及真实选股收益仍需运行数据测试。
+
 ## 交易策略主线：资金入场线索之后选什么股票？
 [ADR-0004 选股决策](wiki/decisions/ADR-0004-stock-selection-after-flow.md) · [EXP-0003 ETF基准S0 vs 股票S1/S2](wiki/experiments/EXP-0003-etf-to-stock.md) · [股票映射代码](national_team/stock_selection.py)。
 
