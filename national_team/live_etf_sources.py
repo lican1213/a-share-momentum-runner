@@ -163,17 +163,27 @@ def collect(ak, asof: date, run_id: str, attempt: str, out_root: Path):
                                       "unit_conversion":"official current_size ten_thousand_shares x 10000"}
         except Exception as exc:
             result["errors"].append(f"SZSE_DATED_JSON:{type(exc).__name__}:{str(exc)[:240]}")
-    # SSE API needs one request per calendar day; weekends/holidays may be empty.
-    for day in dates[-12:]:
+    # Bounded native SSE HTTPS adapter. Unlike AKShare's internal requests.get,
+    # each attempt has an explicit timeout, and official TOT_VOL units (10k)
+    # are multiplied exactly once into raw shares.
+    from national_team.sse_direct import fetch_sse_direct
+    try:
+        from national_team.event_pipeline import exchange_sessions
+        sse_days=set(exchange_sessions(asof.isoformat(),lookback_days=15))
+    except Exception as exc:
+        result["errors"].append(f"SSE_CALENDAR:{type(exc).__name__}:{str(exc)[:130]}")
+        sse_days={d for d in dates[-15:] if date.fromisoformat(d).weekday()<5}
+    for day in [d for d in dates[-15:] if d in sse_days]:
         try:
-            df = ak.fund_etf_scale_sse(date=day.replace("-", ""))
-            result["raw_input_hashes"][f"SSE:{day}"] = hashlib.sha256(df.to_csv(index=False).encode()).hexdigest()
-            rows = normalized_day(df, day, SSE_CODES, "akshare.sse.normalized_shares")
+            rows = fetch_sse_direct(day,attempts=2,timeout=10)
+            result["raw_input_hashes"][f"SSE_DIRECT:{day}"] = hashlib.sha256(
+                json.dumps(rows,sort_keys=True).encode()).hexdigest()
             if rows:
                 result["observations_by_date"].setdefault(day, {}).update(
-                    {k: {"shares": v, "shares_source": "SSE"} for k,v in rows.items()})
+                    {k: {"shares": v, "shares_source": "SSE_DIRECT",
+                         "shares_source_url":SSE_URL} for k,v in rows.items()})
         except Exception as exc:
-            result["errors"].append(f"SSE:{day}:{type(exc).__name__}:{str(exc)[:140]}")
+            result["errors"].append(f"SSE_DIRECT:{day}:{type(exc).__name__}:{str(exc)[:165]}")
     candidates = {day for day in result["observations_by_date"] if day <= asof.isoformat()}
     for code in CORE_FOUR:
         try:
