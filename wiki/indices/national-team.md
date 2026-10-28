@@ -12,6 +12,10 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 
 | Source class | Trade/record date | Run ID | Recorded status | Evidence |
 | --- | --- | --- | --- | --- |
+| ETF source attempts | 2026-10-28 | 40710985962 | PRIOR_FULL_FOUR_AND_LATEST_PARTIAL_OBSERVED | [JSON](../../records/national_team_etf/2026-10-28/40710985962-a1.json) |
+| Four-fund merged funding | 2026-10-28 | 40710985962 | PARTIAL_LATEST_WITH_PRIOR_FULL_FOUR_FACTOR | [JSON](../../records/national_team_merged/2026-10-28/40710985962-a1.json) |
+| CSI300 stock research watches | 2026-10-28 | 40710985962 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-10-28/40710985962-a1.json) |
+| Official exchange PCF attempts | 2026-10-28 | 40710985962 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-10-28/40710985962-a1.json) |
 | ETF source attempts | 2026-10-28 | 40707446444 | FOUR_ETF_FACTOR_OBSERVED_AFTER_CAPTURE_NOT_HISTORICAL_PIT | [JSON](../../records/national_team_etf/2026-10-28/40707446444-a1.json) |
 | ETF source attempts | 2026-10-28 | 40706300084 | SHARES_NAV_HISTORY_OBSERVED_NOT_PIT_HISTORICAL_SIGNALS | [JSON](../../records/national_team_etf/2026-10-28/40706300084-a1.json) |
 | Four-fund merged funding | 2026-10-28 | 40706300084 | PARTIAL_FUNDING_ONLY | [JSON](../../records/national_team_merged/2026-10-28/40706300084-a1.json) |
@@ -37,6 +41,9 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | ETF source attempts | 2026-10-28 | 40698907834 | PARTIAL_SSE_THREE_WITH_NAV_ONLY | [JSON](../../records/national_team_etf/2026-10-28/40698907834-a1.json) |
 | ETF source attempts | 2026-10-28 | 40698827238 | ATTEMPTED_NO_COMPLETE_FACTOR | [JSON](../../records/national_team_etf/2026-10-28/40698827238-a1.json) |
 | ETF source attempts | 2026-10-28 | 40698385410 | ATTEMPTED_NO_COMPLETE_FACTOR | [JSON](../../records/national_team_etf/2026-10-28/40698385410-a1.json) |
+| Frozen paper-event cohorts | 2026-10-28 | 40710985962-a1 | ALL_EVENTS_DUPLICATE_PREVIOUSLY_FROZEN | [JSON](../../records/national_team_events/2026-10-28/40710985962-a1.json) |
+| Matured paper outcomes | 2026-10-28 | 40710985962-a1 | PAPER_EVALUATION_ATTEMPTED | [JSON](../../records/national_team_paper/2026-10-28/40710985962-a1.json) |
+| Independent research integrity audit | 2026-10-28 | 40710985962-a1 | RESEARCH_PRIOR_FOUR_CURRENT_PARTIAL_AUDITED | [JSON](../../records/national_team_audits/2026-10-28/40710985962-a1.json) |
 | Frozen paper-event cohorts | 2026-10-28 | 40706300084-a1 | FROZEN_PROSPECTIVE_RESEARCH_EVENTS | [JSON](../../records/national_team_events/2026-10-28/40706300084-a1.json) |
 | Matured paper outcomes | 2026-10-28 | 40706300084-a1 | PAPER_EVALUATION_ATTEMPTED | [JSON](../../records/national_team_paper/2026-10-28/40706300084-a1.json) |
 | Independent research integrity audit | 2026-10-28 | 40706300084-a1 | RESEARCH_PARTIAL_SOURCES_AUDITED | [JSON](../../records/national_team_audits/2026-10-28/40706300084-a1.json) |

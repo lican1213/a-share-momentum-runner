@@ -7,13 +7,13 @@ updated: 2026-10-28
 # 国家队相关ETF资金与个股观察简报
 
 - 数据截止：2026-10-28（研究账本；不等于实时国家队订单）
-- 独立审计：RESEARCH_PARTIAL_SOURCES_AUDITED
+- 独立审计：RESEARCH_PRIOR_FOUR_CURRENT_PARTIAL_AUDITED
 
 ## 核心四只ETF资金
 - 最近完整四ETF日：2026-10-27，当日净申赎代理 +56.12亿元；五交易日资金强度 +29.11%
 - 最新部分资金日期：2026-10-27 → 2026-10-28，覆盖510300,510310,510330，合计 +16.71亿元
 - 四ETF日期与最新部分资金日期可能不同，不可相加或写成同一个交易日。
-- 完整四ETF是否来自先前独立重算的归档：是，参见来源路径 records/national_team_merged/2026-10-28/40702572594-a1.json
+- 完整四ETF是否来自先前独立重算的归档：否或无足额资料
 
 ## S1 资金敞口／成交额研究观察
 - 股票研究日期：2026-10-28；实际覆盖 150只；指数权重池占比 +83.02%
@@ -29,8 +29,8 @@ updated: 2026-10-28
 - 需要核对2026年基金持有人明细与任何ETF份额折算；这是一条身份有效性**红队异常**，不是推定某主体当天实际卖单。
 
 ## S2 与验证状态
-- 冻结S2：600000, 601816, 601166, 600519, 000333
-- 现有纸面观察：NT-97c649b2aec78ac94133-S1_FLOW_OVER_ADV20:NOT_MATURED_YET, NT-97c649b2aec78ac94133-S2_FLOW_PLUS_PRICE_STRENGTH:NOT_MATURED_YET
+- 冻结S2：无新增冻结事件
+- 现有纸面观察：NT-97c649b2aec78ac94133-S1_FLOW_OVER_ADV20:NOT_MATURED_YET, NT-97c649b2aec78ac94133-S2_FLOW_PLUS_PRICE_STRENGTH:NOT_MATURED_YET, NT-bd5a340716cee70d49c9-S1_FLOW_OVER_ADV20:NOT_MATURED_YET, NT-bd5a340716cee70d49c9-S2_FLOW_PLUS_PRICE_STRENGTH:NOT_MATURED_YET
 - 5/10/20交易日扣成本、样本外能否跑赢直接买沪深300ETF：**尚未证实**。
 
 ## 国家队法定身份与误归因防线
