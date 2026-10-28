@@ -8,6 +8,11 @@ updated: 2026-10-28
 
 [返回根MOC](../MOC.md) · [当前简报](compiled/briefing.md) · [维护协议](../KNOWLEDGE.md)
 
+## 真正的收益策略（优先跟踪）
+- [ADR-0004 ETF资金变化之后选哪些股票](decisions/ADR-0004-stock-selection-after-flow.md)
+- [EXP-0003 S0直接ETF vs S1资金冲击选股 vs S2价格确认选股](experiments/EXP-0003-etf-to-stock.md)
+- [股票映射源码](../national_team/stock_selection.py)（只有合成数据测试通过，暂无真实策略回报）
+
 ## 原始资金指标与国家队身份交叉验证
 - [2026-10-27四ETF原始资金进出指标与双市值覆盖率](data/original-four-etf-indicator.md)
 - [最新合并决策：ADR-0003](decisions/ADR-0003-national-team-pivot.md)
