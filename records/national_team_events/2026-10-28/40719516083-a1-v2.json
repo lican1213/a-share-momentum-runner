@@ -1,0 +1,8 @@
+{
+  "status": "NO_NEW_V2_EVENTS",
+  "model_version": "NT_FLOW_PIT_V2_20261028",
+  "source_strategy": "records/national_team_strategy/2026-10-28/40719516083-a1-v2.json",
+  "events": [],
+  "duplicate_previously_frozen": 2,
+  "no_broker_orders": true
+}
