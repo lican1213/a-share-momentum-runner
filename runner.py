@@ -24,6 +24,7 @@ import quantstats as qs
 
 from strategy import candidate_at, historical_trades, normalize, signal_id
 from research_validation import chronological_diagnostic, summarize
+from market_context import live_context
 
 
 TZ = ZoneInfo("Asia/Shanghai")
@@ -203,6 +204,7 @@ def main() -> int:
                                   "AKShare stock_zh_a_hist (Eastmoney)",
                                   "AKShare tool_trade_date_hist_sina (Sina)"]
         audit["universe_snapshot_note"] = "capture time is fetch time, not exchange quote time"
+        audit["market_context"] = live_context(ak, expected)
         candidates, all_trades, verified = [], [], []
         problems = []
         raw_hashes = {}
