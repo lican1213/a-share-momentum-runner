@@ -12,6 +12,14 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-29 | [0f51707693](https://github.com/lican1213/a-share-momentum-runner/commit/0f51707693da4fce75133ef981f7a3777d10670e) | Can Li | fix: run V2 stock selection after scheduled next-morning ETF data capture |
+| 2026-10-29 | [5c17c9ce18](https://github.com/lican1213/a-share-momentum-runner/commit/5c17c9ce184da79bec9893ec5ba1a046a0e8ab00) | Can Li | fix: align daily source refresh with next-morning ETF publication |
+| 2026-10-29 | [aa0313829f](https://github.com/lican1213/a-share-momentum-runner/commit/aa0313829f1ba2f5f1f6965d8aad6c27927078ce) | Can Li | fix(data): SSE HTTP403 circuit breaker plus dated AKShare fallback preserving unit and source-conflict ledger |
+| 2026-10-29 | [44f415e636](https://github.com/lican1213/a-share-momentum-runner/commit/44f415e6364126a53681f2fca3fae282bd393dda) | Can Li | fix: correct reference price in one-price bar detection |
+| 2026-10-29 | [7be48721b5](https://github.com/lican1213/a-share-momentum-runner/commit/7be48721b54df80e6e7218fe666706815e9763b8) | Can Li | test: daily volume does not imply fill on one-price limit sessions |
+| 2026-10-29 | [6121624289](https://github.com/lican1213/a-share-momentum-runner/commit/612162428918d75d12571ba0813e63966b9ec7a0) | Can Li | fix(execution): require OHLC high low and censor possible limit-locked bars using prior trading close |
+| 2026-10-29 | [789b4c4052](https://github.com/lican1213/a-share-momentum-runner/commit/789b4c4052973b2adf4148e0ca3b16b1d17e1c7c) | Can Li | feat: conservatively censor one-price suspected limit-locked bars instead of asserting fills |
+| 2026-10-28 | [6629fb1c3a](https://github.com/lican1213/a-share-momentum-runner/commit/6629fb1c3a7376c89a808f6ab9ab1c7f87275a10) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-28 | [1a73ac2450](https://github.com/lican1213/a-share-momentum-runner/commit/1a73ac2450e1fe5ad0e91361bee78a946191e1c9) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-29 | [f55cf468d4](https://github.com/lican1213/a-share-momentum-runner/commit/f55cf468d447f141a7d02686e37af454f6317e4d) | Can Li | fix: show V2 frozen S1 and S2 before clearly marked V1 legacy candidates |
 | 2026-10-29 | [04350abd15](https://github.com/lican1213/a-share-momentum-runner/commit/04350abd15ad6946ff983352a2eb8d374867a5a6) | Can Li | feat: resolve earliest original V2 frozen events in daily digest without changing historic V1 |
