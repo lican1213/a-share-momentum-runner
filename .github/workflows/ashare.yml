@@ -1,30 +1,39 @@
-name: A-share live data integrity check
+name: A-share research data audit
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'records/**'
+      - 'README.md'
+      - 'skills/**'
   workflow_dispatch:
   schedule:
     - cron: '30 0 * * 1-5'
     - cron: '30 4 * * 1-5'
     - cron: '30 9 * * 1-5'
 permissions:
-  contents: read
+  contents: write
+concurrency:
+  group: ashare-audit-ledger
+  cancel-in-progress: false
 jobs:
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: 'pip'
           cache-dependency-path: 'requirements.txt'
-      - name: Install pinned dependencies
+      - name: Install declared dependencies
         run: python -m pip install -r requirements.txt
-      - name: Run deterministic unit tests (not market backtest)
+      - name: Deterministic unit tests
         run: python -m pytest -q
-      - name: Run validated data pipeline
+      - name: Execute live data and research replay
         shell: bash
         run: |
           set -euo pipefail
@@ -34,12 +43,35 @@ jobs:
             '30 4 * * 1-5') PHASE=mid ;;
             '30 9 * * 1-5') PHASE=close ;;
           esac
+          echo "RUN_PHASE=$PHASE" >> "$GITHUB_ENV"
           python runner.py --phase "$PHASE" --out output
+      - name: Append immutable-by-filename run evidence
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python record_runs.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- records/
+          if git diff --staged --quiet; then
+            echo "No new evidence to persist"; exit 0
+          fi
+          git commit -m "audit: persist run $GITHUB_RUN_ID attempt ${GITHUB_RUN_ATTEMPT:-1} [skip ci]"
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              echo "AUDIT_RECORD_PERSISTED"; exit 0
+            fi
+            sleep 2
+          done
+          echo "Audit push failed after retries" >&2
+          exit 3
       - name: Upload auditable run artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: a-share-run-${{ github.run_id }}
+          name: a-share-run-${{ github.run_id }}-a${{ github.run_attempt }}
           path: output/
           if-no-files-found: warn
-          retention-days: 30
+          retention-days: 90
