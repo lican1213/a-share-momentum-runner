@@ -6,6 +6,9 @@ updated: 2026-10-28
 ---
 # 尚未搞定的问题与验收门槛
 
+**优先级变更（2026-10-28）**：先完成[国家队跟踪MVP Issue #3](https://github.com/lican1213/a-share-momentum-runner/issues/3)与[ADR-0003](decisions/ADR-0003-national-team-pivot.md)，建立9只ETF的官方每日份额/基金持有人登记，厘清能否跟随盈利。下表是旧三日追涨研究的历史任务清单，除非安全/证据修复，暂不投入开发资源。
+
+
 | 优先级 | 问题 / 拦路因素 | 最低证明方式 | 关联 |
 | --- | --- | --- | --- |
 | P0 | 当前回放仅用12只存续股票，存在样本选择和幸存者偏差 | 重建每个历史日期当时的股票池，包括退市、ST、IPO期限、板块适用规定，点时回测后再审 | [Issue 1](https://github.com/lican1213/a-share-momentum-runner/issues/1) |
