@@ -4,7 +4,7 @@ Uses scenario next-session OPEN to horizon-session CLOSE; not actual broker fill
 This is an evaluation primitive, not evidence of a validated strategy.
 """
 from __future__ import annotations
-from datetime import datetime
+from datetime import datetime, time
 from zoneinfo import ZoneInfo
 from decimal import Decimal, InvalidOperation
 
@@ -39,7 +39,14 @@ def evaluate_frozen_event(event,trade_sessions,prices,*,benchmark="510300",
     published=published.astimezone(ZoneInfo("Asia/Shanghai"))
     if list(trade_sessions)!=sorted(set(trade_sessions)):
         raise ValueError("exchange session list must be unique sorted")
-    entry_candidates=[i for i,d in enumerate(trade_sessions) if d>published.date().isoformat()]
+    # For a source published before the 09:25 CN pre-open cutoff, this
+    # session's OPEN may be used; otherwise use the next exchange session.
+    # PCF published at 08:30 can therefore enter that day's open, whereas
+    # post-close ETF net creations cannot retroactively trade the close.
+    local_day = published.date().isoformat()
+    today_open_eligible = published.time() <= time(9,25)
+    entry_candidates = [i for i,d in enumerate(trade_sessions)
+                        if d > local_day or (d == local_day and today_open_eligible)]
     if not entry_candidates:
         return {"event_id":event_id,"status":"ENTRY_NOT_YET_AVAILABLE","results":{}}
     ix=entry_candidates[0]
@@ -92,7 +99,7 @@ def evaluate_frozen_event(event,trade_sessions,prices,*,benchmark="510300",
                      "unfilled_cash_allocations":sum(p is None for _,p in frozen)}
     return {"event_id":event_id,"first_public_at":published.isoformat(),
             "entry_session":entry,"status":"RESEARCH_PROXY_ONLY",
-            "fill_model":"next-trading-session open to horizon close, never actual orders",
+            "fill_model":"first eligible exchange session open after disclosure; same-day only if public by 09:25 CN; horizon close proxy, never actual orders",
             "cost_assumptions_bps":{"commission_each_side":str(fee),
                                       "slippage_each_side":str(slip),
                                       "stock_sell_stamp":str(stamp)},
