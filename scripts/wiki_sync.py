@@ -122,11 +122,11 @@ def save_briefing(records: list[tuple[Path, dict]], now: str) -> None:
         body = intro + "\n".join([
             f"- 最新持久化run：[{obj.get('github_run_id')}]({rel})；时段 {obj.get('phase')}；记录时间 {obj.get('collected_beijing_time')}.",
             f"- 输入代码SHA：[{str(obj.get('source_commit_sha'))[:12]}]({BASE}/commit/{obj.get('source_commit_sha')})；不保证等于当前HEAD.",
-            f"- 审计执行状态：\`{audit.get('status', 'UNKNOWN')}\`；截止行情：{audit.get('required_history_date', 'not checked')}.",
+            f"- 审计执行状态：`{audit.get('status', 'UNKNOWN')}`；截止行情：{audit.get('required_history_date', 'not checked')}.",
             f"- 有效个股数：{audit.get('verified_symbols', 'unknown')}；研究回放完成交易：{hist.get('closed', 'unknown')}；执行截断：{hist.get('censored','unknown')}.",
             f"- 历史代理交易平均净收益：{hist.get('mean_net_return', 'unavailable')}；历史胜率：{hist.get('win_rate', 'unavailable')}（为比例值，非百分数）.",
             f"- 大盘数据门槛：{context.get('passes_market_data_gate', 'unverified')}；历史股票池偏差解决：{model.get('survivorship_bias_addressed', False)}；独立OOS验证通过：{model.get('out_of_sample_passed', False)}.",
-            f"- 正式交易信号：{len(sig.get('signals') or [])}；信号状态：\`{sig.get('status', 'UNAVAILABLE')}\`.",
+            f"- 正式交易信号：{len(sig.get('signals') or [])}；信号状态：`{sig.get('status', 'UNAVAILABLE')}`.",
             "- 研究结论：基于当前固定存续股票池的历史日K代理，非真实成交，且不可推断未来盈利。要评估改动，读EXP/ADR/INC与对应run JSON。",
         ])
         if audit.get("status") not in ("COMPUTED_RESEARCH_ONLY", "COMPUTED_WITH_LIMITATIONS"):
