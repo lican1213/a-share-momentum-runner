@@ -168,12 +168,40 @@ def collect(ak, asof: date, run_id: str, attempt: str, out_root: Path):
         except Exception as exc:
             result["errors"].append(f"NAV:{code}:{type(exc).__name__}:{str(exc)[:200]}")
 
+    # Partial descriptive facts must be preserved without silently claiming
+    # they are the ORIGINAL complete four-ETF signal.
+    three_sse = {"510300", "510310", "510330"}
+    sse_complete = sorted(d for d, funds in result["observations_by_date"].items()
+                          if three_sse.issubset(funds)
+                          and all("nav" in funds[c] for c in three_sse))
+    if len(sse_complete) >= 2:
+        prev_day, last_day = sse_complete[-2:]
+        current = result["observations_by_date"][last_day]
+        previous = result["observations_by_date"][prev_day]
+        contribution = {code: (
+            Decimal(current[code]["shares"]) - Decimal(previous[code]["shares"])
+        ) * Decimal(current[code]["nav"]) for code in sorted(three_sse)}
+        result["partial_SSE_three_only"] = {
+            "label": "SSE three ETF flow only, EXCLUDES Shenzhen 159919",
+            "period": [prev_day,last_day],
+            "same_day_NAV_weighted_flow_cny": format(sum(contribution.values(),Decimal(0)),"f"),
+            "per_etf_flow_cny": {c: format(v,"f") for c,v in contribution.items()},
+            "consecutive_exchange_sessions_verified": False,
+            "not_full_original_four_factor": True,
+            "not_proof_of_huijin_orders": True,
+        }
+    # Earliest observable public availability is conservatively when THIS
+    # run has finished collecting, not when the job started.
+    result["capture_completed_beijing"] = datetime.now(ZoneInfo("Asia/Shanghai")).isoformat()
+    result["first_observed_no_earlier_than"] = result["capture_completed_beijing"]
     complete_shares = sorted(d for d, fund in result["observations_by_date"].items()
                              if set(CORE_FOUR).issubset(fund))
     complete_nav = sorted(d for d in complete_shares if all(
         "nav" in result["observations_by_date"][d][code] for code in CORE_FOUR))
     result["dates_with_four_shares"] = complete_shares
     result["dates_with_four_shares_and_nav"] = complete_nav
+    if not complete_shares and "partial_SSE_three_only" in result:
+        result["status"] = "PARTIAL_SSE_THREE_WITH_NAV_ONLY"
     if complete_shares:
         last = complete_shares[-1]
         result["latest_complete_shares_date"] = last
