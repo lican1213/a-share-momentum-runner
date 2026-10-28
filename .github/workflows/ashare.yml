@@ -1,23 +1,24 @@
-name: A-share research data audit
+name: Legacy 3-day momentum historical replay (manual or code CI)
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - 'records/**'
-      - 'README.md'
-      - 'skills/**'
-      - 'wiki/**'
-      - 'AGENTS.md'
-      - 'KNOWLEDGE.md'
-      - 'MOC.md'
-      - 'CLAUDE.md'
-      - 'GEMINI.md'
-      - '.github/copilot-instructions.md'
+    paths:
+      - 'strategy.py'
+      - 'runner.py'
+      - 'research_validation.py'
+      - 'market_context.py'
+      - 'market_data.py'
+      - 'regime_study.py'
+      - 'edge_diagnostics.py'
+      - 'record_runs.py'
+      - 'requirements.txt'
+      - 'tests/test_strategy.py'
+      - 'tests/test_market_context.py'
+      - 'tests/test_time_split_and_execution.py'
+      - 'tests/test_regime_study.py'
+      - 'tests/test_edge_diagnostics.py'
+      - '.github/workflows/ashare.yml'
   workflow_dispatch:
-  schedule:
-    - cron: '30 0 * * 1-5'
-    - cron: '30 4 * * 1-5'
-    - cron: '30 9 * * 1-5'
 permissions:
   contents: write
 concurrency:
