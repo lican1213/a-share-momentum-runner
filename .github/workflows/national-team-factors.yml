@@ -6,6 +6,7 @@ on:
       - 'national_team/**'
       - 'tests/test_national_team_factors.py'
       - 'tests/test_national_team_stock_selection.py'
+      - 'tests/test_national_team_opportunity_scan.py'
       - '.github/workflows/national-team-factors.yml'
   workflow_dispatch:
 permissions:
