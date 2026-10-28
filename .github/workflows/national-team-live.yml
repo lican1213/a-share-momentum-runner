@@ -13,12 +13,12 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: nt-etf-actual-shares
-  cancel-in-progress: false
+  group: nt-etf-live-v2-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   four-etf-data:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 22
     steps:
       - uses: actions/checkout@v4
         with:
