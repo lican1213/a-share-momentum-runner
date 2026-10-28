@@ -5,9 +5,10 @@ on:
     paths:
       - '.github/workflows/national-team-wiki-sync.yml'
       - 'national_team/daily_report.py'
+      - 'scripts/national_team_wiki.py'
       - 'data/national_team_holders/**'
   workflow_run:
-    workflows: ["National-team four ETF actual exchange data collection"]
+    workflows: ["National-team four ETF actual exchange data collection", "National-team V2 frozen stock strategy from verified four ETF evidence"]
     types: [completed]
   workflow_dispatch:
   schedule:
