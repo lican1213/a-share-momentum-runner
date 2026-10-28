@@ -12,6 +12,10 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-28 | [5beb3cbe7a](https://github.com/lican1213/a-share-momentum-runner/commit/5beb3cbe7aa86c3a6b5bd3f7092971243ea106ad) | Can Li | fix(report): flag 2025 Huijin reported holdings incompatible with 2026 entire 159919 total; preserve immutable v3 decision snapshot |
+| 2026-10-28 | [094833b776](https://github.com/lican1213/a-share-momentum-runner/commit/094833b776397f89fec675f52e17bafbf0b54f33) | Can Li | test(identity redteam): 2025 Huijin 35.50bn shares exceed 2026 whole 159919 6.94bn, prevent false current-holder claim |
+| 2026-10-28 | [f438ff4924](https://github.com/lican1213/a-share-momentum-runner/commit/f438ff4924d21860a7bb6c07bc1633856d23a9dc) | Can Li | audit(identity): reject stale 2025 Huijin pair as valid 2026 holdings when both exceed newer aggregate fund units |
+| 2026-10-28 | [4d51669afa](https://github.com/lican1213/a-share-momentum-runner/commit/4d51669afa7e71dd9c1e9b2269534c3211cc64e5) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-28 | [1df1191766](https://github.com/lican1213/a-share-momentum-runner/commit/1df11917660d1905b55a8c0717a065c67d3cabac) | Can Li | data(holders): anchor 2026-06-30 159919 total shares from fund original 8.1, flag prior 2025 Huijin holdings as stale |
 | 2026-10-28 | [d47c7a23cd](https://github.com/lican1213/a-share-momentum-runner/commit/d47c7a23cd3e93c6a2416783c7bd46d05fbd0c9c) | Can Li | test(live): require Git worktree cleanup before rebase to prevent hidden unstaged Wiki failures |
 | 2026-10-28 | [cd56bd9aa5](https://github.com/lican1213/a-share-momentum-runner/commit/cd56bd9aa52ef182c8af1f66c8a5875505c1f208) | Can Li | fix(live): restore unstaged derived Wiki summaries before rebase so immutable source evidence can push |
