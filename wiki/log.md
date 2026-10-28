@@ -101,3 +101,9 @@ updated: 2026-10-28
 `YYYY-MM-DD HH:mm +08:00 | actor | question | change/why | prior SHA → new SHA | evidence run | results/limitations | linked EXP/ADR/INC | status`
 
 保留所有失败、被否定假设、回滚理由。新Agent必须在交付有实质变化的代码前补记此页；仅生成run账本不等于更新模型知识。
+
+## 2026-10-28：B16（EXP-0004）真实四ETF信号驱动V2独立选股
+- [策略正式运行40719359363](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40719359363)成功：基金份额交易日2026-10-27，完整四ETF净申赎代理+56.12亿元；数据首次已知之后在2026-10-28 23:46冻结S1/S2，使用当日150只真实股票成交额与相对沪深300强度。
+- [V2源码](../national_team/strategy_v2.py)、[研究协议](experiments/EXP-0004-four-etf-strategy-v2.md)、[真实策略留档](../records/national_team_strategy/2026-10-28/40719359363-a1-v2.json)和[两条冻结事件](../records/national_team_events/2026-10-28/40719359363-a1-v2.json)可独立核验。完成18项策略+回报评价单测及真实历史记录重放，首次生产Git写回成功；随后修复无新四ETF/过期数据分支的Schema，避免未来无信号日误报流程故障。
+- 发现旧S2从S1前10股中再次排序、且未严格应用预注册0%—10%相对强度区间，已由独立全池筛选替代；V1旧冻结仍保留，不重写历史。
+- **核心反事实缺口**：同一CSI300权重导致资金净申赎为S1横截面打分的公共乘数，触发日期而不决定横截面差异；无法直接证明具体国家队机构买入S1/S2股票。PCF及未来5/10/20日对ETF基准净超额收益尚未成熟，禁止把模型成功运行写成策略已盈利。
