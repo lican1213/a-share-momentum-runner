@@ -20,6 +20,8 @@ updated: 2026-10-28
 
 | B7 原四ETF指标恢复与国家队交叉验证 | [原始指标合同](../data/original-four-etf-indicator.md) · [Python指标实现](../../national_team/core_flow_factors.py) | 恢复ETF_AUM、普通/自由流通覆盖率、日/5日申赎；区分原四只与扩展篮子 | 算术CI验证待实跑；国家队ETF官方份额采集尚未上线，不代表策略盈利 |
 
+| B8 资金→股票研究框架 | [stock_selection.py](../../national_team/stock_selection.py) · [EXP-0003](../experiments/EXP-0003-etf-to-stock.md) | 核心ETF净申购→当时权重/PCF→股票潜在资金敞口/ADV20与相对强度；S0 ETF基准 vs S1/S2股票观察 | [CI 40693488577](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40693488577)：16项**合成数据**测试通过；真实收益未验证、无授权买入 |
+
 ## 当前研究标识
 - **策略代码**：`strategy.py` 中的三日突破和交易规则，逻辑版本与证据运行的代码 SHA 绑定，不独立宣称“v0.2盈利”。
 - **执行器标签**：`runner.py` 当前可能仍报告 `daily-bar research runner v0.1`；该文本不能替代 GitSHA，也不意味着整个仓库停留在最初版本。
