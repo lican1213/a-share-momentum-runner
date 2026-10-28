@@ -18,6 +18,8 @@ updated: 2026-10-28
 | B5 退出归因 / 市场条件 | [3ab42308](https://github.com/lican1213/a-share-momentum-runner/commit/3ab4230818bc) | 退出诊断、H01双指数MA条件、16项测试 | [运行40685553957](../../records/2026-10-28/close/40685553957-a1.json)；H01通过组仍亏损 |
 | B6 LLM Wiki 知识治理 | [MOC commit 6ea4826a](https://github.com/lican1213/a-share-momentum-runner/commit/6ea4826a6ae2)、[自动同步CI commit ea6039b8](https://github.com/lican1213/a-share-momentum-runner/commit/ea6039b8b75a) | Agent多端入口、模型/实验/决策/事故Wiki、运行和提交索引自动更新，**不改变交易策略** | [Wiki验证40688051721](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40688051721)19页/无断链；[全量运行40687425222](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40687425222)20项单测且自动索引13条记录已通过 |
 
+| B7 原四ETF指标恢复与国家队交叉验证 | [原始指标合同](../data/original-four-etf-indicator.md) · [Python指标实现](../../national_team/core_flow_factors.py) | 恢复ETF_AUM、普通/自由流通覆盖率、日/5日申赎；区分原四只与扩展篮子 | 算术CI验证待实跑；国家队ETF官方份额采集尚未上线，不代表策略盈利 |
+
 ## 当前研究标识
 - **策略代码**：`strategy.py` 中的三日突破和交易规则，逻辑版本与证据运行的代码 SHA 绑定，不独立宣称“v0.2盈利”。
 - **执行器标签**：`runner.py` 当前可能仍报告 `daily-bar research runner v0.1`；该文本不能替代 GitSHA，也不意味着整个仓库停留在最初版本。
