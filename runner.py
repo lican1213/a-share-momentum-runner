@@ -22,7 +22,8 @@ import akshare as ak
 import pandas as pd
 import quantstats as qs
 
-from strategy import candidate_at, historical_trades, normalize
+from strategy import candidate_at, historical_trades, normalize, signal_id
+from research_validation import chronological_diagnostic, summarize
 
 
 TZ = ZoneInfo("Asia/Shanghai")
@@ -223,13 +224,16 @@ def main() -> int:
                     clean_first = (sym, bars)
                 signal = candidate_at(bars, len(bars) - 1)
                 if signal:
-                    candidates.append({"symbol": sym, "name": item["name"], **signal})
+                    candidates.append({"symbol": sym, "name": item["name"],
+                                       "signal_id": signal_id(sym, signal), **signal})
                 all_trades.extend(historical_trades(bars, sym))
             except Exception as exc:
                 problems.append({"symbol": sym, "error": f"{type(exc).__name__}: {exc}"})
         audit.update(verified_symbols=len(verified), failed_symbols=problems,
                      snapshot_symbols=len(universe), sha256_histories=raw_hashes,
-                     historical_replay_trades=len(all_trades))
+                     historical_replay_trades=len(all_trades),
+                     historical_replay_closed=sum(t.get("net_return") is not None for t in all_trades),
+                     historical_replay_execution_censored=sum(t.get("status") == "execution_censored" for t in all_trades))
         if len(verified) < 5:
             raise RuntimeError("fewer than five symbols pass live data quality and freshness gates")
         if clean_first is None:
@@ -258,18 +262,16 @@ def main() -> int:
             "original_price_basis": "unadjusted daily OHLC; NOT verified intraday price",
             "no_actual_fills": True, "intraday_activation_unknown": True,
             "out_of_sample_validated": False, "automated_trade_signals_authorized": False})
-        if all_trades:
-            returns = pd.Series([float(x["net_return"]) for x in all_trades])
-            audit["exploratory_history"] = {
-                "trade_count": len(all_trades), "winning_fraction": round(float((returns > 0).mean()), 6),
-                "mean_trade_return": round(float(returns.mean()), 6),
-                "sample_type": "selected-current-universe, overlapping cross-sectional trades",
-            }
-            # QuantStats on a sequential hypothetical trade series, explicitly
-            # not comparable to an actual calendar-day portfolio drawdown.
-            # QuantStats max_drawdown expects RETURNS, not equity levels.
-            # QuantStats 0.0.86 max_drawdown requires datetime-like index.
-            # The synthetic index encodes TRADE SEQUENCE, not actual market dates.
+        audit["exploratory_history"] = summarize(all_trades)
+        audit["historical_time_split"] = chronological_diagnostic(all_trades, expected)
+        closed = [x for x in all_trades if x.get("net_return") is not None]
+        if closed:
+            returns = pd.Series([float(x["net_return"]) for x in closed])
+            audit["exploratory_history"]["trade_count"] = len(all_trades)
+            audit["exploratory_history"]["winning_fraction"] = audit["exploratory_history"]["win_rate"]
+            audit["exploratory_history"]["mean_trade_return"] = audit["exploratory_history"]["mean_net_return"]
+            # QuantStats with synthetic dates represents a SEQUENCE of trades;
+            # it is NOT a calendar-time/portfolio-level max drawdown.
             seq = pd.Series(returns.to_numpy(), index=pd.date_range("2000-01-01", periods=len(returns), freq="D"))
             audit["quantstats_trade_sequence_max_drawdown"] = float(qs.stats.max_drawdown(seq))
             audit["quantstats_warning"] = "trade-sequence only, NOT actual portfolio max drawdown"
@@ -278,13 +280,13 @@ def main() -> int:
             "survivorship_bias_addressed": False,
             "intraday_T3_exit_validated": False,
             "research_only": True,
-            "risk_decision": ("NEGATIVE_MEAN_RETURN_REVIEW" if all_trades and audit["exploratory_history"]["mean_trade_return"] <= 0 else "UNVALIDATED_NOT_AUTHORIZED"),
+            "risk_decision": ("NEGATIVE_MEAN_RETURN_REVIEW" if closed and audit["exploratory_history"]["mean_net_return"] <= 0 else "UNVALIDATED_NOT_AUTHORIZED"),
         }
         audit["status"] = "COMPUTED_RESEARCH_ONLY"
         audit["ended_at"] = datetime.now(TZ).isoformat()
         write_json(out / "audit.json", audit)
         print(json.dumps({"status": audit["status"], "verified": len(verified),
-                          "signals": len(signals), "historical_trades": len(all_trades),
+                          "signals": len(signals), "historical_trades": len(all_trades), "closed_trades": len(closed),
                           "akquant_smoke": audit["akquant_smoke"]["status"]}, ensure_ascii=False))
         # Strict user requirement: if AKQuant smoke failed do not treat the
         # full system as validated; artifacts still uploaded by Actions.
