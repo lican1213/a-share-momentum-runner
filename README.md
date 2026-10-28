@@ -46,3 +46,11 @@ All trade calculations require timestamped, authentic data; unit tests and succe
 
 ## Reusable GitHub skill
 [skills/github-connector-write-deploy/SKILL.md](skills/github-connector-write-deploy/SKILL.md) describes verified connector permissions, create/update file, GitHub Actions deployment and artifact audit, reusable in other projects.
+
+
+## Research hypothesis H01: pre-known CSI300 + CSI1000 trend gate (2026-10-28)
+- [GitHub Actions success: run 40685553957](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40685553957): **16 deterministic tests passed**, real index and 12 selected stock histories fetched, 45 historical daily-bar execution proxies reconstructed, evidence committed to [audit record](records/2026-10-28/close/40685553957-a1.json).
+- H01 frozen before this fresh run: Both CSI300 and CSI1000 above MA20 **and** MA60 at each signal-date close. From already inspected 45 trades, 33 pass (mean cost-adjusted -0.2160%) and 12 reject (mean -0.4444%). **The pass subset still loses**; do not activate H01 as an endorsed strategy. This is retrospective and contaminated, not independent OOS.
+- Major exit losses: 13 stop-gap trades average -2.7482%; 66.81% of the sum of absolute losses across all losing trades. The matched same-entry T+3-close benchmark mean is +0.1751%, the original stopped/targeted policy mean -0.2769%. This daily-close proxy benchmark is not an execution claim; it is hypothesis-generating only.
+- **Release gate stays CLOSED:** zero actionable signals; must fix point-in-time all-A security universe, real 14:50 fills, validated breadth, costs/limit-down, and new forward paper-trade evidence.
+- See [research plan H01-H04](../../issues/2) and [release gate](../../issues/1).
