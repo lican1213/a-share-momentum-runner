@@ -12,6 +12,10 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-28 | [0ff860878d](https://github.com/lican1213/a-share-momentum-runner/commit/0ff860878df6676efce5b52f854e3859ea996314) | Can Li | fix(wiki): show first immutable V2 freeze, not later duplicate strategy report |
+| 2026-10-28 | [13a61a65c2](https://github.com/lican1213/a-share-momentum-runner/commit/13a61a65c22867d22b938e84f0d4ff68242a9d7a) | Can Li | docs(wiki): record V2 20-session event tracking capacity adversarial fix |
+| 2026-10-28 | [7a90fbba83](https://github.com/lican1213/a-share-momentum-runner/commit/7a90fbba83228ac4283e4a7a64603f3e26fbd509) | Can Li | docs(wiki): surface actual four-ETF V2 stock portfolio and 20-session paper tracker in MOC |
+| 2026-10-28 | [c80ed95052](https://github.com/lican1213/a-share-momentum-runner/commit/c80ed95052af6cd61ea595d6593c22fe1d414242) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-28 | [037b95d99d](https://github.com/lican1213/a-share-momentum-runner/commit/037b95d99df16a8c05d671a77a1ae967e8811e60) | Can Li | ci(wiki): regenerate second-brain after V2 strategy freezes and strategy index changes |
 | 2026-10-28 | [a4514b1cc8](https://github.com/lican1213/a-share-momentum-runner/commit/a4514b1cc87cc28f33df5cdff48378f98c9ca16e) | Can Li | feat(wiki): include original frozen V2 four-ETF selection and timing in second-brain summaries |
 | 2026-10-28 | [4fcf588388](https://github.com/lican1213/a-share-momentum-runner/commit/4fcf588388fa52ac80ee0a1e735d9510f35914cb) | Can Li | test(national-team): ensure 20d maturities survive >8 frozen cohorts, avoid repeat OHLC provider loads |
