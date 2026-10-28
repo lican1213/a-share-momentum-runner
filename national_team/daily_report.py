@@ -96,7 +96,8 @@ def human_readable(d)->str:
       "## 核心四只ETF资金",
       f"- 最近完整四ETF日：{d['latest_full_four_funding_date'] or '尚无'}，当日净申赎代理 {amt(d['full_four_daily_flow_cny'])}；五交易日资金强度 {pct(d['full_four_five_day_intensity'])}",
       f"- 最新部分资金日期：{' → '.join(d['latest_partial_funding_dates']) if d['latest_partial_funding_dates'] else '无'}，覆盖{','.join(d['latest_partial_fund_scope']) or '无'}，合计 {amt(d['latest_partial_flow_cny'])}",
-      "- 四ETF日期与最新部分资金日期可能不同，不可相加或写成同一个交易日。","",
+      "- 四ETF日期与最新部分资金日期可能不同，不可相加或写成同一个交易日。",
+      f"- 完整四ETF是否来自先前独立重算的归档：{'是，参见来源路径 '+d.get('full_four_prior_source_path','') if d.get('full_four_factor_carried_forward') else '否或无足额资料'}","",
       "## S1 资金敞口／成交额研究观察",
       f"- 股票研究日期：{d['latest_ranked_stock_date'] or '无'}；实际覆盖 {d['ranked_stocks_count']}只；指数权重池占比 {pct(d['index_weight_coverage'])}",
     ]
@@ -120,6 +121,49 @@ def latest_artifact(folder:Path):
     if not items:raise FileNotFoundError(f"no evidence in {folder}")
     return items[0]
 
+def supplement_prior_full_four(digest:dict,root:Path,*,signal_public_at:str)->dict:
+    """Carry forward a separately archived/independently audited 4-ETF day.
+
+    Prior record must have been captured by the time the stock watch was frozen,
+    and never be dated after the currently displayed partial-flow date. Do not
+    infer an investor-specific buy from a historical complete four-ETF factor.
+    """
+    if digest.get("latest_full_four_funding_date"):
+        digest["full_four_factor_carried_forward"]=False
+        return digest
+    from national_team.audit_gate import check_funding
+    from national_team.core_flow_factors import utc_aware
+    end=utc_aware(signal_public_at,"watch disclosure cut-off")
+    max_fund_day=digest.get("latest_ranked_stock_date") or digest.get("asof_requested")
+    possible=[]
+    for p in (root/"records/national_team_merged").glob("*/*.json"):
+        try:
+            obj=json.loads(p.read_text(encoding="utf-8"))
+            earliest=utc_aware(obj.get("first_observed_no_earlier_than"),
+                               "prior archived disclosure")
+            factor=(obj.get("funding_event") or {}).get("four_etf_factor") or {}
+            date_value=factor.get("trade_date")
+            if earliest>end or not date_value or date_value>max_fund_day:
+                continue
+            verified=check_funding(obj)
+            if verified.get("verified") is not True:
+                continue
+            possible.append((date_value,earliest,p,factor))
+        except (OSError,ValueError,KeyError,AssertionError):
+            continue
+    if not possible:
+        digest["full_four_factor_carried_forward"]=False
+        return digest
+    date_value,first,p,factor=max(possible,key=lambda r:(r[0],r[1]))
+    digest["latest_full_four_funding_date"]=date_value
+    digest["full_four_daily_flow_cny"]=factor["daily_net_creation_proxy_cny"]
+    digest["full_four_five_day_intensity"]=factor["five_day"]["net_creation_pct_initial_aum"]
+    digest["full_four_factor_carried_forward"]=True
+    digest["full_four_prior_source_path"]=str(p.relative_to(root))
+    digest["full_four_prior_first_observed_at"]=first.isoformat()
+    return digest
+
+
 def compile_latest(root:Path=ROOT):
     # Choose latest watch for which all same-run companions exist.
     for watch_path in sorted((root/"records/national_team_watch").glob("*/*.json"),
@@ -135,7 +179,10 @@ def compile_latest(root:Path=ROOT):
             read=lambda p:json.loads(p.read_text(encoding="utf-8"))
             inputs={key:read(p) for key,p in required.items()}
             holder=read(root/"data/national_team_holders/159919-2024H1-2025H1.json")
-            result=compile_digest(inputs["merged"],read(watch_path),inputs["events"],inputs["paper"],inputs["audit"],holder)
+            watch=read(watch_path)
+            result=compile_digest(inputs["merged"],watch,inputs["events"],inputs["paper"],inputs["audit"],holder)
+            public_at=watch.get("event_first_public_no_earlier_than") or inputs["merged"]["first_observed_no_earlier_than"]
+            result=supplement_prior_full_four(result,root,signal_public_at=public_at)
             result["source_paths"]={k:str(p.relative_to(root)) for k,p in required.items()}
             result["source_paths"]["watch"]=str(watch_path.relative_to(root))
             return day,stem,result
@@ -145,8 +192,10 @@ def main():
     day,stem,data=compile_latest()
     folder=ROOT/"records/national_team_daily"/day
     folder.mkdir(parents=True,exist_ok=True)
-    jsonfile=folder/stem
-    mdfile=folder/stem.replace(".json",".md")
+    # v2 is a new immutable interpretation, not an overwrite of the older
+    # v1 snapshot: both research reports remain inspectable by future agents.
+    jsonfile=folder/stem.replace(".json","-v2.json")
+    mdfile=folder/stem.replace(".json","-v2.md")
     if not jsonfile.exists():
         jsonfile.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     if not mdfile.exists():
