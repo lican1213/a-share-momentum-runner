@@ -122,7 +122,7 @@ def test_wrong_core_flows_or_future_core_metrics_still_fail():
         scan_opportunities(m,b,s,decision_cutoff="2026-10-28T08:30:00+08:00")
     m,b,s=fixture()
     with pytest.raises(DataGateError,match="not available"):
-        scan_opportunities(m,b,s,decision_cutoff="2026-10-27T12:00:00+08:00")
+        scan_opportunities(m,b,s,decision_cutoff="2026-10-28T08:00:00+08:00")
 
 
 def test_known_suspended_flag_blocks_orderable_listing_only():
