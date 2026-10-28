@@ -1,6 +1,13 @@
-# MOC — A股三日追涨量化研究第二大脑
+# MOC — 国家队资金跟踪与跟随收益研究第二大脑
 
 **Agent starts here.** [操作规则](KNOWLEDGE.md) · [AGENTS入口](AGENTS.md) · [Wiki总索引](wiki/index.md) · [一页当前状态](wiki/compiled/briefing.md)
+
+## P0 现行唯一主线（2026-10-28明确纠偏）
+**[ADR-0003 国家队跟踪重定向](wiki/decisions/ADR-0003-national-team-pivot.md)** · **[国家队ETF官方数据MVP Issue #3](https://github.com/lican1213/a-share-momentum-runner/issues/3)**
+
+**主要目标：从公开披露确认国家队主体持仓、监测相关ETF的实际份额净申赎，研究在信号首次公开可得之后跟随能否盈利。**
+
+原三日突破策略、45笔历史回放、H01研究全部作为**旧实验/历史证据**保留，不再是主线，停止无目的优化。ETF份额流入只能说明该ETF全市场净申购，不能直接声称中央汇金当天买入。无经核验的真实交易数据则不发可执行指令。
 
 ## 1. 当前项目与安全边界
 - [当前结论 / 研究架构](wiki/overview.md)
