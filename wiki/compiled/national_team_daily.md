@@ -2,11 +2,11 @@
 id: NT-COMPILED-DAILY
 type: compiled
 status: active
-updated: 2026-10-28
+updated: 2026-10-29
 ---
 # 国家队相关ETF资金与个股观察简报
 
-- 数据截止：2026-10-28（研究账本；不等于实时国家队订单）
+- 数据截止：2026-10-29（研究账本；不等于实时国家队订单）
 - 独立审计：RESEARCH_PRIOR_FOUR_CURRENT_PARTIAL_AUDITED
 
 ## 核心四只ETF资金
