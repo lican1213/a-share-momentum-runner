@@ -153,7 +153,9 @@ def main():
         mdfile.write_text(human_readable(data),encoding="utf-8")
     summary=ROOT/"wiki/compiled/national_team_daily.md"
     summary.parent.mkdir(parents=True,exist_ok=True)
-    summary.write_text(human_readable(data),encoding="utf-8")
+    wiki_frontmatter=(f"---\\nid: NT-COMPILED-DAILY\\ntype: compiled\\n"
+                      f"status: active\\nupdated: {day}\\n---\\n").replace("\\n","\n")
+    summary.write_text(wiki_frontmatter+human_readable(data),encoding="utf-8")
     print(json.dumps({"status":data["status"],"evidence":str(jsonfile.relative_to(ROOT)),
                       "watch_count":data["ranked_stocks_count"]},ensure_ascii=False))
 if __name__=="__main__":main()
