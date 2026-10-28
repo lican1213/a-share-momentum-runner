@@ -12,6 +12,12 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-29 | [0794f0d0d3](https://github.com/lican1213/a-share-momentum-runner/commit/0794f0d0d3b8952dfcd7c6ba51735e15a859aaeb) | Can Li | test(execution): NaN trading volume never confirms available execution |
+| 2026-10-29 | [9ed88b03df](https://github.com/lican1213/a-share-momentum-runner/commit/9ed88b03df24dfdeb81c625801b60c028f27d809) | Can Li | fix(execution): reject NaN/Infinity OHLC and volume during paper execution screening |
+| 2026-10-28 | [080bd067d0](https://github.com/lican1213/a-share-momentum-runner/commit/080bd067d0a63e6d9d9fb319c52c1cda5fb484f6) | github-actions[bot] | data: archive actual ETF provider attempt 40787672785 [skip ci] |
+| 2026-10-29 | [18930e27b3](https://github.com/lican1213/a-share-momentum-runner/commit/18930e27b3dba5564c51d881be346a02426d8f4c) | Can Li | docs(moc): record B17 source timing, SSE fallback, authentic V2 digest and OHLC execution audit |
+| 2026-10-29 | [6f7be97acd](https://github.com/lican1213/a-share-momentum-runner/commit/6f7be97acd23b4d8c04cc2b86455f97e91975257) | Can Li | feat(data): normalize independent dated ETF share provider without changing official share units |
+| 2026-10-28 | [3ff2cdd43c](https://github.com/lican1213/a-share-momentum-runner/commit/3ff2cdd43ccc12e4cc4e3785674128063cf8cf24) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-29 | [b6b264a50a](https://github.com/lican1213/a-share-momentum-runner/commit/b6b264a50af5ad30569802a7ffe748603159671e) | Can Li | test(digest): primary V2 frozen lists remain distinct from legacy V1 stock selection |
 | 2026-10-28 | [1dd3f45d85](https://github.com/lican1213/a-share-momentum-runner/commit/1dd3f45d85cf4ed95de5d9af315aed54b60e2fec) | github-actions[bot] | data: archived four-ETF V2 candidate freeze 40787782816 [skip ci] |
 | 2026-10-28 | [1749318e80](https://github.com/lican1213/a-share-momentum-runner/commit/1749318e80ce3822288dd86a7396c5e02206ac7b) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
