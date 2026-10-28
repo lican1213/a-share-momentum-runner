@@ -21,6 +21,8 @@ def sample_panel():
                 "shares": str(1000 + 10 * n),
                 "nav": "2",
                 "aum": str(2000 + 20 * n),
+                "aum_source_url": "https://example.org/fake-aum-fixture",
+                "aum_published_at": f"{day}T21:00:00+08:00",
                 "share_unit": "shares", "nav_unit": "CNY/share",
                 "source_url": "https://www.sse.com.cn/fake-fixture",
                 "nav_source_url": "https://example.org/fake-nav-fixture",
@@ -116,3 +118,14 @@ def test_5d_requires_six_complete_sessions():
     out = calculate(sample_panel(), DAYS[:2], DAYS[1], decision_cutoff=CUTOFF)
     assert out["five_day"] is None
     assert Decimal(out["daily_net_creation_proxy_cny"]) == 80
+
+
+def test_official_AUM_must_have_its_own_source_and_public_timestamp():
+    panel = sample_panel()
+    panel[DAYS[-1]][CORE_FOUR[0]].pop("aum_source_url")
+    with pytest.raises(DataGateError, match="AUM requires a source"):
+        calculate(panel, DAYS, DAYS[-1], decision_cutoff=CUTOFF)
+    panel = sample_panel()
+    panel[DAYS[-1]][CORE_FOUR[0]]["aum_published_at"] = "2026-10-27T19:00:00+08:00"
+    with pytest.raises(DataGateError, match="AUM not public"):
+        calculate(panel, DAYS, DAYS[-1], decision_cutoff=CUTOFF)
