@@ -27,13 +27,19 @@ def reconcile_funding_snapshot(raw:Mapping,sessions:Sequence[str])->dict:
          "history_sessions":list(sessions),
          "complete_four_days":[],"missing_by_day":{},
          "partial_funding":None,"four_etf_factor":None}
-    for d in sessions:
+    effective_dates=[d for d in sessions if d in panel and d<=asof]
+    if not effective_dates:
+        return out
+    effective_date=effective_dates[-1]
+    out["latest_available_trading_day"]=effective_date
+    effective_sessions=[d for d in sessions if d<=effective_date]
+    for d in effective_sessions:
         obs=panel.get(d,{})
         missing=[c for c in CORE_FOUR if c not in obs or "shares" not in obs[c] or "nav" not in obs[c]]
         if missing:out["missing_by_day"][d]=missing
         else:out["complete_four_days"].append(d)
-    if len(sessions)>=2:
-        prev,current=sessions[-2:]
+    if len(effective_sessions)>=2:
+        prev,current=effective_sessions[-2:]
         sse=CORE_FOUR[:3]
         if all(c in panel.get(prev,{}) and c in panel.get(current,{})
                and "nav" in panel[current][c] for c in sse):
@@ -46,9 +52,9 @@ def reconcile_funding_snapshot(raw:Mapping,sessions:Sequence[str])->dict:
                 "per_fund_proxy_cny":{c:format(v,"f") for c,v in flows.items()},
                 "fund_count_coverage":"3/4",
                 "market_session_adjacency_verified":True}
-    if len(sessions)<6:
+    if len(effective_sessions)<6:
         return out
-    last6=list(sessions[-6:])
+    last6=list(effective_sessions[-6:])
     if any(d not in out["complete_four_days"] for d in last6):
         if out["partial_funding"] is not None:out["status"]="PARTIAL_FUNDING_ONLY"
         return out
