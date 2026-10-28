@@ -77,6 +77,14 @@ updated: 2026-10-28
 ## 2026-10-28：真实数据源口径最后校正
 - 已确认原始ETF份额来自交易所接口，**历史NAV来自东方财富抓取，并非基金管理人官方一手净值公告**；已在[审计报告](audits/AUD-2026-10-28-red-team.md)中明确需对照基金管理人官方净值/拆并信息。部分三沪ETF流量56.55亿元是研究代理，不升级为一手确认国家队增持。
 
+## 2026-10-28：B11—B12国家队资金—股票端到端开发与独立红队审计
+- [E2E完整审计](audits/AUD-2026-10-28-e2e-release-gate.md)。新增深交所官方按代码日期JSON（正确“万份”转“份”）、上交所原始接口带超时与日期字段审计、真实ETF/NAV源与指数成分股票行情统一账本；拆分和第三方NAV尚需复核。
+- [真实run 40702172792](../records/national_team_etf/2026-10-28/40702172792-a1.json)：四ETF连续七交易日份额/NAV完整，2026-10-27份额净变化×NAV合计+5612203530元；[30股指数代理实际排名](../records/national_team_watch/2026-10-28/40702172792-a1.json)。此数据不是国家队本人逐股成交，也不是历史当时可得的策略信号。
+- [跨运行无冲突账本run 40702572594](../records/national_team_merged/2026-10-28/40702572594-a1.json)：6份来源、0冲突、7天完整四ETF；保留第一观察时间，未把历史回溯数据倒填成历史时点已知。
+- 新增 [原始资金独立红队重算](../national_team/audit_gate.py)、[S1/S2研究事件冻结](../national_team/paper_events.py)、[未来收益纸面追踪](../national_team/live_paper_tracker.py)和测试故意篡改/错日期/重复事件。审计以[实际CI 40704384352](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40704384352)的74项通过为**当时版本**证据。其后SSE直接源适配器和其他测试增加，最新版应以其对应Actions输出验收，不能借旧绿色CI背书。
+- 实际PCF官方页面HTML暂未提供可解析的日期和全量篮子；保留“指数权重代理”降级标签。未经验证的国家队主体持股和真正的5/10/20日独立净超额收益不标成已完成。
+- 生产可靠性修复：SSE直连原接口设明确HTTPS超时/重试，避免AKShare无超时阻断调度；最新150股池和红队自动执行须查最新Actions的完成状态。
+
 ## 未来添加新事件的格式
 `YYYY-MM-DD HH:mm +08:00 | actor | question | change/why | prior SHA → new SHA | evidence run | results/limitations | linked EXP/ADR/INC | status`
 
