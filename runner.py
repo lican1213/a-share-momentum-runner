@@ -274,6 +274,7 @@ def main() -> int:
                      no_trading_signals_authorized=True)
         write_json(out / "audit.json", audit)
         print(audit["error"], file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
         return 2
 
 
