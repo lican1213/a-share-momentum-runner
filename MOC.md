@@ -8,7 +8,7 @@
 
 **已完成**：四只固定沪深300ETF的交易日份额及NAV、日/5日资金指标、SSE/SZSE相互备份与多run合并、CSI300正式指数权重及实际股票ADV20研究排名、S1/S2候选冻结与5/10/20日纸面评价器、基于真实落盘数据的独立红队重算及篡改失败测试。公开持仓身份与ETF实际PCF尚未贯通；当前股票排名是**指数权重研究代理**，不是国家队逐股订单。独立样本外盈利能力仍未得到验证。
 
-**最新开发注记**：新增[带超时的SSE原生取数器](national_team/sse_direct.py)，不让AKShare阻塞本轮采集；扩大股票研究池至150只，需以最新完整生产Actions完成记录为最终运行验收。任何Agent必须区分旧版真实运行成功和最新版未完成的运行。
+**已完成B12**：[真实综合运行40706300084](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40706300084)已成功生成150只股票研究排名（覆盖CSI300权重83.015%）、2026-10-28三沪ETF最新资金代理、两条冻结S1/S2纸面事件及独立审计留档。**最新10月28日缺159919**，最近完整四ETF为10月27日；双日期保留修复在[81项对抗回归CI 40707718330](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40707718330)通过。完成的旧版运行不能替代新修复的综合生产验证。新[带超时SSE原始接口](national_team/sse_direct.py)已部署。
 
 ## 研究纪律纠偏：主动发现机会，不让数据缺口清空研究名单
 **[研究主扫描器 opportunity_scan.py](national_team/opportunity_scan.py)**：已核实的部分ETF篮子、个股数据可以继续排序，完整列出覆盖比例与风险标签；资金净流出也产生撤退风险名单。停牌/ST等已明确不可交易者单列。历史上过于严格的[stock_selection.py](national_team/stock_selection.py)保留为全量证据审计版而非唯一研究入口。真正实盘订单另行验证，不阻断研究输出。
