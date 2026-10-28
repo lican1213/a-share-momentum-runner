@@ -25,6 +25,12 @@ def parse_official_html(html:str,code:str,first_observed:str)->dict:
         return {"status":"NO_DATED_OFFICIAL_PCF_IN_HTTP_RESPONSE",
                 "code":code,"first_observed_at":first_observed}
     day=match.group(1).replace("/","-")
+    from datetime import date
+    if date.fromisoformat(day)>date.fromisoformat(first_observed[:10]):
+        raise ValueError("PCF date after capture day")
+    identity=re.search(r"基金代码\s*[:：]?\s*(\d{6})",text)
+    if identity and identity.group(1)!=code:
+        raise ValueError("PCF fund identity does not match request")
     tables=pd.read_html(StringIO(html))
     components=[]
     for table in tables:
