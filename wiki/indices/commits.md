@@ -12,6 +12,13 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-28 | [a01322fcfc](https://github.com/lican1213/a-share-momentum-runner/commit/a01322fcfcf0f8a9e2913da8dbb17157dae8f230) | Can Li | docs: expose evidence-backed V2 state-backed ETF proxy to stock-selection research at repository entrypoint |
+| 2026-10-28 | [93cada6bfd](https://github.com/lican1213/a-share-momentum-runner/commit/93cada6bfd9cbd3c6f55df30f5963e2fc45abcbb) | github-actions[bot] | data: archived four-ETF V2 candidate freeze 40720654702 [skip ci] |
+| 2026-10-28 | [99b2858b4e](https://github.com/lican1213/a-share-momentum-runner/commit/99b2858b4ef53383059f73494d43ee5fabf9377d) | github-actions[bot] | data: archive actual ETF provider attempt 40719934877 [skip ci] |
+| 2026-10-28 | [5cb1d093d3](https://github.com/lican1213/a-share-momentum-runner/commit/5cb1d093d347c4989dded07260026e451898f27b) | github-actions[bot] | data: archived four-ETF V2 candidate freeze 40720619848 [skip ci] |
+| 2026-10-28 | [6eb2683256](https://github.com/lican1213/a-share-momentum-runner/commit/6eb268325633b8126fbcbcab346d17fa0674cddd) | Can Li | test(national-team): reject pseudo-new stock events on refreshed data for the same four-ETF flow day |
+| 2026-10-28 | [237bf592f7](https://github.com/lican1213/a-share-momentum-runner/commit/237bf592f7c19e7680da87a1b391ed79aa4d2667) | Can Li | fix(national-team): deduplicate prospective stock cohorts by economic four-ETF event date across later snapshot refreshes |
+| 2026-10-28 | [8f289ae9c2](https://github.com/lican1213/a-share-momentum-runner/commit/8f289ae9c22a468983ccbf964ef5b4201900a74a) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-28 | [0ff860878d](https://github.com/lican1213/a-share-momentum-runner/commit/0ff860878df6676efce5b52f854e3859ea996314) | Can Li | fix(wiki): show first immutable V2 freeze, not later duplicate strategy report |
 | 2026-10-28 | [13a61a65c2](https://github.com/lican1213/a-share-momentum-runner/commit/13a61a65c22867d22b938e84f0d4ff68242a9d7a) | Can Li | docs(wiki): record V2 20-session event tracking capacity adversarial fix |
 | 2026-10-28 | [7a90fbba83](https://github.com/lican1213/a-share-momentum-runner/commit/7a90fbba83228ac4283e4a7a64603f3e26fbd509) | Can Li | docs(wiki): surface actual four-ETF V2 stock portfolio and 20-session paper tracker in MOC |
