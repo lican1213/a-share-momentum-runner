@@ -25,6 +25,7 @@ updated: 2026-10-28
 
 ## 哪里错过（故障）
 - [INC-0001 权限与行情、回撤索引错误](incidents/INC-0001-bootstrapping.md)
+- [CTR-0001 错误诊断和矛盾结论的证据](contradictions/CTR-0001.md)
 
 ## 何时做的（时间索引）
 - [Wiki维护日志](log.md)
