@@ -3,6 +3,9 @@
 **2026-10-28 项目主线已纠偏**：用户目标是追踪中央汇金等可核实机构公开持仓与国家队关注ETF的真实份额净申赎，并检验公开信号之后跟随是否有收益。详见[ADR-0003](wiki/decisions/ADR-0003-national-team-pivot.md)与[首要任务 Issue #3](https://github.com/lican1213/a-share-momentum-runner/issues/3)。旧三日动量系统继续作为历史研究分支，**不是国家队交易信号**。尚未部署官方ETF份额管线，不能把旧运行报告当成国家队买卖记录。
 
 
+## 核心：原始国家队ETF资金进出指标已经恢复
+[最初四只ETF（510300/510310/510330/159919）资金因子、两类市场覆盖率和五日净申赎强度](wiki/data/original-four-etf-indicator.md)。9ETF是扩展观察池，国家队基金持有人披露是低频身份核验。原始入金出金信号与市场风险环境需要**合并使用**，不能将ETF总申赎误认为中央汇金具体账户当日成交。当前仅提交公式和合成数据测试，尚无国家队专用ETF实际取数结果。
+
 ## Knowledge base / 第二大脑（Agent先读这里）
 
 **[MOC.md — 总索引](MOC.md)** · [AGENTS.md — Agent接手规则](AGENTS.md) · [KNOWLEDGE.md — LLM Wiki协议](KNOWLEDGE.md) · [最新运行自动简报](wiki/compiled/briefing.md) · [模型版本史](wiki/models/registry.md) · [完整运行账本](wiki/indices/runs.md) · [全部Git提交索引](wiki/indices/commits.md) · [历史升级/失败日志](wiki/log.md)
