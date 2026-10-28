@@ -94,7 +94,7 @@ def generate(root:Path,*,now:str, records:list[tuple[str,Path,dict]]|None=None)-
         if entry is None:return f"- {label}：无可复核持久化记录。"
         folder,path,r=entry
         return (f"- {label}：[run {r.get('run_id',path.stem)}]({relative_link(path,briefing.parent)})；"
-                f"状态 \`{r.get('status','UNVERIFIED')}\`；"
+                f"状态 `{r.get('status','UNVERIFIED')}`；"
                 f"日期 {r.get('funding_date') or r.get('asof_requested') or r.get('asof') or path.parent.name}。")
     info.append(bullet("最新ETF源采集尝试",attempt))
     info.append(bullet("最近可完整核验四ETF份额/NAV的历史记录",full))
