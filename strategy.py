@@ -219,3 +219,36 @@ def historical_trades(df: pd.DataFrame, symbol: str, commission=0.00025,
         })
         eligible_index = exit_at + 1
     return trades
+
+
+def signal_funnel(df: pd.DataFrame) -> dict:
+    """Retrospectively classify every *potential* daily signal.
+
+    This is a signal triggering audit, not an executed portfolio or win rate.
+    Next-day bar is used only to classify past signal outcomes, never to issue it.
+    """
+    counts = {"issued": 0, "triggered_candidate": 0,
+              "not_triggered": 0, "gap_above_max_chase": 0,
+              "one_price_limit_up": 0, "unresolved_insufficient_future": 0}
+    for i in range(250, len(df)):
+        sig = candidate_at(df, i)
+        if sig is None:
+            continue
+        counts["issued"] += 1
+        if i + 1 >= len(df):
+            counts["unresolved_insufficient_future"] += 1
+            continue
+        nxt = df.iloc[i + 1]
+        if approx_locked_limit_up(df, i + 1):
+            counts["one_price_limit_up"] += 1
+        elif float(nxt["open"]) > sig["max_chase"]:
+            counts["gap_above_max_chase"] += 1
+        elif float(nxt["high"]) < sig["trigger"]:
+            counts["not_triggered"] += 1
+        else:
+            counts["triggered_candidate"] += 1
+    known = counts["issued"] - counts["unresolved_insufficient_future"]
+    counts["historical_trigger_fraction"] = (round(counts["triggered_candidate"] / known, 6)
+                                             if known else None)
+    counts["scope"] = "retrospective signal funnel on present-day fixed universe; not actual fills"
+    return counts
