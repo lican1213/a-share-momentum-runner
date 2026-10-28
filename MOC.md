@@ -2,6 +2,9 @@
 
 **Agent starts here.** [操作规则](KNOWLEDGE.md) · [AGENTS入口](AGENTS.md) · [Wiki总索引](wiki/index.md) · [一页当前状态](wiki/compiled/briefing.md)
 
+## 研究纪律纠偏：主动发现机会，不让数据缺口清空研究名单
+**[研究主扫描器 opportunity_scan.py](national_team/opportunity_scan.py)**：已核实的部分ETF篮子、个股数据可以继续排序，完整列出覆盖比例与风险标签；资金净流出也产生撤退风险名单。停牌/ST等已明确不可交易者单列。历史上过于严格的[stock_selection.py](national_team/stock_selection.py)保留为全量证据审计版而非唯一研究入口。真正实盘订单另行验证，不阻断研究输出。
+
 ## P0 策略核心：资金信号后如何选股、是否跑赢买ETF
 **[ADR-0004 资金→股票映射与ETF基准](wiki/decisions/ADR-0004-stock-selection-after-flow.md)** · **[EXP-0003 S0 ETF基准 vs S1资金冲击 vs S2相对强度](wiki/experiments/EXP-0003-etf-to-stock.md)** · **[研究代码](national_team/stock_selection.py)**
 
