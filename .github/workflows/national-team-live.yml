@@ -55,7 +55,7 @@ jobs:
           source="records/national_team_watch/${date_beijing}/${GITHUB_RUN_ID}-a${GITHUB_RUN_ATTEMPT}.json"
           python -m national_team.paper_events --source "$source"
       - name: Recheck matured frozen paper events with authentic price histories
-        run: python -m national_team.live_paper_tracker --max-events 8
+        run: python -m national_team.live_paper_tracker --max-events 64
       - name: Collect original official SSE PCF for three Shanghai core funds
         run: python -m national_team.pcf_official
       - name: Independent red-team integrity audit of source, merged factors, stock ranking, frozen events
