@@ -62,9 +62,9 @@ def index_20_return(ak,asof):
         raise ValueError("CSI300 invalid close")
     return close[-1]/close[0]-1
 
-def collect(ak,etf_record,out_root,max_stocks=30):
-    if not 1<=max_stocks<=120:
-        raise ValueError("max stocks must be 1..120")
+def collect(ak,etf_record,out_root,max_stocks=150):
+    if not 1<=max_stocks<=200:
+        raise ValueError("max stocks must be 1..200")
     now=datetime.now(BEIJING)
     raw=json.loads(Path(etf_record).read_text(encoding="utf-8"))
     source_session=(raw.get("funding_event") or {}).get("latest_available_trading_day")
@@ -104,13 +104,13 @@ def collect(ak,etf_record,out_root,max_stocks=30):
     pool=ordered[:max_stocks]
     out["candidate_pool_pre_filter"]=pool
     out["pool_weight_coverage"]=format(sum((Decimal(weights["weights"][c]) for c in pool),Decimal(0)),"f")
-    out["pool_preselection_rule"]="largest CSI300 benchmark weights BEFORE stock liquidity; not all 300"
+    out["pool_preselection_rule"]="top 150 max CSI300 weights before liquidity, desired >80% benchmark weight coverage; not all 300"
     sampled={}
     start=(date.fromisoformat(source_session)-timedelta(days=90)).strftime("%Y%m%d")
     end=source_session.replace("-","")
     for code in pool:
         data=None
-        for label in ("EASTMONEY","SINA"):
+        for label in ("SINA","EASTMONEY"):
             try:
                 if label=="EASTMONEY":
                     data=ak.stock_zh_a_hist(symbol=code,period="daily",start_date=start,end_date=end,adjust="")
@@ -139,7 +139,7 @@ def main():
     parser=argparse.ArgumentParser()
     parser.add_argument("--source",required=True)
     parser.add_argument("--out",default="records/national_team_watch")
-    parser.add_argument("--max-stocks",type=int,default=30)
+    parser.add_argument("--max-stocks",type=int,default=150)
     args=parser.parse_args()
     src=Path(args.source)
     raw=json.loads(src.read_text(encoding="utf-8"))
