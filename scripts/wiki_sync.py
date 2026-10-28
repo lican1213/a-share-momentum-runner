@@ -9,11 +9,14 @@ from __future__ import annotations
 import json
 import os
 import subprocess
+import sys
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0,str(ROOT))
 RECORDS = ROOT / "records"
 WIKI = ROOT / "wiki"
 BASE = "https://github.com/lican1213/a-share-momentum-runner"
@@ -45,7 +48,7 @@ def record_rows() -> list[tuple[Path, dict]]:
 def save_run_index(records: list[tuple[Path, dict]], now: str) -> None:
     head = ("Automatically regenerated from **actual recorded JSON files**, newest first. "
             "A recorded JSON is an execution observation and not an independently confirmed green Actions result.\n\n"
-            "[返回MOC](../../MOC.md) · [原始记录目录](../../records/)\n\n"
+            "[返回MOC](../../MOC.md) · [国家队新主线运行索引](national-team.md) · [原始记录目录](../../records/)\n\n"
             "| Recorded Beijing time | Phase | Run / attempt | Audit status | Validated symbols | Research signals | File |\n"
             "| --- | --- | --- | --- | ---: | ---: | --- |\n")
     rows = []
@@ -144,7 +147,14 @@ def main() -> None:
     save_run_index(entries, today)
     save_git_index(today)
     save_briefing(entries, today)
-    print(f"WIKI_SYNC_OK records={len(entries)} views=3 date={today}")
+    from scripts.national_team_wiki import enumerate_records,generate
+    national_records=enumerate_records(ROOT)
+    if national_records:
+        summary=generate(ROOT,now=today,records=national_records)
+        print(f"NATIONAL_TEAM_WIKI_SYNC_OK records={summary['national_team_records']} "
+              f"four_run={summary['last_complete_four_run']}")
+    print(f"WIKI_SYNC_OK legacy_records={len(entries)} "
+          f"national_team_records={len(national_records)} date={today}")
 
 
 if __name__ == "__main__":
