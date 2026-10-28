@@ -12,6 +12,7 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-28 | [1a73ac2450](https://github.com/lican1213/a-share-momentum-runner/commit/1a73ac2450e1fe5ad0e91361bee78a946191e1c9) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-29 | [f55cf468d4](https://github.com/lican1213/a-share-momentum-runner/commit/f55cf468d447f141a7d02686e37af454f6317e4d) | Can Li | fix: show V2 frozen S1 and S2 before clearly marked V1 legacy candidates |
 | 2026-10-29 | [04350abd15](https://github.com/lican1213/a-share-momentum-runner/commit/04350abd15ad6946ff983352a2eb8d374867a5a6) | Can Li | feat: resolve earliest original V2 frozen events in daily digest without changing historic V1 |
 | 2026-10-28 | [86c0b52d45](https://github.com/lican1213/a-share-momentum-runner/commit/86c0b52d45962cc193688ffe93776204841d73f8) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
