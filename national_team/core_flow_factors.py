@@ -190,6 +190,7 @@ def calculate(
         "free_float_coverage_ratio": fmt(current_aum / d_free) if d_free else None,
         "coverage_ratios_are_not_national_team_holdings": True,
         "daily_share_changes": {c: fmt(day_delta[c]) for c in codes},
+        "per_etf_daily_flow_proxy_cny": {c: fmt(day_delta[c] * today[c]["nav"]) for c in codes},
         "daily_net_creation_proxy_cny": fmt(one_day),
         "five_day": five_day,
         "investor_identity_attributable": False,
