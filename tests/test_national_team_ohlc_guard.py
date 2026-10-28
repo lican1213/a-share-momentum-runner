@@ -16,3 +16,9 @@ def test_normal_day_is_still_an_unconfirmed_fill():
 def test_no_volume_blocks_both_sides():
     x=conservative_ohlc_bar(10,10,10,10,0,10)
     assert x["entry_blocked"] and x["exit_blocked"]
+
+
+def test_nonfinite_volume_cannot_be_misread_as_trading():
+    import pytest
+    with pytest.raises(ValueError):
+        conservative_ohlc_bar(10,11,9,10.5,float("nan"),10)
