@@ -6,6 +6,7 @@ T+3 daily close is NOT the exact 14:50 executable price; no guarantee of fills.
 from __future__ import annotations
 
 import math
+import hashlib
 import pandas as pd
 
 
@@ -96,6 +97,35 @@ def candidate_at(df: pd.DataFrame, i: int) -> dict | None:
     }
 
 
+def approx_locked_limit_down(df: pd.DataFrame, k: int) -> bool:
+    """Conservative main-board one-price down-limit proxy, not order-book proof."""
+    if k < 1:
+        return False
+    bar, prev = df.iloc[k], float(df.iloc[k - 1]["close"])
+    p = [float(bar[c]) for c in ("open", "high", "low", "close")]
+    return max(p) - min(p) <= 0.011 and max(p) <= prev * 0.902
+
+
+def approx_locked_limit_up(df: pd.DataFrame, k: int) -> bool:
+    """One-price up-limit entry is assumed unfillable, NOT simulated filled."""
+    if k < 1:
+        return False
+    bar, prev = df.iloc[k], float(df.iloc[k - 1]["close"])
+    p = [float(bar[c]) for c in ("open", "high", "low", "close")]
+    return max(p) - min(p) <= 0.011 and min(p) >= prev * 1.098
+
+
+def signal_id(symbol: str, signal: dict, version: str = "research-v0.2") -> str:
+    frozen = f'{version}|{symbol}|{signal["signal_date"]}|{signal["trigger"]:.2f}'
+    return hashlib.sha256(frozen.encode("utf-8")).hexdigest()[:20]
+
+
+def net_after_costs(entry: float, exit_: float, commission: float,
+                    stamp: float, slippage: float) -> float:
+    return (exit_ * (1 - slippage) * (1 - commission - stamp) /
+            (entry * (1 + slippage) * (1 + commission)) - 1)
+
+
 def historical_trades(df: pd.DataFrame, symbol: str, commission=0.00025,
                       stamp=0.0005, slippage=0.0005) -> list[dict]:
     """Conservative OHLC-only exploratory replay; entry next day, exit T+1..T+3.
@@ -113,7 +143,8 @@ def historical_trades(df: pd.DataFrame, symbol: str, commission=0.00025,
             continue
         j = eligible_index + 1
         day = df.iloc[j]
-        if float(day["high"]) < s["trigger"] or float(day["open"]) > s["max_chase"]:
+        if (approx_locked_limit_up(df, j) or float(day["high"]) < s["trigger"]
+                or float(day["open"]) > s["max_chase"]):
             eligible_index += 1
             continue
         fill = max(float(day["open"]), s["trigger"])
@@ -124,8 +155,14 @@ def historical_trades(df: pd.DataFrame, symbol: str, commission=0.00025,
         stop = fill * (1 - risk)
         target = fill * (1 + max(0.018, 1.8 * risk))
         exit_px, exit_at, reason = None, None, None
+        locked_sessions = []
+        extrema = []
         for k in range(j + 1, j + 4):
             x = df.iloc[k]
+            extrema.append((float(x["low"]), float(x["high"])))
+            if approx_locked_limit_down(df, k):
+                locked_sessions.append(str(x["date"].date()))
+                continue
             op, lo, hi = float(x["open"]), float(x["low"]), float(x["high"])
             if op <= stop:
                 exit_px, exit_at, reason = op, k, "stop_gap"
@@ -141,21 +178,41 @@ def historical_trades(df: pd.DataFrame, symbol: str, commission=0.00025,
                 break
             if k == j + 3:
                 exit_px, exit_at, reason = float(x["close"]), k, "T+3_close_proxy"
-        # Do not extrapolate beyond available data.
+        # If T+3 remains one-price limit down, neither target nor time exit
+        # may be executable. Mark as CENSORED; NEVER report a fictitious sale.
         if exit_px is None:
-            eligible_index += 1
+            trades.append({
+                "signal_id": signal_id(symbol, s), "symbol": symbol,
+                "signal_date": s["signal_date"],
+                "entry_date": str(day["date"].date()), "exit_date": None,
+                "entry": round(fill, 4), "exit": None, "net_return": None,
+                "r_multiple": None, "reason": "T+3_unfillable_limit_down_proxy",
+                "status": "execution_censored", "locked_sessions": locked_sessions,
+                "daily_proxy_not_1450": True,
+            })
+            eligible_index = j + 4  # do not pretend position can be reused
             continue
-        net = (exit_px * (1 - slippage) * (1 - commission - stamp)) / (
-            fill * (1 + slippage) * (1 + commission)) - 1
+        net = net_after_costs(fill, exit_px, commission, stamp, slippage)
+        # Daily OHLC extrema on stop/target exit day may occur AFTER exit;
+        # these are NON-path-consistent, NOT precise realized MAE/MFE.
+        proxy_mae = min((lo / fill - 1 for lo, hi in extrema), default=None)
+        proxy_mfe = max((hi / fill - 1 for lo, hi in extrema), default=None)
+        baseline = net_after_costs(fill, float(df.iloc[j + 3]["close"]),
+                                    commission, stamp, slippage) if not approx_locked_limit_down(df, j + 3) else None
         trades.append({
-            "symbol": symbol, "signal_date": s["signal_date"],
+            "signal_id": signal_id(symbol, s), "symbol": symbol,
+            "signal_date": s["signal_date"],
             "entry_date": str(day["date"].date()),
             "exit_date": str(df.iloc[exit_at]["date"].date()),
             "entry": round(fill, 4), "exit": round(exit_px, 4),
             "net_return": round(net, 7),
+            "matched_T3_passive_net": round(baseline, 7) if baseline is not None else None,
             "r_multiple": round(net / risk, 5),
-            "reason": reason,
+            "reason": reason, "status": "closed_daily_proxy",
             "hold_sessions": exit_at - j,
+            "locked_sessions": locked_sessions,
+            "mae_daily_bar_proxy": round(proxy_mae, 6) if proxy_mae is not None else None,
+            "mfe_daily_bar_proxy": round(proxy_mfe, 6) if proxy_mfe is not None else None,
             "daily_proxy_not_1450": True,
         })
         eligible_index = exit_at + 1
