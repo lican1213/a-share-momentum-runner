@@ -39,6 +39,25 @@ def compute_index(raw: pd.DataFrame, asof: date) -> dict[str, Any]:
     }
 
 
+def historical_index_regimes(raw: pd.DataFrame, asof: date, lookback_days: int = 950) -> dict[str, dict]:
+    """Each date's features use only closes on or before that date."""
+    df = raw.rename(columns={"日期": "date", "收盘": "close"}).copy()
+    df["date"] = pd.to_datetime(df["date"], errors="raise")
+    df["close"] = pd.to_numeric(df["close"], errors="raise")
+    df = df.dropna(subset=["date", "close"]).sort_values("date").drop_duplicates("date")
+    df = df[df["date"].dt.date <= asof].copy()
+    if len(df) < 65 or (df["close"] <= 0).any():
+        raise ValueError("insufficient or invalid index history")
+    df["ma20"] = df["close"].rolling(20, min_periods=20).mean()
+    df["ma60"] = df["close"].rolling(60, min_periods=60).mean()
+    cutoff = asof - pd.Timedelta(days=lookback_days)
+    df = df[df["date"].dt.date >= cutoff]
+    return {str(row["date"].date()): {
+        "above_ma20": bool(row["close"] > row["ma20"]),
+        "above_ma60": bool(row["close"] > row["ma60"]),
+    } for _, row in df.iterrows() if pd.notna(row["ma60"])}
+
+
 def compute_breadth(raw: pd.DataFrame, asof: date) -> dict[str, Any]:
     if not {"代码", "名称", "涨跌幅"}.issubset(raw.columns):
         raise ValueError("missing breadth schema")
@@ -67,7 +86,7 @@ def live_context(ak, asof: date, snapshot: pd.DataFrame | None = None) -> dict:
         "asof": str(asof),
         "funding_margin_balance": {"status": "NOT_FETCHED", "reason": "reliable same-date interface not yet validated"},
         "four_etf_shares_nav": {"status": "NOT_FETCHED", "reason": "same-day share/NAV consistency not yet validated"},
-        "indices": {}, "breadth": {},
+        "indices": {}, "breadth": {}, "historical_regimes_by_index": {},
     }
     for name, sym in INDEX_CODES.items():
         problems = []
@@ -87,6 +106,7 @@ def live_context(ak, asof: date, snapshot: pd.DataFrame | None = None) -> dict:
                                else "AKShare index_zh_a_hist (Eastmoney)"),
                     "provider_used": provider
                 }
+                out["historical_regimes_by_index"][name] = historical_index_regimes(df, asof)
                 break
             except Exception as exc:
                 problems.append(f"{provider}: {type(exc).__name__}: {exc}"[:250])
