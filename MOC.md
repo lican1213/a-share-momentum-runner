@@ -2,6 +2,12 @@
 
 **Agent starts here.** [操作规则](KNOWLEDGE.md) · [AGENTS入口](AGENTS.md) · [Wiki总索引](wiki/index.md) · [一页当前状态](wiki/compiled/briefing.md)
 
+## B13 当前交付：不可回写证据→国家队身份→每日股票策略简报
+
+**[B13对抗审计](wiki/audits/AUD-2026-10-28-e2e-release-gate.md)** · [持有人证据：159919的2024/2025中报](data/national_team_holders/159919-2024H1-2025H1.json) · [持仓变化校验](national_team/holder_evidence.py) · [资金与个股研究简报生成器](national_team/daily_report.py) · [原始运行证据与派生Wiki分离的任务](.github/workflows/national-team-wiki-sync.yml)。
+
+真实股票研究已覆盖150只沪深300成分股（约83.015%的指数权重），两条S1/S2前瞻观察名单已经冻结，但5/10/20交易日尚未成熟。法定持仓已独立建立159919的2024/2025基线，**不能代替2026持仓和当日账户交易**。研究源/归因通过历史红队重放；最近生产运行曾因Wiki自动摘要同仓rebase冲突失败，现已经把不可变证据与派生索引分开，仍须匹配新完整生产run验收。**策略盈利没有获得可宣称的样本外正结果**。
+
 ## B11—B12 当前进展：真实四ETF → 股票候选 → 独立审计
 
 **[E2E审计报告](wiki/audits/AUD-2026-10-28-e2e-release-gate.md)** · [四ETF真实来源](records/national_team_etf/2026-10-28/40702172792-a1.json) · [跨运行完整资金快照](records/national_team_merged/2026-10-28/40702572594-a1.json) · [30只真实股票观察排名](records/national_team_watch/2026-10-28/40702172792-a1.json) · [完整量化CI](https://github.com/lican1213/a-share-momentum-runner/actions/workflows/national-team-factors.yml) · [最新源采集Actions](https://github.com/lican1213/a-share-momentum-runner/actions/workflows/national-team-live.yml)
