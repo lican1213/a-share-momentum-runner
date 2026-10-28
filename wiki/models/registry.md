@@ -24,6 +24,8 @@ updated: 2026-10-28
 
 | B9 机会优先选股扫描 | [opportunity_scan.py](../../national_team/opportunity_scan.py) · [ADR-0004](../decisions/ADR-0004-stock-selection-after-flow.md) | 部分可追溯篮子/股票数据排名、资金净赎回风险、任意低流动性与IPO阈值改风险标签，交易执行另外审计 | [CI 40697156501](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40697156501)：26项**合成数据**单元测试通过，尚无真实资金/PCF选股收益证据 |
 
+| B10 对抗式审计/真实ETF采集 | [完整审计AUD](../audits/AUD-2026-10-28-red-team.md) · [数据采集](../../national_team/live_etf_sources.py) · [前瞻评价](../../national_team/forward_evaluation.py) | 纠正沪深份额单位、ETF净流入与个股资金方向混排、缺PCF覆盖、公开时间与收盘回测、分拆未核验；真实获取三沪ETF份额+NAV、159919未标日快照 | 实际[run 40698907834](../../records/national_team_etf/2026-10-28/40698907834-a1.json)为**部分数据**，4ETF完整资金/PCF/OOS收益仍未成功 |
+
 ## 当前研究标识
 - **策略代码**：`strategy.py` 中的三日突破和交易规则，逻辑版本与证据运行的代码 SHA 绑定，不独立宣称“v0.2盈利”。
 - **执行器标签**：`runner.py` 当前可能仍报告 `daily-bar research runner v0.1`；该文本不能替代 GitSHA，也不意味着整个仓库停留在最初版本。
