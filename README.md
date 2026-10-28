@@ -3,6 +3,11 @@
 **2026-10-28 项目主线已纠偏**：用户目标是追踪中央汇金等可核实机构公开持仓与国家队关注ETF的真实份额净申赎，并检验公开信号之后跟随是否有收益。详见[ADR-0003](wiki/decisions/ADR-0003-national-team-pivot.md)与[首要任务 Issue #3](https://github.com/lican1213/a-share-momentum-runner/issues/3)。旧三日动量系统继续作为历史研究分支，**不是国家队交易信号**。尚未部署官方ETF份额管线，不能把旧运行报告当成国家队买卖记录。
 
 
+## 交易策略主线：资金入场线索之后选什么股票？
+[ADR-0004 选股决策](wiki/decisions/ADR-0004-stock-selection-after-flow.md) · [EXP-0003 ETF基准S0 vs 股票S1/S2](wiki/experiments/EXP-0003-etf-to-stock.md) · [股票映射代码](national_team/stock_selection.py)。
+
+国家队相关ETF净申赎 → 按当时PCF/持仓权重映射至股票潜在配置敞口 → 以股票20日成交额归一、相对强度分层 → 研究同日同成本5/10/20交易日是否跑赢直接买沪深300ETF。资金流不等于国家队本人的真实订单；代码尚未得到官方PCF/真实股票数据支持，**不能给当前买入名单**。
+
 ## 核心：原始国家队ETF资金进出指标已经恢复
 [最初四只ETF（510300/510310/510330/159919）资金因子、两类市场覆盖率和五日净申赎强度](wiki/data/original-four-etf-indicator.md)。9ETF是扩展观察池，国家队基金持有人披露是低频身份核验。原始入金出金信号与市场风险环境需要**合并使用**，不能将ETF总申赎误认为中央汇金具体账户当日成交。当前仅提交公式和合成数据测试，尚无国家队专用ETF实际取数结果。
 
