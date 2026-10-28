@@ -12,6 +12,8 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-28 | [f842855abe](https://github.com/lican1213/a-share-momentum-runner/commit/f842855abe2498d688d26d4ab8a6add10a02cffd) | github-actions[bot] | data: archive actual ETF provider attempt 40719964906 [skip ci] |
+| 2026-10-28 | [4a02d25560](https://github.com/lican1213/a-share-momentum-runner/commit/4a02d255603a7815c34984e228e7b6f8c76d9510) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-28 | [a3dbc1bf9c](https://github.com/lican1213/a-share-momentum-runner/commit/a3dbc1bf9c33fa5e09364e1f6c1556a3b0b6f26a) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-28 | [a01322fcfc](https://github.com/lican1213/a-share-momentum-runner/commit/a01322fcfcf0f8a9e2913da8dbb17157dae8f230) | Can Li | docs: expose evidence-backed V2 state-backed ETF proxy to stock-selection research at repository entrypoint |
 | 2026-10-28 | [93cada6bfd](https://github.com/lican1213/a-share-momentum-runner/commit/93cada6bfd9cbd3c6f55df30f5963e2fc45abcbb) | github-actions[bot] | data: archived four-ETF V2 candidate freeze 40720654702 [skip ci] |
