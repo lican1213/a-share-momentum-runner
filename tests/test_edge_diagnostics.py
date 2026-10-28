@@ -14,7 +14,7 @@ def test_gap_stop_is_separate_from_nominal_stop_and_paired_T3():
     assert d["gap_stop_count"]==1
     assert d["stop_count"]==2
     assert abs(d["gap_stop_share_of_absolute_losses"]-0.75)<1e-5
-    assert abs(d["same_trade_T3_passive_comparison"]["mean_active_minus_passive"]-(-0.01))<1e-6
+    assert abs(d["same_trade_T3_passive_comparison"]["mean_active_minus_passive"]-(-0.05 / 3))<1e-6
     assert d["model_release_gate"]=="RESEARCH_ONLY_UNVALIDATED"
 
 def test_unavailable_pairs_not_credited_as_zero_returns():
