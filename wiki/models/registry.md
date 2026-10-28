@@ -17,20 +17,18 @@ updated: 2026-10-28
 | B4 回测边界及账本 | [11ed96a3](https://github.com/lican1213/a-share-momentum-runner/commit/11ed96a3a144), [958d142b](https://github.com/lican1213/a-share-momentum-runner/commit/958d142b4e32), [cfc8c4c6](https://github.com/lican1213/a-share-momentum-runner/commit/cfc8c4c645d9) | 限价涨跌停代理、不可成交审查、Horizon分割、逐笔JSON和哈希、Git留档 | [运行40683070796](../../records/2026-10-28/close/40683070796-a1.json) |
 | B5 退出归因 / 市场条件 | [3ab42308](https://github.com/lican1213/a-share-momentum-runner/commit/3ab4230818bc) | 退出诊断、H01双指数MA条件、16项测试 | [运行40685553957](../../records/2026-10-28/close/40685553957-a1.json)；H01通过组仍亏损 |
 | B6 LLM Wiki 知识治理 | [MOC commit 6ea4826a](https://github.com/lican1213/a-share-momentum-runner/commit/6ea4826a6ae2)、[自动同步CI commit ea6039b8](https://github.com/lican1213/a-share-momentum-runner/commit/ea6039b8b75a) | Agent多端入口、模型/实验/决策/事故Wiki、运行和提交索引自动更新，**不改变交易策略** | [Wiki验证40688051721](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40688051721)19页/无断链；[全量运行40687425222](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40687425222)20项单测且自动索引13条记录已通过 |
-
-| B7 原四ETF指标恢复与国家队交叉验证 | [原始指标合同](../data/original-four-etf-indicator.md) · [Python指标实现](../../national_team/core_flow_factors.py) | 恢复ETF_AUM、普通/自由流通覆盖率、日/5日申赎；区分原四只与扩展篮子 | 算术CI验证待实跑；国家队ETF官方份额采集尚未上线，不代表策略盈利 |
-
+| B7 原四ETF指标恢复与国家队交叉验证 | [原始指标合同](../data/original-four-etf-indicator.md) · [Python指标实现](../../national_team/core_flow_factors.py) | 恢复ETF_AUM、普通/自由流通覆盖率、日/5日申赎；区分原四只与扩展篮子 | 该阶段仅公式/合成测试；真实四ETF已在后续B11获得完整历史份额与NAV，不能将旧状态读成当前状态 |
 | B8 资金→股票研究框架 | [stock_selection.py](../../national_team/stock_selection.py) · [EXP-0003](../experiments/EXP-0003-etf-to-stock.md) | 核心ETF净申购→当时权重/PCF→股票潜在资金敞口/ADV20与相对强度；S0 ETF基准 vs S1/S2股票观察 | [CI 40693488577](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40693488577)：16项**合成数据**测试通过；真实收益未验证、无授权买入 |
-
 | B9 机会优先选股扫描 | [opportunity_scan.py](../../national_team/opportunity_scan.py) · [ADR-0004](../decisions/ADR-0004-stock-selection-after-flow.md) | 部分可追溯篮子/股票数据排名、资金净赎回风险、任意低流动性与IPO阈值改风险标签，交易执行另外审计 | [CI 40697156501](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40697156501)：26项**合成数据**单元测试通过，尚无真实资金/PCF选股收益证据 |
+| B10 对抗式审计/真实ETF采集 | [完整审计AUD](../audits/AUD-2026-10-28-red-team.md) · [数据采集](../../national_team/live_etf_sources.py) · [前瞻评价](../../national_team/forward_evaluation.py) | 纠正沪深份额单位、ETF净流入与个股资金方向混排、缺PCF覆盖、公开时间与收盘回测、分拆未核验；真实获取三沪ETF份额+NAV、159919未标日快照 | 实际[run 40698907834](../../records/national_team_etf/2026-10-28/40698907834-a1.json)是当时的**部分数据**；四ETF份额完整问题在后续B11解决，但PCF/OOS盈利仍未解决 |
 
-| B10 对抗式审计/真实ETF采集 | [完整审计AUD](../audits/AUD-2026-10-28-red-team.md) · [数据采集](../../national_team/live_etf_sources.py) · [前瞻评价](../../national_team/forward_evaluation.py) | 纠正沪深份额单位、ETF净流入与个股资金方向混排、缺PCF覆盖、公开时间与收盘回测、分拆未核验；真实获取三沪ETF份额+NAV、159919未标日快照 | 实际[run 40698907834](../../records/national_team_etf/2026-10-28/40698907834-a1.json)为**部分数据**，4ETF完整资金/PCF/OOS收益仍未成功 |
+| B11 四ETF资金+成分股真实研究与红队验收 | [E2E审计报告](../audits/AUD-2026-10-28-e2e-release-gate.md) · [跨运行资金合并](../../national_team/record_merge.py) · [对抗式审计门槛](../../national_team/audit_gate.py) · [纸面事件冻结](../../national_team/paper_events.py) | 深交所独立日期JSON、四ETF份额/NAV跨运行合并、真实中证300权重与30只股票ADV20、S1/S2冻结、5/10/20日未来纸面评价，扩展至150只的生产测试 | [实际4ETF+30股run 40702172792](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40702172792)，[多源合并run 40702572594](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40702572594)，[74项单测及真实账本审计run 40704384352](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40704384352)；最新完整流水线仍需对应Actions成功记录，PCF和独立净超额收益未证明 |
 
 ## 当前研究标识
-- **策略代码**：`strategy.py` 中的三日突破和交易规则，逻辑版本与证据运行的代码 SHA 绑定，不独立宣称“v0.2盈利”。
+- **现行研究程序**：`national_team/` 下的官方ETF数据、资金合并、指数权重代理、股票观察排名、事件冻结、纸面收益评价和独立审计；`strategy.py` 的三日技术突破只是历史支线，不是当前国家队策略。
 - **执行器标签**：`runner.py` 当前可能仍报告 `daily-bar research runner v0.1`；该文本不能替代 GitSHA，也不意味着整个仓库停留在最初版本。
 - **可执行交易开关**：始终 **OFF / `RESEARCH_ONLY_NOT_TRADE_AUTHORIZED`**。
-- **最近已检验实验**：[EXP-0001](../experiments/EXP-0001-baseline.md) 和 [EXP-0002](../experiments/EXP-0002-regime.md)。
+- **现行研究主线**：[国家队四ETF资金指标](../data/original-four-etf-indicator.md)、[EXP-0003股票映射](../experiments/EXP-0003-etf-to-stock.md)、[E2E审计](../audits/AUD-2026-10-28-e2e-release-gate.md)。EXP-0001/0002为已停止优化的旧技术追涨支线。
 
 ## 每次升级必须补全
 `version_id`、`parent_sha`、`commit_sha`、`experiment_id`、`decision_id`、规则/数据具体差异、训练范围与不可再用作盲测的历史范围、定量评价指标、CI运行ID、逐笔证据、风险门槛、回滚策略、已观察结果及未完成项。
