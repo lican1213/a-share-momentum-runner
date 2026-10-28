@@ -1,5 +1,12 @@
 # A-share momentum runner | 中国A股三日追涨研究引擎
 
+
+## Knowledge base / 第二大脑（Agent先读这里）
+
+**[MOC.md — 总索引](MOC.md)** · [AGENTS.md — Agent接手规则](AGENTS.md) · [KNOWLEDGE.md — LLM Wiki协议](KNOWLEDGE.md) · [最新运行自动简报](wiki/compiled/briefing.md) · [模型版本史](wiki/models/registry.md) · [完整运行账本](wiki/indices/runs.md) · [全部Git提交索引](wiki/indices/commits.md) · [历史升级/失败日志](wiki/log.md)
+
+本仓库采用 LLM Wiki 的三层结构：`records/` 原始证据不回写，`wiki/` 由Agent持续综合，`AGENTS.md`/ `KNOWLEDGE.md` 管理每轮升级。运行后自动重建 `wiki/indices/` 和 `wiki/compiled/`，模型变更还必须更新实验、版本、决策、事故与维护日志。**当前仍是研究态，不能发可执行买卖指令。**
+
 A **real GitHub Actions-powered** research prototype with fail-closed controls. Uses actual third-party market data; never places broker orders.
 
 ## Verified execution (2026-10-28)
