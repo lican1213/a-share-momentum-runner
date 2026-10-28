@@ -1,0 +1,570 @@
+{
+  "schema": 1,
+  "status": "FOUR_ETF_FACTOR_OBSERVED_AFTER_CAPTURE_NOT_HISTORICAL_PIT",
+  "run_id": "40702172792",
+  "run_attempt": "1",
+  "capture_time_beijing": "2026-10-28T22:03:40.796091+08:00",
+  "first_observed_no_earlier_than": "2026-10-28T22:04:35.880199+08:00",
+  "asof_requested": "2026-10-28",
+  "core_codes": [
+    "510300",
+    "510310",
+    "510330",
+    "159919"
+  ],
+  "unit": "raw_shares",
+  "sources": {
+    "SSE": {
+      "url": "https://www.sse.com.cn/assortment/fund/etf/list/scale/",
+      "api": "akshare.fund_etf_scale_sse",
+      "normalization": "AKShare already *10000 from official 10,000-share display"
+    },
+    "SZSE": {
+      "url": "https://www.szse.cn/market/fund/volume/etf/index.html",
+      "api": "akshare.fund_scale_daily_szse",
+      "normalization": "AKShare output already raw shares"
+    },
+    "NAV": {
+      "url_template": "https://fundf10.eastmoney.com/jjjz_{code}.html",
+      "api": "akshare.fund_etf_fund_info_em",
+      "normalization": "CNY per fund share; may be unavailable"
+    }
+  },
+  "observations_by_date": {
+    "2026-10-27": {
+      "159919": {
+        "shares": "10396116600.00",
+        "shares_source": "SZSE_DATED_JSON",
+        "shares_source_url": "https://www.szse.cn/market/fund/volume/etf/index.html",
+        "first_observed_at": "2026-10-28T22:03:48.395229+08:00",
+        "nav": "4.3077",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510300": {
+        "shares": "36238087700.0",
+        "shares_source": "SSE",
+        "nav": "4.1259",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510310": {
+        "shares": "21926444000.0",
+        "shares_source": "SSE",
+        "nav": "4.0093",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510330": {
+        "shares": "13507449800.0",
+        "shares_source": "SSE",
+        "nav": "4.303",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      }
+    },
+    "2026-10-26": {
+      "159919": {
+        "shares": "10406016600.00",
+        "shares_source": "SZSE_DATED_JSON",
+        "shares_source_url": "https://www.szse.cn/market/fund/volume/etf/index.html",
+        "first_observed_at": "2026-10-28T22:03:48.395251+08:00",
+        "nav": "4.3637",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510300": {
+        "shares": "35446987700.0",
+        "shares_source": "SSE",
+        "nav": "4.1797",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510310": {
+        "shares": "21601544000.0",
+        "shares_source": "SSE",
+        "nav": "4.0618",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510330": {
+        "shares": "13254549800.0",
+        "shares_source": "SSE",
+        "nav": "4.3587",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      }
+    },
+    "2026-10-23": {
+      "159919": {
+        "shares": "9987516600.00",
+        "shares_source": "SZSE_DATED_JSON",
+        "shares_source_url": "https://www.szse.cn/market/fund/volume/etf/index.html",
+        "first_observed_at": "2026-10-28T22:03:48.395255+08:00",
+        "nav": "4.3652",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510300": {
+        "shares": "35242687700.0",
+        "shares_source": "SSE",
+        "nav": "4.1811",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510310": {
+        "shares": "18359744000.0",
+        "shares_source": "SSE",
+        "nav": "4.063",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510330": {
+        "shares": "11908149800.0",
+        "shares_source": "SSE",
+        "nav": "4.3603",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      }
+    },
+    "2026-10-22": {
+      "159919": {
+        "shares": "9767916600.00",
+        "shares_source": "SZSE_DATED_JSON",
+        "shares_source_url": "https://www.szse.cn/market/fund/volume/etf/index.html",
+        "first_observed_at": "2026-10-28T22:03:48.395258+08:00",
+        "nav": "4.289",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510300": {
+        "shares": "32729887700.0",
+        "shares_source": "SSE",
+        "nav": "4.1093",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510310": {
+        "shares": "17115044000.0",
+        "shares_source": "SSE",
+        "nav": "3.9922",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510330": {
+        "shares": "10532949800.0",
+        "shares_source": "SSE",
+        "nav": "4.2848",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      }
+    },
+    "2026-10-21": {
+      "159919": {
+        "shares": "7565616600.00",
+        "shares_source": "SZSE_DATED_JSON",
+        "shares_source_url": "https://www.szse.cn/market/fund/volume/etf/index.html",
+        "first_observed_at": "2026-10-28T22:03:48.395261+08:00",
+        "nav": "4.369",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510300": {
+        "shares": "30199087700.0",
+        "shares_source": "SSE",
+        "nav": "4.1856",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510310": {
+        "shares": "17062844000.0",
+        "shares_source": "SSE",
+        "nav": "4.0664",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510330": {
+        "shares": "9702249800.0",
+        "shares_source": "SSE",
+        "nav": "4.3645",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      }
+    },
+    "2026-10-20": {
+      "159919": {
+        "shares": "7342416600.00",
+        "shares_source": "SZSE_DATED_JSON",
+        "shares_source_url": "https://www.szse.cn/market/fund/volume/etf/index.html",
+        "first_observed_at": "2026-10-28T22:03:48.395263+08:00",
+        "nav": "4.4097",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510300": {
+        "shares": "29400787700.0",
+        "shares_source": "SSE",
+        "nav": "4.2245",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510310": {
+        "shares": "17028644000.0",
+        "shares_source": "SSE",
+        "nav": "4.1043",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510330": {
+        "shares": "9623949800.0",
+        "shares_source": "SSE",
+        "nav": "4.4049",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      }
+    },
+    "2026-10-19": {
+      "159919": {
+        "shares": "6986016600.00",
+        "shares_source": "SZSE_DATED_JSON",
+        "shares_source_url": "https://www.szse.cn/market/fund/volume/etf/index.html",
+        "first_observed_at": "2026-10-28T22:03:48.395266+08:00",
+        "nav": "4.434",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510300": {
+        "shares": "29195587700.0",
+        "shares_source": "SSE",
+        "nav": "4.2473",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510310": {
+        "shares": "16948544000.0",
+        "shares_source": "SSE",
+        "nav": "4.1268",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      },
+      "510330": {
+        "shares": "8719449800.0",
+        "shares_source": "SSE",
+        "nav": "4.4298",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      }
+    },
+    "2026-10-16": {
+      "159919": {
+        "shares": "6929316600.00",
+        "shares_source": "SZSE_DATED_JSON",
+        "shares_source_url": "https://www.szse.cn/market/fund/volume/etf/index.html",
+        "first_observed_at": "2026-10-28T22:03:48.395280+08:00",
+        "nav": "4.4289",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      }
+    },
+    "2026-10-15": {
+      "159919": {
+        "shares": "6851916600.00",
+        "shares_source": "SZSE_DATED_JSON",
+        "shares_source_url": "https://www.szse.cn/market/fund/volume/etf/index.html",
+        "first_observed_at": "2026-10-28T22:03:48.395283+08:00",
+        "nav": "4.4226",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      }
+    },
+    "2026-10-14": {
+      "159919": {
+        "shares": "6839316600.00",
+        "shares_source": "SZSE_DATED_JSON",
+        "shares_source_url": "https://www.szse.cn/market/fund/volume/etf/index.html",
+        "first_observed_at": "2026-10-28T22:03:48.395286+08:00",
+        "nav": "4.4774",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      }
+    },
+    "2026-10-13": {
+      "159919": {
+        "shares": "6848316600.00",
+        "shares_source": "SZSE_DATED_JSON",
+        "shares_source_url": "https://www.szse.cn/market/fund/volume/etf/index.html",
+        "first_observed_at": "2026-10-28T22:03:48.395288+08:00",
+        "nav": "4.5389",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      }
+    },
+    "2026-10-12": {
+      "159919": {
+        "shares": "6844716600.00",
+        "shares_source": "SZSE_DATED_JSON",
+        "shares_source_url": "https://www.szse.cn/market/fund/volume/etf/index.html",
+        "first_observed_at": "2026-10-28T22:03:48.395290+08:00",
+        "nav": "4.5519",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      }
+    },
+    "2026-10-09": {
+      "159919": {
+        "shares": "6856416600.00",
+        "shares_source": "SZSE_DATED_JSON",
+        "shares_source_url": "https://www.szse.cn/market/fund/volume/etf/index.html",
+        "first_observed_at": "2026-10-28T22:03:48.395293+08:00",
+        "nav": "4.583",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      }
+    },
+    "2026-10-08": {
+      "159919": {
+        "shares": "6878916600.00",
+        "shares_source": "SZSE_DATED_JSON",
+        "shares_source_url": "https://www.szse.cn/market/fund/volume/etf/index.html",
+        "first_observed_at": "2026-10-28T22:03:48.395295+08:00",
+        "nav": "4.5753",
+        "nav_source": "fund_etf_fund_info_em: Eastmoney"
+      }
+    }
+  },
+  "raw_input_hashes": {
+    "SZSE_LATEST_UNDATED": "7800cb0477e1bae60d8cee5ba260f720664f9703356e27bf63017eba75895c68",
+    "SSE:2026-10-19": "4c41aebd82aa588d4616bca1181f8e87281d82ceb0bac8867061e4f3fbafdf26",
+    "SSE:2026-10-20": "730f427edba513d19bb65e52109ca6b8b6d126474308d8328ddb04c1d0b25907",
+    "SSE:2026-10-21": "e660844fb37319a0177eb3d4888ba6a9a773253cfe2b138b0016246f60a6f346",
+    "SSE:2026-10-22": "9bb751451c147cdb1c50e567649c5da1f5b54573fa562c4133b31f80af6c2285",
+    "SSE:2026-10-23": "8bce935ba9997b3e3dab592789b412232bd2288bbf78b40cf8c16ac84180bea4",
+    "SSE:2026-10-26": "f8d18781db25533ce60c65069564016adcec8204cfe0cde52f53edb18415570d",
+    "SSE:2026-10-27": "500226ac7d4444fd0efff468f5ac4bd7b654508700b3d65725f2d42e42f28a17",
+    "NAV:510300": "b21c51ddf9b1ccfe451bf1de3540e713207575d3e779a58ee658a8f2a04cbe2c",
+    "NAV:510310": "2902c7e1835aab6f9eef2be264b36951f25dcd59ba484bb45642558d1270a0e9",
+    "NAV:510330": "b363d8b7d99aab23e6c46edc34d90f641ce7fb03da069d942c87c63e6c4f8ef4",
+    "NAV:159919": "53de436d026f04f7ea0fb9e3f56efb3c91bfd2e2a05e07d44c076fb59a4a3321"
+  },
+  "errors": [
+    "SZSE_DAILY:ConnectionError:('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+    "SSE:2026-10-17:KeyError:\"None of [Index(['序号', '基金代码', '基金简称', 'ETF类型', '统计日期', '基金份额'], dtype='object')] are in the [columns]\"",
+    "SSE:2026-10-18:KeyError:\"None of [Index(['序号', '基金代码', '基金简称', 'ETF类型', '统计日期', '基金份额'], dtype='object')] are in the [columns]\"",
+    "SSE:2026-10-24:KeyError:\"None of [Index(['序号', '基金代码', '基金简称', 'ETF类型', '统计日期', '基金份额'], dtype='object')] are in the [columns]\"",
+    "SSE:2026-10-25:KeyError:\"None of [Index(['序号', '基金代码', '基金简称', 'ETF类型', '统计日期', '基金份额'], dtype='object')] are in the [columns]\"",
+    "SSE:2026-10-28:KeyError:\"None of [Index(['序号', '基金代码', '基金简称', 'ETF类型', '统计日期', '基金份额'], dtype='object')] are in the [columns]\""
+  ],
+  "availability_status": "historical data first captured NOW, not earlier public event timestamps",
+  "investor_identity": "UNATTRIBUTED_TO_HUIJIN_OR_ANY_OTHER_ENTITY",
+  "trade_signal_authorized": false,
+  "latest_undated_szse_snapshot": {
+    "fund_code": "159919",
+    "shares": "10396116676",
+    "first_observed_at": "2026-10-28T22:03:40.796091+08:00",
+    "observation_exchange_trading_date": null,
+    "cannot_calculate_daily_share_change": true,
+    "url": "https://fund.szse.cn/marketdata/fundslist/index.html",
+    "api": "akshare.fund_etf_scale_szse"
+  },
+  "SZSE_DATED_JSON": {
+    "count": 14,
+    "status": "OK",
+    "unit_conversion": "official current_size ten_thousand_shares x 10000"
+  },
+  "partial_SSE_three_only": {
+    "label": "SSE three ETF flow only, EXCLUDES Shenzhen 159919",
+    "period": [
+      "2026-10-26",
+      "2026-10-27"
+    ],
+    "same_day_NAV_weighted_flow_cny": "5654849760.00000",
+    "per_etf_flow_cny": {
+      "510300": "3263999490.00000",
+      "510310": "1302621570.00000",
+      "510330": "1088228700.0000"
+    },
+    "consecutive_exchange_sessions_verified": false,
+    "not_full_original_four_factor": true,
+    "not_proof_of_huijin_orders": true
+  },
+  "capture_completed_beijing": "2026-10-28T22:04:35.880199+08:00",
+  "dates_with_four_shares": [
+    "2026-10-19",
+    "2026-10-20",
+    "2026-10-21",
+    "2026-10-22",
+    "2026-10-23",
+    "2026-10-26",
+    "2026-10-27"
+  ],
+  "dates_with_four_shares_and_nav": [
+    "2026-10-19",
+    "2026-10-20",
+    "2026-10-21",
+    "2026-10-22",
+    "2026-10-23",
+    "2026-10-26",
+    "2026-10-27"
+  ],
+  "latest_complete_shares_date": "2026-10-27",
+  "last_two_complete_observation_dates": [
+    "2026-10-26",
+    "2026-10-27"
+  ],
+  "last_pair_share_changes": {
+    "510300": "791100000.0",
+    "510310": "324900000.0",
+    "510330": "252900000.0",
+    "159919": "-9900000.00"
+  },
+  "last_pair_trading_day_consecutiveness_verified": false,
+  "factor_arithmetic_possible": true,
+  "funding_event": {
+    "status": "FULL_FOUR_ETF_SHARES_NAV_OBSERVED_RESEARCH",
+    "funds": [
+      "510300",
+      "510310",
+      "510330",
+      "159919"
+    ],
+    "asof": "2026-10-28",
+    "first_available_at": "2026-10-28T22:04:35.880199+08:00",
+    "provider_run_id": "40702172792",
+    "publication_time_policy": "historical observations first available after this capture",
+    "verified_consecutive_session_flow": true,
+    "series_kind": "ETF_NET_CREATION_PROXY_NOT_HUIJIN_ACCOUNT_ORDERS",
+    "history_sessions": [
+      "2026-10-08",
+      "2026-10-09",
+      "2026-10-12",
+      "2026-10-13",
+      "2026-10-14",
+      "2026-10-15",
+      "2026-10-16",
+      "2026-10-19",
+      "2026-10-20",
+      "2026-10-21",
+      "2026-10-22",
+      "2026-10-23",
+      "2026-10-26",
+      "2026-10-27",
+      "2026-10-28"
+    ],
+    "complete_four_days": [
+      "2026-10-19",
+      "2026-10-20",
+      "2026-10-21",
+      "2026-10-22",
+      "2026-10-23",
+      "2026-10-26",
+      "2026-10-27"
+    ],
+    "missing_by_day": {
+      "2026-10-08": [
+        "510300",
+        "510310",
+        "510330"
+      ],
+      "2026-10-09": [
+        "510300",
+        "510310",
+        "510330"
+      ],
+      "2026-10-12": [
+        "510300",
+        "510310",
+        "510330"
+      ],
+      "2026-10-13": [
+        "510300",
+        "510310",
+        "510330"
+      ],
+      "2026-10-14": [
+        "510300",
+        "510310",
+        "510330"
+      ],
+      "2026-10-15": [
+        "510300",
+        "510310",
+        "510330"
+      ],
+      "2026-10-16": [
+        "510300",
+        "510310",
+        "510330"
+      ]
+    },
+    "partial_funding": {
+      "period": [
+        "2026-10-26",
+        "2026-10-27"
+      ],
+      "funds": [
+        "510300",
+        "510310",
+        "510330"
+      ],
+      "net_creation_proxy_cny": "5654849760.00000",
+      "per_fund_proxy_cny": {
+        "510300": "3263999490.00000",
+        "510310": "1302621570.00000",
+        "510330": "1088228700.0000"
+      },
+      "fund_count_coverage": "3/4",
+      "market_session_adjacency_verified": true
+    },
+    "four_etf_factor": {
+      "indicator_version": "NT-CORE4-20261027-v1.0",
+      "basket_name": "core_csi300_four",
+      "codes": [
+        "510300",
+        "510310",
+        "510330",
+        "159919"
+      ],
+      "trade_date": "2026-10-27",
+      "prior_date": "2026-10-26",
+      "decision_cutoff": "2026-10-28T22:04:35.880199+08:00",
+      "unit_money": "CNY",
+      "fund_aum_cny": "340330325937.850000",
+      "aum_is_partially_estimated": true,
+      "shares_times_nav_estimate_cny": "340330325937.850000",
+      "ordinary_float_coverage_ratio": null,
+      "free_float_coverage_ratio": null,
+      "coverage_ratios_are_not_national_team_holdings": true,
+      "corporate_actions_explicitly_verified": false,
+      "corporate_action_unknown_dates_codes": [
+        "2026-10-20:159919",
+        "2026-10-20:510300",
+        "2026-10-20:510310",
+        "2026-10-20:510330",
+        "2026-10-21:159919",
+        "2026-10-21:510300",
+        "2026-10-21:510310",
+        "2026-10-21:510330",
+        "2026-10-22:159919",
+        "2026-10-22:510300",
+        "2026-10-22:510310",
+        "2026-10-22:510330",
+        "2026-10-23:159919",
+        "2026-10-23:510300",
+        "2026-10-23:510310",
+        "2026-10-23:510330",
+        "2026-10-26:159919",
+        "2026-10-26:510300",
+        "2026-10-26:510310",
+        "2026-10-26:510330",
+        "2026-10-27:159919",
+        "2026-10-27:510300",
+        "2026-10-27:510310",
+        "2026-10-27:510330"
+      ],
+      "daily_share_changes": {
+        "510300": "791100000.0",
+        "510310": "324900000.0",
+        "510330": "252900000.0",
+        "159919": "-9900000.00"
+      },
+      "per_etf_daily_flow_proxy_cny": {
+        "510300": "3263999490.00000",
+        "510310": "1302621570.00000",
+        "510330": "1088228700.0000",
+        "159919": "-42646230.000000"
+      },
+      "daily_net_creation_proxy_cny": "5612203530.000000",
+      "five_day": {
+        "start": "2026-10-20",
+        "end": "2026-10-27",
+        "net_creation_cny_daily_sum": "78257382120.000000",
+        "net_creation_cny_endpoint_nav": "77711889600.000000",
+        "initial_aum_cny": "268864682162.890000",
+        "net_creation_pct_initial_aum": "0.2910660540851112994085114550",
+        "endpoint_pct_initial_aum": "0.2890371802456327592695454133",
+        "hypothetical_abs_3pct_alert": true,
+        "threshold_is_unvalidated": true,
+        "method_difference_warning": "daily NAV-weighted flow and endpoint-NAV flow are different proxies; retain both"
+      },
+      "investor_identity_attributable": false,
+      "trade_signal_authorized": false,
+      "missing_denominator_is_null": true,
+      "method_note": "ETF-wide primary issuance/redemption proxy; no investor identity or actual broker cash flow proven"
+    },
+    "latest_available_trading_day": "2026-10-27",
+    "factor_quality": {
+      "exchange_shares_via_akshare": true,
+      "NAV_from_Eastmoney_not_original_fund_report": true,
+      "corporate_actions_explicitly_verified": false,
+      "market_float_denominators_available": false,
+      "first_available_at": "2026-10-28T22:04:35.880199+08:00",
+      "national_team_investor_identified": false
+    }
+  }
+}
