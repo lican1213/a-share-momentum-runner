@@ -38,6 +38,11 @@ updated: 2026-10-28
 - 新增Claude/Gemini/Copilot入口均指向AGENTS/MOC，避免多Agent指令漂移。
 - **界限**：LLM Wiki文档会被Agent依协议维护；自动脚本仅刷新**结构化可验证的运行事实和Git索引**，不会自动生成或擅自修改科学结论。**交易授权继续OFF。**
 
+## 2026-10-28：用户纠正项目主目标——转向国家队资金跟踪
+- 用户明确要求跟踪国家队建仓及跟随后的实际收益，而非持续构建通用三日追涨系统。
+- 已确立[ADR-0003](decisions/ADR-0003-national-team-pivot.md)与[Issue #3](https://github.com/lican1213/a-share-momentum-runner/issues/3)为P0；旧三日动量研究保持原文件、记录与错误日志，不清理过去证据。
+- 研究数据先做ETF官方清算总份额与基金定期报告持有人，不以ETF净申购直接断言某国家队账户买入。尚未执行新国家队数据管线，故不能称国家队策略已跑通。
+
 ## 未来添加新事件的格式
 `YYYY-MM-DD HH:mm +08:00 | actor | question | change/why | prior SHA → new SHA | evidence run | results/limitations | linked EXP/ADR/INC | status`
 
