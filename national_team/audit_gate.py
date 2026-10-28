@@ -134,9 +134,17 @@ def audit(bundle:dict)->dict:
     funds=check_funding(merged)
     stocks=check_stock_watch(watch,merged)
     paper=check_paper(frozen,watch)
-    status=("RESEARCH_DATA_AUDIT_PASS" if funds["verified"] and stocks["verified"]
+    both_verified=funds["verified"] and stocks["verified"]
+    full_factor_date=((merged.get("funding_event") or {}).get("four_etf_factor") or {}).get("trade_date")
+    stock_signal_date=watch.get("funding_date")
+    mixed_date=bool(full_factor_date and stock_signal_date and full_factor_date!=stock_signal_date)
+    status=("RESEARCH_PRIOR_FOUR_CURRENT_PARTIAL_AUDITED" if both_verified and mixed_date
+            else "RESEARCH_DATA_AUDIT_PASS" if both_verified
             else "RESEARCH_PARTIAL_SOURCES_AUDITED")
-    return {"status":status,"funds":funds,"stock_proxy":stocks,"paper":paper,
+    return {"status":status,"latest_complete_four_factor_date":full_factor_date,
+            "stock_signal_trading_day":stock_signal_date,
+            "funding_and_stock_signals_use_distinct_dates":mixed_date,
+            "funds":funds,"stock_proxy":stocks,"paper":paper,
             "audit_does_not_prove_alpha":True,
             "audit_does_not_verify_actual_broker_execution":True,
             "investor_identity_verified":False}
