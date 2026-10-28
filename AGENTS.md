@@ -1,6 +1,8 @@
-# Agent entrypoint — A-share momentum research
+# Agent entrypoint — national-team ETF funding and stock selection
 
 **Read before any modification:** [MOC.md](MOC.md) → [KNOWLEDGE.md](KNOWLEDGE.md) → [wiki/compiled/briefing.md](wiki/compiled/briefing.md) → [wiki/index.md](wiki/index.md).
+
+**Current controlling audit: [AUD-2026-10-28-E2E](wiki/audits/AUD-2026-10-28-e2e-release-gate.md)**. B11: full four-ETF dated shares/NAV recovered and verified [2026-10-28 source run 40702172792](records/national_team_etf/2026-10-28/40702172792-a1.json); independent multi-source merge [40702572594](records/national_team_merged/2026-10-28/40702572594-a1.json). Real CSI300 300-component weight and 30-stock historical ADV20 run completed. New 150-stock build + direct SSE HTTP + frozen paper events + `audit_gate` requires matching production Actions verification; do not use earlier successful runs as proof of latest code. Actual PCF and Central Huijin holdings identification remain UNVERIFIED; the 5/10/20d edge is not demonstrated. Use `national_team/index_proxy.py` as a LABELLED index-weight proxy only. NEVER trade based on the backfilled Oct27 price.
 
 **Mandatory read after red-team 2026-10-28:** [AUD-2026-10-28](wiki/audits/AUD-2026-10-28-red-team.md) lists P0/P1 flaws, exact actual source recordings and remaining cash-flow / PCF / stock-return gaps. Current actual ETF facts are in [records/national_team_etf](records/national_team_etf), which is a DIFFERENT grain than the legacy momentum records. Never equate successful source collector job with four-ETF factor completeness. The official SSE display is in 10,000 shares but AKShare's SSE share adapter ALREADY multiplies by 10000. SZSE dated shares may fail; undated latest quotes cannot be backdated. Preserve signed negative stock exposure and independent flow-confirmed strength rankings. Evaluate next eligible open using Shanghai local time, not UTC calendar date.
 
