@@ -1,5 +1,11 @@
 name: Rebuild national-team MOC indices after source evidence is archived
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/national-team-wiki-sync.yml'
+      - 'national_team/daily_report.py'
+      - 'data/national_team_holders/**'
   workflow_run:
     workflows: ["National-team four ETF actual exchange data collection"]
     types: [completed]
