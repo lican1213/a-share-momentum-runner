@@ -43,6 +43,12 @@ updated: 2026-10-28
 - 已确立[ADR-0003](decisions/ADR-0003-national-team-pivot.md)与[Issue #3](https://github.com/lican1213/a-share-momentum-runner/issues/3)为P0；旧三日动量研究保持原文件、记录与错误日志，不清理过去证据。
 - 研究数据先做ETF官方清算总份额与基金定期报告持有人，不以ETF净申购直接断言某国家队账户买入。尚未执行新国家队数据管线，故不能称国家队策略已跑通。
 
+## 2026-10-28：找回用户原始资金进出指标（源规范纠偏）
+- 从2026-10-27原始实施方案找回固定四ETF（510300、510310、510330、159919）的核心指标：ETF_AUM、普通流通覆盖率、自由流通覆盖率、日度Δ份额×NAV、5交易日净申赎/期初规模、3%待检验警报。
+- [原始指标合同](data/original-four-etf-indicator.md)恢复两份原始方案间不同的5日NAV计价方法：逐日求和为主、期末NAV终点差法为敏感性对照；不能混合指标口径。
+- [代码实现](../national_team/core_flow_factors.py)与[合成数据测试](../tests/test_national_team_factors.py)验证算术和发布时间门槛，不代表ETF官方取数已完成；9ETF与国家队持仓确认作为扩展交叉验证，旧三日追涨保留历史证据。
+- [ADR-0003](decisions/ADR-0003-national-team-pivot.md)已补充最初设计而非替代指标。
+
 ## 未来添加新事件的格式
 `YYYY-MM-DD HH:mm +08:00 | actor | question | change/why | prior SHA → new SHA | evidence run | results/limitations | linked EXP/ADR/INC | status`
 
