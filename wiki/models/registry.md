@@ -10,6 +10,7 @@ updated: 2026-10-28
 
 | 逻辑阶段 | 代表提交 | 主要变化 | 可核验运行 / 状态 |
 | --- | --- | --- | --- |
+| B16 固定四ETF V2独立选股（EXP-0004） | [d13723f](https://github.com/lican1213/a-share-momentum-runner/commit/d13723f4cf9ce34d60c45dbeb7dc2e429b978b3e) · [源码](../../national_team/strategy_v2.py) · [实验协议](../experiments/EXP-0004-four-etf-strategy-v2.md) | 真实四ETF净流量触发；S1全样本资金敞口/ADV20前五；S2从整个150股中相对强度0%—10%独立前五；首次公开时间冻结；后续5/10/20日与ETF S0比较 | [run 40719359363](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40719359363)18项测试与真实源重放成功，[策略JSON](../../records/national_team_strategy/2026-10-28/40719359363-a1-v2.json)，[冻结事件](../../records/national_team_events/2026-10-28/40719359363-a1-v2.json)；尚无已到期净超额收益 |
 | B0 初始化 | [8f41d850](https://github.com/lican1213/a-share-momentum-runner/commit/8f41d850e3ce) | 原始三日突破策略与日线回放，T+1、T+3、手续费代理 | 尚未成熟，历史初版失败见 [INC-0001](../incidents/INC-0001-bootstrapping.md) |
 | B1 数据连接 | [ab6ce8a3](https://github.com/lican1213/a-share-momentum-runner/commit/ab6ce8a3d1ba) | 新浪备用交易日历/数据源、固定观察池；BaoStock后续追加 | 不能据此声称全市场检验 |
 | B2 计算修复 | [7234c871](https://github.com/lican1213/a-share-momentum-runner/commit/7234c871b03c) | QuantStats `DatetimeIndex` 回撤修复 | [成功运行40681563446](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40681563446) |
