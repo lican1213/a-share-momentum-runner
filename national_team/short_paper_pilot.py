@@ -328,11 +328,29 @@ def portfolio(ak, frozen, today):
         except Exception as ex:
             benchmark={"status":"BENCHMARK_EXIT_1450_UNVERIFIED",
                        "error":f"{type(ex).__name__}:{str(ex)[:160]}"}
+    nonfilled={"ENTRY_EXECUTION_BLOCKED","ENTRY_PRICE_GATE_REJECTED",
+               "LOT_RISK_TOO_LARGE"}
+    final_trade_states={"PAPER_EXIT_OHLC_SCENARIO"}|nonfilled
+    matured=(len(ss)>=4 and all(r["status"] in final_trade_states for r in recs)
+             and benchmark.get("status")=="S0_ETF_1450_OHLC_SCENARIO")
+    if matured:
+        stocks_net=sum(r.get("net_pnl",0.0) for r in recs)
+        benchmark_net=benchmark["net_pnl"]
+        paired={"status":"MATURED_OHLC_SCENARIO_NOT_BROKER_PNL",
+                "stock_strategy_net_pnl_cny":stocks_net,
+                "S0_etf_net_pnl_cny":benchmark_net,
+                "stock_strategy_minus_S0_cny":stocks_net-benchmark_net,
+                "stock_account_return":stocks_net/ACCOUNT,
+                "S0_account_return":benchmark_net/ACCOUNT,
+                "real_trades_confirmed":0}
+    else:
+        paired={"status":"NOT_MATURED_OR_EXIT_UNVERIFIED","reason":
+                "open exit, missing OHLC or minute 14:50, or calendar insufficient"}
     return {"status":"PAPER_OHLC_SCENARIOS_ONLY","records":recs,
             "cash_initial":ACCOUNT,"cash_unallocated_at_entry":ACCOUNT-invested,
             "initial_gross_invested":invested,"benchmark_etf":"510300",
             "benchmark_entry_open":refentry["open"],
-            "S0_benchmark":benchmark}
+            "S0_benchmark":benchmark, "paired_scenario":paired}
 
 
 def selftest():
