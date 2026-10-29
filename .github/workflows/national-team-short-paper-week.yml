@@ -1,0 +1,62 @@
+name: National-team one-week SHORT paper pilot - experiment EXP-0005
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'national_team/short_paper_pilot.py'
+      - '.github/workflows/national-team-short-paper-week.yml'
+  schedule:
+    # 18:15 Beijing every weekday; source and exchange-calendar gates run in Python.
+    - cron: '15 10 * * 1-5'
+permissions:
+  contents: write
+concurrency:
+  group: nt-short-paper-exp0005-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  freeze-and-monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install real data runtime
+        run: python -m pip install 'akshare>=1.17.0,<2' 'pandas>=2.2,<3' 'exchange-calendars==4.13.1'
+      - name: Run pilot unit smoke on actual Python
+        run: python -m national_team.short_paper_pilot --selftest
+      - name: Produce immutable preentry freeze or later OHLC-only valuation
+        run: python -m national_team.short_paper_pilot
+      - name: Persist experiment freeze and per-run audit (never overwrite)
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- records/national_team_short_pilot/
+          if git diff --staged --quiet; then
+            echo 'NO_NEW_SHORT_PILOT_EVIDENCE'; exit 0
+          fi
+          git commit -m "data: short paper pilot run ${GITHUB_RUN_ID} [skip ci]"
+          for n in 1 2 3 4; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              echo "SHORT_PILOT_EVIDENCE_PERSISTED"; exit 0
+            fi
+            sleep 2
+          done
+          echo "ERROR: cannot persist frozen audit evidence" >&2
+          exit 2
+      - name: Upload failure/success immutable evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nt-short-paper-exp0005-${{ github.run_id }}
+          path: records/national_team_short_pilot/
+          if-no-files-found: warn
+          retention-days: 90
