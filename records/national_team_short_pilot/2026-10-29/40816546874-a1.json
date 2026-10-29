@@ -1,0 +1,14 @@
+{
+  "version": "NT_SHORT_EXP0005_V1",
+  "captured_at": "2026-10-29T12:14:25.384202+08:00",
+  "github_run_id": "40816546874",
+  "github_sha": "f612c31bf322949dadb8c042af4a34c987b19a93",
+  "experiment": "EXP-0005",
+  "real_broker_trades": 0,
+  "errors": [],
+  "versions": {
+    "akshare": "1.20.2",
+    "exchange_calendars": "4.13.1"
+  },
+  "status": "FREEZE_NOT_YET_READY_OR_MISSED"
+}
