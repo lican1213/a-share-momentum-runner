@@ -3,6 +3,7 @@ id: EXP-0005
 type: experiment
 status: protocol-frozen-runner-pending
 created: 2026-10-29
+updated: 2026-10-29
 asof_bj: 2026-10-29T12:05:56+08:00
 ---
 # EXP-0005: 国家队ETF事件驱动三交易日短线纸面试验
