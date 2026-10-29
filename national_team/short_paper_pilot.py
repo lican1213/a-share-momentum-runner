@@ -169,26 +169,49 @@ def find_bar(rows, day):
     return next((b for b in rows["bars"] if b["date"]==day), None)
 
 
-def minute_exit_1450(ak, code, day):
-    """Use only actual 14:50 1-minute OPEN, never the later 15:00 close."""
-    from datetime import timedelta
-    d = datetime.fromisoformat(day)
-    start = (d + timedelta(hours=14, minutes=49)).strftime("%Y-%m-%d %H:%M:%S")
-    end = (d + timedelta(hours=14, minutes=52)).strftime("%Y-%m-%d %H:%M:%S")
+def minute_bars_to_1450(ak, code, day):
+    """Actual one-minute rows up to and INCLUDING 14:50, never 15:00 OHLC."""
+    start=f"{day} 09:30:00"
+    end=f"{day} 14:51:00"
     if code == "510300":
-        df = ak.fund_etf_hist_min_em(symbol=code,period="1",start_date=start,
-                                     end_date=end,adjust="")
+        df=ak.fund_etf_hist_min_em(symbol=code,period="1",start_date=start,end_date=end,adjust="")
     else:
-        df = ak.stock_zh_a_hist_min_em(symbol=code, period="1",start_date=start,
-                                       end_date=end,adjust="")
-    if "时间" not in df.columns or "开盘" not in df.columns:
-        raise ValueError("missing minute time/open")
+        df=ak.stock_zh_a_hist_min_em(symbol=code, period="1",start_date=start,end_date=end,adjust="")
+    required=("时间","开盘","最高","最低","收盘")
+    if not all(k in df.columns for k in required):
+        raise ValueError("missing minute OHLC schema")
+    out=[]
     for _,line in df.iterrows():
-        if str(line["时间"])[:16] == f"{day} 14:50":
-            return {"price":float(line["开盘"]), "source":"EASTMONEY_1MIN_1450_OPEN",
-                    "hash":h256(df.to_dict(orient="records"))}
-    raise ValueError(f"{code}: no verified 14:50 bar for {day}")
+        stamp=str(line["时间"])[:16]
+        if not (f"{day} 09:30"<=stamp<=f"{day} 14:50"):
+            continue
+        bar={"minute":stamp, "open":float(line["开盘"]),"high":float(line["最高"]),
+             "low":float(line["最低"]),"close":float(line["收盘"])}
+        if not (0<bar["low"]<=min(bar["open"],bar["close"])<=max(bar["open"],bar["close"])<=bar["high"]):
+            raise ValueError("inconsistent minute high/low")
+        out.append(bar)
+    if not out or out[-1]["minute"]!=f"{day} 14:50":
+        raise ValueError(f"{code}: missing final 14:50 one-minute OHLC")
+    if len({x["minute"] for x in out})!=len(out):
+        raise ValueError("duplicate minute bars")
+    return {"bars":out,"source":"EASTMONEY_1MIN_UP_TO_1450",
+            "raw_sha256":h256(out)}
 
+
+def minute_exit_1450(ak, code, day):
+    m=minute_bars_to_1450(ak,code,day)
+    return {"price":m["bars"][-1]["open"],"source":m["source"],
+            "hash":m["raw_sha256"]}
+
+
+def minute_order_outcome(minute_snapshot, stop, target):
+    """Conservative first touch; if same bar both touch, STOP precedes TARGET."""
+    for b in minute_snapshot["bars"]:
+        if b["open"]<=stop: return "GAP_STOP",b["open"]
+        if b["low"]<=stop:return "STOP_FIRST",stop
+        if b["open"]>=target:return "TARGET_GAP",b["open"]
+        if b["high"]>=target:return "TARGET",target
+    return "T_PLUS_3_1450_TIME",minute_snapshot["bars"][-1]["open"]
 
 def portfolio(ak, frozen, today):
     if today < ENTRY:
@@ -252,7 +275,17 @@ def portfolio(ak, frozen, today):
             if bar["volume"]<=0 or abs(bar["high"]-bar["low"])<1e-9:
                 rec["status"]="EXIT_BLOCKED_OR_ONE_PRICE";rec["blocked_day"]=day;break
             reason=None;px=None
-            if bar["open"] <= stop:
+            if d_index==3:
+                try:
+                    minute=minute_bars_to_1450(ak,code,day)
+                    rec["time_exit_minute_source"]={"source":minute["source"],
+                                                   "hash":minute["raw_sha256"]}
+                    reason,px=minute_order_outcome(minute,stop,target)
+                except Exception as ex:
+                    rec["status"]="TIME_EXIT_1450_UNVERIFIED"
+                    rec["error"]=f"{type(ex).__name__}:{str(ex)[:120]}"
+                    break
+            elif bar["open"] <= stop:
                 reason="GAP_STOP";px=bar["open"]
             elif bar["low"] <= stop:
                 reason="STOP_FIRST";px=stop
@@ -260,15 +293,6 @@ def portfolio(ak, frozen, today):
                 reason="TARGET_GAP";px=bar["open"]
             elif bar["high"] >= target:
                 reason="TARGET";px=target
-            elif d_index == 3:
-                try:
-                    m=minute_exit_1450(ak,code,day)
-                    reason="T_PLUS_3_1450_TIME";px=m["price"]
-                    rec["time_exit_minute_source"]=m
-                except Exception as ex:
-                    rec["status"]="TIME_EXIT_1450_UNVERIFIED"
-                    rec["error"]=f"{type(ex).__name__}:{str(ex)[:120]}"
-                    break
             if reason is None:
                 rec["status"]="PAPER_OPEN_EXIT_PENDING";continue
             px=round_down_tick(px*(1-SLIP))
@@ -281,12 +305,34 @@ def portfolio(ak, frozen, today):
                        assumed_fees=fees,execution_not_confirmed=True)
             break
         recs.append(rec)
-    # No stock position is a real broker trade. S0 is an independent scenario.
+    # S0 ETF is evaluated on the identical open-to-T+3 14:50 window;
+    # never substitute the 15:00 daily close for 14:50.
+    benchmark={"status":"NOT_MATURED"}
+    if len(ss)>=4:
+        exitday=ss[3]
+        try:
+            etf_m=minute_exit_1450(ak,"510300",exitday)
+            etf_buy=round_up_tick(refentry["open"]*(1+SLIP))
+            etf_sell=round_down_tick(etf_m["price"]*(1-SLIP))
+            n=math.floor(MAX_GROSS/(etf_buy*100))*100
+            if n<100:
+                benchmark={"status":"ETF_LOT_UNAFFORDABLE"}
+            else:
+                paid=etf_buy*n;received=etf_sell*n
+                charges=one_way_fee(paid,etf=True)+one_way_fee(received,sell=True,etf=True)
+                benchmark={"status":"S0_ETF_1450_OHLC_SCENARIO","entry_date":ENTRY,
+                           "exit_date":exitday,"quantity":n,
+                           "buy_price":etf_buy,"exit_price":etf_sell,
+                           "costs":charges,"net_pnl":received-paid-charges,
+                           "source":etf_m}
+        except Exception as ex:
+            benchmark={"status":"BENCHMARK_EXIT_1450_UNVERIFIED",
+                       "error":f"{type(ex).__name__}:{str(ex)[:160]}"}
     return {"status":"PAPER_OHLC_SCENARIOS_ONLY","records":recs,
             "cash_initial":ACCOUNT,"cash_unallocated_at_entry":ACCOUNT-invested,
             "initial_gross_invested":invested,"benchmark_etf":"510300",
             "benchmark_entry_open":refentry["open"],
-            "benchmark_3d_net":"UNVERIFIED_UNTIL_EXIT_SAME_TIME_AUDITED"}
+            "S0_benchmark":benchmark}
 
 
 def selftest():
