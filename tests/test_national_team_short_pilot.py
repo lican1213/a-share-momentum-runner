@@ -41,6 +41,8 @@ def test_breakout_uses_only_previous_10_high_and_prev_20_volume():
                      "low":close-0.2,"close":close,
                      "volume":200.0 if i==279 else 100.0})
     bars[-1]["date"]="2026-10-29"
+    bars[-1]["close"]=bars[-2]["high"]+0.5
+    bars[-1]["high"]=bars[-1]["close"]+0.1
     benchmark=[dict(x,open=4.0,high=4.02,low=3.98,close=4.0) for x in bars]
     d=indicators({"bars":bars},{"bars":benchmark})
     assert d["eligible"] and d["breakout_trigger"]>bars[-2]["high"]
