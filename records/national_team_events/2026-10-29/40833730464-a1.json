@@ -1,0 +1,8 @@
+{
+  "status": "ALL_EVENTS_DUPLICATE_PREVIOUSLY_FROZEN",
+  "source_watch": "records/national_team_watch/2026-10-29/40833730464-a1.json",
+  "frozen_at": "2026-10-29T15:15:11.633061+08:00",
+  "events": [],
+  "no_broker_orders": true,
+  "duplicate_already_frozen": 2
+}
