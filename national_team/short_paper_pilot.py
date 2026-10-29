@@ -38,11 +38,11 @@ def h256(obj):
 
 
 def round_up_tick(x):
-    return math.ceil(round(float(x) * 100.0 - 1e-9)) / 100.0
+    return math.ceil(float(x) * 100.0 - 1e-9) / 100.0
 
 
 def round_down_tick(x):
-    return math.floor(round(float(x) * 100.0 + 1e-9)) / 100.0
+    return math.floor(float(x) * 100.0 + 1e-9) / 100.0
 
 
 def one_way_fee(notional, sell=False, etf=False):
