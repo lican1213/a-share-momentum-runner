@@ -190,8 +190,8 @@ def minute_bars_to_1450(ak, code, day):
         if not (0<bar["low"]<=min(bar["open"],bar["close"])<=max(bar["open"],bar["close"])<=bar["high"]):
             raise ValueError("inconsistent minute high/low")
         out.append(bar)
-    if not out or out[-1]["minute"]!=f"{day} 14:50":
-        raise ValueError(f"{code}: missing final 14:50 one-minute OHLC")
+    if len(out)<220 or out[-1]["minute"]!=f"{day} 14:50":
+        raise ValueError(f"{code}: incomplete intraday minute sequence to 14:50")
     if len({x["minute"] for x in out})!=len(out):
         raise ValueError("duplicate minute bars")
     return {"bars":out,"source":"EASTMONEY_1MIN_UP_TO_1450",
