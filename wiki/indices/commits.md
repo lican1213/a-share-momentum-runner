@@ -2,7 +2,7 @@
 id: GENERATED-COMMITS
 type: log
 status: maintained
-updated: 2026-10-29
+updated: 2026-10-30
 ---
 # 全部Git提交历史（自动索引）
 
@@ -12,6 +12,27 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-29 | [a8b6496aeb](https://github.com/lican1213/a-share-momentum-runner/commit/a8b6496aeb6900215eb852ae2a702953faf3ba1d) | github-actions[bot] | data: short paper pilot run 40916309987 [skip ci] |
+| 2026-10-29 | [8679ad35b5](https://github.com/lican1213/a-share-momentum-runner/commit/8679ad35b5ad809ce523d8f9eb06590c08076625) | Can Li | research: freeze aggressive B-group EXP-0006 prospective A/B paper protocol |
+| 2026-10-29 | [a72dd22340](https://github.com/lican1213/a-share-momentum-runner/commit/a72dd2234024f3930d1b61ba45d981ed39606589) | Can Li | fix: add required updated metadata to EXP-0005 wiki protocol |
+| 2026-10-29 | [8d70a85e67](https://github.com/lican1213/a-share-momentum-runner/commit/8d70a85e672d616f48c82e446b0d7d5912b90473) | github-actions[bot] | data: archived four-ETF V2 candidate freeze 40842156623 [skip ci] |
+| 2026-10-29 | [b8213b3534](https://github.com/lican1213/a-share-momentum-runner/commit/b8213b35346b94d039dde52769a9d4ddc6290830) | github-actions[bot] | data: archive actual ETF provider attempt 40833730464 [skip ci] |
+| 2026-10-29 | [54304c8fe5](https://github.com/lican1213/a-share-momentum-runner/commit/54304c8fe5c8443fb087e57ec297d81b3ef5e55b) | github-actions[bot] | data: short paper pilot run 40816698300 [skip ci] |
+| 2026-10-29 | [02b6653224](https://github.com/lican1213/a-share-momentum-runner/commit/02b665322459bda1b47f5fe706b23ab00e03f44c) | github-actions[bot] | data: short paper pilot run 40816654503 [skip ci] |
+| 2026-10-29 | [00884356d4](https://github.com/lican1213/a-share-momentum-runner/commit/00884356d46341ad324210fd217c75336dbd8092) | Can Li | fix: censor time-exit simulations when minute history coverage is incomplete |
+| 2026-10-29 | [2210971bf2](https://github.com/lican1213/a-share-momentum-runner/commit/2210971bf29d7855c7062c4161af596645148996) | Can Li | feat: report mature cost-adjusted short stock-vs-ETF paired paper result only after verified T+3 exits |
+| 2026-10-29 | [c52d7ed123](https://github.com/lican1213/a-share-momentum-runner/commit/c52d7ed1236c2a8d2b1fe65b1c3c4a06be77e270) | github-actions[bot] | data: short paper pilot run 40816546874 [skip ci] |
+| 2026-10-29 | [47939d8cb4](https://github.com/lican1213/a-share-momentum-runner/commit/47939d8cb4f108bfa8519d3e61d4a08f34153462) | Can Li | docs: index EXP-0005 strict short paper pilot in MOC |
+| 2026-10-29 | [464a77c6b0](https://github.com/lican1213/a-share-momentum-runner/commit/464a77c6b0b18885c385651f5feaaa456985b9a7) | github-actions[bot] | data: short paper pilot run 40816531707 [skip ci] |
+| 2026-10-29 | [f612c31bf3](https://github.com/lican1213/a-share-momentum-runner/commit/f612c31bf322949dadb8c042af4a34c987b19a93) | Can Li | ci: gate paper pilot on executed adversarial pytest cases |
+| 2026-10-29 | [f0e3892a2e](https://github.com/lican1213/a-share-momentum-runner/commit/f0e3892a2eb3f513f84d1c67c77cff21919a13f9) | Can Li | test: form a true breakout in isolated synthetic positive control |
+| 2026-10-29 | [bb7ac50210](https://github.com/lican1213/a-share-momentum-runner/commit/bb7ac502107b64f130f43e08d36d9342859ff685) | Can Li | fix: use correct A-share 0.01 price tick ceiling/floor without premature rounding |
+| 2026-10-29 | [4eb800f8e1](https://github.com/lican1213/a-share-momentum-runner/commit/4eb800f8e1fdc28797c9fc1b9057e127ae59a629) | Can Li | test: conservative short-paper stop and no-lookahead signal adversarial cases |
+| 2026-10-29 | [6aa794655e](https://github.com/lican1213/a-share-momentum-runner/commit/6aa794655ec0eefa7208adde0f1eca028f2dc9cd) | Can Li | fix: use verified minute window for T+3 exit and paired 510300 S0 paper baseline |
+| 2026-10-29 | [7aeadbba6b](https://github.com/lican1213/a-share-momentum-runner/commit/7aeadbba6b227bf7d9fb8d3e6fa918afaf5859fd) | Can Li | ci: run isolated short paper pilot on verified after-close data |
+| 2026-10-29 | [14b73ace5c](https://github.com/lican1213/a-share-momentum-runner/commit/14b73ace5c1fe628ed5ad2142d1577b0df7901c7) | Can Li | feat: add isolated precommitted short paper pilot with no-broker OHLC guard [skip ci] |
+| 2026-10-29 | [7736f6c0f2](https://github.com/lican1213/a-share-momentum-runner/commit/7736f6c0f2a59536b1f14240e763ecff0905f12f) | Can Li | research: freeze prospective one-week national-team short-horizon paper pilot [skip ci] |
+| 2026-10-28 | [ad9c24ce16](https://github.com/lican1213/a-share-momentum-runner/commit/ad9c24ce160fca128bd4c2c40135f01f1c027aa8) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-28 | [97df59f69f](https://github.com/lican1213/a-share-momentum-runner/commit/97df59f69fe5b72f9b7a16cf4dfefb4d9f0d673d) | github-actions[bot] | data: archive actual ETF provider attempt 40788353267 [skip ci] |
 | 2026-10-28 | [9feedffecc](https://github.com/lican1213/a-share-momentum-runner/commit/9feedffecc92e85d707217c03ec4935bbdb9def1) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-28 | [58cc03066e](https://github.com/lican1213/a-share-momentum-runner/commit/58cc03066ef83daa3e08eba978c39b8d419b71a0) | github-actions[bot] | data: archive actual ETF provider attempt 40787773755 [skip ci] |
