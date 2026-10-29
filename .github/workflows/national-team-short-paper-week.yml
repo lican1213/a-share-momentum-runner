@@ -26,9 +26,11 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install real data runtime
-        run: python -m pip install 'akshare>=1.17.0,<2' 'pandas>=2.2,<3' 'exchange-calendars==4.13.1'
+        run: python -m pip install 'akshare>=1.17.0,<2' 'pandas>=2.2,<3' 'exchange-calendars==4.13.1' 'pytest>=8,<10'
       - name: Run pilot unit smoke on actual Python
         run: python -m national_team.short_paper_pilot --selftest
+      - name: Execute adversarial unit cases
+        run: python -m pytest -q tests/test_national_team_short_pilot.py
       - name: Produce immutable preentry freeze or later OHLC-only valuation
         run: python -m national_team.short_paper_pilot
       - name: Persist experiment freeze and per-run audit (never overwrite)
