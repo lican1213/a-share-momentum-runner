@@ -2,16 +2,16 @@
 id: NT-COMPILED-DAILY
 type: compiled
 status: active
-updated: 2026-10-29
+updated: 2026-10-30
 ---
 # 国家队相关ETF资金与个股观察简报
 
-- 数据截止：2026-10-29（研究账本；不等于实时国家队订单）
+- 数据截止：2026-10-30（研究账本；不等于实时国家队订单）
 - 独立审计：RESEARCH_DATA_AUDIT_PASS
 
 ## 核心四只ETF资金
-- 最近完整四ETF日：2026-10-28，当日净申赎代理 +32.46亿元；五交易日资金强度 +28.29%
-- 最新部分资金日期：2026-10-27 → 2026-10-28，覆盖510300,510310,510330，合计 +16.71亿元
+- 最近完整四ETF日：2026-10-29，当日净申赎代理 +87.42亿元；五交易日资金强度 +21.33%
+- 最新部分资金日期：2026-10-28 → 2026-10-29，覆盖510300,510310,510330，合计 +54.42亿元
 - 四ETF日期与最新部分资金日期可能不同，不可相加或写成同一个交易日。
 - 完整四ETF是否来自先前独立重算的归档：否或无足额资料
 
@@ -22,12 +22,12 @@ updated: 2026-10-29
 - V2仅供前瞻纸面观察，尚无经验证的超额收益。
 
 ## V1 旧版候选历史记录（不与V2合并）
-- 股票研究日期：2026-10-28；实际覆盖 150只；指数权重池占比 +83.02%
-1. 601825：潜在指数敞口/ADV20 2.69%（并非真实买盘）
-2. 600000：潜在指数敞口/ADV20 2.26%（并非真实买盘）
-3. 601229：潜在指数敞口/ADV20 2.24%（并非真实买盘）
-4. 601166：潜在指数敞口/ADV20 2.22%（并非真实买盘）
-5. 600519：潜在指数敞口/ADV20 2.21%（并非真实买盘）
+- 股票研究日期：2026-10-29；实际覆盖 146只；指数权重池占比 +83.02%
+1. 601825：潜在指数敞口/ADV20 7.16%（并非真实买盘）
+2. 600000：潜在指数敞口/ADV20 5.96%（并非真实买盘）
+3. 601229：潜在指数敞口/ADV20 5.87%（并非真实买盘）
+4. 600519：潜在指数敞口/ADV20 5.83%（并非真实买盘）
+5. 601166：潜在指数敞口/ADV20 5.74%（并非真实买盘）
 
 ## 重要身份冲突：不得沿用旧汇金仓位
 - 2025年中报所列汇金两主体合计：354.98亿份；2026年6月底**整只基金**总份额：69.39亿份。
@@ -36,7 +36,7 @@ updated: 2026-10-29
 
 ## Historical S2 and validation status
 - 冻结S2：600000, 601816, 601166, 600519, 000333
-- 现有纸面观察：NT-97c649b2aec78ac94133-S1_FLOW_OVER_ADV20:NOT_MATURED_YET, NT-97c649b2aec78ac94133-S2_FLOW_PLUS_PRICE_STRENGTH:NOT_MATURED_YET, NT-bd5a340716cee70d49c9-S1_FLOW_OVER_ADV20:NOT_MATURED_YET, NT-bd5a340716cee70d49c9-S2_FLOW_PLUS_PRICE_STRENGTH:NOT_MATURED_YET, NT2-84cff95303c56c57d176-S1_FLOW_OVER_ADV20:NOT_MATURED_YET, NT2-84cff95303c56c57d176-S2_INDEPENDENT_RELATIVE_CONFIRMATION:NOT_MATURED_YET
+- 现有纸面观察：NT-97c649b2aec78ac94133-S1_FLOW_OVER_ADV20:NOT_MATURED_YET, NT-97c649b2aec78ac94133-S2_FLOW_PLUS_PRICE_STRENGTH:NOT_MATURED_YET, NT-bd5a340716cee70d49c9-S1_FLOW_OVER_ADV20:NOT_MATURED_YET, NT-bd5a340716cee70d49c9-S2_FLOW_PLUS_PRICE_STRENGTH:NOT_MATURED_YET, NT2-84cff95303c56c57d176-S1_FLOW_OVER_ADV20:NOT_MATURED_YET, NT2-84cff95303c56c57d176-S2_INDEPENDENT_RELATIVE_CONFIRMATION:NOT_MATURED_YET, NT2-03fdedff0613f7ae3d22-S1_FLOW_OVER_ADV20:NOT_MATURED_YET, NT2-03fdedff0613f7ae3d22-S2_INDEPENDENT_RELATIVE_CONFIRMATION:NOT_MATURED_YET, NT-34cb0b6dbc0dd98f3983-S1_FLOW_OVER_ADV20:NOT_MATURED_YET, NT-34cb0b6dbc0dd98f3983-S2_FLOW_PLUS_PRICE_STRENGTH:NOT_MATURED_YET
 - 5/10/20交易日扣成本、样本外能否跑赢直接买沪深300ETF：**尚未证实**。
 
 ## 国家队法定身份与误归因防线
