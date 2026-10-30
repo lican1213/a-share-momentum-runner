@@ -1,3 +1,11 @@
+## 2026-10-30 16:56 最终源码/数据源对抗审计记录
+
+- **源码验收基线**：[`51aeffcd720b`](https://github.com/lican1213/a-share-momentum-runner/commit/51aeffcd720bffa4571a0727c3d34be677764df2)；综合审计 [Run 41029766486](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41029766486) 163 passed，A2 [Run 41029766667](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41029766667) 41 passed，B [Run 41029766609](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41029766609) 41 passed。软件G0通过，不等于交易完成。
+- **最后一次实源预检**：[Run 41029766462](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41029766462) · [归档证据](records/national_team_short_ab/probes/2026-10-30/41029766462-a1.json)，16:56北京时间。510300 10月30日收盘4.065，来源为新浪ETF截至10月29日日线＋同标的10月30日完整到15:00的实际1分钟数据，证据哈希已归档；上交所主板证券名册成功；10个原V2候选中**9个本轮真实日线验证通过**，600000（浦发银行）本轮新浪请求超时而东方财富仍熔断，不能当作技术指标筛选淘汰；510300/601825/600309三组分钟抽查通过。
+- **预检信号不作交易**：当轮指标A2=3只、B=6只，尚未执行整手数量、每股/组合预算及次交易日09:30开盘限制。早一轮 [Run 41029341126](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41029341126) 10/10数据通过、A2=3只、B=7只；两轮差异来自600000单股间歇性数据超时，不允许事后补当日入场。
+- **下一验证关口**：G1：2026-10-30 17:30后至23:59:59当日正式交易日冻结；预定18:15、20:15、22:15自动尝试；G2：2026-11-02 09:25前Git提交不可回写冻结；G3：11月2日真实开盘后OHLC纸面入场及T+1到T+3逐分钟止盈止损，与510300同期配对，费用后考察超额。2026-10-30 16:56时冻结=0、模拟成交=0、券商订单=0。失败必须以源错误或规则拒绝记录，不回填过往交易。
+- **文档链路**：[对抗审计](wiki/audits/AUD-2026-10-30-short-ab-execution-closure.md) · [A2/B引擎](national_team/short_ab_engine.py) · [只读源预检](national_team/short_probe.py) · [测试](tests/test_national_team_short_ab_engine.py) · [预检工作流](.github/workflows/national-team-short-probe.yml)。
+
 ## 2026-10-30 16:52实际行情验收：软件G0通过，市场冻结G1待18:15
 
 - [实际Run 41029341126](records/national_team_short_ab/probes/2026-10-30/41029341126-a1.json)：当日510300收盘4.065；原V2十只股票当日日线10/10；上交所主板名册与3只真实1分钟源抽查均通过。ETF完整资金因子为10月29日全四只+87.42亿元（全持有人净份额×NAV），不是汇金当日成交。A2日线指标通过601919、601166、600519，B通过601825、600309、600000、601919、601166、600519、601838；后续整手、预算、风险和次交易日开盘仍可拒绝。
