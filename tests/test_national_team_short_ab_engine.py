@@ -572,3 +572,245 @@ def test_frozen_benchmark_close_cannot_be_revised_on_paper_replay(monkeypatch):
     result=x.assess(object(),"B",frozen,now("2026-11-02T18:15:00"))
     assert result["status"]=="BENCHMARK_FREEZE_CLOSE_REVISED"
     assert result["entries"]==[]
+
+
+# 2026-10-30 Sol P0 red-team regressions: unknown != validated cash;
+# exact minute trading grid; T+1/T+2 final 10m; shared account.
+def _grid_minutes(day, last="15:00", ending=False):
+    from datetime import datetime,timedelta
+    def series(st,fin):
+        t=datetime.fromisoformat(day+" "+st)
+        u=datetime.fromisoformat(day+" "+fin)
+        out=[]
+        while t<=u:
+            out.append(t.strftime("%Y-%m-%d %H:%M:%S"))
+            t+=timedelta(minutes=1)
+        return out
+    first="09:31" if ending else "09:30"
+    second="13:01" if ending else "13:00"
+    stamps=series(first,"11:30")
+    if last!="11:30":
+        stamps+=series(second,last)
+    return stamps
+
+def _minute_df(stamps):
+    import pandas as pd
+    return pd.DataFrame([{"day":stamp,"open":10.,"high":10.1,
+                          "low":9.9,"close":10.,"volume":100.}
+                         for stamp in stamps])
+
+
+@pytest.mark.parametrize("ending", [False,True])
+def test_exact_minute_grid_accepts_only_complete_legal_sessions(ending):
+    day="2026-10-30"
+    got=x._normalize_minutes(_minute_df(_grid_minutes(day,ending=ending)),
+                              "601825",day,"09:30","15:00","FIXTURE")
+    assert len(got["bars"]) in (240,242)
+    assert got["bars"][-1]["minute"]==day+" 15:00"
+
+
+@pytest.mark.parametrize("damage",["delete_1000","delete_open","lunch",
+                                   "duplicate","delete_1500","delete_1455"])
+def test_missing_or_illegal_single_minute_must_not_hide_stop(damage):
+    day="2026-10-30";stamps=_grid_minutes(day)
+    if damage=="delete_1000":
+        stamps.remove(day+" 10:00:00")
+    elif damage=="delete_open":
+        stamps.remove(day+" 09:30:00")
+    elif damage=="lunch":
+        stamps.append(day+" 12:01:00")
+    elif damage=="duplicate":
+        stamps.append(day+" 10:00:00")
+    elif damage=="delete_1500":
+        stamps.remove(day+" 15:00:00")
+    else:
+        stamps.remove(day+" 14:55:00")
+    stamps.sort()
+    with pytest.raises(ValueError,match="MINUTE"):
+        x._normalize_minutes(_minute_df(stamps),"601825",day,"09:30","15:00","FIXTURE")
+
+
+def test_incomplete_510300_daily_reconstruction_does_not_make_a_false_close():
+    import pandas as pd
+    day="2026-10-30"
+    valid=_minute_df(_grid_minutes(day,ending=True))
+    missing=valid[valid["day"]!=day+" 14:55:00"]
+    class AK:
+        def stock_zh_a_minute(self,**kw):return missing
+    with pytest.raises(ValueError,match="ETF_1M_SESSION_NOT_COMPLETE"):
+        x._completed_etf_daily_from_sina_minutes(AK(),day)
+
+
+def test_source_unknown_remains_retryable_then_can_freeze_without_backdating(monkeypatch,tmp_path):
+    day="2026-10-30"
+    monkeypatch.setattr(x,"calendar_sessions",lambda a,b:[a])
+    signal={"group":"B","asof_session":day,"next_open_session":"2026-11-02",
+            "selected":[],"four_etf_flow":{"day":"2026-10-29","net_cny":"100"},
+            "checked":[{"code":c,"cohort":g,"data_status":"UNVERIFIED"}
+                       for g,c in x.RANK_ORDER]}
+    def create(verified):
+        obj=dict(signal)
+        obj["checked"]=[dict(v,data_status="VERIFIED" if verified else "UNVERIFIED")
+                        for v in signal["checked"]]
+        obj["candidate_diagnostics"]={"total":10,
+                                      "verified":10 if verified else 0,
+                                      "unverified":0 if verified else 10}
+        obj["signal_sha256"]=x.sha(obj)
+        return obj
+    monkeypatch.setattr(x,"build_freeze",lambda ak,now,group,day:create(False))
+    bad=x.run(object(),now("2026-10-30T18:15:00"),"B",tmp_path)
+    assert bad["freeze_status"]=="SOURCE_INCOMPLETE_RETRYABLE"
+    assert bad["unconsumed_funding_day"]=="2026-10-29"
+    assert not bad["freeze_created"]
+    assert not list((tmp_path/"freezes").glob("**/*.json"))
+    monkeypatch.setattr(x,"build_freeze",lambda ak,now,group,day:create(True))
+    recovered=x.run(object(),now("2026-10-30T20:15:00"),"B",tmp_path)
+    assert recovered["freeze_created"]
+    assert recovered["freeze_status"]=="VALIDATED_CASH_FREEZE"
+    frozen=json.loads((tmp_path/"freezes"/"B"/(day+".json")).read_text())
+    assert frozen["status"]=="VALIDATED_CASH_NO_SIGNAL"
+    assert frozen["selected"]==[]
+    assert frozen["signal_sha256"]==x.sha({k:v for k,v in frozen.items() if k!="signal_sha256"})
+    repeat=x.run(object(),now("2026-10-30T22:15:00"),"B",tmp_path)
+    assert repeat["freeze_status"]=="EXISTING_FREEZE_UNCHANGED"
+
+
+def test_one_arm_unknown_keeps_other_arm_verification_without_consuming_event(monkeypatch,tmp_path):
+    day="2026-10-30"
+    monkeypatch.setattr(x,"calendar_sessions",lambda a,b:[a])
+    checked=[]
+    for arm,code in x.RANK_ORDER:
+        status="VERIFIED" if arm=="S1" else "UNVERIFIED"
+        checked.append({"cohort":arm,"code":code,"data_status":status,
+                        "eligible":arm=="S1"})
+    def build(ak,now,group,day):
+        obj={"group":group,"asof_session":day,"next_open_session":"2026-11-02",
+             "selected":[checked[0]],"checked":checked,
+             "candidate_diagnostics":{"total":10,"verified":5,"unverified":5},
+             "four_etf_flow":{"day":"2026-10-29","net_cny":"1"}}
+        return dict(obj,signal_sha256=x.sha(obj))
+    monkeypatch.setattr(x,"build_freeze",build)
+    run=x.run(object(),now("2026-10-30T18:15:00"),"A2",tmp_path)
+    assert run["independent_verified_arms"]["S1"]["complete"]
+    assert not run["independent_verified_arms"]["S2"]["complete"]
+    assert run["independent_verified_arms"]["S1"]["candidates"]==["601825"]
+    assert run["freeze_status"]=="SOURCE_INCOMPLETE_RETRYABLE"
+    assert not run["freeze_created"]
+
+
+@pytest.mark.parametrize("outcome,expected_minute,expected_last",[
+    ("t1_late_stop","2026-11-03 14:55","15:00"),
+    ("t2_late_target","2026-11-04 14:58","15:00"),
+    ("t3_forced","2026-11-05 14:50","14:50"),
+])
+def test_exit_uses_full_T1_T2_market_and_only_T3_1450(monkeypatch,outcome,expected_minute,expected_last):
+    days=["2026-11-02","2026-11-03","2026-11-04","2026-11-05"]
+    def daily(day,close,high,low):
+        return {"date":day,"open":close,"high":high,"low":low,
+                "close":close,"volume":1000.}
+    stock={"bars":[daily("2026-10-30",10,10.2,9.9),
+                   daily(days[0],10.1,10.4,10.0),
+                   daily(days[1],10.1,11.0,9.5),
+                   daily(days[2],10.1,11.0,9.5),
+                   daily(days[3],10.1,10.4,10.0)],"raw_sha256":"stock"}
+    bench={"bars":[daily("2026-10-30",4.,4.05,3.95)]+
+            [daily(day,4.,4.05,3.95) for day in days],"raw_sha256":"benchmark"}
+    monkeypatch.setattr(x,"prices",lambda ak,code,through:bench if code=="510300" else stock)
+    monkeypatch.setattr(x,"next_session",lambda d:days[0])
+    monkeypatch.setattr(x,"calendar_sessions",lambda a,b:days[:days.index(b)+1])
+    calls=[]
+    def minutes(ak,code,day,first="09:30",last="14:50"):
+        calls.append((code,day,last))
+        if day==days[3]:assert last=="14:50"
+        else:assert last=="15:00"
+        bars=[{"minute":day+" 09:31","open":4. if code=="510300" else 10.1,
+               "high":4.04 if code=="510300" else 10.2,
+               "low":3.96 if code=="510300" else 10.0}]
+        if day==days[1] and outcome=="t1_late_stop" and code!="510300":
+            hi,lo=10.2,9.5
+        elif day==days[2] and outcome=="t2_late_target" and code!="510300":
+            hi,lo=11.0,10.0
+        else:
+            hi,lo=(4.04,3.96) if code=="510300" else (10.2,10.0)
+        terminal="14:50" if last=="14:50" else "15:00"
+        if terminal=="15:00":
+            bars.append({"minute":day+(" 14:55" if day==days[1] else " 14:58"),
+                         "open":4. if code=="510300" else 10.1,
+                         "high":hi,"low":lo})
+        bars.append({"minute":day+" "+terminal,
+                     "open":4. if code=="510300" else 10.1,
+                     "high":4.04 if code=="510300" else 10.2,
+                     "low":3.96 if code=="510300" else 10.0})
+        return {"bars":bars,"sha256":day+code+last}
+    monkeypatch.setattr(x,"minute_rows",minutes)
+    frozen={"freeze_created_at":"2026-10-30T18:15:00+08:00",
+            "asof_session":"2026-10-30","next_open_session":days[0],
+            "signal_sha256":"forward-test",
+            "selected":[{"code":"600000","cohort":"S1","close":10.,"atr14":.10,
+                         "breakout":10.01}]}
+    result=x.assess(object(),"B",frozen,now("2026-11-05T18:10:00"))
+    event=result["entries"][0]
+    assert event["status"]=="PAPER_EXIT_SCENARIO_NO_BROKER_FILL"
+    assert event["exit_time"]==expected_minute
+    assert (event["exit_reason"]=="STOP_FIRST" if outcome=="t1_late_stop"
+            else event["exit_reason"]=="TARGET" if outcome=="t2_late_target"
+            else event["exit_reason"]=="T_PLUS_3_1450")
+    assert ("510300",event["exit_day"],expected_last) in calls
+
+
+def test_shared_account_cash_open_positions_and_release_timing():
+    first={"group":"B","code":"601825","signal_id":"a",
+           "entry_session":"2026-11-02","notional":7000.,"entry_fee":5.,
+           "entry_price":70.,"status":"EXIT_NOT_MATURED"}
+    second=dict(first,code="600309",signal_id="b",
+                entry_session="2026-11-03",notional=7000.)
+    current=x.account_snapshot_before([first,second],"2026-11-04","B")
+    assert current["cash_available"]==16000-10
+    assert current["gross_active"]==14000
+    assert current["active_positions"]==2
+    closed=dict(first,status="PAPER_EXIT_SCENARIO_NO_BROKER_FILL",
+                exit_day="2026-11-04",net_pnl=60.)
+    too_early=x.account_snapshot_before([closed,second],"2026-11-04","B")
+    assert too_early["active_positions"]==2  # 14:xx sale cannot fund 09:30 buy
+    released=x.account_snapshot_before([closed,second],"2026-11-05","B")
+    assert released["active_positions"]==1
+    assert released["gross_active"]==7000
+    assert released["cash_available"]==30000+60-7005
+    assert x.account_snapshot_before([first],"2026-11-03","A2")["cash_available"]==30000
+
+
+def test_run_three_overlapping_events_reuses_one_account_not_three(monkeypatch,tmp_path):
+    sessions=["2026-11-02","2026-11-03","2026-11-04"]
+    archives=[]
+    for i,trade in enumerate(sessions):
+        f={"group":"B","asof_session":"2026-10-30",
+           "next_open_session":trade,"freeze_created_at":"2026-10-30T18:15:00+08:00",
+           "selected":[],"signal_sha256":f"fund-{i}"}
+        archives.append((tmp_path/f"f{i}.json",f))
+    monkeypatch.setattr(x,"locked_freezes",lambda group,root:archives)
+    monkeypatch.setattr(x,"freeze_archive_commit_at",
+                        lambda p:now("2026-10-30T18:18:00"))
+    monkeypatch.setattr(x,"calendar_sessions",lambda a,b:sessions[:sessions.index(b)+1])
+    monkeypatch.setattr(x,"next_session",lambda d:"2026-11-02")
+    monkeypatch.setattr(x,"close_day",lambda now:None)
+    monkeypatch.setattr(x,"lock_paper_replay",
+                        lambda *args,**kw:{"drifts":[],"locked_entries":[],"locked_exits":[]})
+    snapshots=[]
+    def fake_assess(ak,group,frozen,now,portfolio=None):
+        snapshots.append(portfolio)
+        amount=(7000.,7000.,5000.)[len(snapshots)-1]
+        e={"group":"B","code":("601825","600309","601919")[len(snapshots)-1],
+           "signal_id":"x"+str(len(snapshots)),
+           "entry_session":frozen["next_open_session"],
+           "entry_price":10.,"notional":amount,"entry_fee":5.,
+           "status":"EXIT_NOT_MATURED"}
+        return {"status":"REPLAYED_PAPER_SCENARIOS_NOT_LIVE","entries":[e]}
+    monkeypatch.setattr(x,"assess",fake_assess)
+    result=x.run(object(),now("2026-11-04T18:15:00"),"B",tmp_path)
+    assert len(snapshots)==3
+    assert snapshots[0]["gross_active"]==0.
+    assert snapshots[1]["gross_active"]==7000.
+    assert snapshots[2]["gross_active"]==14000.
+    assert result["portfolio_latest_verified"]["gross_active"]==19000.
+    assert result["portfolio_latest_verified"]["active_positions"]==3
+    assert result["portfolio_latest_verified"]["cash_available"]==30000-19000-15
