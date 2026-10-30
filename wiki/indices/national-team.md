@@ -2,7 +2,7 @@
 id: GENERATED-NATIONAL-TEAM
 type: log
 status: maintained
-updated: 2026-10-30
+updated: 2026-10-31
 ---
 # 国家队四ETF与股票追踪实际运行索引
 
