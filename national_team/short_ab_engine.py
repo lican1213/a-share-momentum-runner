@@ -312,9 +312,9 @@ def b2_signal(today_minutes, prior_minutes):
         prior.append(sum(t["volume"] for t in window))
     if len(prior)<3 or min(prior)<=0:return None
     running=0
-    for x in b:
+    for index,x in enumerate(b):
         clock=x["minute"][11:]
-        if not ("10:31"<=clock<="11:30"):continue
+        if not ("10:31"<=clock<="11:29"):continue
         running+=x["volume"]
         # Relative to same elapsed interval in each of previous 3 sessions.
         minute_count=sum("10:31"<=v["minute"][11:]<=clock for v in b)
@@ -326,9 +326,17 @@ def b2_signal(today_minutes, prior_minutes):
         if len(baseline)!=len(prior):continue
         average=sum(baseline)/len(baseline)
         if average>0 and running>=1.2*average and x["high"]>=up(threshold+.01):
-            # Real threshold-crossing price may be unfilled; scenario only.
-            return {"minute":x["minute"],"trigger":up(threshold+.01),
-                    "price":max(x["open"],up(threshold+.01)),
+            # The crossing/volume bar is only *known at the end* of this minute.
+            # The first eligible paper quote is the NEXT observed minute OPEN.
+            if index+1>=len(b):return None
+            following=b[index+1]
+            stamp=datetime.strptime(x["minute"],"%Y-%m-%d %H:%M")
+            next_stamp=datetime.strptime(following["minute"],"%Y-%m-%d %H:%M")
+            if (next_stamp-stamp).total_seconds()!=60 or following["open"]<up(threshold+.01):
+                return None
+            return {"minute":following["minute"],"trigger":up(threshold+.01),
+                    "signal_bar_minute":x["minute"],
+                    "price":following["open"],
                     "volume_ratio":running/average}
     return None
 
