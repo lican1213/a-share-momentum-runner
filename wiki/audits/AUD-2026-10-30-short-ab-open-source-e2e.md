@@ -15,6 +15,16 @@ updated: 2026-10-30
 - 原四ETF CI历史数据测试硬编码最新完整交易日10月27日，真实10月28日全四份额已被10月29日下午归档；修复为对两种已知日期分别校验精确资金值，并对10月29日15:15的股票watch禁止提前读取16:26才首次冻结的V2事件。
 - [成功CI run 40994830388](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40994830388)对应最初修复；[最终新增综合合成夹具run 40995281846](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40995281846)实际报告**146项通过**。这两项只说明对应提交的规则和算术静态/历史记录正确，**尚非盘后真实信号冻结**。
 
+## 2026-10-30 G0最终验收：同源SHA三流程真实绿灯
+
+最后一轮**涉及引擎及测试修改**的提交SHA：`cecb1dc4a2a39492ec2a7ad5b9c8262d14bc1260`。在该提交下，GitHub Actions实际执行并写回：
+- [A2 run 40995677286](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40995677286)：SUCCESS，专项`29 passed`；真实程序输出`OUTSIDE_TODAY_COMPLETED_EXCHANGE_SESSION`且`errors=[]`，运行记录`records/national_team_short_ab/runs/A2/2026-10-30/40995677286-a1.json`成功提交。
+- [B run 40995677298](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40995677298)：SUCCESS，专项`29 passed`；真实程序同样完成无错误的**非盘后窗口**预检查、运行原件写回。
+- [原四ETF及全部规则CI run 40995677281](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40995677281)：SUCCESS，`148 passed`。
+- [MOC/Wiki完整性 run 40995724664](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40995724664)：SUCCESS，对应后续仅文档更新SHA `2a0dc6904b3c`。
+
+**判定：G0工程端到端（真实GitHub Python测试、runner执行、错误状态、源代码提交、Git原件持久化）PASS。G1当日真实收盘候选冻结、G2下一实际交易日开盘、G3退出收益、G4样本外超额收益仍未执行，不得标PASS。**
+
 ## 二、实读开源实现并采纳的做法
 
 | 外部项目与代码证据 | 采用的工程原则 | 本项目对应 |
