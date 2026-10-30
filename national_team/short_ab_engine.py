@@ -165,8 +165,7 @@ def _completed_etf_daily_from_sina_minutes(ak,day):
         if rows and stamp<=rows[-1]["minute"]:
             raise ValueError("ETF_MINUTE_DUPLICATED_OR_UNSORTED")
         rows.append({"minute":stamp,**v})
-    if len(rows)<238 or rows[0]["minute"]>f"{day} 09:35" or rows[-1]["minute"]!=f"{day} 15:00":
-        raise ValueError(f"ETF_1M_SESSION_NOT_COMPLETE:{len(rows)}")
+    _require_exact_session_minutes(rows,day,"09:30","15:00","SINA_ETF_DAILY_RECONSTRUCTION")
     daily={"date":day,"open":rows[0]["open"],
            "high":max(v["high"] for v in rows),
            "low":min(v["low"] for v in rows),
@@ -435,6 +434,38 @@ def build_freeze(ak, now, group, market_session, flow=None, v2=None):
     return freeze
 
 
+def _require_exact_session_minutes(rows,day,first,last,provider):
+    """Recognize the two documented 1m timestamp conventions, never row-count approximations.
+
+    Some vendors timestamp a 09:30 bar at 09:30, others label it 09:31
+    when the bar closes. In either convention every trading-minute label
+    must exist; lunch is excluded and no synthetic fill is fabricated.
+    """
+    from datetime import timedelta
+    if first!="09:30" or last not in ("11:30","14:50","15:00"):
+        raise ValueError("UNSUPPORTED_MINUTE_SESSION_REQUEST")
+    actual=[b["minute"] for b in rows]
+    def grid(morning,afternoon):
+        def span(a,b):
+            start=datetime.fromisoformat(f"{day} {a}")
+            finish=datetime.fromisoformat(f"{day} {b}")
+            result=[]
+            while start<=finish:
+                result.append(start.strftime("%Y-%m-%d %H:%M"))
+                start+=timedelta(minutes=1)
+            return result
+        morning_bars=span(morning,"11:30")
+        if last=="11:30":return morning_bars
+        return morning_bars+span(afternoon,last)
+    for morning,afternoon in (("09:30","13:00"),("09:31","13:01")):
+        if actual==grid(morning,afternoon):return
+    if not actual:raise ValueError(f"INCOMPLETE_MINUTE_SOURCE:{provider}:0")
+    # First missing, interior hole, lunch bar, unexpected timestamp and
+    # missing terminal are all hard failures, even if >200 rows remain.
+    raise ValueError(f"INCOMPLETE_MINUTE_SOURCE:{provider}:{len(rows)}:"
+                     f"{actual[0]}..{actual[-1]}")
+
+
 def _normalize_minutes(frame,code,day,first,last,provider):
     """Timestamped 1min bars must be complete; never infer missing 14:50 quotes."""
     keys_cn=("时间","开盘","最高","最低","收盘","成交量")
@@ -458,10 +489,7 @@ def _normalize_minutes(frame,code,day,first,last,provider):
             raise ValueError("INCONSISTENT_MINUTE_QUOTE")
         if rows and stamp<=rows[-1]["minute"]:raise ValueError("MINUTE_ORDER_OR_DUPLICATE")
         rows.append(item)
-    min_rows=110 if last=="11:30" else 215
-    if (len(rows)<min_rows or not rows or
-        rows[0]["minute"]>f"{day} 09:35" or rows[-1]["minute"]!=f"{day} {last}"):
-        raise ValueError(f"INCOMPLETE_MINUTE_SOURCE:{provider}:{len(rows)}")
+    _require_exact_session_minutes(rows,day,first,last,provider)
     return {"bars":rows,"sha256":sha(rows),"provider":provider,"code":code}
 
 
@@ -694,8 +722,11 @@ def assess(ak,group,frozen,now):
             for si in range(1,min(len(series),4)):
                 day=series[si]
                 try:
-                    m=minute_rows(ak,code,day)
-                    mbench=minute_rows(ak,"510300",day)
+                    # T+1/T+2 must inspect the entire regular session.
+                    # Only the contractual T+3 forced exit is cut at 14:50.
+                    last_minute="15:00" if si<3 else "14:50"
+                    m=minute_rows(ak,code,day,last=last_minute)
+                    mbench=minute_rows(ak,"510300",day,last=last_minute)
                     daybar=bar(history,day)
                     if daybar is None or daybar["volume"]<=0 or abs(daybar["high"]-daybar["low"])<1e-8:
                         raise ValueError("EXIT_SUSPENDED_OR_ONE_PRICE_UNVERIFIABLE")
