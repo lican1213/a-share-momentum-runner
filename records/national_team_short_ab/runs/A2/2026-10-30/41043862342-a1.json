@@ -1,0 +1,28 @@
+{
+  "captured_at": "2026-10-30T18:52:17.189965+08:00",
+  "group": "A2",
+  "experiment": "EXP-0005-A2",
+  "version": "EXP0005_A2_20261030",
+  "github_run_id": "41043862342",
+  "github_sha": "fe339a345900042df4b638b003f9cdd87b81648c",
+  "real_broker_orders": 0,
+  "freeze_created": false,
+  "prior_freezes": [],
+  "errors": [
+    "FREEZE:ValueError:510300:DAILY_PROVIDERS_UNVERIFIED:EASTMONEY:Push2RateLimitError:东方财富 push2 行情服务器断开了连接，通常是短时间内请求过多，当前 IP 被临时限流。首次限流一般约 5 分钟后恢复，反复触发后可能需要 40 分钟以上；等待期间不要重复调用东方财富的行情接口，否则会延长限流。;SINA_ETF:ValueError:ETF_1M_SESSION_NOT_COMPLETE"
+  ],
+  "portfolio_latest_verified": {
+    "group": "A2",
+    "asof_entry_session": "2026-10-31",
+    "cash_available": 30000.0,
+    "gross_active": 0,
+    "active_positions": 0,
+    "active_codes": [],
+    "active": [],
+    "realized_net_pnl": 0.0,
+    "initial_capital": 30000.0
+  },
+  "freeze_status": "FREEZE_FAILED_NO_BACKFILL",
+  "status": "RESEARCH_ONLY_NO_BROKER_ORDERS",
+  "runtime_akshare": "1.20.16"
+}
