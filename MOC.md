@@ -1,3 +1,10 @@
+## 2026-10-30 19:00后优先级：短线执行红队四项P0修复（参数不变）
+
+- [**唯一当前状态**](wiki/current-status.md) · [执行层四P0审计](wiki/audits/AUD-2026-10-30-short-ab-execution-closure.md) · [当前引擎](national_team/short_ab_engine.py) · [对抗集成测试](tests/test_national_team_short_ab_engine.py) · [待办](wiki/open-questions.md)。后续Agent一律先核对新run及本页，AGENTS/EXP-0006已同步。
+- P0数据未知→诊断可重试且不消耗ETF事件；合法空仓与真实选股冻结不同；已完整核验的S1/S2可各自独立锁定，其余臂晚间重试不覆盖；分钟验证必须无缺口/午休伪造/重复；T+1/2检查到15:00而T+3按14:50；跨资金事件读取不可回写entry/exit账本，不重新分配整套3万元。
+- **真实G1已通过**：A2冻结源[41044087760](records/national_team_short_ab/freezes/A2/2026-10-30.json)对应SHA`40640bb97e4b`，选601166/601919；B冻结源[41044087791](records/national_team_short_ab/freezes/B/2026-10-30.json)同SHA，选601825/600309/600000。两者10/10行情已验证，冻结日2026-10-30，计划首次执行日2026-11-02。**这一事实不能升级为已模拟买入**，且后续修复引擎版本不能改写旧冻。
+- 新执行修复的G0必须看**最新SHA匹配Actions**；G2实际入场、G3完整分钟退出和S0同时间ETF配对、G4成熟样本净超额，仍未达到。全程0笔真实券商订单。
+
 ## 2026-10-30 16:56 最终源码/数据源对抗审计记录
 
 - **源码验收基线**：[`51aeffcd720b`](https://github.com/lican1213/a-share-momentum-runner/commit/51aeffcd720bffa4571a0727c3d34be677764df2)；综合审计 [Run 41029766486](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41029766486) 163 passed，A2 [Run 41029766667](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41029766667) 41 passed，B [Run 41029766609](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41029766609) 41 passed。软件G0通过，不等于交易完成。
