@@ -945,10 +945,10 @@ def run(ak,now,group,root=RECORD_ROOT):
                                              "paper_ledger":locks,"result":assessment})
         except Exception as exc:
             records["errors"].append(f"ASSESS:{p.name}:{type(exc).__name__}:{str(exc)[:150]}")
+    from datetime import timedelta
+    snapshot_after_today=(date.fromisoformat(today)+timedelta(days=1)).isoformat()
     records["portfolio_latest_verified"]=account_snapshot_before(
-        account_history,next_session(today) if today in calendar_sessions(today,today)
-        else (date.fromisoformat(today)+__import__("datetime").timedelta(days=1)).isoformat(),
-        group)
+        account_history,snapshot_after_today,group)
     day=close_day(now)
     if day:
         path=root/"freezes"/group/f"{day}.json"
