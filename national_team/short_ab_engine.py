@@ -291,7 +291,8 @@ def minute_rows(ak, code, day, first="09:30", last="14:50"):
             raise ValueError("INCONSISTENT_MINUTE_QUOTE")
         if out and stamp<=out[-1]["minute"]:raise ValueError("MINUTE_ORDER_OR_DUPLICATE")
         out.append(b)
-    if not out or out[-1]["minute"]!=f"{day} {last}":
+    min_rows=110 if last=="11:30" else 215
+    if len(out)<min_rows or out[0]["minute"]>f"{day} 09:35" or out[-1]["minute"]!=f"{day} {last}":
         raise ValueError("INCOMPLETE_MINUTE_SOURCE")
     return {"bars":out,"sha256":sha(out),"provider":"EASTMONEY_1MIN"}
 
@@ -525,6 +526,10 @@ def run(ak,now,group,root=RECORD_ROOT):
     # Evaluate only ALREADY PERSISTED historical freeze files; never the fresh one.
     for p,f in locked_freezes(group,root):
         if f["next_open_session"]>today:continue
+        # Only recently frozen events can still be T+3 open; older ones stay immutable in archives.
+        from datetime import timedelta
+        if date.fromisoformat(f["next_open_session"])<now.date()-timedelta(days=9):
+            continue
         try:
             records["prior_freezes"].append({"path":str(p),"signal_sha256":f["signal_sha256"],
                                              "result":assess(ak,group,f,now)})
