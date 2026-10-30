@@ -1,0 +1,65 @@
+name: National-team prospective short paper A2 - EXP-0005-A2
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'national_team/short_ab_engine.py'
+      - 'tests/test_national_team_short_ab_engine.py'
+      - '.github/workflows/national-team-short-a2.yml'
+  schedule:
+    # 18:15 / 20:15 / 22:15 Asia/Shanghai; same-session retries, no midnight backfill.
+    - cron: '15 10,12,14 * * 1-5'
+permissions:
+  contents: write
+concurrency:
+  group: short-ab-A2-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  paper-a2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout immutable ledger and source code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install runtime and test dependencies
+        run: python -m pip install 'akshare>=1.17.0,<2' 'pandas>=2.2,<3' 'pytest>=8,<10' 'exchange-calendars==4.13.1'
+      - name: Run prospective adversarial tests
+        run: python -m pytest -q tests/test_national_team_short_ab_engine.py tests/test_national_team_short_pilot.py
+      - name: Actual run from as-of market data / immutable forward freeze
+        run: python -m national_team.short_ab_engine --group A2
+      - name: Persist audit evidence even when paper business logic rejects signals
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A -- records/national_team_short_ab/
+          if git diff --cached --quiet; then
+            echo "NO_SHORT_AB_EVIDENCE"; exit 0
+          fi
+          git commit -m "data: short A2 prospective paper run ${GITHUB_RUN_ID} [skip ci]"
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              echo "SHORT_A2_AUDIT_PERSISTED"; exit 0
+            fi
+            sleep 3
+          done
+          echo "P0: Cannot persist short paper audit" >&2
+          exit 2
+      - name: Upload audit artifact for failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper-A2-${GITHUB_RUN_ID}
+          path: records/national_team_short_ab/
+          if-no-files-found: warn
+          retention-days: 90
