@@ -1,0 +1,181 @@
+{
+  "status": "DIAGNOSTIC_ONLY_NO_FREEZE_NO_ORDER",
+  "source_readiness_version": "SSE_SINA_SOURCE_FAILOVER_V2_20261030",
+  "captured_at": "2026-10-30T16:48:42.940905+08:00",
+  "run_id": "41028928457",
+  "source_commit_sha": "d52b2d40564e2dd47be9df96c217a8ee3cbab28d",
+  "asof_session": "2026-10-30",
+  "candidate_pool": [
+    "601825",
+    "600309",
+    "600000",
+    "601919",
+    "601229",
+    "600660",
+    "601166",
+    "601012",
+    "600519",
+    "601838"
+  ],
+  "real_broker_orders": 0,
+  "paper_positions_created": 0,
+  "warnings": [
+    "BENCHMARK:ValueError:510300:DAILY_PROVIDERS_UNVERIFIED:EASTMONEY:Push2RateLimitError:东方财富 push2 行情服务器断开了连接，通常是短时间内请求过多，当前 IP 被临时限流。首次限流一般约 5 分钟后恢复，反复触发后可能需要 40 分钟以上；等待期间不要重复调用东方财富的行情接口，否则会延长限流。;SINA_ETF:ValueError:SINA_ETF_ASOF_BAR_MISSING;SINA_SECURITY_ETF:DataParsingError:无法解析上游返回的数据：Expecting value: line 1 column 1 (char 0)；附近内容：''"
+  ],
+  "candidates": [
+    {
+      "code": "601825",
+      "cohort": "S1",
+      "name": "沪农商行",
+      "status": "DAILY_STOCK_VERIFIED_BENCHMARK_MISSING",
+      "group_gates": {},
+      "price_sha256": "4262b95abb241b21dfcc1251b7c5fbd87911ecf7450828e5156a6934b824bf46",
+      "history_count": 441,
+      "close": 8.99,
+      "indicator_error": "BENCHMARK_DAILY_NOT_VERIFIED"
+    },
+    {
+      "code": "600309",
+      "cohort": "S2",
+      "name": "万华化学",
+      "status": "DAILY_STOCK_VERIFIED_BENCHMARK_MISSING",
+      "group_gates": {},
+      "price_sha256": "88e8e36905fd71f73d2ea888cb21d86943bbf9237e1919cb961a6806158a6fa8",
+      "history_count": 441,
+      "close": 70.2,
+      "indicator_error": "BENCHMARK_DAILY_NOT_VERIFIED"
+    },
+    {
+      "code": "600000",
+      "cohort": "S1",
+      "name": "浦发银行",
+      "status": "DAILY_STOCK_VERIFIED_BENCHMARK_MISSING",
+      "group_gates": {},
+      "price_sha256": "c28ca6c574ffaad7ba13b487b8d0c9d51bd26987084f7df5a46e3c8251ac3550",
+      "history_count": 441,
+      "close": 10.02,
+      "indicator_error": "BENCHMARK_DAILY_NOT_VERIFIED"
+    },
+    {
+      "code": "601919",
+      "cohort": "S2",
+      "name": "中远海控",
+      "status": "DAILY_STOCK_VERIFIED_BENCHMARK_MISSING",
+      "group_gates": {},
+      "price_sha256": "45170db4e950953ec5c2acd772463cf4e9ed3f52fab0d1f02f012d87173a9356",
+      "history_count": 441,
+      "close": 17.84,
+      "indicator_error": "BENCHMARK_DAILY_NOT_VERIFIED"
+    },
+    {
+      "code": "601229",
+      "cohort": "S1",
+      "name": "上海银行",
+      "status": "DAILY_STOCK_VERIFIED_BENCHMARK_MISSING",
+      "group_gates": {},
+      "price_sha256": "bba25a856ff950bf1cae3ad7979b06d5c9712d1cacf888ae34c5eeb9319348b3",
+      "history_count": 441,
+      "close": 9.31,
+      "indicator_error": "BENCHMARK_DAILY_NOT_VERIFIED"
+    },
+    {
+      "code": "600660",
+      "cohort": "S2",
+      "name": "福耀玻璃",
+      "status": "DAILY_STOCK_VERIFIED_BENCHMARK_MISSING",
+      "group_gates": {},
+      "price_sha256": "b3d6ca37c9709e2e6acf6255237ccf93146cd65fb9db799d182e4ea4f6e249a1",
+      "history_count": 441,
+      "close": 53.49,
+      "indicator_error": "BENCHMARK_DAILY_NOT_VERIFIED"
+    },
+    {
+      "code": "601166",
+      "cohort": "S1",
+      "name": "兴业银行",
+      "status": "DAILY_STOCK_VERIFIED_BENCHMARK_MISSING",
+      "group_gates": {},
+      "price_sha256": "8e00e9689500fd9d63d8689b5e767697fc4bf29dd98b48fef824ec2c0706fb5a",
+      "history_count": 441,
+      "close": 19.65,
+      "indicator_error": "BENCHMARK_DAILY_NOT_VERIFIED"
+    },
+    {
+      "code": "601012",
+      "cohort": "S2",
+      "name": "隆基绿能",
+      "status": "DAILY_STOCK_VERIFIED_BENCHMARK_MISSING",
+      "group_gates": {},
+      "price_sha256": "fb87d987b060511f6fcd5fd22ab85c444a2aae65d562ce4da56142d31fd7200e",
+      "history_count": 441,
+      "close": 11.0,
+      "indicator_error": "BENCHMARK_DAILY_NOT_VERIFIED"
+    },
+    {
+      "code": "600519",
+      "cohort": "S1",
+      "name": "贵州茅台",
+      "status": "DAILY_STOCK_VERIFIED_BENCHMARK_MISSING",
+      "group_gates": {},
+      "price_sha256": "ac2d01edbbe2ad8531ca8e9452820f4c802a22f2af9231d373b76d2df14e53d0",
+      "history_count": 441,
+      "close": 1392.05,
+      "indicator_error": "BENCHMARK_DAILY_NOT_VERIFIED"
+    },
+    {
+      "code": "601838",
+      "cohort": "S2",
+      "name": "成都银行",
+      "status": "DAILY_STOCK_VERIFIED_BENCHMARK_MISSING",
+      "group_gates": {},
+      "price_sha256": "e120553371c97d986c96afadc22c19edd16f9dcdd5ee9cf23c2220fc4b6f3ab4",
+      "history_count": 441,
+      "close": 19.94,
+      "indicator_error": "BENCHMARK_DAILY_NOT_VERIFIED"
+    }
+  ],
+  "groups": {
+    "A2": {
+      "data_verified": 10,
+      "indicative_eligible": 0,
+      "not_a_frozen_signal": true
+    },
+    "B": {
+      "data_verified": 10,
+      "indicative_eligible": 0,
+      "not_a_frozen_signal": true
+    }
+  },
+  "four_etf_flow": {
+    "day": "2026-10-29",
+    "first_observed_at": "2026-10-30T15:14:19.498841+08:00",
+    "net_cny": "8742148830.000000",
+    "path": "records/national_team_merged/2026-10-30/41018737358-a1.json",
+    "sha256": "3f6923246552e9c0dd2c196b0c0d253dcfbf7c907a4a5af8c57236c34dfa4720",
+    "scope": "FOUR_ETF_ALL_INVESTORS_NOT_HUIJIN"
+  },
+  "original_v2": {
+    "path": "records/national_team_strategy/2026-10-28/40719359363-a1-v2.json",
+    "sha256": "14c2c654c747b0e97a6e326b909799105dcb7cd585360627374a42ac849c483b",
+    "first_public_at": "2026-10-28T23:46:43.818303+08:00"
+  },
+  "security_name_provider": "SSE_OFFICIAL_MAIN_BOARD",
+  "minute_source_checks": {
+    "510300": {
+      "ok": true,
+      "sha256": "2970b0ba19c75fbf721eb7be21c9a5cb949f3457e37f000d19dcc7bb14f0fb33",
+      "bars": 230
+    },
+    "601825": {
+      "ok": true,
+      "sha256": "286d2a647095f1fe93e91a023278b48997335a878e03c68bb2534e1fe3e98eab",
+      "bars": 230
+    },
+    "600309": {
+      "ok": true,
+      "sha256": "0500f1f941aff82cf55aeb1cae04772f427dd9138f6afba80cbbd4159ad5c90b",
+      "bars": 230
+    }
+  },
+  "akshare_version": "1.20.13"
+}
