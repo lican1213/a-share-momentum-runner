@@ -1,7 +1,7 @@
 ---
 id: AUD-2026-10-30-ROUND2-INDEPENDENT
 type: audit
-status: software-repair-in-progress
+status: software-g0-passed-market-gates-pending
 created: 2026-10-30
 updated: 2026-10-30
 ---
@@ -38,3 +38,11 @@ updated: 2026-10-30
 参考：[当前执行状态](../current-status.md) · [实验B协议](../experiments/EXP-0006-national-team-aggressive-paper-ab.md) · [Issue #4](https://github.com/lican1213/a-share-momentum-runner/issues/4) · [修复PR #5](https://github.com/lican1213/a-share-momentum-runner/pull/5)。
 
 **谨记**：每个新真实运行的run ID、head SHA、业务状态、数据SHA和冻结/账本内容应独立核验；不得以软件CI绿色自称有实盘获利。
+
+## 2026-10-30 实际完成验收（补记）
+
+- 第二轮修复已通过[PR #5](https://github.com/lican1213/a-share-momentum-runner/pull/5)合并到main，squash commit [7ef5da1cd725](https://github.com/lican1213/a-share-momentum-runner/commit/7ef5da1cd725a8384a3f730ffdd8d454a49067ca)；提交差异**无任何`records/`历史数据文件修改**。
+- [PR代码SHA 8f1607855b4c 的Run 41058218569](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41058218569) SUCCESS：`216 passed`，`WIKI_LINT_OK pages=35`。
+- **合并main后独立重验**：[全库Run 41058487212](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41058487212)源码SHA`7ef5da1cd725` SUCCESS：`216 passed in 5.95s`，`WIKI_LINT_OK pages=35 ids_unique=true all_internal_links_present=true`。
+- A2主分支[Run 41058487108](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41058487108)与B[Run 41058486901](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41058486901)在该SHA均SUCCESS、各60项通过、业务返回`EXISTING_FREEZE_UNCHANGED`且`errors=[]`；**两份2026-10-30原冻结保持不变**。
+- 因此本轮**五项软件缺陷已完成红测回归、全库CI、实际入库验证**；严格定义软件G0 PASS。未知入场的后续资本账户只可按新增显式决策和作废状态前行，不可回溯补单。**G2 2026-11-02开盘模拟、G3真实分钟出场及G4成本后超额依然OPEN，真实券商订单0。**
