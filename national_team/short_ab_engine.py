@@ -409,7 +409,9 @@ def build_freeze(ak, now, group, market_session, flow=None, v2=None):
                              "source_error":f"{type(error).__name__}:{str(error)[:180]}"})
         checked.append(item)
     selected=selects(checked,group)
-    freeze={"status":"FROZEN_NO_BROKER_ORDER","experiment":GROUPS[group]["experiment"],
+    complete=all(v.get("data_status")=="VERIFIED" for v in checked)
+    freeze={"status":("FROZEN_NO_BROKER_ORDER" if complete else
+                      "DIAGNOSTIC_ONLY_UNVERIFIED_NO_TRADE"),"experiment":GROUPS[group]["experiment"],
             "version":GROUPS[group]["version"],"group":group,"asof_session":market_session,
             "next_open_session":next_session(market_session),
             "freeze_created_at":now.astimezone(BJ).isoformat(),
@@ -885,6 +887,31 @@ def run(ak,now,group,root=RECORD_ROOT):
         else:
             try:
                 freeze=build_freeze(ak,now,group,day)
+                diag=freeze.get("candidate_diagnostics")
+                # Unknown upstream data is never a verified "no signal".
+                # Keep the attempt, eligible arms and exact errors in the run
+                # JSON; do NOT create a freeze or consume its funding event.
+                if diag is not None and (diag.get("unverified",0)>0 or
+                                         diag.get("verified",0)!=diag.get("total",0) or
+                                         diag.get("total",0)!=len(RANK_ORDER)):
+                    records["freeze_status"]="SOURCE_INCOMPLETE_RETRYABLE"
+                    records["candidate_diagnostics"]=diag
+                    records["candidate_rejections"]=[
+                        {"cohort":v["cohort"],"code":v["code"],
+                         "status":v.get("data_status"),"reason":v.get("reason"),
+                         "source_error":v.get("source_error")}
+                        for v in freeze.get("checked",[]) if not v.get("eligible")]
+                    records["independent_verified_arms"]={
+                        arm:{"complete":all(v.get("data_status")=="VERIFIED"
+                                            for v in freeze["checked"] if v["cohort"]==arm)
+                                         and sum(v["cohort"]==arm for v in freeze["checked"])==len(RANKS[arm]),
+                             "candidates":[v["code"] for v in freeze["selected"]
+                                           if v["cohort"]==arm]}
+                        for arm in ("S1","S2")}
+                    records["unconsumed_funding_day"]=freeze["four_etf_flow"]["day"]
+                    records["selected_codes"]=[]
+                    # No formal entry signal until both branches are complete.
+                    return records
                 funding_day=freeze["four_etf_flow"]["day"]
                 previously_frozen_days={
                     previous.get("four_etf_flow",{}).get("day")
@@ -899,7 +926,8 @@ def run(ak,now,group,root=RECORD_ROOT):
                     with path.open("x",encoding="utf-8") as w:
                         w.write(json.dumps(freeze,ensure_ascii=False,indent=2)+"\n")
                     records["freeze_created"]=True
-                    records["freeze_status"]="FROZEN_BEFORE_NEXT_SESSION"
+                    records["freeze_status"]=("VALIDATED_CASH_FREEZE" if not freeze["selected"]
+                                              else "FROZEN_BEFORE_NEXT_SESSION")
                     records["freeze_signal_sha256"]=freeze["signal_sha256"]
                     records["freeze_path"]=str(path)
                     records["selected_codes"]=[x["code"] for x in freeze["selected"]]
