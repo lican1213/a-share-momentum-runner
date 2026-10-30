@@ -2,9 +2,11 @@
 id: OPEN-QUESTIONS
 type: open-questions
 status: active
-updated: 2026-10-28
+updated: 2026-10-30
 ---
 # 尚未搞定的问题与验收门槛
+
+**2026-10-30当前主线：** [唯一当前状态页](current-status.md) · [P0最新执行审计](audits/AUD-2026-10-30-short-ab-execution-closure.md) · [A2严格组](experiments/EXP-0005-A2-prospective-freeze-recovery.md) · [B积极组](experiments/EXP-0006-national-team-aggressive-paper-ab.md)。四项优先软件缺陷已编入引擎与反例：未知数据不得冻结、分钟不得有任何空洞、T+1/T+2必须直到15:00、连续正资金事件必须共享单一组内现金/持仓/费用账本。2026-10-30 A2/B 盘后首个G1冻结原件已确认；新代码G0需匹配SHA CI，11月2日的G2模拟成交及随后G3/G4利润均待观察。**以下旧三日追涨表格仅属历史任务，不再是下个Agent首要待办。**
 
 **优先级变更（2026-10-28）**：先完成[国家队跟踪MVP Issue #3](https://github.com/lican1213/a-share-momentum-runner/issues/3)与[ADR-0003](decisions/ADR-0003-national-team-pivot.md)，建立9只ETF的官方每日份额/基金持有人登记，厘清能否跟随盈利。下表是旧三日追涨研究的历史任务清单，除非安全/证据修复，暂不投入开发资源。
 
