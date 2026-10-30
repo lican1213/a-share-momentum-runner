@@ -694,8 +694,18 @@ def test_one_arm_unknown_keeps_other_arm_verification_without_consuming_event(mo
     assert run["independent_verified_arms"]["S1"]["complete"]
     assert not run["independent_verified_arms"]["S2"]["complete"]
     assert run["independent_verified_arms"]["S1"]["candidates"]==["601825"]
-    assert run["freeze_status"]=="SOURCE_INCOMPLETE_RETRYABLE"
-    assert not run["freeze_created"]
+    assert run["freeze_status"]=="PARTIAL_ARM_FROZEN_OTHER_ARM_RETRYABLE"
+    assert run["freeze_created"]
+    assert len(run["independent_frozen_arms"])==1
+    first=tmp_path/"freezes"/"A2"/"2026-10-30-S1.json"
+    assert first.is_file()
+    arm=json.loads(first.read_text())
+    assert [v["code"] for v in arm["selected"]]==["601825"]
+    assert arm["candidate_diagnostics"]["unverified"]==0
+    assert not (tmp_path/"freezes"/"A2"/"2026-10-30.json").exists()
+    again=x.run(object(),now("2026-10-30T20:15:00"),"A2",tmp_path)
+    assert again["independent_frozen_arms"][0]["status"]=="PREVIOUS_ARM_UNCHANGED"
+    assert json.loads(first.read_text())==arm
 
 
 @pytest.mark.parametrize("outcome,expected_minute,expected_last",[
@@ -875,3 +885,46 @@ def test_account_open_position_limits_reject_new_entries_before_market_access(mo
     account["gross_active"]=20000.
     res=x.assess(object(),"B",frozen,now("2026-11-02T18:15:00"),portfolio=account)
     assert res["entries"][0]["status"]=="ACCOUNT_CASH_OR_GROSS_LIMIT"
+
+
+def test_partial_valid_arm_then_recovered_full_event_does_not_double_trade(monkeypatch,tmp_path):
+    monkeypatch.setattr(x,"calendar_sessions",lambda a,b:[a])
+    state={"complete":False}
+    def freeze(ak,when,group,day):
+        checked=[]
+        for arm,code in x.RANK_ORDER:
+            verified=state["complete"] or arm=="S1"
+            checked.append({"cohort":arm,"code":code,
+                            "data_status":"VERIFIED" if verified else "UNVERIFIED",
+                            "eligible":verified})
+        chosen=[checked[0]]
+        if state["complete"]:
+            chosen=[checked[0],checked[1]]
+        obj={"group":group,"status":"FROZEN_NO_BROKER_ORDER",
+             "asof_session":day,"next_open_session":"2026-11-02",
+             "selected":chosen,"checked":checked,
+             "candidate_diagnostics":{"total":10,
+                       "verified":10 if state["complete"] else 5,
+                       "unverified":0 if state["complete"] else 5,
+                       "eligible":10 if state["complete"] else 5,
+                       "selected":len(chosen)},
+             "four_etf_flow":{"day":"2026-10-29","net_cny":"100"}}
+        return dict(obj,signal_sha256=x.sha(obj))
+    monkeypatch.setattr(x,"build_freeze",freeze)
+    partial=x.run(object(),now("2026-10-30T18:15:00"),"A2",tmp_path)
+    assert partial["freeze_status"]=="PARTIAL_ARM_FROZEN_OTHER_ARM_RETRYABLE"
+    s1=tmp_path/"freezes"/"A2"/"2026-10-30-S1.json"
+    original=s1.read_bytes()
+    state["complete"]=True
+    filled=x.run(object(),now("2026-10-30T20:15:00"),"A2",tmp_path)
+    assert filled["freeze_created"]
+    assert filled["selected_codes"]==["600309"]  # S1 already frozen
+    combined=tmp_path/"freezes"/"A2"/"2026-10-30.json"
+    doc=json.loads(combined.read_text())
+    assert doc["cohort_scope"]=="REMAINDER_AFTER_PARTIAL_ARM_FREEZES"
+    assert doc["prior_arm_signal_hashes"]==[json.loads(original)["signal_sha256"]]
+    assert s1.read_bytes()==original
+    assert set([v["code"] for v in doc["selected"]])=={"600309"}
+    assert len(x.locked_freezes("A2",tmp_path))==2
+    repeat=x.run(object(),now("2026-10-30T22:15:00"),"A2",tmp_path)
+    assert repeat["freeze_status"]=="EXISTING_FREEZE_UNCHANGED"
