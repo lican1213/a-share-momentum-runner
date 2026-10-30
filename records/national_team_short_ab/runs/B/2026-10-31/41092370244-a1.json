@@ -1,0 +1,26 @@
+{
+  "captured_at": "2026-10-31T00:43:12.772470+08:00",
+  "group": "B",
+  "experiment": "EXP-0006",
+  "version": "EXP0006_B_20261030",
+  "github_run_id": "41092370244",
+  "github_sha": "9ed69dea16d57a748e2c8566dd0c7a2b175b8e4c",
+  "real_broker_orders": 0,
+  "freeze_created": false,
+  "prior_freezes": [],
+  "errors": [],
+  "status": "RESEARCH_ONLY_NO_BROKER_ORDERS",
+  "portfolio_latest_verified": {
+    "group": "B",
+    "asof_entry_session": "2026-11-01",
+    "cash_available": 30000.0,
+    "gross_active": 0,
+    "active_positions": 0,
+    "active_codes": [],
+    "active": [],
+    "realized_net_pnl": 0.0,
+    "initial_capital": 30000.0
+  },
+  "freeze_status": "OUTSIDE_TODAY_COMPLETED_EXCHANGE_SESSION",
+  "runtime_akshare": "1.20.18"
+}
