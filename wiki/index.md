@@ -2,9 +2,14 @@
 id: MOC-WIKI
 type: moc
 status: maintained
-updated: 2026-10-28
+updated: 2026-10-30
 ---
 # Wiki 总索引（Map of Content）
+
+## 2026-10-30 单一当前执行状态（优先于旧三日项目）
+- [当前状态与唯一验收Gate](current-status.md) · [源码](../national_team/short_ab_engine.py) · [最新对抗测试](../tests/test_national_team_short_ab_engine.py) · [四P0真实修复](audits/AUD-2026-10-30-short-ab-execution-closure.md)
+- [A2盘后首次合法冻结](../records/national_team_short_ab/freezes/A2/2026-10-30.json) · [B盘后首次合法冻结](../records/national_team_short_ab/freezes/B/2026-10-30.json)；G2/G3/G4待成熟、真实券商0笔。
+
 
 [返回根MOC](../MOC.md) · [当前简报](compiled/briefing.md) · [维护协议](../KNOWLEDGE.md)
 
