@@ -59,7 +59,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: paper-A2-${GITHUB_RUN_ID}
+          name: paper-A2-${{ github.run_id }}
           path: records/national_team_short_ab/
           if-no-files-found: warn
           retention-days: 90
