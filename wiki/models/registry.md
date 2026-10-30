@@ -2,9 +2,11 @@
 id: MODEL-REGISTRY
 type: model-registry
 status: maintained
-updated: 2026-10-28
+updated: 2026-10-30
 ---
 # 模型及执行器版本登记（唯一有效升级台账）
+
+**现行执行层（2026-10-30）：** [EXP-0005-A2](../experiments/EXP-0005-A2-prospective-freeze-recovery.md)与[EXP-0006-B](../experiments/EXP-0006-national-team-aggressive-paper-ab.md)已在真实Actions`41044087760 / 41044087791`取得首次盘后完整冻结，冻结引擎SHA`40640bb97e4b`且不可回写。后续修复版引擎参见[当前状态页](../current-status.md)与[short_ab_engine.py](../../national_team/short_ab_engine.py)；将“数据异常尝试/合法空仓/有效臂或完整冻结”区分，并增加严格分钟、T+1/2收盘检查、跨事件现金/持仓持久化。冻结SHA与后来复算的执行引擎SHA不得混为一个版本；新CI必须匹配最新代码。G2/G3/G4尚未通过，不能说策略获利。
 
 **版本必须定义为 Git commit SHA + 实验ID + 运行记录ID。** Git提交时间线由 [commits.md](../indices/commits.md) 生成；本页归纳语义版本，不以“v2表现更好”替代实跑证据。
 
