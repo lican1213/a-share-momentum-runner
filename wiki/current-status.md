@@ -38,7 +38,7 @@ D. 真实盈利：5/10/20日V2尚未验证；A2/B短线仍无经核验的纸面�
 
 ## 仍需独立验证的Gate
 
-- **G0（新版本）**：等待最新源码/新增反例的真实Actions全套pytest与wiki_lint在同一代码版本成功；历史绿色CI不替代本版。
+- **G0（新版本）PASS**：执行引擎SHA `543f6dacaac5af38ccdbfe00234e12d54d50df76`，A2真实Actions [41044988928](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41044988928) 60项通过，B [41044988855](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41044988855) 60项通过，四ETF综合 [41044988939](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41044988939) 182项通过；后续文档Wiki完整性 [41045287544](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41045287544) SUCCESS。不得与G1实际行情或G2模拟成交混用。
 - **G1（10月30日既有历史源）**：A2/B首次完整盘后冻结已通过，原件不可覆盖；之后若来源间歇性断流则应写错误或部分臂合法冻结。
 - **G2（11月2日）**：必须核实冻结Git实际写入时间早于09:25，随后按真实开盘OHLC及分钟触发、风险、100股整手、停复牌限制验证模拟成交；实际券商订单仍为0。
 - **G3**：T+1/T+2真实完整分钟及T+3 14:50退出，ETF同期同分钟净利润对照；缺分钟不得填确认盈利。
