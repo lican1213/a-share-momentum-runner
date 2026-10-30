@@ -592,14 +592,31 @@ def run(ak,now,group,root=RECORD_ROOT):
         else:
             try:
                 freeze=build_freeze(ak,now,group,day)
-                path.parent.mkdir(parents=True,exist_ok=True)
-                with path.open("x",encoding="utf-8") as w:
-                    w.write(json.dumps(freeze,ensure_ascii=False,indent=2)+"\n")
-                records["freeze_created"]=True
-                records["freeze_status"]="FROZEN_BEFORE_NEXT_SESSION"
-                records["freeze_signal_sha256"]=freeze["signal_sha256"]
-                records["freeze_path"]=str(path)
-                records["selected_codes"]=[x["code"] for x in freeze["selected"]]
+                funding_day=freeze["four_etf_flow"]["day"]
+                previously_frozen_days={
+                    previous.get("four_etf_flow",{}).get("day")
+                    for _,previous in locked_freezes(group,root)
+                }
+                if funding_day in previously_frozen_days:
+                    records["freeze_status"]="NO_NEW_FOUR_ETF_EVENT"
+                    records["duplicate_funding_day"]=funding_day
+                    records["selected_codes"]=[]
+                else:
+                    path.parent.mkdir(parents=True,exist_ok=True)
+                    with path.open("x",encoding="utf-8") as w:
+                        w.write(json.dumps(freeze,ensure_ascii=False,indent=2)+"\n")
+                    records["freeze_created"]=True
+                    records["freeze_status"]="FROZEN_BEFORE_NEXT_SESSION"
+                    records["freeze_signal_sha256"]=freeze["signal_sha256"]
+                    records["freeze_path"]=str(path)
+                    records["selected_codes"]=[x["code"] for x in freeze["selected"]]
+            except ValueError as e:
+                if str(e).startswith("FOUR_ETF_FLOW_NOT_POSITIVE:"):
+                    records["freeze_status"]="NO_POSITIVE_CORE_FOUR_FLOW"
+                    records["selected_codes"]=[]
+                else:
+                    records["freeze_status"]="FREEZE_FAILED_NO_BACKFILL"
+                    records["errors"].append(f"FREEZE:{type(e).__name__}:{str(e)[:220]}")
             except Exception as e:
                 records["freeze_status"]="FREEZE_FAILED_NO_BACKFILL"
                 records["errors"].append(f"FREEZE:{type(e).__name__}:{str(e)[:220]}")
