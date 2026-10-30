@@ -1,0 +1,63 @@
+{
+  "status": "PAPER_EVALUATION_ATTEMPTED",
+  "asof": "2026-10-30",
+  "source_events": 10,
+  "assessed_events": 10,
+  "eligible_60d_window_count": 10,
+  "max_events": 64,
+  "model": "NEXT_EXECUTABLE_OPEN_OHLC_SCENARIO_NOT_LIVE_ORDER",
+  "result_records": [
+    {
+      "id": "NT-97c649b2aec78ac94133-S1_FLOW_OVER_ADV20",
+      "status": "NOT_MATURED_YET",
+      "source_event": "records/national_team_events/2026-10-28/40706300084-a1.json"
+    },
+    {
+      "id": "NT-97c649b2aec78ac94133-S2_FLOW_PLUS_PRICE_STRENGTH",
+      "status": "NOT_MATURED_YET",
+      "source_event": "records/national_team_events/2026-10-28/40706300084-a1.json"
+    },
+    {
+      "id": "NT-bd5a340716cee70d49c9-S1_FLOW_OVER_ADV20",
+      "status": "NOT_MATURED_YET",
+      "source_event": "records/national_team_events/2026-10-28/40703474509-a1.json"
+    },
+    {
+      "id": "NT-bd5a340716cee70d49c9-S2_FLOW_PLUS_PRICE_STRENGTH",
+      "status": "NOT_MATURED_YET",
+      "source_event": "records/national_team_events/2026-10-28/40703474509-a1.json"
+    },
+    {
+      "id": "NT2-84cff95303c56c57d176-S1_FLOW_OVER_ADV20",
+      "status": "NOT_MATURED_YET",
+      "source_event": "records/national_team_events/2026-10-28/40719359363-a1-v2.json"
+    },
+    {
+      "id": "NT2-84cff95303c56c57d176-S2_INDEPENDENT_RELATIVE_CONFIRMATION",
+      "status": "NOT_MATURED_YET",
+      "source_event": "records/national_team_events/2026-10-28/40719359363-a1-v2.json"
+    },
+    {
+      "id": "NT2-03fdedff0613f7ae3d22-S1_FLOW_OVER_ADV20",
+      "status": "NOT_MATURED_YET",
+      "source_event": "records/national_team_events/2026-10-29/40842156623-a1-v2.json"
+    },
+    {
+      "id": "NT2-03fdedff0613f7ae3d22-S2_INDEPENDENT_RELATIVE_CONFIRMATION",
+      "status": "NOT_MATURED_YET",
+      "source_event": "records/national_team_events/2026-10-29/40842156623-a1-v2.json"
+    },
+    {
+      "id": "NT-34cb0b6dbc0dd98f3983-S1_FLOW_OVER_ADV20",
+      "status": "NOT_MATURED_YET",
+      "source_event": "records/national_team_events/2026-10-30/41018737358-a1.json"
+    },
+    {
+      "id": "NT-34cb0b6dbc0dd98f3983-S2_FLOW_PLUS_PRICE_STRENGTH",
+      "status": "NOT_MATURED_YET",
+      "source_event": "records/national_team_events/2026-10-30/41018737358-a1.json"
+    }
+  ],
+  "errors": [],
+  "calculation_never_backdates_data_discovery": true
+}
