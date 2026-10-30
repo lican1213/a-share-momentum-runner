@@ -965,10 +965,10 @@ def load_entry_decisions(group,root,freeze=None):
     return result
 
 
-def lock_paper_replay(group,frozen,result,root,archive_time):
+def lock_paper_replay(group,frozen,result,root,archive_time,observed_at=None):
     audit={"locked_entries":[],"locked_exits":[],"locked_decisions":[],"drifts":[]}
     for entry in result.get("entries",[]):
-        if not persist_entry_decision(group,frozen,entry,root,archive_time):
+        if not persist_entry_decision(group,frozen,entry,root,observed_at or archive_time):
             audit["drifts"].append(str(_entry_decision_path(root,group,entry["signal_id"])))
             continue
         audit["locked_decisions"].append(entry["signal_id"])
@@ -1154,7 +1154,7 @@ def run(ak,now,group,root=RECORD_ROOT):
                     "unknown_signals":[v["signal_id"] for v in unknown]})
                 records["freeze_status"]="ENTRY_DATA_UNKNOWN_BLOCKS_ACCOUNT"
                 return records
-            locks=lock_paper_replay(group,f,assessment,root,archive_time)
+            locks=lock_paper_replay(group,f,assessment,root,archive_time,observed_at=now)
             if locks["drifts"]:
                 records["errors"].append("IMMUTABLE_PAPER_LEDGER_DRIFT:"+",".join(locks["drifts"]))
                 records["freeze_status"]="ACCOUNT_LEDGER_DRIFT_BLOCKED"
