@@ -495,7 +495,11 @@ def _normalize_minutes(frame,code,day,first,last,provider):
         if rows and stamp<=rows[-1]["minute"]:raise ValueError("MINUTE_ORDER_OR_DUPLICATE")
         rows.append(item)
     _require_exact_session_minutes(rows,day,first,last,provider)
-    return {"bars":rows,"sha256":sha(rows),"provider":provider,"code":code}
+    convention=("BAR_START" if rows[0]["minute"]==f"{day} 09:30" else "BAR_END")
+    return {"bars":rows,"sha256":sha(rows),"provider":provider,"code":code,
+            "minute_convention":convention,
+            "timestamp_semantics":"start-of-interval" if convention=="BAR_START"
+                                   else "end-of-interval"}
 
 
 def minute_rows(ak,code,day,first="09:30",last="14:50"):
@@ -800,7 +804,16 @@ def assess(ak,group,frozen,now,portfolio=None):
                     if m["bars"][0]["minute"]>f"{day} 09:35":
                         raise ValueError("MINUTE_OPEN_NOT_OBSERVED")
                     reason=None;closebar=None
+                    convention=m.get("minute_convention","BAR_START")
+                    if convention not in ("BAR_START","BAR_END"):
+                        raise ValueError("UNKNOWN_MINUTE_TIMESTAMP_SEMANTICS")
                     for b in m["bars"]:
+                        # 14:50 start-labelled interval begins AFTER the
+                        # forced liquidation quote: its low/high are future.
+                        if (si==3 and b["minute"]==f"{day} 14:50"
+                            and convention=="BAR_START"):
+                            reason="T_PLUS_3_1450";closebar=b
+                            exit_quote=b["open"];break
                         if b["open"]<=position["stop"]:
                             reason="STOP_GAP";closebar=b;exit_quote=b["open"];break
                         if b["low"]<=position["stop"]:
@@ -811,7 +824,11 @@ def assess(ak,group,frozen,now,portfolio=None):
                             reason="TARGET";closebar=b;exit_quote=position["target"];break
                     if reason is None and si==3:
                         reason="T_PLUS_3_1450"
-                        closebar=m["bars"][-1];exit_quote=closebar["open"]
+                        closebar=m["bars"][-1]
+                        # An end-labelled 14:50 bar covers 14:49-14:50:
+                        # its OPEN is the wrong instant; use its CLOSE.
+                        exit_quote=(closebar["close"] if convention=="BAR_END"
+                                    else closebar["open"])
                     if reason is None:
                         record["status"]="EXIT_PENDING";continue
                     previous_session=series[si-1]
@@ -820,16 +837,27 @@ def assess(ak,group,frozen,now,portfolio=None):
                         raise ValueError("POSSIBLE_LIMIT_DOWN_ONE_MINUTE_EXIT_QUEUE_UNVERIFIED")
                     matching=next((x for x in mbench["bars"] if x["minute"]==closebar["minute"]),None)
                     if matching is None:raise ValueError("BENCHMARK_SAME_MINUTE_UNAVAILABLE")
+                    bm_convention=mbench.get("minute_convention","BAR_START")
+                    if bm_convention not in ("BAR_START","BAR_END"):
+                        raise ValueError("BENCHMARK_MINUTE_SEMANTICS_UNKNOWN")
+                    if reason!="T_PLUS_3_1450" and bm_convention!=convention:
+                        raise ValueError("BENCHMARK_MINUTE_LABEL_MISMATCH")
+                    bm_exit_quote=(matching.get("close") if bm_convention=="BAR_END"
+                                   and reason=="T_PLUS_3_1450" else matching["open"])
+                    if bm_exit_quote is None:
+                        raise ValueError("BENCHMARK_1450_CLOSE_UNVERIFIED")
                     sell=down(exit_quote*(1-SLIP))
                     net=position["qty"]*(sell-position["entry_price"])-position["entry_fee"]-fee(position["qty"]*sell,True)
-                    bm_sell=down(matching["open"]*(1-SLIP))
+                    bm_sell=down(bm_exit_quote*(1-SLIP))
                     bmn=record["benchmark_quantity"]
                     bmnet=bmn*(bm_sell-record["benchmark_entry_price"])-fee(bmn*record["benchmark_entry_price"],etf=True)-fee(bmn*bm_sell,sell=True,etf=True)
                     record.update({"status":"PAPER_EXIT_SCENARIO_NO_BROKER_FILL",
                                    "exit_day":day,"exit_time":closebar["minute"],"exit_reason":reason,
                                    "exit_price":sell,"net_pnl":net,"r_multiple":net/position["budget_risk"],
                                    "exit_minute_sha256":m["sha256"],"benchmark_minute_sha256":mbench["sha256"],
-                                   "benchmark_exit_quote":matching["open"],
+                                   "benchmark_exit_quote":bm_exit_quote,
+                                   "minute_convention":convention,
+                                   "benchmark_minute_convention":bm_convention,
                                    "benchmark_exit_price":bm_sell,"benchmark_net_pnl":bmnet,
                                    "paired_excess_pnl":net-bmnet,
                                    "paired_excess_pct_of_account":(net-bmnet)/ACCOUNT,
