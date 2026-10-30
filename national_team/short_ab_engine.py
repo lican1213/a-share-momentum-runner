@@ -635,7 +635,45 @@ def execution_gate(frozen,now):
     return None
 
 
-def assess(ak,group,frozen,now):
+def account_snapshot_before(entries,trade,group):
+    """Reconstruct one group's cash + open positions at the NEW entry session.
+
+    Closed trades release cash only if their verified exit day was strictly
+    earlier than this session. Missing exit minutes preserve the reservation.
+    A2 and B never share capital. No inferred sale or future cash release.
+    """
+    cash=ACCOUNT;realized=0.0;active=[]
+    for event in entries:
+        if event.get("group")!=group or "entry_price" not in event:
+            continue
+        if event.get("status","").endswith("_DRIFT_BLOCKED"):
+            raise ValueError("ACCOUNT_LEDGER_DRIFT")
+        if event["entry_session"]>=trade:
+            # No event may use future sale proceeds as next-session buying power.
+            continue
+        if (event.get("status")=="PAPER_EXIT_SCENARIO_NO_BROKER_FILL" and
+                event.get("exit_day") and event["exit_day"]<trade):
+            realized+=float(event["net_pnl"])
+            cash+=float(event["net_pnl"])
+        else:
+            gross=float(event["notional"])
+            entry_fee=float(event["entry_fee"])
+            cash-=gross+entry_fee
+            active.append({"code":event["code"],"entry_session":event["entry_session"],
+                           "signal_id":event["signal_id"],"notional":gross,
+                           "reserved_cash":gross+entry_fee})
+    gross_active=sum(v["notional"] for v in active)
+    if cash<-.01 or gross_active>GROUPS[group]["max_gross"]+.01 or len(active)>GROUPS[group]["max_positions"]:
+        raise ValueError("ACCOUNT_CONSTRAINTS_ALREADY_BREACHED")
+    if len({v["code"] for v in active})!=len(active):
+        raise ValueError("ACCOUNT_DUPLICATE_STOCK_POSITION")
+    return {"group":group,"asof_entry_session":trade,"cash_available":cash,
+            "gross_active":gross_active,"active_positions":len(active),
+            "active_codes":[v["code"] for v in active],"active":active,
+            "realized_net_pnl":realized,"initial_capital":ACCOUNT}
+
+
+def assess(ak,group,frozen,now,portfolio=None):
     """Replay after close, with a prior archived freeze. No retrospective signal creation."""
     cfg=GROUPS[group];today=now.astimezone(BJ).date().isoformat()
     failed=execution_gate(frozen,now)
@@ -652,12 +690,31 @@ def assess(ak,group,frozen,now):
             return {"status":"BENCHMARK_FREEZE_CLOSE_REVISED",
                     "reason":"asof 510300 close changed since archived signal",
                     "entries":[]}
-    used=0.0;entries=[]
+    portfolio=portfolio or account_snapshot_before([],trade,group)
+    if portfolio["group"]!=group:
+        return {"status":"ACCOUNT_GROUP_MISMATCH","entries":[]}
+    used=float(portfolio["gross_active"])
+    cash=float(portfolio["cash_available"])
+    occupied=set(portfolio["active_codes"])
+    occupied_count=int(portfolio["active_positions"])
+    entries=[]
     for index,item in enumerate(frozen["selected"]):
         code=item["code"]
         record={"signal_id":f"{frozen['signal_sha256'][:16]}-{index}-{code}",
                 "code":code,"cohort":item["cohort"],"group":group,
                 "entry_session":trade,"status":"ENTRY_UNVERIFIED"}
+        if occupied_count>=cfg["max_positions"]:
+            record.update({"status":"ACCOUNT_MAX_POSITIONS_REJECTED",
+                           "reason":"prior active positions occupy group capacity"})
+            entries.append(record);continue
+        if code in occupied:
+            record.update({"status":"ACCOUNT_DUPLICATE_CODE_REJECTED",
+                           "reason":"same ticker still held from an earlier funding event"})
+            entries.append(record);continue
+        if used>=cfg["max_gross"] or cash<=0:
+            record.update({"status":"ACCOUNT_CASH_OR_GROSS_LIMIT",
+                           "reason":"existing holdings reserve the account budget"})
+            entries.append(record);continue
         try:
             history=prices(ak,code,today)
             original=bar(history,frozen["asof_session"])
@@ -690,8 +747,10 @@ def assess(ak,group,frozen,now):
                 record["b2_evidence"]={"trigger":signal,"minute_hash":tmin["sha256"],
                                        "comparables_sha":[x["sha256"] for x in comparables]}
             else:raise ValueError("A2_OPEN_PRICE_GATE_REJECTED")
-            position=entry_position(quote,item,cfg,cfg["max_gross"]-used)
+            position=entry_position(quote,item,cfg,min(cfg["max_gross"]-used,cash-5))
             if not position:raise ValueError("LOT_OR_RISK_OR_PORTFOLIO_BUDGET")
+            if position["notional"]+position["entry_fee"]>cash+1e-7:
+                raise ValueError("ACCOUNT_CASH_INCLUDING_COMMISSION_EXCEEDED")
             # S0 ETF is matched to the exact same entry time, including intraday B2.
             etf_entry=bar(bench,trade)
             if etf_entry is None or etf_entry["volume"]<=0:
@@ -711,6 +770,8 @@ def assess(ak,group,frozen,now):
             record["benchmark_entry_price"]=bm_buy
             record["benchmark_quantity"]=bm_qty
             used+=position["notional"]
+            cash-=position["notional"]+position["entry_fee"]
+            occupied.add(code);occupied_count+=1
             record.update(position)
             record.update({"method":entry_method,"entry_time":trigger,
                            "entry_stock_data_sha256":history["raw_sha256"],
@@ -780,7 +841,8 @@ def assess(ak,group,frozen,now):
             record["reason"]=f"{type(e).__name__}:{str(e)[:160]}"
             entries.append(record)
     return {"status":"REPLAYED_PAPER_SCENARIOS_NOT_LIVE","account":ACCOUNT,
-            "initial_gross":used,"initial_unallocated_cash":ACCOUNT-used,
+            "gross_reserved_at_entry":used,"cash_reserved_at_entry":cash,
+            "account_before_entry":portfolio,
             "entries":entries,"benchmark":"510300","real_broker_orders":0}
 
 
@@ -846,8 +908,14 @@ def run(ak,now,group,root=RECORD_ROOT):
              "version":GROUPS[group]["version"],"github_run_id":os.getenv("GITHUB_RUN_ID","local"),
              "github_sha":os.getenv("GITHUB_SHA","UNKNOWN"),"real_broker_orders":0,
              "freeze_created":False,"prior_freezes":[],"errors":[]}
+    # Reconstruct one group account chronologically across ALL prior funding days.
+    # Never restart account limits at each freeze; A2 and B remain isolated.
+    account_history=[]
     # Evaluate only ALREADY PERSISTED historical freeze files; never the fresh one.
-    for p,f in locked_freezes(group,root):
+    prior=sorted(locked_freezes(group,root),
+                 key=lambda pf:(pf[1].get("next_open_session",""),
+                                pf[1].get("freeze_created_at",""),str(pf[0])))
+    for p,f in prior:
         if f["next_open_session"]>today:continue
         # No settled bot commit before 09:25, no retrospectively filled entry.
         archive_time=freeze_archive_commit_at(p)
@@ -862,15 +930,25 @@ def run(ak,now,group,root=RECORD_ROOT):
         if date.fromisoformat(f["next_open_session"])<now.date()-timedelta(days=9):
             continue
         try:
-            assessment=assess(ak,group,f,now)
+            portfolio=account_snapshot_before(account_history,f["next_open_session"],group)
+            assessment=assess(ak,group,f,now,portfolio=portfolio)
             locks=lock_paper_replay(group,f,assessment,root,archive_time)
             if locks["drifts"]:
                 records["errors"].append("IMMUTABLE_PAPER_LEDGER_DRIFT:"+",".join(locks["drifts"]))
+                # An untrusted replay cannot free cash or authorize later entries.
+                break
+            for event in assessment.get("entries",[]):
+                if "entry_price" in event and not event.get("status","").endswith("_DRIFT_BLOCKED"):
+                    account_history.append(event)
             records["prior_freezes"].append({"path":str(p),"signal_sha256":f["signal_sha256"],
                                              "archive_commit_at":archive_time.isoformat(),
                                              "paper_ledger":locks,"result":assessment})
         except Exception as exc:
             records["errors"].append(f"ASSESS:{p.name}:{type(exc).__name__}:{str(exc)[:150]}")
+    records["portfolio_latest_verified"]=account_snapshot_before(
+        account_history,next_session(today) if today in calendar_sessions(today,today)
+        else (date.fromisoformat(today)+__import__("datetime").timedelta(days=1)).isoformat(),
+        group)
     day=close_day(now)
     if day:
         path=root/"freezes"/group/f"{day}.json"
