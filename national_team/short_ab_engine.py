@@ -433,6 +433,24 @@ def assess(ak,group,frozen,now):
             else:raise ValueError("A2_OPEN_PRICE_GATE_REJECTED")
             position=entry_position(quote,item,cfg,cfg["max_gross"]-used)
             if not position:raise ValueError("LOT_OR_RISK_OR_PORTFOLIO_BUDGET")
+            # S0 ETF is matched to the exact same entry time, including intraday B2.
+            etf_entry=bar(bench,trade)
+            if etf_entry is None or etf_entry["volume"]<=0:
+                raise ValueError("BENCHMARK_ENTRY_OPEN_UNVERIFIED")
+            if entry_method=="B2_INTRADAY_AFTER_1030":
+                etf_min=minute_rows(ak,"510300",trade,last="11:30")
+                matched_entry=next((m for m in etf_min["bars"] if m["minute"]==trigger),None)
+                if matched_entry is None:raise ValueError("BENCHMARK_B2_SAME_MINUTE_UNVERIFIED")
+                bm_quote=matched_entry["open"]
+                record["benchmark_entry_sha256"]=etf_min["sha256"]
+            else:
+                bm_quote=etf_entry["open"]
+                record["benchmark_entry_sha256"]=bench["raw_sha256"]
+            bm_buy=up(bm_quote*(1+SLIP))
+            bm_qty=math.floor(position["notional"]/(100*bm_buy))*100
+            if bm_qty<100:raise ValueError("BENCHMARK_LOT_UNAFFORDABLE")
+            record["benchmark_entry_price"]=bm_buy
+            record["benchmark_quantity"]=bm_qty
             used+=position["notional"]
             record.update(position)
             record.update({"method":entry_method,"entry_time":trigger,
@@ -447,7 +465,10 @@ def assess(ak,group,frozen,now):
                 try:
                     m=minute_rows(ak,code,day)
                     mbench=minute_rows(ak,"510300",day)
-                    if m["bars"][0]["minute"]!=f"{day} 09:30":
+                    daybar=bar(history,day)
+                    if daybar is None or daybar["volume"]<=0 or abs(daybar["high"]-daybar["low"])<1e-8:
+                        raise ValueError("EXIT_SUSPENDED_OR_ONE_PRICE_UNVERIFIABLE")
+                    if m["bars"][0]["minute"]>f"{day} 09:35":
                         raise ValueError("MINUTE_OPEN_NOT_OBSERVED")
                     reason=None;closebar=None
                     for b in m["bars"]:
@@ -468,11 +489,17 @@ def assess(ak,group,frozen,now):
                     if matching is None:raise ValueError("BENCHMARK_SAME_MINUTE_UNAVAILABLE")
                     sell=down(exit_quote*(1-SLIP))
                     net=position["qty"]*(sell-position["entry_price"])-position["entry_fee"]-fee(position["qty"]*sell,True)
+                    bm_sell=down(matching["open"]*(1-SLIP))
+                    bmn=record["benchmark_quantity"]
+                    bmnet=bmn*(bm_sell-record["benchmark_entry_price"])-fee(bmn*record["benchmark_entry_price"],etf=True)-fee(bmn*bm_sell,sell=True,etf=True)
                     record.update({"status":"PAPER_EXIT_SCENARIO_NO_BROKER_FILL",
                                    "exit_day":day,"exit_time":closebar["minute"],"exit_reason":reason,
                                    "exit_price":sell,"net_pnl":net,"r_multiple":net/position["budget_risk"],
                                    "exit_minute_sha256":m["sha256"],"benchmark_minute_sha256":mbench["sha256"],
                                    "benchmark_exit_quote":matching["open"],
+                                   "benchmark_exit_price":bm_sell,"benchmark_net_pnl":bmnet,
+                                   "paired_excess_pnl":net-bmnet,
+                                   "paired_excess_pct_of_account":(net-bmnet)/ACCOUNT,
                                    "broker_fill_confirmed":False})
                     break
                 except (ValueError,KeyError,TypeError,IndexError) as e:
@@ -553,6 +580,10 @@ def main():
                       "freeze_status":result.get("freeze_status"),"errors":result.get("errors",[]),
                       "run_record":str(target)},ensure_ascii=False))
 
+
+    # A green job must not conceal an expired/failed business gate.
+    if result.get("freeze_status")=="FREEZE_FAILED_NO_BACKFILL" or result["status"]=="PAPER_RUNNER_ERROR" or result.get("errors"):
+        raise SystemExit(2)
 
 if __name__=="__main__":
     main()
