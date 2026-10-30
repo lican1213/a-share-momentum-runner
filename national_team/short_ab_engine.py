@@ -539,7 +539,15 @@ def run(ak,now,group,root=RECORD_ROOT):
     if day:
         path=root/"freezes"/group/f"{day}.json"
         if path.exists():
-            records["freeze_status"]="EXISTING_FREEZE_UNCHANGED"
+            try:
+                stored=json.loads(path.read_text(encoding="utf-8"))
+                expected=sha({k:v for k,v in stored.items() if k!="signal_sha256"})
+                if stored.get("signal_sha256")!=expected or stored.get("group")!=group or stored.get("asof_session")!=day:
+                    raise ValueError("IMMUTABLE_FREEZE_HASH_OR_IDENTITY_CHANGED")
+                records["freeze_status"]="EXISTING_FREEZE_UNCHANGED"
+            except (OSError,ValueError,TypeError) as e:
+                records["freeze_status"]="FREEZE_FAILED_NO_BACKFILL"
+                records["errors"].append(f"FREEZE_INTEGRITY:{type(e).__name__}:{str(e)[:120]}")
         else:
             try:
                 freeze=build_freeze(ak,now,group,day)
