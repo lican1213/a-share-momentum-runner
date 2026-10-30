@@ -1236,7 +1236,7 @@ def run(ak,now,group,root=RECORD_ROOT):
                     for arm in ("S1","S2"):
                         if arm in locked_arms:
                             records["independent_frozen_arms"].append({
-                                "arm":arm,"status":"PREVIOUS_EVENT_ARM_UNCHANGED"})
+                                "arm":arm,"status":"PREVIOUS_ARM_UNCHANGED"})
                             continue
                         if not records["independent_verified_arms"][arm]["complete"]:
                             continue
