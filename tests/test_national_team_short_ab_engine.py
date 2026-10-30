@@ -793,8 +793,8 @@ def test_run_three_overlapping_events_reuses_one_account_not_three(monkeypatch,t
     monkeypatch.setattr(x,"calendar_sessions",lambda a,b:sessions[:sessions.index(b)+1])
     monkeypatch.setattr(x,"next_session",lambda d:"2026-11-02")
     monkeypatch.setattr(x,"close_day",lambda now:None)
-    monkeypatch.setattr(x,"lock_paper_replay",
-                        lambda *args,**kw:{"drifts":[],"locked_entries":[],"locked_exits":[]})
+    # Keep the REAL immutable paper ledger: subsequent events must read
+    # earlier position reservations back from disk, not a transient array.
     snapshots=[]
     def fake_assess(ak,group,frozen,now,portfolio=None):
         snapshots.append(portfolio)
@@ -802,8 +802,8 @@ def test_run_three_overlapping_events_reuses_one_account_not_three(monkeypatch,t
         e={"group":"B","code":("601825","600309","601919")[len(snapshots)-1],
            "signal_id":"x"+str(len(snapshots)),
            "entry_session":frozen["next_open_session"],
-           "entry_price":10.,"notional":amount,"entry_fee":5.,
-           "status":"EXIT_NOT_MATURED"}
+           "entry_price":10.,"qty":int(amount/10),"notional":amount,
+           "entry_fee":5.,"status":"EXIT_NOT_MATURED"}
         return {"status":"REPLAYED_PAPER_SCENARIOS_NOT_LIVE","entries":[e]}
     monkeypatch.setattr(x,"assess",fake_assess)
     result=x.run(object(),now("2026-11-04T18:15:00"),"B",tmp_path)
@@ -814,3 +814,64 @@ def test_run_three_overlapping_events_reuses_one_account_not_three(monkeypatch,t
     assert result["portfolio_latest_verified"]["gross_active"]==19000.
     assert result["portfolio_latest_verified"]["active_positions"]==3
     assert result["portfolio_latest_verified"]["cash_available"]==30000-19000-15
+
+
+def test_immutable_open_position_survives_price_vendor_outage(monkeypatch,tmp_path):
+    freeze={"group":"B","signal_sha256":"freeze_hash","next_open_session":"2026-11-02",
+            "asof_session":"2026-10-30","freeze_created_at":"2026-10-30T18:15:00+08:00"}
+    monkeypatch.setattr(x,"locked_freezes",lambda group,root:[(tmp_path/"freeze.json",freeze)])
+    paper={"signal_id":"x-0-601825","code":"601825","cohort":"S1","group":"B",
+           "entry_session":"2026-11-02","entry_time":"2026-11-02 09:30",
+           "entry_price":20.,"qty":300,"notional":6000.,
+           "entry_fee":5.,"status":"EXIT_MINUTE_OR_MATCHED_BENCHMARK_UNVERIFIED"}
+    x.lock_paper_replay("B",freeze,{"entries":[paper]},tmp_path,
+                        now("2026-10-30T18:16:00"))
+    original=x.load_account_ledger("B",tmp_path)
+    assert len(original)==1 and original[0]["code"]=="601825"
+    assert x.account_snapshot_before(original,"2026-11-04","B")["gross_active"]==6000
+    monkeypatch.setattr(x,"freeze_archive_commit_at",
+                        lambda p:now("2026-10-30T18:18:00"))
+    monkeypatch.setattr(x,"close_day",lambda now:None)
+    monkeypatch.setattr(x,"next_session",lambda day:"2026-11-02")
+    def vendor_outage(ak,group,frozen,now,portfolio=None):
+        assert portfolio["gross_active"]==0
+        return {"status":"REPLAY_DATA_UNAVAILABLE","entries":[]}
+    monkeypatch.setattr(x,"assess",vendor_outage)
+    ran=x.run(object(),now("2026-11-04T18:15:00"),"B",tmp_path)
+    assert ran["portfolio_latest_verified"]["gross_active"]==6000
+    assert ran["portfolio_latest_verified"]["cash_available"]==23995.
+    assert ran["portfolio_latest_verified"]["active_codes"]==["601825"]
+    # If the ledger entry is tampered with, the next run must fail CLOSED.
+    file=tmp_path/"ledger"/"entries"/"B"/"x-0-601825.json"
+    doc=json.loads(file.read_text())
+    doc["original_entry"]["group"]="A2"
+    file.write_text(json.dumps(doc))
+    with pytest.raises(ValueError,match="ACCOUNT_LEDGER_INTEGRITY"):
+        x.load_account_ledger("B",tmp_path)
+
+
+def test_account_open_position_limits_reject_new_entries_before_market_access(monkeypatch):
+    frozen={"freeze_created_at":"2026-10-30T18:15:00+08:00",
+            "asof_session":"2026-10-30","next_open_session":"2026-11-02",
+            "signal_sha256":"frozen",
+            "selected":[{"code":"601825","cohort":"S1","close":10.,
+                         "atr14":.2,"breakout":10.}]}
+    monkeypatch.setattr(x,"next_session",lambda day:"2026-11-02")
+    monkeypatch.setattr(x,"calendar_sessions",lambda a,b:["2026-11-02"])
+    monkeypatch.setattr(x,"prices",lambda ak,code,through:
+                        {"bars":[],"raw_sha256":"only-benchmark"} if code=="510300"
+                        else (_ for _ in ()).throw(AssertionError("must not fetch stock")))
+    account={"group":"B","gross_active":18000.,"cash_available":11985.,
+             "active_codes":["600000","600309","601919"],
+             "active_positions":3}
+    res=x.assess(object(),"B",frozen,now("2026-11-02T18:15:00"),portfolio=account)
+    assert res["entries"][0]["status"]=="ACCOUNT_MAX_POSITIONS_REJECTED"
+    account["active_positions"]=1
+    account["active_codes"]=["601825"]
+    res=x.assess(object(),"B",frozen,now("2026-11-02T18:15:00"),portfolio=account)
+    assert res["entries"][0]["status"]=="ACCOUNT_DUPLICATE_CODE_REJECTED"
+    account["active_positions"]=2
+    account["active_codes"]=["600000","600309"]
+    account["gross_active"]=20000.
+    res=x.assess(object(),"B",frozen,now("2026-11-02T18:15:00"),portfolio=account)
+    assert res["entries"][0]["status"]=="ACCOUNT_MAX_POSITIONS_REJECTED"
