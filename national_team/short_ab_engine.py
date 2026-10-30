@@ -681,7 +681,7 @@ def account_snapshot_before(entries,trade,group):
             "realized_net_pnl":realized,"initial_capital":ACCOUNT}
 
 
-def assess(ak,group,frozen,now,portfolio=None):
+def assess(ak,group,frozen,now,portfolio=None,decisions=None):
     """Replay after close, with a prior archived freeze. No retrospective signal creation."""
     cfg=GROUPS[group];today=now.astimezone(BJ).date().isoformat()
     failed=execution_gate(frozen,now)
@@ -711,6 +711,15 @@ def assess(ak,group,frozen,now,portfolio=None):
         record={"signal_id":f"{frozen['signal_sha256'][:16]}-{index}-{code}",
                 "code":code,"cohort":item["cohort"],"group":group,
                 "entry_session":trade,"status":"ENTRY_UNVERIFIED"}
+        previous=(decisions or {}).get(record["signal_id"])
+        if previous and previous["decision_status"] in ("NO_FILL_RULE_REJECTED","ENTRY_EXPIRED"):
+            record.update({"status":previous["decision_status"],
+                           "reason":"prior immutable no-fill decision; retrospective fill prohibited"})
+            entries.append(record);continue
+        if previous and previous["decision_status"]=="ENTRY_DATA_UNKNOWN":
+            record.update({"status":"ENTRY_DATA_UNKNOWN",
+                           "reason":"prior unresolved decision; account gate remains closed"})
+            entries.append(record);continue
         if occupied_count>=cfg["max_positions"]:
             record.update({"status":"ACCOUNT_MAX_POSITIONS_REJECTED",
                            "reason":"prior active positions occupy group capacity"})
@@ -869,8 +878,16 @@ def assess(ak,group,frozen,now,portfolio=None):
                     break
             entries.append(record)
         except Exception as e:
-            record["status"]="NO_VALID_PAPER_ENTRY"
-            record["reason"]=f"{type(e).__name__}:{str(e)[:160]}"
+            reason=str(e)
+            verified_reject={
+                "A2_OPEN_PRICE_GATE_REJECTED","LOT_OR_RISK_OR_PORTFOLIO_BUDGET",
+                "ACCOUNT_CASH_INCLUDING_COMMISSION_EXCEEDED","B2_CHASE_LIMIT",
+                "B2_MINUTE_BREAKOUT_NOT_CONFIRMED","OPEN_MISSING_OR_SUSPENDED",
+                "BENCHMARK_LOT_UNAFFORDABLE"}
+            record["status"]=("NO_FILL_RULE_REJECTED" if
+                              isinstance(e,ValueError) and reason in verified_reject
+                              else "ENTRY_DATA_UNKNOWN")
+            record["reason"]=f"{type(e).__name__}:{reason[:160]}"
             entries.append(record)
     return {"status":"REPLAYED_PAPER_SCENARIOS_NOT_LIVE","account":ACCOUNT,
             "gross_reserved_at_entry":used,"cash_reserved_at_entry":cash,
@@ -893,9 +910,68 @@ def write_paper_event_once(path,obj):
         out.write(json.dumps(obj,ensure_ascii=False,sort_keys=True,indent=2)+"\n")
     return True
 
+def _entry_decision_path(root,group,signal_id):
+    return Path(root)/"ledger"/"decisions"/group/f"{signal_id}.json"
+
+
+def persist_entry_decision(group,frozen,entry,root,observed_at):
+    """First entry judgment is immutable, including UNKNOWN and verified no-fill.
+
+    No later vendor recovery may silently create a historical paper trade.
+    UNKNOWN blocks later account allocation until separately resolved.
+    """
+    status=entry.get("status")
+    decision=("CONFIRMED_PAPER_ENTRY" if "entry_price" in entry else
+              "NO_FILL_RULE_REJECTED" if status=="NO_FILL_RULE_REJECTED"
+              or str(status).startswith("ACCOUNT_") else
+              "ENTRY_DATA_UNKNOWN")
+    path=_entry_decision_path(root,group,entry["signal_id"])
+    if path.exists():
+        raw=json.loads(path.read_text(encoding="utf-8"))
+        if (raw.get("signal_id")!=entry["signal_id"]
+            or raw.get("frozen_signal_sha256")!=frozen["signal_sha256"]
+            or raw.get("group")!=group
+            or raw.get("decision_status")!=decision):
+            return False
+        return True
+    obj={"signal_id":entry["signal_id"],"code":entry["code"],
+         "group":group,"entry_session":entry["entry_session"],
+         "frozen_signal_sha256":frozen["signal_sha256"],
+         "decision_status":decision,"first_assessed_at":observed_at.isoformat(),
+         "basis":str(entry.get("reason",status))[:220],
+         "broker_fill_confirmed":False}
+    return write_paper_event_once(path,obj)
+
+
+def load_entry_decisions(group,root,freeze=None):
+    """Read immutable judgment files, refusing identity drift."""
+    known={f["signal_sha256"] for _,f in locked_freezes(group,root)}
+    allowed={freeze["signal_sha256"]} if freeze else known
+    result={}
+    for path in sorted((Path(root)/"ledger"/"decisions"/group).glob("*.json")):
+        try:
+            obj=json.loads(path.read_text(encoding="utf-8"))
+            if (obj.get("signal_id")!=path.stem
+                or obj.get("group")!=group
+                or obj.get("frozen_signal_sha256") not in known
+                or obj.get("decision_status") not in ("ENTRY_DATA_UNKNOWN",
+                    "NO_FILL_RULE_REJECTED","CONFIRMED_PAPER_ENTRY","ENTRY_EXPIRED")
+                or obj.get("broker_fill_confirmed") is not False):
+                raise ValueError("ENTRY_DECISION_INTEGRITY")
+            if obj["frozen_signal_sha256"] in allowed:
+                result[obj["signal_id"]]=obj
+        except (OSError,KeyError,ValueError,TypeError) as e:
+            raise ValueError(f"ENTRY_DECISION_CORRUPTED:{path}:{e}") from e
+    return result
+
+
 def lock_paper_replay(group,frozen,result,root,archive_time):
-    audit={"locked_entries":[],"locked_exits":[],"drifts":[]}
+    audit={"locked_entries":[],"locked_exits":[],"locked_decisions":[],"drifts":[]}
     for entry in result.get("entries",[]):
+        if not persist_entry_decision(group,frozen,entry,root,archive_time):
+            audit["drifts"].append(str(_entry_decision_path(root,group,entry["signal_id"])))
+            continue
+        audit["locked_decisions"].append(entry["signal_id"])
         if "entry_price" not in entry:continue
         signal_id=entry["signal_id"]
         original={"frozen_signal_sha256":frozen["signal_sha256"],
@@ -1024,6 +1100,19 @@ def run(ak,now,group,root=RECORD_ROOT):
         records["errors"].append(str(exc))
         records["freeze_status"]="ACCOUNT_LEDGER_INTEGRITY_FAILED"
         return records
+    try:
+        existing_decisions=load_entry_decisions(group,root)
+    except ValueError as exc:
+        records["errors"].append(str(exc))
+        records["freeze_status"]="ENTRY_DECISION_INTEGRITY_FAILED"
+        return records
+    if any(d["decision_status"]=="ENTRY_DATA_UNKNOWN"
+           and d["entry_session"]<=today for d in existing_decisions.values()):
+        records["freeze_status"]="ENTRY_DATA_UNKNOWN_BLOCKS_ACCOUNT"
+        records["unresolved_entry_signals"]=[
+            k for k,v in existing_decisions.items()
+            if v["decision_status"]=="ENTRY_DATA_UNKNOWN" and v["entry_session"]<=today]
+        return records
     # Evaluate only ALREADY PERSISTED historical freeze files; never the fresh one.
     prior=sorted(locked_freezes(group,root),
                  key=lambda pf:(pf[1].get("next_open_session",""),
@@ -1046,7 +1135,25 @@ def run(ak,now,group,root=RECORD_ROOT):
             preceding=[e for e in account_history
                        if e.get("frozen_signal_sha256")!=f["signal_sha256"]]
             portfolio=account_snapshot_before(preceding,f["next_open_session"],group)
-            assessment=assess(ak,group,f,now,portfolio=portfolio)
+            decisions=load_entry_decisions(group,root,f)
+            if any(d["decision_status"] in ("NO_FILL_RULE_REJECTED","ENTRY_EXPIRED")
+                   for d in decisions.values()):
+                assessment=assess(ak,group,f,now,portfolio=portfolio,decisions=decisions)
+            else:
+                assessment=assess(ak,group,f,now,portfolio=portfolio)
+            unknown=[e for e in assessment.get("entries",[])
+                     if e.get("status")=="ENTRY_DATA_UNKNOWN"]
+            if unknown:
+                for entry in unknown:
+                    if not persist_entry_decision(group,f,entry,root,now):
+                        raise ValueError("ENTRY_UNKNOWN_DECISION_DRIFT")
+                records["prior_freezes"].append({
+                    "path":str(p),"signal_sha256":f["signal_sha256"],
+                    "result":assessment,
+                    "status":"ENTRY_DATA_UNKNOWN_BLOCKS_ACCOUNT",
+                    "unknown_signals":[v["signal_id"] for v in unknown]})
+                records["freeze_status"]="ENTRY_DATA_UNKNOWN_BLOCKS_ACCOUNT"
+                return records
             locks=lock_paper_replay(group,f,assessment,root,archive_time)
             if locks["drifts"]:
                 records["errors"].append("IMMUTABLE_PAPER_LEDGER_DRIFT:"+",".join(locks["drifts"]))
