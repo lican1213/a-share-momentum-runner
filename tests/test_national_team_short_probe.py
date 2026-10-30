@@ -17,7 +17,9 @@ def test_before_stock_close_probe_only_yesterday(monkeypatch):
     assert out["asof_session"]=="2026-10-29"
     assert out["status"]=="DIAGNOSTIC_ONLY_NO_FREEZE_NO_ORDER"
     assert out["real_broker_orders"]==0 and out["paper_positions_created"]==0
-    assert out["candidates"]==[] and "BENCHMARK:" in out["warnings"][-1]
+    assert len(out["candidates"])==10
+    assert all(row["status"]=="UNVERIFIED" for row in out["candidates"])
+    assert any(w.startswith("BENCHMARK:") for w in out["warnings"])
 
 def test_after_stock_close_probe_only_today_and_source_missing_is_reported(monkeypatch):
     monkeypatch.setattr(x,"calendar_sessions",lambda a,b:["2026-10-30"])
