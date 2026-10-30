@@ -1,0 +1,83 @@
+{
+  "captured_at": "2026-10-30T18:54:04.105966+08:00",
+  "group": "B",
+  "experiment": "EXP-0006",
+  "version": "EXP0006_B_20261030",
+  "github_run_id": "41044087791",
+  "github_sha": "40640bb97e4b962ed85fd5abe320fa7c75324524",
+  "real_broker_orders": 0,
+  "freeze_created": true,
+  "prior_freezes": [],
+  "errors": [],
+  "portfolio_latest_verified": {
+    "group": "B",
+    "asof_entry_session": "2026-10-31",
+    "cash_available": 30000.0,
+    "gross_active": 0,
+    "active_positions": 0,
+    "active_codes": [],
+    "active": [],
+    "realized_net_pnl": 0.0,
+    "initial_capital": 30000.0
+  },
+  "freeze_status": "FROZEN_BEFORE_NEXT_SESSION",
+  "freeze_signal_sha256": "4468b1afdcbd2c33c3e37a4f457d206da6788e1d0e11fb65e5dafbc9b84fdd4c",
+  "freeze_path": "records/national_team_short_ab/freezes/B/2026-10-30.json",
+  "selected_codes": [
+    "601825",
+    "600309",
+    "600000"
+  ],
+  "candidate_diagnostics": {
+    "total": 10,
+    "verified": 10,
+    "unverified": 0,
+    "eligible": 6,
+    "selected": 3,
+    "blocked_unverified": []
+  },
+  "candidate_rejections": [
+    {
+      "cohort": "S1",
+      "code": "601229",
+      "status": "VERIFIED",
+      "reason": null,
+      "failed_gates": [
+        "ABOVE_MA20"
+      ],
+      "source_error": null
+    },
+    {
+      "cohort": "S2",
+      "code": "600660",
+      "status": "VERIFIED",
+      "reason": null,
+      "failed_gates": [
+        "ABOVE_MA20"
+      ],
+      "source_error": null
+    },
+    {
+      "cohort": "S2",
+      "code": "601012",
+      "status": "VERIFIED",
+      "reason": null,
+      "failed_gates": [
+        "ABOVE_MA20"
+      ],
+      "source_error": null
+    },
+    {
+      "cohort": "S1",
+      "code": "600519",
+      "status": "VERIFIED",
+      "reason": "MINIMUM_OPEN_LOT_UNAFFORDABLE",
+      "failed_gates": [
+        "MINIMUM_OPEN_LOT_UNAFFORDABLE"
+      ],
+      "source_error": null
+    }
+  ],
+  "status": "RESEARCH_ONLY_NO_BROKER_ORDERS",
+  "runtime_akshare": "1.20.16"
+}
