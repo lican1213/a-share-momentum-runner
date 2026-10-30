@@ -146,6 +146,37 @@ def stock_names(ak):
     raise ValueError("NO_VERIFIED_SECURITY_NAMES:"+";".join(failures))
 
 
+def _completed_etf_daily_from_sina_minutes(ak,day):
+    """Construct same-security ETF close ONLY from genuinely complete 1m session."""
+    frame=ak.stock_zh_a_minute(symbol="sh510300",period="1",adjust="")
+    keys=("day","open","high","low","close","volume")
+    if not all(k in frame.columns for k in keys):
+        raise ValueError("ETF_1M_ENGLISH_SCHEMA_REQUIRED")
+    rows=[]
+    for _,r in frame.iterrows():
+        stamp=str(r["day"])[:16]
+        if not f"{day} 09:30"<=stamp<=f"{day} 15:00":continue
+        v={k:float(r[k]) for k in keys[1:]}
+        if not all(math.isfinite(z) for z in v.values()):
+            raise ValueError("ETF_MINUTE_NONFINITE")
+        if (min(v["open"],v["high"],v["low"],v["close"])<=0 or v["volume"]<0
+            or not v["low"]<=min(v["open"],v["close"])<=max(v["open"],v["close"])<=v["high"]):
+            raise ValueError("ETF_MINUTE_INVALID_OHLC")
+        if rows and stamp<=rows[-1]["minute"]:
+            raise ValueError("ETF_MINUTE_DUPLICATED_OR_UNSORTED")
+        rows.append({"minute":stamp,**v})
+    if len(rows)<238 or rows[0]["minute"]>f"{day} 09:35" or rows[-1]["minute"]!=f"{day} 15:00":
+        raise ValueError(f"ETF_1M_SESSION_NOT_COMPLETE:{len(rows)}")
+    daily={"date":day,"open":rows[0]["open"],
+           "high":max(v["high"] for v in rows),
+           "low":min(v["low"] for v in rows),
+           "close":rows[-1]["close"],
+           "volume":sum(v["volume"] for v in rows)}
+    if not daily["low"]<=min(daily["open"],daily["close"])<=max(daily["open"],daily["close"])<=daily["high"]:
+        raise ValueError("ETF_COMPUTED_DAILY_OHLC_INVALID")
+    return daily,sha(rows)
+
+
 def prices(ak,code,through):
     """Actual unadjusted daily prices; Sina is preferred for stocks to avoid EM push2 bans."""
     end=through.replace("-","")
@@ -189,8 +220,19 @@ def prices(ak,code,through):
                         (frame[date_field].astype(str).str[:10]<=through)]
             if frame.empty:raise ValueError("SINA_ETF_NO_ASOF_BARS")
             result=normalize(frame,code,"SINA_ETF_DAILY_NO_ADJUST")
-            if bar(result,through) is None:raise ValueError("SINA_ETF_ASOF_BAR_MISSING")
-            return result
+            if bar(result,through) is not None:return result
+            # The fund daily vendor can be one session late even after 15:00.
+            # Complete Shanghai/Sina 1m for the EXACT ETF ticker is an
+            # independently dated, observable last-day OHLC replacement.
+            # A 14:50 or 14:59 quote MUST NOT be treated as a 15:00 close.
+            latest=result["bars"][-1]["date"]
+            if latest>=through:raise ValueError("ETF_DAILY_ASOF_UNEXPECTED")
+            today_daily,today_minutes_sha=_completed_etf_daily_from_sina_minutes(ak,through)
+            bars=result["bars"]+[today_daily]
+            return {"kind":"SINA_ETF_PRIOR_DAILY_PLUS_VERIFIED_1M_SESSION",
+                    "code":code,"bars":bars,"raw_sha256":sha(bars),
+                    "current_session_minute_sha256":today_minutes_sha,
+                    "prior_daily_last_session":latest}
         except Exception as exc:
             failures.append("SINA_ETF:"+type(exc).__name__+":"+str(exc)[:120])
     if code=="510300":

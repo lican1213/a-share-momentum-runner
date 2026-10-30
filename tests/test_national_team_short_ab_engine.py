@@ -514,3 +514,48 @@ def test_sina_minute_history_accepted_only_if_complete(monkeypatch):
     with pytest.raises(ValueError,match="INCOMPLETE_MINUTE_SOURCE"):
         x._normalize_minutes(frame.iloc[:-1],"601825",date_string,"09:30","14:50","SINA_1MIN")
 
+
+def test_daily_etf_can_use_real_complete_current_1m_not_prior_nav(monkeypatch):
+    import pandas as pd
+    from datetime import datetime,timedelta
+    day="2026-10-30"
+    historical=pd.DataFrame([
+        {"date":(date(2026,7,1)+timedelta(days=i)).isoformat(),
+         "open":4.,"high":4.1,"low":3.9,"close":4.,"volume":10000}
+        for i in range(121)])
+    # Complete 1-minute actual-day timeline, ending at 15:00.
+    times=([datetime.fromisoformat(day+" 09:30")+timedelta(minutes=i) for i in range(121)] +
+           [datetime.fromisoformat(day+" 13:00")+timedelta(minutes=i) for i in range(121)])
+    ticks=pd.DataFrame([{"day":v.strftime("%Y-%m-%d %H:%M:%S"),
+                        "open":4.02,"high":4.05,"low":4.0,
+                        "close":4.03,"volume":100.} for v in times])
+    class AK:
+        def fund_etf_hist_em(self,**kwargs):
+            raise RuntimeError("Push2RateLimitError: too many requests")
+        def fund_etf_hist_sina(self,**kwargs):
+            return historical
+        def stock_zh_a_minute(self,**kwargs):
+            assert kwargs["symbol"]=="sh510300" and kwargs["adjust"]==""
+            return ticks
+    monkeypatch.setattr(x,"_EM_RATE_LIMITED",False)
+    result=x.prices(AK(),"510300",day)
+    assert result["kind"]=="SINA_ETF_PRIOR_DAILY_PLUS_VERIFIED_1M_SESSION"
+    assert x.bar(result,day)["close"]==4.03
+    assert x.bar(result,day)["volume"]==len(times)*100
+    assert result["current_session_minute_sha256"]
+    class Truncated(AK):
+        def stock_zh_a_minute(self,**kwargs):
+            return ticks.iloc[:-1]
+    with pytest.raises(ValueError,match="ETF_1M_SESSION_NOT_COMPLETE"):
+        x._completed_etf_daily_from_sina_minutes(Truncated(),day)
+
+
+def test_etf_minute_incomplete_cannot_substitute_1450_for_1500():
+    import pandas as pd
+    class AK:
+        def stock_zh_a_minute(self,**kwargs):
+            return pd.DataFrame([{"day":"2026-10-30 14:50:00",
+                                  "open":4.,"high":4.,"low":4.,"close":4.,
+                                  "volume":1000}])
+    with pytest.raises(ValueError,match="ETF_1M_SESSION_NOT_COMPLETE"):
+        x._completed_etf_daily_from_sina_minutes(AK(),"2026-10-30")
