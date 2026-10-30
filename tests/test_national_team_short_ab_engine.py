@@ -258,3 +258,56 @@ def test_b_hard_position_limits_hold_after_tiny_price_change():
             assert pos["qty"]%100==0
             assert pos["notional"]<=8000
             assert pos["budget_risk"]<=150
+
+
+def test_end_to_end_synthetic_source_freeze_persist_idempotent_and_next_open(monkeypatch,tmp_path):
+    """Hermetic full pipeline, NOT evidence of genuine market fills or alpha."""
+    class FakeNames:
+        def iterrows(self):
+            return iter((i,{"code":code,"name":"TEST"+code})
+                        for i,(_,code) in enumerate(x.RANK_ORDER))
+    class FakeAK:
+        def stock_info_a_code_name(self):return FakeNames()
+    ak=FakeAK()
+    # 300 completed *synthetic* historical observations, with one explicitly dated
+    # new as-of session. Daily order is deterministic and aligned to benchmark.
+    sessions=[(date(2025,1,1)+timedelta(days=i)).isoformat() for i in range(300)]
+    sessions.append("2026-10-30")
+    stock=[]
+    etf=[]
+    for i,d in enumerate(sessions):
+        c=10+i*.01
+        stock.append({"date":d,"open":c,"high":c+.02,"low":c-.02,
+                      "close":c,"volume":200 if i==300 else 100,
+                      "turnover":100000000})
+        etf.append({"date":d,"open":4.,"high":4.02,"low":3.98,
+                    "close":4.,"volume":10000})
+    cache={"510300":{"bars":etf,"raw_sha256":x.sha(etf)}}
+    for group,code in x.RANK_ORDER:
+        cache[code]={"bars":stock,"raw_sha256":x.sha(stock),"kind":"SYNTHETIC"}
+    monkeypatch.setattr(x,"prices",lambda ak,code,through:cache[code])
+    monkeypatch.setattr(x,"source_flow",lambda now:{"net_cny":"1000",
+                           "day":"2026-10-28","first_observed_at":"2026-10-29T17:00:00+08:00",
+                           "scope":"SYNTHETIC_TEST"})
+    monkeypatch.setattr(x,"strategy_snapshot",lambda now:{"first_public_at":"2026-10-28T23:46:43+08:00",
+                                                          "path":"SYNTHETIC","sha256":"fixture"})
+    monkeypatch.setattr(x,"calendar_sessions",lambda a,b:["2026-10-30"] if b=="2026-10-30" else ["2026-11-02"])
+    monkeypatch.setattr(x,"next_session",lambda day:"2026-11-02")
+    for group in ("A2","B"):
+        result=x.run(ak,now("2026-10-30T18:15:00"),group,tmp_path)
+        assert result["freeze_status"]=="FROZEN_BEFORE_NEXT_SESSION"
+        freeze_file=tmp_path/"freezes"/group/"2026-10-30.json"
+        frozen=json.loads(freeze_file.read_text())
+        assert frozen["signal_sha256"]==x.sha({k:v for k,v in frozen.items() if k!="signal_sha256"})
+        assert frozen["next_open_session"]=="2026-11-02"
+        assert frozen["source_run_id"]=="local"
+        assert len(frozen["checked"])==10
+        assert len(frozen["selected"])<=x.GROUPS[group]["max_positions"]
+        assert frozen["real_orders"]==0
+        again=x.run(ak,now("2026-10-30T20:15:00"),group,tmp_path)
+        assert again["freeze_status"]=="EXISTING_FREEZE_UNCHANGED"
+        assert json.loads(freeze_file.read_text())==frozen
+    # Even if the program is manually invoked after midnight, no additional
+    # 10/30 signal can be forged or rewritten.
+    missed=x.run(ak,now("2026-10-31T00:55:00"),"B",tmp_path)
+    assert not missed["freeze_created"]
