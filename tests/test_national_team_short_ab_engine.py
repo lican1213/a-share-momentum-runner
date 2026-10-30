@@ -125,7 +125,8 @@ def test_freeze_retries_are_idempotent(monkeypatch,tmp_path):
     monkeypatch.setattr(x,"calendar_sessions",lambda a,b:["2026-10-30"])
     def stub(ak,now,group,day):
         obj={"group":group,"selected":[],"asof_session":day,
-             "next_open_session":"2026-11-02"}
+             "next_open_session":"2026-11-02",
+             "four_etf_flow":{"day":"2026-10-28"}}
         return dict(obj,signal_sha256=x.sha(obj))
     monkeypatch.setattr(x,"build_freeze",stub)
     r1=x.run(object(),now("2026-10-30T18:15:00"),"B",tmp_path)
@@ -136,7 +137,8 @@ def test_freeze_retries_are_idempotent(monkeypatch,tmp_path):
 def test_a2_and_b_ledgers_are_separate(monkeypatch,tmp_path):
     monkeypatch.setattr(x,"calendar_sessions",lambda a,b:["2026-10-30"])
     def stub(ak,now,group,day):
-        o={"group":group,"selected":[],"asof_session":day,"next_open_session":"2026-11-02"}
+        o={"group":group,"selected":[],"asof_session":day,"next_open_session":"2026-11-02",
+           "four_etf_flow":{"day":"2026-10-28"}}
         return dict(o,signal_sha256=x.sha(o))
     monkeypatch.setattr(x,"build_freeze",stub)
     assert x.run(object(),now("2026-10-30T18:15:00"),"A2",tmp_path)["freeze_created"]
