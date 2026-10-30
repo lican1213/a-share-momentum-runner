@@ -228,3 +228,32 @@ def test_existing_freeze_hash_tamper_fails_business_gate(monkeypatch,tmp_path):
     r=x.run(object(),now("2026-10-30T20:15:00"),"B",tmp_path)
     assert r["freeze_status"]=="FREEZE_FAILED_NO_BACKFILL"
     assert any("INTEGRITY" in e for e in r["errors"])
+
+
+def test_actual_git_commit_proof_is_required_for_entry(monkeypatch):
+    import subprocess
+    class Reply:
+        returncode=0
+        stdout="2026-10-30T18:16:22+08:00\n"
+    monkeypatch.setattr(subprocess,"run",lambda *a,**k:Reply())
+    stamp=x.freeze_archive_commit_at("records/national_team_short_ab/freezes/B/2026-10-30.json")
+    assert stamp==now("2026-10-30T18:16:22")
+    class NoCommit:
+        returncode=0
+        stdout=""
+    monkeypatch.setattr(subprocess,"run",lambda *a,**k:NoCommit())
+    assert x.freeze_archive_commit_at("no-file.json") is None
+
+
+def test_arbitrary_after_midnight_freeze_not_eligible_even_if_calendar_next_day(monkeypatch):
+    monkeypatch.setattr(x,"calendar_sessions",lambda a,b:["2026-10-30","2026-11-02"])
+    assert x.close_day(now("2026-11-02T00:55:00")) is None
+
+
+def test_b_hard_position_limits_hold_after_tiny_price_change():
+    for price in (2.01,9.99,20.01,49.99,80.01):
+        pos=x.entry_position(price,{"atr14":.25},x.GROUPS["B"],20000.)
+        if pos:
+            assert pos["qty"]%100==0
+            assert pos["notional"]<=8000
+            assert pos["budget_risk"]<=150
