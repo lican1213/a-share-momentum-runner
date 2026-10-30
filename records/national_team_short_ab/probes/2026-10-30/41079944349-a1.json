@@ -1,0 +1,510 @@
+{
+  "status": "DIAGNOSTIC_ONLY_NO_FREEZE_NO_ORDER",
+  "source_readiness_version": "SINA_ETF_VERIFIED_1500_SESSION_V3_20261030",
+  "captured_at": "2026-10-30T23:21:46.709396+08:00",
+  "run_id": "41079944349",
+  "source_commit_sha": "2905dcf55882ef9cb50762d9ba9e10ff4a24d0f1",
+  "asof_session": "2026-10-30",
+  "candidate_pool": [
+    "601825",
+    "600309",
+    "600000",
+    "601919",
+    "601229",
+    "600660",
+    "601166",
+    "601012",
+    "600519",
+    "601838"
+  ],
+  "real_broker_orders": 0,
+  "paper_positions_created": 0,
+  "warnings": [],
+  "candidates": [
+    {
+      "code": "601825",
+      "cohort": "S1",
+      "name": "沪农商行",
+      "status": "MARKET_DATA_VERIFIED_NO_FREEZE",
+      "group_gates": {
+        "A2": {
+          "eligible_indicative_only": false,
+          "gate_checks": {
+            "ABOVE_MA20": true,
+            "POSITIVE_RS20": true,
+            "ADV20_THRESHOLD": true,
+            "ABOVE_MA60": true,
+            "TEN_DAY_BREAKOUT": false,
+            "VOLUME_1P2X": false
+          },
+          "rejection_reasons": [
+            "TEN_DAY_BREAKOUT",
+            "VOLUME_1P2X"
+          ],
+          "atr14": 0.23857142857142857,
+          "close": 8.99,
+          "adv20": 248972797.9,
+          "rel20": 0.13300110741971205
+        },
+        "B": {
+          "eligible_indicative_only": true,
+          "gate_checks": {
+            "ABOVE_MA20": true,
+            "POSITIVE_RS20": true,
+            "ADV20_THRESHOLD": true
+          },
+          "rejection_reasons": [],
+          "atr14": 0.23857142857142857,
+          "close": 8.99,
+          "adv20": 248972797.9,
+          "rel20": 0.13300110741971205
+        }
+      },
+      "price_sha256": "4262b95abb241b21dfcc1251b7c5fbd87911ecf7450828e5156a6934b824bf46",
+      "history_count": 441,
+      "close": 8.99
+    },
+    {
+      "code": "600309",
+      "cohort": "S2",
+      "name": "万华化学",
+      "status": "MARKET_DATA_VERIFIED_NO_FREEZE",
+      "group_gates": {
+        "A2": {
+          "eligible_indicative_only": false,
+          "gate_checks": {
+            "ABOVE_MA20": true,
+            "POSITIVE_RS20": true,
+            "ADV20_THRESHOLD": true,
+            "ABOVE_MA60": false,
+            "TEN_DAY_BREAKOUT": false,
+            "VOLUME_1P2X": false
+          },
+          "rejection_reasons": [
+            "ABOVE_MA60",
+            "TEN_DAY_BREAKOUT",
+            "VOLUME_1P2X"
+          ],
+          "atr14": 1.7957142857142867,
+          "close": 70.2,
+          "adv20": 1483910961.55,
+          "rel20": 0.11046691015549304
+        },
+        "B": {
+          "eligible_indicative_only": true,
+          "gate_checks": {
+            "ABOVE_MA20": true,
+            "POSITIVE_RS20": true,
+            "ADV20_THRESHOLD": true
+          },
+          "rejection_reasons": [],
+          "atr14": 1.7957142857142867,
+          "close": 70.2,
+          "adv20": 1483910961.55,
+          "rel20": 0.11046691015549304
+        }
+      },
+      "price_sha256": "88e8e36905fd71f73d2ea888cb21d86943bbf9237e1919cb961a6806158a6fa8",
+      "history_count": 441,
+      "close": 70.2
+    },
+    {
+      "code": "600000",
+      "cohort": "S1",
+      "name": "浦发银行",
+      "status": "MARKET_DATA_VERIFIED_NO_FREEZE",
+      "group_gates": {
+        "A2": {
+          "eligible_indicative_only": false,
+          "gate_checks": {
+            "ABOVE_MA20": true,
+            "POSITIVE_RS20": true,
+            "ADV20_THRESHOLD": true,
+            "ABOVE_MA60": true,
+            "TEN_DAY_BREAKOUT": true,
+            "VOLUME_1P2X": false
+          },
+          "rejection_reasons": [
+            "VOLUME_1P2X"
+          ],
+          "atr14": 0.19214285714285698,
+          "close": 10.02,
+          "adv20": 756400251.25,
+          "rel20": 0.2130011074197119
+        },
+        "B": {
+          "eligible_indicative_only": true,
+          "gate_checks": {
+            "ABOVE_MA20": true,
+            "POSITIVE_RS20": true,
+            "ADV20_THRESHOLD": true
+          },
+          "rejection_reasons": [],
+          "atr14": 0.19214285714285698,
+          "close": 10.02,
+          "adv20": 756400251.25,
+          "rel20": 0.2130011074197119
+        }
+      },
+      "price_sha256": "c28ca6c574ffaad7ba13b487b8d0c9d51bd26987084f7df5a46e3c8251ac3550",
+      "history_count": 441,
+      "close": 10.02
+    },
+    {
+      "code": "601919",
+      "cohort": "S2",
+      "name": "中远海控",
+      "status": "MARKET_DATA_VERIFIED_NO_FREEZE",
+      "group_gates": {
+        "A2": {
+          "eligible_indicative_only": true,
+          "gate_checks": {
+            "ABOVE_MA20": true,
+            "POSITIVE_RS20": true,
+            "ADV20_THRESHOLD": true,
+            "ABOVE_MA60": true,
+            "TEN_DAY_BREAKOUT": true,
+            "VOLUME_1P2X": true
+          },
+          "rejection_reasons": [],
+          "atr14": 0.4714285714285714,
+          "close": 17.84,
+          "adv20": 1334950550.15,
+          "rel20": 0.19414630169374048
+        },
+        "B": {
+          "eligible_indicative_only": true,
+          "gate_checks": {
+            "ABOVE_MA20": true,
+            "POSITIVE_RS20": true,
+            "ADV20_THRESHOLD": true
+          },
+          "rejection_reasons": [],
+          "atr14": 0.4714285714285714,
+          "close": 17.84,
+          "adv20": 1334950550.15,
+          "rel20": 0.19414630169374048
+        }
+      },
+      "price_sha256": "45170db4e950953ec5c2acd772463cf4e9ed3f52fab0d1f02f012d87173a9356",
+      "history_count": 441,
+      "close": 17.84
+    },
+    {
+      "code": "601229",
+      "cohort": "S1",
+      "name": "上海银行",
+      "status": "MARKET_DATA_VERIFIED_NO_FREEZE",
+      "group_gates": {
+        "A2": {
+          "eligible_indicative_only": false,
+          "gate_checks": {
+            "ABOVE_MA20": false,
+            "POSITIVE_RS20": true,
+            "ADV20_THRESHOLD": true,
+            "ABOVE_MA60": false,
+            "TEN_DAY_BREAKOUT": false,
+            "VOLUME_1P2X": false
+          },
+          "rejection_reasons": [
+            "ABOVE_MA20",
+            "ABOVE_MA60",
+            "TEN_DAY_BREAKOUT",
+            "VOLUME_1P2X"
+          ],
+          "atr14": 0.172857142857143,
+          "close": 9.31,
+          "adv20": 598317244.55,
+          "rel20": 0.07863727986976454
+        },
+        "B": {
+          "eligible_indicative_only": false,
+          "gate_checks": {
+            "ABOVE_MA20": false,
+            "POSITIVE_RS20": true,
+            "ADV20_THRESHOLD": true
+          },
+          "rejection_reasons": [
+            "ABOVE_MA20"
+          ],
+          "atr14": 0.172857142857143,
+          "close": 9.31,
+          "adv20": 598317244.55,
+          "rel20": 0.07863727986976454
+        }
+      },
+      "price_sha256": "bba25a856ff950bf1cae3ad7979b06d5c9712d1cacf888ae34c5eeb9319348b3",
+      "history_count": 441,
+      "close": 9.31
+    },
+    {
+      "code": "600660",
+      "cohort": "S2",
+      "name": "福耀玻璃",
+      "status": "MARKET_DATA_VERIFIED_NO_FREEZE",
+      "group_gates": {
+        "A2": {
+          "eligible_indicative_only": false,
+          "gate_checks": {
+            "ABOVE_MA20": false,
+            "POSITIVE_RS20": true,
+            "ADV20_THRESHOLD": true,
+            "ABOVE_MA60": false,
+            "TEN_DAY_BREAKOUT": false,
+            "VOLUME_1P2X": false
+          },
+          "rejection_reasons": [
+            "ABOVE_MA20",
+            "ABOVE_MA60",
+            "TEN_DAY_BREAKOUT",
+            "VOLUME_1P2X"
+          ],
+          "atr14": 1.422857142857143,
+          "close": 53.49,
+          "adv20": 610983456.45,
+          "rel20": 0.11910745390341704
+        },
+        "B": {
+          "eligible_indicative_only": false,
+          "gate_checks": {
+            "ABOVE_MA20": false,
+            "POSITIVE_RS20": true,
+            "ADV20_THRESHOLD": true
+          },
+          "rejection_reasons": [
+            "ABOVE_MA20"
+          ],
+          "atr14": 1.422857142857143,
+          "close": 53.49,
+          "adv20": 610983456.45,
+          "rel20": 0.11910745390341704
+        }
+      },
+      "price_sha256": "b3d6ca37c9709e2e6acf6255237ccf93146cd65fb9db799d182e4ea4f6e249a1",
+      "history_count": 441,
+      "close": 53.49
+    },
+    {
+      "code": "601166",
+      "cohort": "S1",
+      "name": "兴业银行",
+      "status": "MARKET_DATA_VERIFIED_NO_FREEZE",
+      "group_gates": {
+        "A2": {
+          "eligible_indicative_only": true,
+          "gate_checks": {
+            "ABOVE_MA20": true,
+            "POSITIVE_RS20": true,
+            "ADV20_THRESHOLD": true,
+            "ABOVE_MA60": true,
+            "TEN_DAY_BREAKOUT": true,
+            "VOLUME_1P2X": true
+          },
+          "rejection_reasons": [],
+          "atr14": 0.34357142857142847,
+          "close": 19.65,
+          "adv20": 1951966227.7,
+          "rel20": 0.19866106267698258
+        },
+        "B": {
+          "eligible_indicative_only": true,
+          "gate_checks": {
+            "ABOVE_MA20": true,
+            "POSITIVE_RS20": true,
+            "ADV20_THRESHOLD": true
+          },
+          "rejection_reasons": [],
+          "atr14": 0.34357142857142847,
+          "close": 19.65,
+          "adv20": 1951966227.7,
+          "rel20": 0.19866106267698258
+        }
+      },
+      "price_sha256": "8e00e9689500fd9d63d8689b5e767697fc4bf29dd98b48fef824ec2c0706fb5a",
+      "history_count": 441,
+      "close": 19.65
+    },
+    {
+      "code": "601012",
+      "cohort": "S2",
+      "name": "隆基绿能",
+      "status": "MARKET_DATA_VERIFIED_NO_FREEZE",
+      "group_gates": {
+        "A2": {
+          "eligible_indicative_only": false,
+          "gate_checks": {
+            "ABOVE_MA20": false,
+            "POSITIVE_RS20": true,
+            "ADV20_THRESHOLD": true,
+            "ABOVE_MA60": false,
+            "TEN_DAY_BREAKOUT": false,
+            "VOLUME_1P2X": false
+          },
+          "rejection_reasons": [
+            "ABOVE_MA20",
+            "ABOVE_MA60",
+            "TEN_DAY_BREAKOUT",
+            "VOLUME_1P2X"
+          ],
+          "atr14": 0.3235714285714287,
+          "close": 11.0,
+          "adv20": 889842121.35,
+          "rel20": 0.0960445856805816
+        },
+        "B": {
+          "eligible_indicative_only": false,
+          "gate_checks": {
+            "ABOVE_MA20": false,
+            "POSITIVE_RS20": true,
+            "ADV20_THRESHOLD": true
+          },
+          "rejection_reasons": [
+            "ABOVE_MA20"
+          ],
+          "atr14": 0.3235714285714287,
+          "close": 11.0,
+          "adv20": 889842121.35,
+          "rel20": 0.0960445856805816
+        }
+      },
+      "price_sha256": "fb87d987b060511f6fcd5fd22ab85c444a2aae65d562ce4da56142d31fd7200e",
+      "history_count": 441,
+      "close": 11.0
+    },
+    {
+      "code": "600519",
+      "cohort": "S1",
+      "name": "贵州茅台",
+      "status": "MARKET_DATA_VERIFIED_NO_FREEZE",
+      "group_gates": {
+        "A2": {
+          "eligible_indicative_only": true,
+          "gate_checks": {
+            "ABOVE_MA20": true,
+            "POSITIVE_RS20": true,
+            "ADV20_THRESHOLD": true,
+            "ABOVE_MA60": true,
+            "TEN_DAY_BREAKOUT": true,
+            "VOLUME_1P2X": true
+          },
+          "rejection_reasons": [],
+          "atr14": 27.494285714285734,
+          "close": 1392.05,
+          "adv20": 4988752067.45,
+          "rel20": 0.22501134724725158
+        },
+        "B": {
+          "eligible_indicative_only": true,
+          "gate_checks": {
+            "ABOVE_MA20": true,
+            "POSITIVE_RS20": true,
+            "ADV20_THRESHOLD": true
+          },
+          "rejection_reasons": [],
+          "atr14": 27.494285714285734,
+          "close": 1392.05,
+          "adv20": 4988752067.45,
+          "rel20": 0.22501134724725158
+        }
+      },
+      "price_sha256": "ac2d01edbbe2ad8531ca8e9452820f4c802a22f2af9231d373b76d2df14e53d0",
+      "history_count": 441,
+      "close": 1392.05
+    },
+    {
+      "code": "601838",
+      "cohort": "S2",
+      "name": "成都银行",
+      "status": "MARKET_DATA_VERIFIED_NO_FREEZE",
+      "group_gates": {
+        "A2": {
+          "eligible_indicative_only": false,
+          "gate_checks": {
+            "ABOVE_MA20": true,
+            "POSITIVE_RS20": true,
+            "ADV20_THRESHOLD": true,
+            "ABOVE_MA60": true,
+            "TEN_DAY_BREAKOUT": false,
+            "VOLUME_1P2X": false
+          },
+          "rejection_reasons": [
+            "TEN_DAY_BREAKOUT",
+            "VOLUME_1P2X"
+          ],
+          "atr14": 0.5235714285714277,
+          "close": 19.94,
+          "adv20": 525930589.95,
+          "rel20": 0.14693668164940388
+        },
+        "B": {
+          "eligible_indicative_only": true,
+          "gate_checks": {
+            "ABOVE_MA20": true,
+            "POSITIVE_RS20": true,
+            "ADV20_THRESHOLD": true
+          },
+          "rejection_reasons": [],
+          "atr14": 0.5235714285714277,
+          "close": 19.94,
+          "adv20": 525930589.95,
+          "rel20": 0.14693668164940388
+        }
+      },
+      "price_sha256": "e120553371c97d986c96afadc22c19edd16f9dcdd5ee9cf23c2220fc4b6f3ab4",
+      "history_count": 441,
+      "close": 19.94
+    }
+  ],
+  "groups": {
+    "A2": {
+      "data_verified": 10,
+      "indicative_eligible": 3,
+      "not_a_frozen_signal": true
+    },
+    "B": {
+      "data_verified": 10,
+      "indicative_eligible": 7,
+      "not_a_frozen_signal": true
+    }
+  },
+  "four_etf_flow": {
+    "day": "2026-10-29",
+    "first_observed_at": "2026-10-30T15:14:19.498841+08:00",
+    "net_cny": "8742148830.000000",
+    "path": "records/national_team_merged/2026-10-30/41018737358-a1.json",
+    "sha256": "3f6923246552e9c0dd2c196b0c0d253dcfbf7c907a4a5af8c57236c34dfa4720",
+    "scope": "FOUR_ETF_ALL_INVESTORS_NOT_HUIJIN"
+  },
+  "original_v2": {
+    "path": "records/national_team_strategy/2026-10-28/40719359363-a1-v2.json",
+    "sha256": "14c2c654c747b0e97a6e326b909799105dcb7cd585360627374a42ac849c483b",
+    "first_public_at": "2026-10-28T23:46:43.818303+08:00"
+  },
+  "benchmark": {
+    "price_sha256": "2910fd1aca2914f9d70a334e70deb6d26c6f747b028aa79b8e7b97c77fb45f0b",
+    "price_provider": "EASTMONEY_ETF_DAILY_NO_ADJUST",
+    "current_session_minute_sha256": null,
+    "prior_daily_last_session": null,
+    "asof_close": 4.065,
+    "history_count": 441
+  },
+  "security_name_provider": "SSE_OFFICIAL_MAIN_BOARD",
+  "minute_source_checks": {
+    "510300": {
+      "ok": true,
+      "sha256": "2970b0ba19c75fbf721eb7be21c9a5cb949f3457e37f000d19dcc7bb14f0fb33",
+      "bars": 230
+    },
+    "601825": {
+      "ok": true,
+      "sha256": "286d2a647095f1fe93e91a023278b48997335a878e03c68bb2534e1fe3e98eab",
+      "bars": 230
+    },
+    "600309": {
+      "ok": true,
+      "sha256": "0500f1f941aff82cf55aeb1cae04772f427dd9138f6afba80cbbd4159ad5c90b",
+      "bars": 230
+    }
+  },
+  "akshare_version": "1.20.18"
+}
