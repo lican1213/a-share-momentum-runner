@@ -158,3 +158,73 @@ def test_source_flow_rejects_partial_etf(monkeypatch,tmp_path):
     monkeypatch.setattr(x,"FLOW_ROOT",root)
     with pytest.raises(ValueError,match="NO_PIT_COMPLETE"):
         x.source_flow(now("2026-10-30T18:15:00"))
+
+
+def test_real_four_etf_proxy_is_recomputed_no_future_obs(monkeypatch,tmp_path):
+    base=tmp_path/"merged";daydir=base/"2026-10-30";daydir.mkdir(parents=True)
+    first="2026-10-29T15:11:00+08:00"
+    previous={code:{"shares":"100","nav":"4","shares_first_observed_at":first,
+                    "nav_first_observed_at":first} for code in x.CORE}
+    current={code:{"shares":"101","nav":"4","shares_first_observed_at":first,
+                   "nav_first_observed_at":first} for code in x.CORE}
+    data={"first_observed_no_earlier_than":first,
+          "observations_by_date":{"2026-10-27":previous,"2026-10-28":current}}
+    p=daydir/"actual.json";p.write_text(json.dumps(data))
+    monkeypatch.setattr(x,"FLOW_ROOT",base)
+    monkeypatch.setattr(x,"next_session",lambda _: "2026-10-28")
+    monkeypatch.setattr(x,"calendar_sessions",lambda a,b:["2026-10-28","2026-10-29","2026-10-30"])
+    good=x.source_flow(now("2026-10-30T18:15:00"))
+    assert good["day"]=="2026-10-28" and float(good["net_cny"])==16.
+    data["observations_by_date"]["2026-10-28"]["159919"]["shares_first_observed_at"]="2026-10-31T18:15:00+08:00"
+    p.write_text(json.dumps(data))
+    with pytest.raises(ValueError,match="NO_PIT_COMPLETE"):
+        x.source_flow(now("2026-10-30T18:15:00"))
+
+
+def test_T_plus_one_conservative_stop_wins_and_paired_ETF_is_same_minute(monkeypatch):
+    trade="2026-11-02";exit_day="2026-11-03"
+    def mkbar(day,price,hi,lo):
+        return {"date":day,"open":price,"high":hi,"low":lo,"close":price,"volume":1000.}
+    stock={"bars":[mkbar("2026-10-30",10.,10.1,9.9),
+                   mkbar(trade,10.2,10.5,10.0),
+                   mkbar(exit_day,10.3,11.5,9.7)],"raw_sha256":"stock"}
+    ref={"bars":[mkbar("2026-10-30",4.,4.1,3.9),
+                 mkbar(trade,4.0,4.1,3.9),
+                 mkbar(exit_day,4.1,4.2,4.)],"raw_sha256":"ref"}
+    monkeypatch.setattr(x,"next_session",lambda d:trade)
+    monkeypatch.setattr(x,"calendar_sessions",
+                        lambda a,b:[trade] if b==trade else [trade,exit_day])
+    monkeypatch.setattr(x,"prices",lambda ak,code,through:ref if code=="510300" else stock)
+    def fake_minutes(ak,code,day,*args,**kwargs):
+        if code=="510300":
+            bars=[{"minute":f"{day} 09:31","open":4.1,"low":4.,"high":4.2,"volume":100}]
+        else:
+            bars=[{"minute":f"{day} 09:31","open":10.3,"low":9.7,"high":11.5,"volume":100}]
+        return {"bars":bars,"sha256":code+"-"+day}
+    monkeypatch.setattr(x,"minute_rows",fake_minutes)
+    f={"freeze_created_at":"2026-10-30T18:15:00+08:00",
+       "asof_session":"2026-10-30","next_open_session":trade,
+       "signal_sha256":"testfreeze",
+       "selected":[{"code":"600000","cohort":"S1","close":10.,
+                    "atr14":.10,"breakout":10.01}]}
+    t=x.assess(object(),"B",f,now("2026-11-02T18:20:00"))
+    assert t["entries"][0]["status"]=="EXIT_NOT_MATURED"
+    result=x.assess(object(),"B",f,now("2026-11-03T18:20:00"))
+    entry=result["entries"][0]
+    assert entry["status"]=="PAPER_EXIT_SCENARIO_NO_BROKER_FILL"
+    assert entry["exit_reason"]=="STOP_FIRST"
+    assert entry["exit_time"]=="2026-11-03 09:31"
+    assert entry["net_pnl"]<0 and entry["benchmark_net_pnl"] is not None
+    assert entry["paired_excess_pnl"]==pytest.approx(entry["net_pnl"]-entry["benchmark_net_pnl"])
+    assert not entry["broker_fill_confirmed"]
+
+
+def test_existing_freeze_hash_tamper_fails_business_gate(monkeypatch,tmp_path):
+    monkeypatch.setattr(x,"calendar_sessions",lambda a,b:["2026-10-30"])
+    p=tmp_path/"freezes"/"B"/"2026-10-30.json"
+    p.parent.mkdir(parents=True)
+    p.write_text(json.dumps({"group":"B","asof_session":"2026-10-30",
+                             "signal_sha256":"tampered","selected":[]}))
+    r=x.run(object(),now("2026-10-30T20:15:00"),"B",tmp_path)
+    assert r["freeze_status"]=="FREEZE_FAILED_NO_BACKFILL"
+    assert any("INTEGRITY" in e for e in r["errors"])
