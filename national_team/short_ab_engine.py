@@ -156,7 +156,9 @@ def prices(ak,code,through):
             frame=ak.stock_zh_a_daily(symbol=prefix,start_date="20250101",
                                       end_date=end,adjust="")
             if frame is None or frame.empty:raise ValueError("EMPTY_SINA_DAILY")
-            return normalize(frame,code,"SINA_STOCK_DAILY_NO_ADJUST")
+            result=normalize(frame,code,"SINA_STOCK_DAILY_NO_ADJUST")
+            if bar(result,through) is None:raise ValueError("SINA_DAILY_ASOF_BAR_MISSING")
+            return result
         except Exception as exc:
             failures.append("SINA:"+type(exc).__name__+":"+str(exc)[:120])
     if not _EM_RATE_LIMITED:
@@ -170,7 +172,9 @@ def prices(ak,code,through):
                                          start_date="20250101",end_date=end,adjust="")
                 kind="EASTMONEY_STOCK_DAILY_NO_ADJUST"
             if frame is None or frame.empty:raise ValueError("EMPTY_EASTMONEY_DAILY")
-            return normalize(frame,code,kind)
+            result=normalize(frame,code,kind)
+            if bar(result,through) is None:raise ValueError("EASTMONEY_DAILY_ASOF_BAR_MISSING")
+            return result
         except Exception as exc:
             _pause_eastmoney(exc)
             failures.append("EASTMONEY:"+type(exc).__name__+":"+str(exc)[:120])
@@ -184,7 +188,9 @@ def prices(ak,code,through):
             frame=frame[(frame[date_field].astype(str).str[:10]>="2025-01-01") &
                         (frame[date_field].astype(str).str[:10]<=through)]
             if frame.empty:raise ValueError("SINA_ETF_NO_ASOF_BARS")
-            return normalize(frame,code,"SINA_ETF_DAILY_NO_ADJUST")
+            result=normalize(frame,code,"SINA_ETF_DAILY_NO_ADJUST")
+            if bar(result,through) is None:raise ValueError("SINA_ETF_ASOF_BAR_MISSING")
+            return result
         except Exception as exc:
             failures.append("SINA_ETF:"+type(exc).__name__+":"+str(exc)[:120])
     raise ValueError(f"{code}:DAILY_PROVIDERS_UNVERIFIED:"+";".join(failures))

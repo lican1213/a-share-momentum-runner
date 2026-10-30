@@ -265,6 +265,7 @@ def test_b_hard_position_limits_hold_after_tiny_price_change():
 def test_end_to_end_synthetic_source_freeze_persist_idempotent_and_next_open(monkeypatch,tmp_path):
     """Hermetic full pipeline, NOT evidence of genuine market fills or alpha."""
     class FakeNames:
+        columns=("code","name")
         def iterrows(self):
             return iter((i,{"code":code,"name":"SYN"+code})
                         for i,(_,code) in enumerate(x.RANK_ORDER))
@@ -370,6 +371,7 @@ def test_gate_reasons_strict_vs_aggressive():
 def test_partial_vendor_outage_keeps_verified_arm_and_audit(monkeypatch):
     monkeypatch.setattr(x,"next_session",lambda d:"2026-11-02")
     class Names:
+        columns=("code","name")
         def iterrows(self):
             return iter((i,{"code":c,"name":"SAFE"}) for i,(_,c) in enumerate(x.RANK_ORDER))
     class AK:
@@ -417,6 +419,7 @@ def test_preopen_possible_three_percent_gap_is_not_a_false_rejection(monkeypatch
     """Buying one lot at a legal low-gap quote may fit even if +3% doesn't."""
     monkeypatch.setattr(x,"next_session",lambda day:"2026-11-02")
     class Names:
+        columns=("code","name")
         def iterrows(self):
             return iter((i,{"code":c,"name":"SAFE"}) for i,(_,c) in enumerate(x.RANK_ORDER))
     class AK:
