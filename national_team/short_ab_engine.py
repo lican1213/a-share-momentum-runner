@@ -906,6 +906,59 @@ def lock_paper_replay(group,frozen,result,root,archive_time):
         else:audit["locked_exits"].append(str(exit_path))
     return audit
 
+def load_account_ledger(group,root):
+    """Only immutable, matching entry/exit evidence may establish usable cash.
+
+    Vendor failures on a later replay cannot erase previously bought positions.
+    Entries without an independently locked exit remain reserved indefinitely.
+    """
+    if group not in GROUPS:raise ValueError("UNKNOWN_GROUP")
+    known={obj["signal_sha256"] for _,obj in locked_freezes(group,root)}
+    root=Path(root)
+    entries_root=root/"ledger"/"entries"/group
+    exits_root=root/"ledger"/"exits"/group
+    out=[];seen=set()
+    for path in sorted(entries_root.glob("*.json")):
+        try:
+            raw=json.loads(path.read_text(encoding="utf-8"))
+            row=dict(raw["original_entry"])
+            token=row["signal_id"]
+            if (token!=path.stem or token in seen or row["group"]!=group or
+                    raw.get("frozen_signal_sha256") not in known or
+                    raw.get("broker_fill_confirmed") is not False):
+                raise ValueError("ACCOUNT_ENTRY_IDENTITY_OR_FREEZE_MISMATCH")
+            seen.add(token)
+            if (row["entry_session"]<"2026-10-30" or
+                    int(row["qty"])<100 or int(row["qty"])%100!=0 or
+                    float(row["notional"])<=0 or float(row["entry_fee"])<0 or
+                    abs(float(row["entry_price"])*int(row["qty"])-float(row["notional"]))>.011):
+                raise ValueError("ACCOUNT_ENTRY_AMOUNT_INVALID")
+            row.update({"status":"EXIT_NOT_MATURED",
+                        "frozen_signal_sha256":raw["frozen_signal_sha256"]})
+            exit_path=exits_root/path.name
+            if exit_path.exists():
+                closed=json.loads(exit_path.read_text(encoding="utf-8"))
+                if (closed.get("signal_id")!=token or
+                        closed.get("frozen_signal_sha256")!=raw["frozen_signal_sha256"] or
+                        closed.get("entry_lock_sha256")!=sha(raw) or
+                        closed.get("broker_fill_confirmed") is not False or
+                        closed.get("exit_day","")<=row["entry_session"] or
+                        not closed.get("exit_minute_sha256") or
+                        not closed.get("benchmark_minute_sha256")):
+                    raise ValueError("ACCOUNT_EXIT_LOCK_OR_TIME_MISMATCH")
+                row.update({"status":"PAPER_EXIT_SCENARIO_NO_BROKER_FILL",
+                            "exit_day":closed["exit_day"],
+                            "net_pnl":float(closed["net_pnl"])})
+            out.append(row)
+        except (OSError,KeyError,TypeError,ValueError) as error:
+            raise ValueError("ACCOUNT_LEDGER_INTEGRITY:"+str(path)+":"+str(error)) from error
+    # Orphan exit cannot create realized cash out of thin air.
+    for path in exits_root.glob("*.json"):
+        if path.stem not in seen:
+            raise ValueError("ACCOUNT_ORPHAN_EXIT:"+str(path))
+    return out
+
+
 def run(ak,now,group,root=RECORD_ROOT):
     now=now.astimezone(BJ);today=now.date().isoformat()
     records={"captured_at":now.isoformat(),"group":group,"experiment":GROUPS[group]["experiment"],
@@ -914,7 +967,12 @@ def run(ak,now,group,root=RECORD_ROOT):
              "freeze_created":False,"prior_freezes":[],"errors":[]}
     # Reconstruct one group account chronologically across ALL prior funding days.
     # Never restart account limits at each freeze; A2 and B remain isolated.
-    account_history=[]
+    try:
+        account_history=load_account_ledger(group,root)
+    except ValueError as exc:
+        records["errors"].append(str(exc))
+        records["freeze_status"]="ACCOUNT_LEDGER_INTEGRITY_FAILED"
+        return records
     # Evaluate only ALREADY PERSISTED historical freeze files; never the fresh one.
     prior=sorted(locked_freezes(group,root),
                  key=lambda pf:(pf[1].get("next_open_session",""),
@@ -934,16 +992,18 @@ def run(ak,now,group,root=RECORD_ROOT):
         if date.fromisoformat(f["next_open_session"])<now.date()-timedelta(days=9):
             continue
         try:
-            portfolio=account_snapshot_before(account_history,f["next_open_session"],group)
+            preceding=[e for e in account_history
+                       if e.get("frozen_signal_sha256")!=f["signal_sha256"]]
+            portfolio=account_snapshot_before(preceding,f["next_open_session"],group)
             assessment=assess(ak,group,f,now,portfolio=portfolio)
             locks=lock_paper_replay(group,f,assessment,root,archive_time)
             if locks["drifts"]:
                 records["errors"].append("IMMUTABLE_PAPER_LEDGER_DRIFT:"+",".join(locks["drifts"]))
                 records["freeze_status"]="ACCOUNT_LEDGER_DRIFT_BLOCKED"
                 return records
-            for event in assessment.get("entries",[]):
-                if "entry_price" in event and not event.get("status","").endswith("_DRIFT_BLOCKED"):
-                    account_history.append(event)
+            # Hydrate from disk, never from volatile assessed data, so a later
+            # failed vendor request cannot erase a previously locked holding.
+            account_history=load_account_ledger(group,root)
             records["prior_freezes"].append({"path":str(p),"signal_sha256":f["signal_sha256"],
                                              "archive_commit_at":archive_time.isoformat(),
                                              "paper_ledger":locks,"result":assessment})
