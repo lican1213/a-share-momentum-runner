@@ -1,11 +1,13 @@
 ---
 id: EXP-0006
 type: experiment
-status: protocol-frozen-implementation-pending
+status: active-paper-frozen-g1-pending-entry
 created: 2026-10-29
-updated: 2026-10-29
+updated: 2026-10-30
 ---
 # EXP-0006: 国家队短线A/B并行纸面测试（积极B组）
+
+**2026-10-30更新：** 目前实施和真实G1已完成，不再是`implementation-pending`。B组18:54真实run [41044087791](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41044087791)基于源码`40640bb97e4b`完成10/10行情可验证，首次冻结股票601825、600309、600000，记录见[原始不可回写JSON](../../records/national_team_short_ab/freezes/B/2026-10-30.json)。随后P0执行引擎进行了[四缺陷修复](../current-status.md)，该修复不改写旧冻原件；11月2日G2模拟可成交性及G3出场收益尚待验证。下文初始试验协议和当时标注保留作为历史冻结版本。
 
 **冻结于2026-10-29晚间；这是前瞻协议，不是已经执行的买卖或回测结果。**
 
