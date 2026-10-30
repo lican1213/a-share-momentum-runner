@@ -651,8 +651,9 @@ def account_snapshot_before(entries,trade,group):
             continue
         if event.get("status","").endswith("_DRIFT_BLOCKED"):
             raise ValueError("ACCOUNT_LEDGER_DRIFT")
-        if event["entry_session"]>=trade:
-            # No event may use future sale proceeds as next-session buying power.
+        if event["entry_session"]>trade:
+            # Ignore genuinely future entries. Entries on the SAME session
+            # still reserve funds and position slots for later event replays.
             continue
         if (event.get("status")=="PAPER_EXIT_SCENARIO_NO_BROKER_FILL" and
                 event.get("exit_day") and event["exit_day"]<trade):
@@ -938,8 +939,8 @@ def run(ak,now,group,root=RECORD_ROOT):
             locks=lock_paper_replay(group,f,assessment,root,archive_time)
             if locks["drifts"]:
                 records["errors"].append("IMMUTABLE_PAPER_LEDGER_DRIFT:"+",".join(locks["drifts"]))
-                # An untrusted replay cannot free cash or authorize later entries.
-                break
+                records["freeze_status"]="ACCOUNT_LEDGER_DRIFT_BLOCKED"
+                return records
             for event in assessment.get("entries",[]):
                 if "entry_price" in event and not event.get("status","").endswith("_DRIFT_BLOCKED"):
                     account_history.append(event)
@@ -948,6 +949,8 @@ def run(ak,now,group,root=RECORD_ROOT):
                                              "paper_ledger":locks,"result":assessment})
         except Exception as exc:
             records["errors"].append(f"ASSESS:{p.name}:{type(exc).__name__}:{str(exc)[:150]}")
+            records["freeze_status"]="PRIOR_ACCOUNT_REPLAY_UNVERIFIED"
+            return records
     from datetime import timedelta
     snapshot_after_today=(date.fromisoformat(today)+timedelta(days=1)).isoformat()
     records["portfolio_latest_verified"]=account_snapshot_before(
@@ -1003,6 +1006,11 @@ def run(ak,now,group,root=RECORD_ROOT):
                     records["duplicate_funding_day"]=funding_day
                     records["selected_codes"]=[]
                 else:
+                    # A verified empty decision is different from a data failure.
+                    if not freeze["selected"]:
+                        freeze["status"]="VALIDATED_CASH_NO_SIGNAL"
+                        freeze["signal_sha256"]=sha({k:v for k,v in freeze.items()
+                                                      if k!="signal_sha256"})
                     path.parent.mkdir(parents=True,exist_ok=True)
                     with path.open("x",encoding="utf-8") as w:
                         w.write(json.dumps(freeze,ensure_ascii=False,indent=2)+"\n")
