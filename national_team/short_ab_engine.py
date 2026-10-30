@@ -165,7 +165,10 @@ def _completed_etf_daily_from_sina_minutes(ak,day):
         if rows and stamp<=rows[-1]["minute"]:
             raise ValueError("ETF_MINUTE_DUPLICATED_OR_UNSORTED")
         rows.append({"minute":stamp,**v})
-    _require_exact_session_minutes(rows,day,"09:30","15:00","SINA_ETF_DAILY_RECONSTRUCTION")
+    try:
+        _require_exact_session_minutes(rows,day,"09:30","15:00","SINA_ETF_DAILY_RECONSTRUCTION")
+    except ValueError as exc:
+        raise ValueError("ETF_1M_SESSION_NOT_COMPLETE:"+str(exc)) from exc
     daily={"date":day,"open":rows[0]["open"],
            "high":max(v["high"] for v in rows),
            "low":min(v["low"] for v in rows),
