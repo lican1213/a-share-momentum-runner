@@ -1,5 +1,12 @@
 # MOC — 国家队资金跟踪与跟随收益研究第二大脑
 
+## 2026-10-30 开源对照与真实CI红队闭环（A/B短线）
+
+- **[专项对抗审计与开源对照](wiki/audits/AUD-2026-10-30-short-ab-open-source-e2e.md)**：参考 [VeighNa PaperAccount](https://github.com/vnpy/vnpy_paperaccount)、[Zipline](https://github.com/quantopian/zipline/blob/master/zipline/finance/slippage.py) 与 [Backtesting.py](https://github.com/kernc/backtesting.py)，吸收委托/模拟成交/持仓分离、时间事件驱动防未来、滑点费用与止盈止损保守顺序等原则；GitHub Actions 设置 `queue: max` 避免多次推送取消等待中的归档任务。
+- **已用真实GitHub Actions定位并修复P0**：曾有25项PASS、1项FAIL（次日上午00:55冻结被误放行）；修复 `execution_gate` 限定冻结创建日期必须与当日收盘日期相同。测试失败后旧CI仍`git add`不存在记录路径造成无关二次错误，工作流已修复。旧四ETF原报告测试硬编码10月27日，被后续完整10月28日有效记录推翻，改成基于源日期和真实金额的验证，并正确阻止15:15读取16:26未来才冻结的事件。
+- **继续增强业务规则**：B2突破必须等1分钟信号bar结束，下一分钟才能模拟入场；同一个四ETF资金事件日不能跨多天重复创造股票交易；净赎回是正常`NO_POSITIVE_CORE_FOUR_FLOW`现金决策而不是数据错误。新增全链路合成复现实验（原股票池→行情指标→两个独立冻结账本→同日重试→午夜失败）及较严格的可比ETF分钟、日期哈希检验。
+- **验收分层**：G0代码/CI成功可通过实际Actions核验；G1要求2026-10-30或后续实际交易日盘后首次可得真实行情与四ETF正向资金成功写入不可回写冻结文件；G2要求Git归档早于次交易日09:25；G3用可验证T+1/T+3真实分钟行情情景与同分钟510300配对；G4检验30+真实前瞻纸面交易是否有净超额。**G0绿灯不能替代G1–G4**。
+
 ## 2026-10-30 P0 修复：EXP-0005-A2 / EXP-0006-B 双版本前瞻纸面交易
 
 - **旧A原件未改写**：[EXP-0005](wiki/experiments/EXP-0005-national-team-one-week-paper-pilot.md) 2026-10-29盘后未产生可验证冻结文件，2026-10-30 09:30**不得回填**，历史Workflow只保留手动审计，[P0问题 #4](https://github.com/lican1213/a-share-momentum-runner/issues/4)记录原因和缺口。
