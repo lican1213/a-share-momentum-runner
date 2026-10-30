@@ -345,3 +345,70 @@ def test_negative_funding_is_valid_cash_decision_not_ci_failure(monkeypatch,tmp_
     assert result["freeze_status"]=="NO_POSITIVE_CORE_FOUR_FLOW"
     assert result["errors"]==[]
     assert not result["freeze_created"]
+
+def test_unknown_higher_rank_never_promotes_lower():
+    checked=[{"cohort":g,"code":c,"eligible":True,"data_status":"VERIFIED"}
+             for g,c in x.RANK_ORDER]
+    checked[0]["data_status"]="UNVERIFIED"
+    checked[0]["eligible"]=False
+    assert [v["code"] for v in x.selects(checked,"A2")]==["600309"]
+    assert [v["code"] for v in x.selects(checked,"B")]==["600309"]
+
+def test_gate_reasons_strict_vs_aggressive():
+    stk=[];bench=[]
+    for i in range(300):
+        d=(date(2025,1,1)+timedelta(days=i)).isoformat()
+        c=10+i*.01
+        stk.append({"date":d,"open":c,"high":c+.05,"low":c-.05,
+                    "close":c,"volume":100,"turnover":60000000})
+        bench.append({"date":d,"close":4.})
+    a=x.indicator({"bars":stk},{"bars":bench},stk[-1]["date"],"A2")
+    b=x.indicator({"bars":stk},{"bars":bench},stk[-1]["date"],"B")
+    assert "VOLUME_1P2X" in a["rejection_reasons"]
+    assert b["eligible"] and not b["rejection_reasons"]
+
+def test_partial_vendor_outage_keeps_verified_arm_and_audit(monkeypatch):
+    monkeypatch.setattr(x,"next_session",lambda d:"2026-11-02")
+    class Names:
+        def iterrows(self):
+            return iter((i,{"code":c,"name":"SAFE"}) for i,(_,c) in enumerate(x.RANK_ORDER))
+    class AK:
+        def stock_info_a_code_name(self):return Names()
+    def price(ak,code,day):
+        if code=="600000":raise ConnectionError("vendor timeout")
+        return {"bars":[{"date":day,"close":10}],"raw_sha256":"test","kind":"TEST"}
+    def ind(stock,bench,day,group):
+        return {"eligible":True,"close":10.,"atr14":.2,"breakout":9.,
+                "rejection_reasons":[],"gate_checks":{}}
+    monkeypatch.setattr(x,"prices",price)
+    monkeypatch.setattr(x,"indicator",ind)
+    f=x.build_freeze(AK(),now("2026-10-30T18:15:00"),"B","2026-10-30",
+                     flow={"day":"2026-10-29","net_cny":"500"},v2={"path":"V2"})
+    assert len(f["checked"])==10 and f["candidate_diagnostics"]["unverified"]==1
+    assert [v["code"] for v in f["selected"]]==["601825","600309"]
+
+def test_entry_exit_create_only_replay_drift(tmp_path):
+    frozen={"signal_sha256":"freeze"}
+    row={"signal_id":"freeze-0-600000","code":"600000","cohort":"S1","group":"B",
+         "entry_session":"2026-11-02","entry_price":10.01,
+         "entry_time":"2026-11-02 09:30","method":"B1_0930_OPEN",
+         "qty":100,"notional":1001.,"stop":9.7,"target":10.63,
+         "budget_risk":45.,"entry_fee":5.,"benchmark_entry_price":4.0,
+         "benchmark_quantity":200,"entry_daily_bar_sha256":"stock",
+         "benchmark_entry_daily_bar_sha256":"etf",
+         "status":"PAPER_EXIT_SCENARIO_NO_BROKER_FILL",
+         "exit_day":"2026-11-03","exit_time":"2026-11-03 10:01",
+         "exit_reason":"TARGET","exit_price":10.6,
+         "net_pnl":50.,"benchmark_minute_sha256":"bm",
+         "exit_minute_sha256":"minute","benchmark_exit_price":4.05,
+         "benchmark_net_pnl":1.,"paired_excess_pnl":49.}
+    when=now("2026-10-30T18:16:00")
+    a=x.lock_paper_replay("B",frozen,{"entries":[dict(row)]},tmp_path,when)
+    assert len(a["locked_entries"])==len(a["locked_exits"])==1
+    assert not x.lock_paper_replay("B",frozen,{"entries":[dict(row)]},tmp_path,when)["drifts"]
+    wrong=dict(row,stop=9.9)
+    assert x.lock_paper_replay("B",frozen,{"entries":[wrong]},tmp_path,when)["drifts"]
+    assert wrong["status"]=="ENTRY_LEDGER_DRIFT_BLOCKED" and "net_pnl" not in wrong
+    wrong=dict(row,net_pnl=999.)
+    assert x.lock_paper_replay("B",frozen,{"entries":[wrong]},tmp_path,when)["drifts"]
+    assert wrong["status"]=="EXIT_LEDGER_DRIFT_BLOCKED" and "net_pnl" not in wrong

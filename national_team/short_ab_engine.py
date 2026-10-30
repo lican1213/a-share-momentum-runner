@@ -138,15 +138,16 @@ def indicator(stock, benchmark, day, group):
         true_range.append(max(cur["high"]-cur["low"],abs(cur["high"]-prev),abs(cur["low"]-prev)))
     atr=sum(true_range)/14
     if atr<=0:raise ValueError("ATR invalid")
-    common=c>ma20 and relative>0 and turnover>=GROUPS[group]["min_adv"]
+    gates={"ABOVE_MA20":c>ma20,"POSITIVE_RS20":relative>0,
+           "ADV20_THRESHOLD":turnover>=GROUPS[group]["min_adv"]}
     if group=="A2":
-        eligible=common and c>ma60 and c>=up(past10+.01) and volume_prev20>0 and arr[i]["volume"]>=1.2*volume_prev20
-    else:
-        eligible=common
-    return {"asof":day,"eligible":eligible,"close":c,"ma20":ma20,"ma60":ma60,
+        gates.update({"ABOVE_MA60":c>ma60,"TEN_DAY_BREAKOUT":c>=up(past10+.01),
+                      "VOLUME_1P2X":volume_prev20>0 and arr[i]["volume"]>=1.2*volume_prev20})
+    return {"asof":day,"eligible":all(gates.values()),"close":c,"ma20":ma20,"ma60":ma60,
             "breakout":up(past10+.01),"rel20":relative,"adv20":turnover,
             "relvol":arr[i]["volume"]/volume_prev20 if volume_prev20 else None,
-            "atr14":atr}
+            "atr14":atr,"gate_checks":gates,
+            "rejection_reasons":[k for k,v in gates.items() if not v]}
 
 
 def source_flow(now):
@@ -203,31 +204,25 @@ def strategy_snapshot(now):
 
 
 def selects(checked,group):
-    eligible={x["code"]:x for x in checked if x.get("eligible") is True}
-    c=GROUPS[group]
-    if group=="A2":
-        desired=[]
-        for g in ("S1","S2"):
-            item=next((eligible[x] for x in RANKS[g] if x in eligible),None)
-            if item:desired.append(item)
-    else:
-        # Reserve S1/S2 diversification first; choose third by original frozen interleaving order.
-        desired=[]
-        for g in ("S1","S2"):
-            x=next((eligible[code] for code in RANKS[g] if code in eligible),None)
-            if x:desired.append(x)
-        if len(desired)==2:
-            used={x["code"] for x in desired}
-            third=next((eligible[code] for g,code in RANK_ORDER if code in eligible and code not in used),None)
-            if third:desired.append(third)
-        elif len(desired)<2:
-            used={x["code"] for x in desired}
-            for g,code in RANK_ORDER:
-                if code in eligible and code not in used:
-                    desired.append(eligible[code]);used.add(code)
-                if len(desired)==c["max_positions"]:break
-    return desired[:c["max_positions"]]
-
+    """Original V2 ranked precedence cannot be silently bypassed on vendor errors."""
+    lookup={v["code"]:v for v in checked}
+    def first_eligible(arm):
+        for code in RANKS[arm]:
+            item=lookup.get(code)
+            if item is None or item.get("data_status")=="UNVERIFIED":
+                return None
+            if item.get("eligible") is True:return item
+        return None
+    selected=[v for g in ("S1","S2") if (v:=first_eligible(g)) is not None]
+    if group=="B":
+        already={x["code"] for x in selected}
+        for arm,code in RANK_ORDER:
+            if code in already:continue
+            item=lookup.get(code)
+            if item is None or item.get("data_status")=="UNVERIFIED":break
+            if item.get("eligible") is True:
+                selected.append(item);break
+    return selected[:GROUPS[group]["max_positions"]]
 
 def build_freeze(ak, now, group, market_session, flow=None, v2=None):
     if close_day(now,[market_session])!=market_session:
@@ -236,24 +231,39 @@ def build_freeze(ak, now, group, market_session, flow=None, v2=None):
     v2=v2 if v2 is not None else strategy_snapshot(now)
     benchmark=prices(ak,"510300",market_session)
     if bar(benchmark,market_session) is None:raise ValueError("benchmark close not available")
-    names_df=ak.stock_info_a_code_name()
-    names={str(r["code"]).zfill(6):str(r["name"]) for _,r in names_df.iterrows()}
+    try:
+        names_df=ak.stock_info_a_code_name()
+        names={str(r["code"]).zfill(6):str(r["name"]) for _,r in names_df.iterrows()}
+        name_error=None
+    except Exception as error:
+        names={};name_error=f"{type(error).__name__}:{str(error)[:160]}"
     checked=[]
     for cohort,code in RANK_ORDER:
-        if code not in names:raise ValueError(f"{code}: name missing; cannot skip")
-        name=names[code];entry={"cohort":cohort,"code":code,"name":name}
-        if "ST" in name.upper() or "退" in name:
-            entry["eligible"]=False;entry["reason"]="SPECIAL_TREATMENT_OR_DELISTING"
+        name=names.get(code)
+        item={"cohort":cohort,"code":code,"name":name,"eligible":False}
+        if name is None:
+            item.update({"data_status":"UNVERIFIED","reason":"SECURITY_NAME_UNVERIFIED",
+                         "source_error":name_error or "MISSING_SECURITY_NAME"})
+        elif "ST" in name.upper() or "退" in name:
+            item.update({"data_status":"VERIFIED",
+                         "reason":"SPECIAL_TREATMENT_OR_DELISTING",
+                         "rejection_reasons":["SPECIAL_TREATMENT_OR_DELISTING"]})
         else:
-            hist=prices(ak,code,market_session)
-            ind=indicator(hist,benchmark,market_session,group)
-            entry.update(ind)
-            entry["price_sha256"]=hist["raw_sha256"]
-            entry["price_provider"]=hist["kind"]
-            if ind["eligible"] and 100*ind["close"]*1.03>GROUPS[group]["max_each"]:
-                entry["eligible"]=False
-                entry["reason"]="ONE_LOT_EXCEEDS_PER_STOCK_BUDGET"
-        checked.append(entry)
+            try:
+                hist=prices(ak,code,market_session)
+                ind=indicator(hist,benchmark,market_session,group)
+                item.update(ind)
+                item.update({"data_status":"VERIFIED","price_sha256":hist["raw_sha256"],
+                             "price_provider":hist["kind"]})
+                if ind["eligible"] and 100*ind["close"]*1.03>GROUPS[group]["max_each"]:
+                    item["eligible"]=False
+                    item["reason"]="ONE_LOT_EXCEEDS_PER_STOCK_BUDGET"
+                    item["rejection_reasons"].append(item["reason"])
+            except Exception as error:
+                item.update({"eligible":False,"data_status":"UNVERIFIED",
+                             "reason":"STOCK_HISTORY_OR_INDICATOR_UNVERIFIED",
+                             "source_error":f"{type(error).__name__}:{str(error)[:180]}"})
+        checked.append(item)
     selected=selects(checked,group)
     freeze={"status":"FROZEN_NO_BROKER_ORDER","experiment":GROUPS[group]["experiment"],
             "version":GROUPS[group]["version"],"group":group,"asof_session":market_session,
@@ -263,7 +273,14 @@ def build_freeze(ak, now, group, market_session, flow=None, v2=None):
             "source_run_id":os.getenv("GITHUB_RUN_ID","local"),
             "frozen_v2":v2,"four_etf_flow":flow,
             "benchmark_sha256":benchmark["raw_sha256"],
-            "checked":checked,"selected":selected,"paper_account":ACCOUNT,
+            "checked":checked,"selected":selected,
+             "candidate_diagnostics":{"total":len(checked),
+                 "verified":sum(v.get("data_status")=="VERIFIED" for v in checked),
+                 "unverified":sum(v.get("data_status")=="UNVERIFIED" for v in checked),
+                 "eligible":sum(v.get("eligible") is True for v in checked),
+                 "selected":len(selected),
+                 "blocked_unverified":[v["code"] for v in checked if v.get("data_status")=="UNVERIFIED"]},
+             "paper_account":ACCOUNT,
             "max_gross":GROUPS[group]["max_gross"],"max_each":GROUPS[group]["max_each"],
             "max_initial_risk":RISK,"real_orders":0,"expected_entry_model":"PAPER_SCENARIO"}
     freeze["signal_sha256"]=sha(freeze)
@@ -484,6 +501,8 @@ def assess(ak,group,frozen,now):
             record.update(position)
             record.update({"method":entry_method,"entry_time":trigger,
                            "entry_stock_data_sha256":history["raw_sha256"],
+                           "entry_daily_bar_sha256":sha(opening),
+                           "benchmark_entry_daily_bar_sha256":sha(etf_entry),
                            "status":"PAPER_ENTRY_SCENARIO_NO_BROKER_FILL"})
             if len(series)<2:
                 record["status"]="EXIT_NOT_MATURED"
@@ -549,6 +568,62 @@ def assess(ak,group,frozen,now):
             "entries":entries,"benchmark":"510300","real_broker_orders":0}
 
 
+PAPER_ENTRY_FIELDS=("signal_id","code","cohort","group","entry_session","entry_price",
+                    "entry_time","method","qty","notional","stop","target",
+                    "budget_risk","entry_fee","benchmark_entry_price",
+                    "benchmark_quantity","entry_daily_bar_sha256",
+                    "benchmark_entry_daily_bar_sha256","b2_evidence")
+
+def write_paper_event_once(path,obj):
+    """No overwrite: first simulated evidence survives subsequent replays."""
+    path.parent.mkdir(parents=True,exist_ok=True)
+    if path.exists():
+        return json.loads(path.read_text(encoding="utf-8"))==obj
+    with path.open("x",encoding="utf-8") as out:
+        out.write(json.dumps(obj,ensure_ascii=False,sort_keys=True,indent=2)+"\n")
+    return True
+
+def lock_paper_replay(group,frozen,result,root,archive_time):
+    audit={"locked_entries":[],"locked_exits":[],"drifts":[]}
+    for entry in result.get("entries",[]):
+        if "entry_price" not in entry:continue
+        signal_id=entry["signal_id"]
+        original={"frozen_signal_sha256":frozen["signal_sha256"],
+                  "freeze_git_archive_at":archive_time.isoformat(),
+                  "original_entry":{k:entry.get(k) for k in PAPER_ENTRY_FIELDS},
+                  "broker_fill_confirmed":False}
+        entry_path=root/"ledger"/"entries"/group/f"{signal_id}.json"
+        if not write_paper_event_once(entry_path,original):
+            entry["status"]="ENTRY_LEDGER_DRIFT_BLOCKED"
+            entry["reason"]="entry terms disagree with first immutable paper event"
+            for key in ("net_pnl","benchmark_net_pnl","paired_excess_pnl",
+                        "r_multiple","paired_excess_pct_of_account"):
+                entry.pop(key,None)
+            audit["drifts"].append(str(entry_path))
+            continue
+        audit["locked_entries"].append(str(entry_path))
+        if entry["status"]!="PAPER_EXIT_SCENARIO_NO_BROKER_FILL":continue
+        exit_obj={"frozen_signal_sha256":frozen["signal_sha256"],"signal_id":signal_id,
+                  "entry_lock_sha256":sha(original),
+                  "exit_day":entry["exit_day"],"exit_time":entry["exit_time"],
+                  "exit_reason":entry["exit_reason"],"exit_price":entry["exit_price"],
+                  "net_pnl":entry["net_pnl"],"exit_minute_sha256":entry["exit_minute_sha256"],
+                  "benchmark_minute_sha256":entry["benchmark_minute_sha256"],
+                  "benchmark_exit_price":entry["benchmark_exit_price"],
+                  "benchmark_net_pnl":entry["benchmark_net_pnl"],
+                  "paired_excess_pnl":entry["paired_excess_pnl"],
+                  "broker_fill_confirmed":False}
+        exit_path=root/"ledger"/"exits"/group/f"{signal_id}.json"
+        if not write_paper_event_once(exit_path,exit_obj):
+            entry["status"]="EXIT_LEDGER_DRIFT_BLOCKED"
+            entry["reason"]="exit differs from first immutable paper event"
+            for key in ("net_pnl","benchmark_net_pnl","paired_excess_pnl",
+                        "r_multiple","paired_excess_pct_of_account"):
+                entry.pop(key,None)
+            audit["drifts"].append(str(exit_path))
+        else:audit["locked_exits"].append(str(exit_path))
+    return audit
+
 def run(ak,now,group,root=RECORD_ROOT):
     now=now.astimezone(BJ);today=now.date().isoformat()
     records={"captured_at":now.isoformat(),"group":group,"experiment":GROUPS[group]["experiment"],
@@ -562,18 +637,13 @@ def run(ak,now,group,root=RECORD_ROOT):
         archive_time=freeze_archive_commit_at(p)
         cutoff=datetime.combine(date.fromisoformat(f["next_open_session"]),time(9,25),BJ)
         if archive_time is None or archive_time>=cutoff:
-            records["prior_freezes"].append({"path":str(p),"signal_sha256":f["signal_sha256"],
-                "result":{"status":"ARCHIVED_FREEZE_COMMIT_BEFORE_OPEN_NOT_VERIFIED",
-                          "archive_commit_time":archive_time.isoformat() if archive_time else None}})
-            continue
-        # Only recently frozen events can still be T+3 open; older ones stay immutable in archives.
-        from datetime import timedelta
-        if date.fromisoformat(f["next_open_session"])<now.date()-timedelta(days=9):
-            continue
-        try:
+            assessment=assess(ak,group,f,now)
+            locks=lock_paper_replay(group,f,assessment,root,archive_time)
+            if locks["drifts"]:
+                records["errors"].append("IMMUTABLE_PAPER_LEDGER_DRIFT:"+",".join(locks["drifts"]))
             records["prior_freezes"].append({"path":str(p),"signal_sha256":f["signal_sha256"],
                                              "archive_commit_at":archive_time.isoformat(),
-                                             "result":assess(ak,group,f,now)})
+                                             "paper_ledger":locks,"result":assessment})
         except Exception as e:
             records["errors"].append(f"ASSESS:{p.name}:{type(e).__name__}:{str(e)[:150]}")
     day=close_day(now)
@@ -610,6 +680,13 @@ def run(ak,now,group,root=RECORD_ROOT):
                     records["freeze_signal_sha256"]=freeze["signal_sha256"]
                     records["freeze_path"]=str(path)
                     records["selected_codes"]=[x["code"] for x in freeze["selected"]]
+                    records["candidate_diagnostics"]=freeze["candidate_diagnostics"]
+                    records["candidate_rejections"]=[
+                        {"cohort":v["cohort"],"code":v["code"],
+                         "status":v.get("data_status"),"reason":v.get("reason"),
+                         "failed_gates":v.get("rejection_reasons",[]),
+                         "source_error":v.get("source_error")}
+                        for v in freeze["checked"] if not v.get("eligible")]
             except ValueError as e:
                 if str(e).startswith("FOUR_ETF_FLOW_NOT_POSITIVE:"):
                     records["freeze_status"]="NO_POSITIVE_CORE_FOUR_FLOW"
