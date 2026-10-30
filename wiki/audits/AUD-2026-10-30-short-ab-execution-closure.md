@@ -62,3 +62,7 @@ Actual GitHub source probe [41029341126](https://github.com/lican1213/a-share-mo
 4. 组内连续资金事件的`cash_available`、`gross_active`、`active_codes`、最多仓位数量从`ledger/entries`和`ledger/exits`真实回读并重建；单次行情服务器失败不释放旧仓，重复股票不能占第二份资金，只有有独立退出证据才在后续交易日释放资金；费用/滑点计入预算。异常或账本漂移直接阻止后续模拟交易。
 
 **G2/G3/G4继续保持OPEN**：11月2日需进一步核验19:00之前归档确实早于11月2日09:25、实际开盘价格、100股整手和可成交性；T+1/T+2整日分钟及T+3 14:50真实分钟退出成熟后再计算与510300配对利润；尚无真实券商订单或纸面成交证明。源差异、真实PCF及最新汇金法人持仓依旧未解决。
+
+## 全仓库依赖级端到端软件Gate（2026-10-30晚间）
+
+[真实Run 41045697242](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41045697242) SUCCESS，SHA`9b0a78ebf807b508b572446fa26b8f6eaa00134e`（只新增CI门槛，核心交易引擎仍是`543f6dacaac5`），安装`requirements.txt`及Wiki依赖后实际`python -m pytest -q` **206 passed in 3.87s**，`WIKI_LINT_OK pages=34 ids_unique=true all_internal_links_present=true`，语法检查全部成功。此结果独立于原182项子集审计，补齐修复任务书“全套pytest”和Wiki门槛。G0=PASS，G1 10月30日已完成；G2/G3/G4仍待2026-11-02及后续真实观察。
