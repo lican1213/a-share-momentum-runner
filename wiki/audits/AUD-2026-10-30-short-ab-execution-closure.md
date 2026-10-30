@@ -20,3 +20,7 @@ Tests prove software behavior; G1 actual close freeze, G2 pre-open archived even
 - Removed the synthetic +3% *pre-open* affordability rejection: valid low-gap 100-share orders are evaluated at next-session execution price, not eliminated using hypothetical highest permissible gap. Still rejects provably unaffordable lots and enforces the original entry-time max-position/max-risk limits.
 - Prior **and** current ETF observations require timezone-aware per-field point-in-time stamps no later than the freeze; a future-stamped prior share/NAV is not allowed in the four-ETF daily difference.
 - Both behaviors have counterexample-based automated tests.
+
+## Independent 16:40 Beijing real-source readiness probe
+
+A separate read-only workflow `national-team-short-probe.yml` probes the completed actual market session, all ten frozen V2 securities, the four-ETF archived event, and 510300/601825/600309 minute vendor reachability. The probe cannot call build_freeze, write a freeze path, generate a paper order, or increment paper positions. It saves `records/national_team_short_ab/probes/` with real run ID, SHA, provider errors and source hashes. This is a data-readiness check only, not G1/G2/G3 evidence.

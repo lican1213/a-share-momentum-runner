@@ -1,3 +1,7 @@
+## 2026-10-30 盘后冻结前16:40行情可达性预检（不产生交易）
+
+- [只读探针](national_team/short_probe.py) · [16:40独立Actions](.github/workflows/national-team-short-probe.yml) · [源故障与测试](tests/test_national_team_short_probe.py)。盘后预读当天真实10只股票/510300日线、归档四ETF及少量真实分钟行情，写入 `records/national_team_short_ab/probes/`，无冻结、无模拟入场、无券商订单；不允许把预检指标冒充正式A2/B首次冻结。
+
 ## 2026-10-30 执行闭环P0修复（待实盘行情/远端Actions逐级验收）
 
 - [闭环审计](wiki/audits/AUD-2026-10-30-short-ab-execution-closure.md)：逐只保留10个原V2候选的过滤值、拒绝原因、数据源错误；高排名行情未知不伪装成筛选淘汰。A2/B原买卖参数不变。
