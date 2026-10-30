@@ -1,10 +1,15 @@
 name: Short-paper P0 full-repository acceptance gate
 on:
+  pull_request:
+    branches: [main]
   push:
     branches: [main]
     paths:
       - 'national_team/short_ab_engine.py'
+      - 'national_team/forward_evaluation.py'
+      - 'national_team/live_paper_tracker.py'
       - 'tests/test_national_team_short_ab_engine.py'
+      - 'tests/test_audit2_independent_redteam.py'
       - '.github/workflows/national-team-p0-full-gate.yml'
   workflow_dispatch:
 permissions:

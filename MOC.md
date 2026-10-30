@@ -1,3 +1,9 @@
+## 2026-10-30 第二轮独立红队审计（优先级覆盖之前“全库206 PASS”的结论）
+
+- [**第二轮5缺陷与真实修复范围**](wiki/audits/AUD-2026-10-30-round2-independent-redteam.md) · [修复PR #5](https://github.com/lican1213/a-share-momentum-runner/pull/5) · [当前状态](wiki/current-status.md) · [独立反例](tests/test_audit2_independent_redteam.py)。原`88dfa97dac20`五个新反例失败，不能用既有206个旧通过宣布执行层完成。
+- R1：历史入场未知须留下不可回写`ENTRY_DATA_UNKNOWN`决策并阻断后续资金，显式`ENTRY_EXPIRED`独立证据方可停止阻断；R2：完整/部分冻结共用funding_day事件唯一性；R3：已冻结的是整个S1/S2分支，恢复不补第二只同分支；R4：14:50固定退出必须区分分钟BAR_START/BAR_END且ETF同步；R5：V2缺股票数据不得作为现金算跑赢510300。
+- 不调MA/ATR/仓位参数，不覆盖10月30日两份原始G1冻结，不编造11月2日尚未发生的模拟成交。**第二轮G0仅由本轮新SHA的全库Actions与新测试验证，原206次历史测试是基线，不是第二轮结论。** G2/G3/G4继续待真实数据。
+
 ## 2026-10-30 全仓库最终G0：206项PASS、Wiki 34页PASS
 
 - [全库Gate实际run 41045697242](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41045697242) 基于`9b0a78ebf807`（仅新增[全量Gate工作流](.github/workflows/national-team-p0-full-gate.yml)，原引擎代码仍为`543f6dacaac5`）：真实安装项目依赖后执行`python -m pytest -q` **206 passed**，`python scripts/wiki_lint.py` **34页、ID唯一、内部链接全部有效**。G0测试完整覆盖本轮修复；此前182项指标专项和60项短线专项也已独立通过。

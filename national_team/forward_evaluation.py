@@ -58,19 +58,35 @@ def evaluate_frozen_event(event,trade_sessions,prices,*,benchmark="510300",
     if not bench or bench.get("entry_blocked") is not False:
         return {"event_id":event_id,"status":"BENCHMARK_ENTRY_UNVERIFIED","results":{}}
     b0=_num(bench.get("open"),"benchmark open",positive=True)
-    frozen=[]
+    frozen=[];unknown_entry=[]
     for stock in names:
         row=prices.get(stock,{}).get(entry)
-        if row is None or row.get("entry_blocked") is not False:
+        if row is None or row.get("entry_blocked") is None:
+            unknown_entry.append(stock)
             frozen.append((stock,None))
-        else:
+        elif row.get("entry_blocked") is True:
+            # Only a timestamped, explicit no-fill decision is eligible cash.
+            # A missing price or missing decision is never evidence of zero return.
+            frozen.append((stock,None))
+        elif row.get("entry_blocked") is False:
             frozen.append((stock,_num(row.get("open"),f"{stock} open",positive=True)))
+        else:
+            unknown_entry.append(stock)
+            frozen.append((stock,None))
     out={}
     for h in HORIZONS:
         if ix+h>=len(trade_sessions):
             out[str(h)]={"status":"NOT_MATURED"}
             continue
         end=trade_sessions[ix+h]
+        if unknown_entry:
+            out[str(h)]={"status":"STOCK_ENTRY_DATA_UNKNOWN",
+                         "exit_session":end,"unknown_entry_symbols":unknown_entry,
+                         "verified_entry_count":len(names)-len(unknown_entry),
+                         "total_frozen_candidates":len(names),
+                         "filled_stock_count":sum(p is not None for _,p in frozen),
+                         "paired_excess_net_return":None}
+            continue
         b1=prices.get(benchmark,{}).get(end)
         if not b1 or b1.get("exit_blocked") is not False:
             out[str(h)]={"status":"BENCHMARK_EXIT_UNVERIFIED","exit_session":end}

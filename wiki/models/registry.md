@@ -6,6 +6,8 @@ updated: 2026-10-30
 ---
 # 模型及执行器版本登记（唯一有效升级台账）
 
+**2026-10-30第二轮执行版本：** [AUD-R2](../audits/AUD-2026-10-30-round2-independent-redteam.md)与[PR #5](https://github.com/lican1213/a-share-momentum-runner/pull/5)修改短线`short_ab_engine.py`的真实前瞻判定、事件/臂唯一性、分钟时钟，及独立V2`forward_evaluation.py`的未知收益口径；**不改变候选规则/成交成本/ATR参数**。旧10月30日正式冻结的来源SHA仍为`40640bb97e4b`，修复后引擎必须用新的源码SHA与它配对，不能把历史冻结更新为新版本。新回归的实际run ID和结论以[审计页](../audits/AUD-2026-10-30-round2-independent-redteam.md)后续记录为准。
+
 **现行执行层（2026-10-30）：** [EXP-0005-A2](../experiments/EXP-0005-A2-prospective-freeze-recovery.md)与[EXP-0006-B](../experiments/EXP-0006-national-team-aggressive-paper-ab.md)已在真实Actions`41044087760 / 41044087791`取得首次盘后完整冻结，冻结引擎SHA`40640bb97e4b`且不可回写。后续修复版引擎参见[当前状态页](../current-status.md)与[short_ab_engine.py](../../national_team/short_ab_engine.py)；将“数据异常尝试/合法空仓/有效臂或完整冻结”区分，并增加严格分钟、T+1/2收盘检查、跨事件现金/持仓持久化。冻结SHA与后来复算的执行引擎SHA不得混为一个版本；新CI必须匹配最新代码。G2/G3/G4尚未通过，不能说策略获利。
 
 **版本必须定义为 Git commit SHA + 实验ID + 运行记录ID。** Git提交时间线由 [commits.md](../indices/commits.md) 生成；本页归纳语义版本，不以“v2表现更好”替代实跑证据。

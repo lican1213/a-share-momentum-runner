@@ -1,5 +1,7 @@
 # Agent entrypoint — national-team ETF funding and stock selection
 
+**NEW controlling round-two audit (2026-10-30):** [AUD-R2](wiki/audits/AUD-2026-10-30-round2-independent-redteam.md) and [single status](wiki/current-status.md). Five independent red cases overturned the prior claim of full execution acceptance: undecided entry misallocated later capital, repeat partial funding event, duplicate recovered S1/S2, 14:50 interval timestamp order, V2 missing stock becoming profitable cash. Do not tune picks. Only trust new matched-SHA full pytest plus actual immutable G1, and distinguish future G2/G3/G4.
+
 **CURRENT CANONICAL STATUS (2026-10-30):** [wiki/current-status.md](wiki/current-status.md). Read the root MOC then that status page before any edits. Four immediate P0 execution defects (unknown-data freeze, exact minute completeness, T+1/T+2 late-session exits, cross-event account ledger) are tracked there. A2/B G1 actual Oct30 freeze exists; G2/G3/G4 are not proof of trades or profits. 2026-10-28 audits below are historical, not controlling the 2026-10-30 short execution gate. No trading authorization. 
 
 **Read before any modification:** [MOC.md](MOC.md) → [KNOWLEDGE.md](KNOWLEDGE.md) → [wiki/compiled/briefing.md](wiki/compiled/briefing.md) → [wiki/index.md](wiki/index.md).

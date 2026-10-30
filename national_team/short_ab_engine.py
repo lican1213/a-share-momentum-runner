@@ -495,7 +495,11 @@ def _normalize_minutes(frame,code,day,first,last,provider):
         if rows and stamp<=rows[-1]["minute"]:raise ValueError("MINUTE_ORDER_OR_DUPLICATE")
         rows.append(item)
     _require_exact_session_minutes(rows,day,first,last,provider)
-    return {"bars":rows,"sha256":sha(rows),"provider":provider,"code":code}
+    convention=("BAR_START" if rows[0]["minute"]==f"{day} 09:30" else "BAR_END")
+    return {"bars":rows,"sha256":sha(rows),"provider":provider,"code":code,
+            "minute_convention":convention,
+            "timestamp_semantics":"start-of-interval" if convention=="BAR_START"
+                                   else "end-of-interval"}
 
 
 def minute_rows(ak,code,day,first="09:30",last="14:50"):
@@ -677,7 +681,7 @@ def account_snapshot_before(entries,trade,group):
             "realized_net_pnl":realized,"initial_capital":ACCOUNT}
 
 
-def assess(ak,group,frozen,now,portfolio=None):
+def assess(ak,group,frozen,now,portfolio=None,decisions=None):
     """Replay after close, with a prior archived freeze. No retrospective signal creation."""
     cfg=GROUPS[group];today=now.astimezone(BJ).date().isoformat()
     failed=execution_gate(frozen,now)
@@ -707,6 +711,15 @@ def assess(ak,group,frozen,now,portfolio=None):
         record={"signal_id":f"{frozen['signal_sha256'][:16]}-{index}-{code}",
                 "code":code,"cohort":item["cohort"],"group":group,
                 "entry_session":trade,"status":"ENTRY_UNVERIFIED"}
+        previous=(decisions or {}).get(record["signal_id"])
+        if previous and previous["decision_status"] in ("NO_FILL_RULE_REJECTED","ENTRY_EXPIRED"):
+            record.update({"status":previous["decision_status"],
+                           "reason":"prior immutable no-fill decision; retrospective fill prohibited"})
+            entries.append(record);continue
+        if previous and previous["decision_status"]=="ENTRY_DATA_UNKNOWN":
+            record.update({"status":"ENTRY_DATA_UNKNOWN",
+                           "reason":"prior unresolved decision; account gate remains closed"})
+            entries.append(record);continue
         if occupied_count>=cfg["max_positions"]:
             record.update({"status":"ACCOUNT_MAX_POSITIONS_REJECTED",
                            "reason":"prior active positions occupy group capacity"})
@@ -800,7 +813,16 @@ def assess(ak,group,frozen,now,portfolio=None):
                     if m["bars"][0]["minute"]>f"{day} 09:35":
                         raise ValueError("MINUTE_OPEN_NOT_OBSERVED")
                     reason=None;closebar=None
+                    convention=m.get("minute_convention","BAR_START")
+                    if convention not in ("BAR_START","BAR_END"):
+                        raise ValueError("UNKNOWN_MINUTE_TIMESTAMP_SEMANTICS")
                     for b in m["bars"]:
+                        # 14:50 start-labelled interval begins AFTER the
+                        # forced liquidation quote: its low/high are future.
+                        if (si==3 and b["minute"]==f"{day} 14:50"
+                            and convention=="BAR_START"):
+                            reason="T_PLUS_3_1450";closebar=b
+                            exit_quote=b["open"];break
                         if b["open"]<=position["stop"]:
                             reason="STOP_GAP";closebar=b;exit_quote=b["open"];break
                         if b["low"]<=position["stop"]:
@@ -811,7 +833,11 @@ def assess(ak,group,frozen,now,portfolio=None):
                             reason="TARGET";closebar=b;exit_quote=position["target"];break
                     if reason is None and si==3:
                         reason="T_PLUS_3_1450"
-                        closebar=m["bars"][-1];exit_quote=closebar["open"]
+                        closebar=m["bars"][-1]
+                        # An end-labelled 14:50 bar covers 14:49-14:50:
+                        # its OPEN is the wrong instant; use its CLOSE.
+                        exit_quote=(closebar["close"] if convention=="BAR_END"
+                                    else closebar["open"])
                     if reason is None:
                         record["status"]="EXIT_PENDING";continue
                     previous_session=series[si-1]
@@ -820,16 +846,27 @@ def assess(ak,group,frozen,now,portfolio=None):
                         raise ValueError("POSSIBLE_LIMIT_DOWN_ONE_MINUTE_EXIT_QUEUE_UNVERIFIED")
                     matching=next((x for x in mbench["bars"] if x["minute"]==closebar["minute"]),None)
                     if matching is None:raise ValueError("BENCHMARK_SAME_MINUTE_UNAVAILABLE")
+                    bm_convention=mbench.get("minute_convention","BAR_START")
+                    if bm_convention not in ("BAR_START","BAR_END"):
+                        raise ValueError("BENCHMARK_MINUTE_SEMANTICS_UNKNOWN")
+                    if reason!="T_PLUS_3_1450" and bm_convention!=convention:
+                        raise ValueError("BENCHMARK_MINUTE_LABEL_MISMATCH")
+                    bm_exit_quote=(matching.get("close") if bm_convention=="BAR_END"
+                                   and reason=="T_PLUS_3_1450" else matching["open"])
+                    if bm_exit_quote is None:
+                        raise ValueError("BENCHMARK_1450_CLOSE_UNVERIFIED")
                     sell=down(exit_quote*(1-SLIP))
                     net=position["qty"]*(sell-position["entry_price"])-position["entry_fee"]-fee(position["qty"]*sell,True)
-                    bm_sell=down(matching["open"]*(1-SLIP))
+                    bm_sell=down(bm_exit_quote*(1-SLIP))
                     bmn=record["benchmark_quantity"]
                     bmnet=bmn*(bm_sell-record["benchmark_entry_price"])-fee(bmn*record["benchmark_entry_price"],etf=True)-fee(bmn*bm_sell,sell=True,etf=True)
                     record.update({"status":"PAPER_EXIT_SCENARIO_NO_BROKER_FILL",
                                    "exit_day":day,"exit_time":closebar["minute"],"exit_reason":reason,
                                    "exit_price":sell,"net_pnl":net,"r_multiple":net/position["budget_risk"],
                                    "exit_minute_sha256":m["sha256"],"benchmark_minute_sha256":mbench["sha256"],
-                                   "benchmark_exit_quote":matching["open"],
+                                   "benchmark_exit_quote":bm_exit_quote,
+                                   "minute_convention":convention,
+                                   "benchmark_minute_convention":bm_convention,
                                    "benchmark_exit_price":bm_sell,"benchmark_net_pnl":bmnet,
                                    "paired_excess_pnl":net-bmnet,
                                    "paired_excess_pct_of_account":(net-bmnet)/ACCOUNT,
@@ -841,8 +878,16 @@ def assess(ak,group,frozen,now,portfolio=None):
                     break
             entries.append(record)
         except Exception as e:
-            record["status"]="NO_VALID_PAPER_ENTRY"
-            record["reason"]=f"{type(e).__name__}:{str(e)[:160]}"
+            reason=str(e)
+            verified_reject={
+                "A2_OPEN_PRICE_GATE_REJECTED","LOT_OR_RISK_OR_PORTFOLIO_BUDGET",
+                "ACCOUNT_CASH_INCLUDING_COMMISSION_EXCEEDED","B2_CHASE_LIMIT",
+                "B2_MINUTE_BREAKOUT_NOT_CONFIRMED","OPEN_MISSING_OR_SUSPENDED",
+                "BENCHMARK_LOT_UNAFFORDABLE"}
+            record["status"]=("NO_FILL_RULE_REJECTED" if
+                              isinstance(e,ValueError) and reason in verified_reject
+                              else "ENTRY_DATA_UNKNOWN")
+            record["reason"]=f"{type(e).__name__}:{reason[:160]}"
             entries.append(record)
     return {"status":"REPLAYED_PAPER_SCENARIOS_NOT_LIVE","account":ACCOUNT,
             "gross_reserved_at_entry":used,"cash_reserved_at_entry":cash,
@@ -865,9 +910,113 @@ def write_paper_event_once(path,obj):
         out.write(json.dumps(obj,ensure_ascii=False,sort_keys=True,indent=2)+"\n")
     return True
 
-def lock_paper_replay(group,frozen,result,root,archive_time):
-    audit={"locked_entries":[],"locked_exits":[],"drifts":[]}
+def _entry_decision_path(root,group,signal_id):
+    return Path(root)/"ledger"/"decisions"/group/f"{signal_id}.json"
+
+
+def persist_entry_decision(group,frozen,entry,root,observed_at):
+    """First entry judgment is immutable, including UNKNOWN and verified no-fill.
+
+    No later vendor recovery may silently create a historical paper trade.
+    UNKNOWN blocks later account allocation until separately resolved.
+    """
+    status=entry.get("status")
+    decision=("CONFIRMED_PAPER_ENTRY" if "entry_price" in entry else
+              "NO_FILL_RULE_REJECTED" if status=="NO_FILL_RULE_REJECTED"
+              or str(status).startswith("ACCOUNT_") else
+              "ENTRY_DATA_UNKNOWN")
+    path=_entry_decision_path(root,group,entry["signal_id"])
+    if path.exists():
+        raw=json.loads(path.read_text(encoding="utf-8"))
+        if (raw.get("signal_id")!=entry["signal_id"]
+            or raw.get("frozen_signal_sha256")!=frozen["signal_sha256"]
+            or raw.get("group")!=group
+            or raw.get("decision_status")!=decision):
+            return False
+        return True
+    obj={"signal_id":entry["signal_id"],"code":entry["code"],
+         "group":group,"entry_session":entry["entry_session"],
+         "frozen_signal_sha256":frozen["signal_sha256"],
+         "decision_status":decision,"first_assessed_at":observed_at.isoformat(),
+         "basis":str(entry.get("reason",status))[:220],
+         "broker_fill_confirmed":False}
+    return write_paper_event_once(path,obj)
+
+
+def expire_unknown_entry(group,root,signal_id,effective_at,reason):
+    """Explicit append-only NO-BACKFILL resolution; not an automatic fill.
+
+    A source outage cannot resolve itself by recovering historical quotations.
+    An auditor may explicitly retire the paper candidate after its entry
+    session; earlier dependent funding sessions remain censored.
+    """
+    path=_entry_decision_path(root,group,signal_id)
+    original=json.loads(path.read_text(encoding="utf-8"))
+    if original.get("decision_status")!="ENTRY_DATA_UNKNOWN":
+        raise ValueError("ONLY_UNKNOWN_ENTRIES_CAN_EXPIRE")
+    if effective_at.tzinfo is None:
+        raise ValueError("EXPIRY_TIME_REQUIRES_TIMEZONE")
+    at=effective_at.astimezone(BJ)
+    cutoff=datetime.combine(date.fromisoformat(original["entry_session"]),time(15,0),BJ)
+    if at<=cutoff or not str(reason).strip():
+        raise ValueError("EXPIRY_REQUIRES_POST_SESSION_AUDITED_REASON")
+    out=_entry_decision_path(root,group,signal_id).parent.parent.parent/"resolutions"/group/f"{signal_id}.json"
+    resolution={"signal_id":signal_id,"original_decision_sha256":sha(original),
+                "resolution":"ENTRY_EXPIRED","effective_at":at.isoformat(),
+                "reason":str(reason).strip()[:250],"backfilled_paper_orders":0}
+    if not write_paper_event_once(out,resolution):
+        raise ValueError("IMMUTABLE_ENTRY_EXPIRY_DRIFT")
+    return out
+
+
+def load_entry_decisions(group,root,freeze=None,now=None):
+    """Read immutable judgment and optional append-only expiry evidence."""
+
+    known={f["signal_sha256"] for _,f in locked_freezes(group,root)}
+    allowed={freeze["signal_sha256"]} if freeze else known
+    result={}
+    for path in sorted((Path(root)/"ledger"/"decisions"/group).glob("*.json")):
+        try:
+            obj=json.loads(path.read_text(encoding="utf-8"))
+            if (obj.get("signal_id")!=path.stem
+                or obj.get("group")!=group
+                or obj.get("frozen_signal_sha256") not in known
+                or obj.get("decision_status") not in ("ENTRY_DATA_UNKNOWN",
+                    "NO_FILL_RULE_REJECTED","CONFIRMED_PAPER_ENTRY","ENTRY_EXPIRED")
+                or obj.get("broker_fill_confirmed") is not False):
+                raise ValueError("ENTRY_DECISION_INTEGRITY")
+            expiry=Path(root)/"ledger"/"resolutions"/group/f"{obj['signal_id']}.json"
+            if expiry.exists():
+                resolution=json.loads(expiry.read_text(encoding="utf-8"))
+                if (obj["decision_status"]!="ENTRY_DATA_UNKNOWN"
+                    or resolution.get("resolution")!="ENTRY_EXPIRED"
+                    or resolution.get("signal_id")!=obj["signal_id"]
+                    or resolution.get("original_decision_sha256")!=sha(obj)
+                    or resolution.get("backfilled_paper_orders")!=0):
+                    raise ValueError("ENTRY_EXPIRY_INTEGRITY")
+                at=datetime.fromisoformat(resolution["effective_at"])
+                cutoff=datetime.combine(date.fromisoformat(obj["entry_session"]),time(15,0),BJ)
+                if (at.tzinfo is None or at.astimezone(BJ)<=cutoff
+                    or (now is not None and at>now)):
+                    if now is None or at.tzinfo is None or at.astimezone(BJ)<=cutoff:
+                        raise ValueError("ENTRY_EXPIRY_TIME_INVALID")
+                else:
+                    obj["resolution_effective_at"]=at.astimezone(BJ).isoformat()
+                    obj["decision_status"]="ENTRY_EXPIRED"
+            if obj["frozen_signal_sha256"] in allowed:
+                result[obj["signal_id"]]=obj
+        except (OSError,KeyError,ValueError,TypeError) as e:
+            raise ValueError(f"ENTRY_DECISION_CORRUPTED:{path}:{e}") from e
+    return result
+
+
+def lock_paper_replay(group,frozen,result,root,archive_time,observed_at=None):
+    audit={"locked_entries":[],"locked_exits":[],"locked_decisions":[],"drifts":[]}
     for entry in result.get("entries",[]):
+        if not persist_entry_decision(group,frozen,entry,root,observed_at or archive_time):
+            audit["drifts"].append(str(_entry_decision_path(root,group,entry["signal_id"])))
+            continue
+        audit["locked_decisions"].append(entry["signal_id"])
         if "entry_price" not in entry:continue
         signal_id=entry["signal_id"]
         original={"frozen_signal_sha256":frozen["signal_sha256"],
@@ -959,6 +1108,28 @@ def load_account_ledger(group,root):
     return out
 
 
+def funding_event_history(group,root,funding_day,version=None):
+    """All immutable arm/full/remnant freezes share ONE economic ETF event key.
+
+    The scope of a full freeze is both arms, a partial freeze is its own arm.
+    Blank-version legacy source is associated with the current group's version.
+    """
+    found=[]
+    for path,frozen in locked_freezes(group,root):
+        if frozen.get("four_etf_flow",{}).get("day")!=funding_day:
+            continue
+        if frozen.get("version",GROUPS[group]["version"]) != (version or GROUPS[group]["version"]):
+            continue
+        scope=frozen.get("cohort_scope")
+        arms=({scope} if scope in ("S1","S2") else
+              set(frozen.get("remaining_arms",[])) if scope=="REMAINDER_AFTER_PARTIAL_ARM_FREEZES"
+              else {"S1","S2"})
+        if not arms<=set(RANKS):
+            raise ValueError("FUNDING_EVENT_ARM_SCOPE_UNVERIFIED")
+        found.append((path,frozen,arms))
+    return found
+
+
 def run(ak,now,group,root=RECORD_ROOT):
     now=now.astimezone(BJ);today=now.date().isoformat()
     records={"captured_at":now.isoformat(),"group":group,"experiment":GROUPS[group]["experiment"],
@@ -973,6 +1144,19 @@ def run(ak,now,group,root=RECORD_ROOT):
     except ValueError as exc:
         records["errors"].append(str(exc))
         records["freeze_status"]="ACCOUNT_LEDGER_INTEGRITY_FAILED"
+        return records
+    try:
+        existing_decisions=load_entry_decisions(group,root,now=now)
+    except ValueError as exc:
+        records["errors"].append(str(exc))
+        records["freeze_status"]="ENTRY_DECISION_INTEGRITY_FAILED"
+        return records
+    if any(d["decision_status"]=="ENTRY_DATA_UNKNOWN"
+           and d["entry_session"]<=today for d in existing_decisions.values()):
+        records["freeze_status"]="ENTRY_DATA_UNKNOWN_BLOCKS_ACCOUNT"
+        records["unresolved_entry_signals"]=[
+            k for k,v in existing_decisions.items()
+            if v["decision_status"]=="ENTRY_DATA_UNKNOWN" and v["entry_session"]<=today]
         return records
     # Evaluate only ALREADY PERSISTED historical freeze files; never the fresh one.
     prior=sorted(locked_freezes(group,root),
@@ -996,8 +1180,42 @@ def run(ak,now,group,root=RECORD_ROOT):
             preceding=[e for e in account_history
                        if e.get("frozen_signal_sha256")!=f["signal_sha256"]]
             portfolio=account_snapshot_before(preceding,f["next_open_session"],group)
-            assessment=assess(ak,group,f,now,portfolio=portfolio)
-            locks=lock_paper_replay(group,f,assessment,root,archive_time)
+            # A later expiry cannot retrospectively finance a downstream
+            # event that would already have entered before that expiry.
+            expired_cutoffs=[
+                datetime.fromisoformat(d["resolution_effective_at"])
+                for d in existing_decisions.values()
+                if d["decision_status"]=="ENTRY_EXPIRED"]
+            open_cutoff=datetime.combine(
+                date.fromisoformat(f["next_open_session"]),time(9,25),BJ)
+            if (any(open_cutoff<=t for t in expired_cutoffs)
+                and not any(e.get("frozen_signal_sha256")==f["signal_sha256"]
+                            for e in account_history)):
+                records["prior_freezes"].append({
+                    "path":str(p),"signal_sha256":f["signal_sha256"],
+                    "result":{"status":"ENTRY_EXPIRED_NO_RETROACTIVE_REPLAY",
+                              "entries":[]}})
+                continue
+            decisions=load_entry_decisions(group,root,f,now=now)
+            if any(d["decision_status"] in ("NO_FILL_RULE_REJECTED","ENTRY_EXPIRED")
+                   for d in decisions.values()):
+                assessment=assess(ak,group,f,now,portfolio=portfolio,decisions=decisions)
+            else:
+                assessment=assess(ak,group,f,now,portfolio=portfolio)
+            unknown=[e for e in assessment.get("entries",[])
+                     if e.get("status")=="ENTRY_DATA_UNKNOWN"]
+            if unknown:
+                for entry in unknown:
+                    if not persist_entry_decision(group,f,entry,root,now):
+                        raise ValueError("ENTRY_UNKNOWN_DECISION_DRIFT")
+                records["prior_freezes"].append({
+                    "path":str(p),"signal_sha256":f["signal_sha256"],
+                    "result":assessment,
+                    "status":"ENTRY_DATA_UNKNOWN_BLOCKS_ACCOUNT",
+                    "unknown_signals":[v["signal_id"] for v in unknown]})
+                records["freeze_status"]="ENTRY_DATA_UNKNOWN_BLOCKS_ACCOUNT"
+                return records
+            locks=lock_paper_replay(group,f,assessment,root,archive_time,observed_at=now)
             if locks["drifts"]:
                 records["errors"].append("IMMUTABLE_PAPER_LEDGER_DRIFT:"+",".join(locks["drifts"]))
                 records["freeze_status"]="ACCOUNT_LEDGER_DRIFT_BLOCKED"
@@ -1032,6 +1250,14 @@ def run(ak,now,group,root=RECORD_ROOT):
         else:
             try:
                 freeze=build_freeze(ak,now,group,day)
+                funding_day=freeze["four_etf_flow"]["day"]
+                history=funding_event_history(group,root,funding_day,freeze.get("version"))
+                if any(previous.get("asof_session")!=day for _,previous,_ in history):
+                    records["freeze_status"]="NO_NEW_FOUR_ETF_EVENT"
+                    records["duplicate_funding_day"]=funding_day
+                    records["selected_codes"]=[]
+                    return records
+                locked_arms=set().union(*(arms for _,_,arms in history)) if history else set()
                 diag=freeze.get("candidate_diagnostics")
                 # Unknown upstream data is never a verified "no signal".
                 # Keep the attempt, eligible arms and exact errors in the run
@@ -1066,9 +1292,13 @@ def run(ak,now,group,root=RECORD_ROOT):
                         if v.get("asof_session")==day
                         and v.get("cohort_scope") in ("S1","S2")}
                     if (previous_arm_days and
-                        previous_arm_days!={freeze["four_etf_flow"]["day"]}):
+                        previous_arm_days!={funding_day}):
                         raise ValueError("FUNDING_EVENT_CHANGED_AFTER_PARTIAL_ARM_FREEZE")
                     for arm in ("S1","S2"):
+                        if arm in locked_arms:
+                            records["independent_frozen_arms"].append({
+                                "arm":arm,"status":"PREVIOUS_ARM_UNCHANGED"})
+                            continue
                         if not records["independent_verified_arms"][arm]["complete"]:
                             continue
                         branch_path=root/"freezes"/group/f"{day}-{arm}.json"
@@ -1110,9 +1340,8 @@ def run(ak,now,group,root=RECORD_ROOT):
                         records["freeze_status"]="PARTIAL_ARM_FROZEN_OTHER_ARM_RETRYABLE"
                     # If no arm is complete: diagnostics only, zero formal freeze.
                     return records
-                funding_day=freeze["four_etf_flow"]["day"]
                 existing_today=[
-                    previous for _,previous in locked_freezes(group,root)
+                    previous for _,previous,arms in history
                     if previous.get("asof_session")==day and
                        previous.get("cohort_scope") in ("S1","S2")]
                 if any(v.get("four_etf_flow",{}).get("day")!=funding_day
@@ -1129,12 +1358,16 @@ def run(ak,now,group,root=RECORD_ROOT):
                     records["selected_codes"]=[]
                 else:
                     if existing_today:
-                        previously_selected={v["code"] for prior_arm in existing_today
-                                              for v in prior_arm["selected"]}
+                        # Lock the whole S1/S2 branch decision, including an
+                        # independently verified CASH branch. A changed leading
+                        # ticker cannot reopen the same arm.
+                        remaining=set(RANKS)-locked_arms
                         freeze["selected"]=[
-                            v for v in freeze["selected"]
-                            if v["code"] not in previously_selected]
+                            next((v for v in freeze["selected"] if v["cohort"]==arm),None)
+                            for arm in ("S1","S2") if arm in remaining]
+                        freeze["selected"]=[v for v in freeze["selected"] if v is not None]
                         freeze["cohort_scope"]="REMAINDER_AFTER_PARTIAL_ARM_FREEZES"
+                        freeze["remaining_arms"]=sorted(remaining)
                         freeze["prior_arm_signal_hashes"]=[
                             v["signal_sha256"] for v in existing_today]
                         freeze["candidate_diagnostics"]["selected"]=len(freeze["selected"])
