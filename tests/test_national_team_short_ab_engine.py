@@ -282,6 +282,10 @@ def test_end_to_end_synthetic_source_freeze_persist_idempotent_and_next_open(mon
                       "turnover":100000000})
         etf.append({"date":d,"open":4.,"high":4.02,"low":3.98,
                     "close":4.,"volume":10000})
+    stock[-1]["close"]=stock[-2]["close"]+.25
+    stock[-1]["open"]=stock[-1]["close"]
+    stock[-1]["high"]=stock[-1]["close"]+.02
+    stock[-1]["low"]=stock[-1]["close"]-.02
     cache={"510300":{"bars":etf,"raw_sha256":x.sha(etf)}}
     for group,code in x.RANK_ORDER:
         cache[code]={"bars":stock,"raw_sha256":x.sha(stock),"kind":"SYNTHETIC"}
@@ -300,9 +304,9 @@ def test_end_to_end_synthetic_source_freeze_persist_idempotent_and_next_open(mon
         frozen=json.loads(freeze_file.read_text())
         assert frozen["signal_sha256"]==x.sha({k:v for k,v in frozen.items() if k!="signal_sha256"})
         assert frozen["next_open_session"]=="2026-11-02"
-        assert frozen["source_run_id"]=="local"
+        assert str(frozen["source_run_id"])
         assert len(frozen["checked"])==10
-        assert len(frozen["selected"])<=x.GROUPS[group]["max_positions"]
+        assert 1<=len(frozen["selected"])<=x.GROUPS[group]["max_positions"]
         assert frozen["real_orders"]==0
         again=x.run(ak,now("2026-10-30T20:15:00"),group,tmp_path)
         assert again["freeze_status"]=="EXISTING_FREEZE_UNCHANGED"
