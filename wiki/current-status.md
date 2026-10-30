@@ -7,7 +7,9 @@ updated: 2026-10-30
 ---
 # 国家队 ETF → 个股机会：单一当前状态与执行 P0 验收门槛
 
-**2026-10-30 20:30新审计优先声明：上轮G0全库206项绿色已被五个新的执行/收益反例证伪其“完整性”，并不代表当时CI伪造。** 当前修复在[第二轮独立审计](audits/AUD-2026-10-30-round2-independent-redteam.md)及[PR #5](https://github.com/lican1213/a-share-momentum-runner/pull/5)。新增状态`ENTRY_DATA_UNKNOWN`必须持久化并暂停后续组内资金，完整/部分冻结同一funding_day去重，已冻结分支不选第二只，14:50按分钟标签时点交易，V2未知行情禁止完整超额收益。将第二轮最新SHA全库测试列为**新G0**，不要把下面历史206项当作最终审计。
+**2026-10-30 20:53最新验收：第二轮R1—R5已修复并真正合并main**，GitHub源码`7ef5da1cd725`实际全库[41058487212](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41058487212) **216项PASS、Wiki 35页PASS**；A2[41058487108](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41058487108)与B[41058486901](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41058486901)对应同SHA，实际业务`EXISTING_FREEZE_UNCHANGED`、`errors=[]`。五项独立红例已回归通过。**这只完成第二轮软件G0，2026-11-02 G2真实模拟入场、G3真实分钟退出和G4成熟净超额均尚未发生。** 详情[独立审计闭环](audits/AUD-2026-10-30-round2-independent-redteam.md)。
+
+**第二轮纠正历史结论：** ：上轮G0全库206项绿色已被五个新的执行/收益反例证伪其“完整性”，并不代表当时CI伪造。** 当前修复在[第二轮独立审计](audits/AUD-2026-10-30-round2-independent-redteam.md)及[PR #5](https://github.com/lican1213/a-share-momentum-runner/pull/5)。新增状态`ENTRY_DATA_UNKNOWN`必须持久化并暂停后续组内资金，完整/部分冻结同一funding_day去重，已冻结分支不选第二只，14:50按分钟标签时点交易，V2未知行情禁止完整超额收益。将第二轮最新SHA全库测试列为**新G0**，不要把下面历史206项当作最终审计。
 
 **本页是人工维护的状态基线；新Agent先读[MOC](../MOC.md)，再读本页、最新Actions及不可回写JSON。任何新运行可能使下列状态过时，须重新核实当时的run ID/SHA。**
 
