@@ -390,7 +390,11 @@ def execution_gate(frozen,now):
     first=datetime.fromisoformat(frozen["freeze_created_at"]).astimezone(BJ)
     trade=frozen["next_open_session"]
     cutoff=datetime.combine(date.fromisoformat(trade),time(9,25),BJ)
-    if first>=cutoff or frozen["asof_session"]>=trade:
+    # Must have been frozen *on the actual as-of trading date*, after close.
+    # E.g. a 00:55 Monday retry can never masquerade as Friday's close.
+    if (first.date().isoformat()!=frozen["asof_session"]
+            or first.time()<CUT or first>=cutoff
+            or frozen["asof_session"]>=trade):
         return "FREEZE_AFTER_ENTRY_CUTOFF"
     if now<cutoff:return "ENTRY_NOT_REACHED"
     # Trading session must match the true next exchange session after freeze.
