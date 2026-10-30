@@ -964,7 +964,8 @@ def run(ak,now,group,root=RECORD_ROOT):
     records={"captured_at":now.isoformat(),"group":group,"experiment":GROUPS[group]["experiment"],
              "version":GROUPS[group]["version"],"github_run_id":os.getenv("GITHUB_RUN_ID","local"),
              "github_sha":os.getenv("GITHUB_SHA","UNKNOWN"),"real_broker_orders":0,
-             "freeze_created":False,"prior_freezes":[],"errors":[]}
+             "freeze_created":False,"prior_freezes":[],"errors":[],
+             "status":"RESEARCH_ONLY_NO_BROKER_ORDERS"}
     # Reconstruct one group account chronologically across ALL prior funding days.
     # Never restart account limits at each freeze; A2 and B remain isolated.
     try:
@@ -1059,6 +1060,14 @@ def run(ak,now,group,root=RECORD_ROOT):
                     # under the same funding event, but must never change this
                     # first valid arm or fabricate a B third stock prematurely.
                     records["independent_frozen_arms"]=[]
+                    previous_arm_days={
+                        v.get("four_etf_flow",{}).get("day")
+                        for _,v in locked_freezes(group,root)
+                        if v.get("asof_session")==day
+                        and v.get("cohort_scope") in ("S1","S2")}
+                    if (previous_arm_days and
+                        previous_arm_days!={freeze["four_etf_flow"]["day"]}):
+                        raise ValueError("FUNDING_EVENT_CHANGED_AFTER_PARTIAL_ARM_FREEZE")
                     for arm in ("S1","S2"):
                         if not records["independent_verified_arms"][arm]["complete"]:
                             continue
@@ -1106,6 +1115,9 @@ def run(ak,now,group,root=RECORD_ROOT):
                     previous for _,previous in locked_freezes(group,root)
                     if previous.get("asof_session")==day and
                        previous.get("cohort_scope") in ("S1","S2")]
+                if any(v.get("four_etf_flow",{}).get("day")!=funding_day
+                       for v in existing_today):
+                    raise ValueError("FUNDING_EVENT_CHANGED_AFTER_PARTIAL_ARM_FREEZE")
                 previously_frozen_days={
                     previous.get("four_etf_flow",{}).get("day")
                     for _,previous in locked_freezes(group,root)
