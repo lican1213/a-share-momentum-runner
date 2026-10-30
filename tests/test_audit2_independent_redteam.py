@@ -125,3 +125,63 @@ def test_R5_missing_V2_stock_cannot_turn_ETF_loss_into_excess_profit():
     h=evaluate_frozen_event(event,sessions,prices)["results"]["5"]
     assert h["status"]=="STOCK_ENTRY_DATA_UNKNOWN"
     assert h["paired_excess_net_return"] is None
+
+
+def test_R2_partial_to_complete_next_day_still_same_fund_event(monkeypatch,tmp_path):
+    monkeypatch.setattr(x,"close_day",lambda t:t.date().isoformat())
+    monkeypatch.setattr(x,"freeze_archive_commit_at",lambda p:now("2026-10-30T18:20:00"))
+    monkeypatch.setattr(x,"assess",lambda *a,**kw:dict(entries=[],status="VERIFIED_NO_ENTRY_PRICE_GATE"))
+    monkeypatch.setattr(x,"build_freeze",lambda ak,t,g,d:synthetic_freeze(d))
+    first=x.run(None,now("2026-10-30T18:15:00"),"A2",tmp_path)
+    assert first["freeze_created"]
+    monkeypatch.setattr(x,"build_freeze",lambda ak,t,g,d:synthetic_freeze(d,complete=True))
+    second=x.run(None,now("2026-11-02T18:15:00"),"A2",tmp_path)
+    assert second["freeze_status"]=="NO_NEW_FOUR_ETF_EVENT"
+    assert len(x.locked_freezes("A2",tmp_path))==1
+
+
+def test_R4_end_labelled_terminal_bar_uses_close_1450_not_open(monkeypatch):
+    frozen=fixture(monkeypatch)
+    def minute(ak,code,day,first="09:30",last="14:50"):
+        p=4. if code=="510300" else 10.1
+        bars=[dict(minute=day+" 09:31",open=p,high=p+.01,low=p-.01,close=p)]
+        bars.append(dict(minute=day+" "+last,open=p,high=p+.01,low=p-.01,
+                         close=p+.02))
+        return {"bars":bars,"sha256":code+day,"minute_convention":"BAR_END"}
+    monkeypatch.setattr(x,"minute_rows",minute)
+    e=x.assess(None,"B",frozen,now("2026-11-05T18:15:00"))["entries"][0]
+    assert e["exit_reason"]=="T_PLUS_3_1450"
+    assert e["minute_convention"]=="BAR_END"
+    assert e["benchmark_minute_convention"]=="BAR_END"
+    assert e["benchmark_exit_quote"]==4.02
+
+
+def test_R4_end_labelled_prior_minute_stop_still_wins(monkeypatch):
+    frozen=fixture(monkeypatch)
+    def minute(ak,code,day,first="09:30",last="14:50"):
+        p=4. if code=="510300" else 10.1
+        bars=[dict(minute=day+" 09:31",open=p,high=p+.01,low=p-.01,close=p)]
+        stop=day=="2026-11-05" and code!="510300"
+        bars.append(dict(minute=day+" "+last,open=p,high=p+.01,
+                         low=9.5 if stop else p-.01,close=p))
+        return {"bars":bars,"sha256":code+day,"minute_convention":"BAR_END"}
+    monkeypatch.setattr(x,"minute_rows",minute)
+    e=x.assess(None,"B",frozen,now("2026-11-05T18:15:00"))["entries"][0]
+    assert e["exit_reason"]=="STOP_FIRST"
+
+
+def test_R5_partial_missing_V2_stock_blocks_full_portfolio_pnl():
+    from national_team.forward_evaluation import evaluate_frozen_event
+    sessions=["2026-11-02","2026-11-03","2026-11-04",
+              "2026-11-05","2026-11-06","2026-11-09"]
+    event={"id":"partial","first_public_at":"2026-10-30T18:15:00+08:00",
+           "candidate_symbols":["600000","600309"]}
+    prices={
+      "510300":{d:{"open":4.,"close":3.,"entry_blocked":False,"exit_blocked":False}
+                for d in sessions},
+      "600000":{d:{"open":10.,"close":12.,"entry_blocked":False,"exit_blocked":False}
+                for d in sessions}}
+    result=evaluate_frozen_event(event,sessions,prices)["results"]["5"]
+    assert result["status"]=="STOCK_ENTRY_DATA_UNKNOWN"
+    assert result["unknown_entry_symbols"]==["600309"]
+    assert result["paired_excess_net_return"] is None
