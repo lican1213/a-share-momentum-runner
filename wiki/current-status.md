@@ -36,6 +36,8 @@ D. 真实盈利：5/10/20日V2尚未验证；A2/B短线仍无经核验的纸面�
 
 新回归位于[tests/test_national_team_short_ab_engine.py](../tests/test_national_team_short_ab_engine.py)；实施于[short_ab_engine.py](../national_team/short_ab_engine.py)。完整失败日志和定位记录在[执行闭环审计](audits/AUD-2026-10-30-short-ab-execution-closure.md)；真实完成SHA与Actions请读取最新GitHub运行，而非仅信此页。
 
+**全仓库独立验收（2026-10-30）**：新增[专用全量Gate](../.github/workflows/national-team-p0-full-gate.yml)于真实[GitHub Run 41045697242](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41045697242)（SHA`9b0a78ebf807`，对比执行引擎变动仅新增CI工作流）实际执行`python -m pytest -q`，**206 passed**；`scripts/wiki_lint.py`报告`WIKI_LINT_OK pages=34 ids_unique=true all_internal_links_present=true`，Python语法检查成功。此前的182项子集并未替代这次全量测试。全量G0通过也不能替代G2/G3市场模拟。
+
 ## 仍需独立验证的Gate
 
 - **G0（新版本）PASS**：执行引擎SHA `543f6dacaac5af38ccdbfe00234e12d54d50df76`，A2真实Actions [41044988928](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41044988928) 60项通过，B [41044988855](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41044988855) 60项通过，四ETF综合 [41044988939](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41044988939) 182项通过；后续文档Wiki完整性 [41045287544](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41045287544) SUCCESS。不得与G1实际行情或G2模拟成交混用。
