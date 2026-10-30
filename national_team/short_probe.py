@@ -41,8 +41,10 @@ def read_only_probe(ak, now):
                               "asof_close":x.bar(benchmark,asof)["close"],
                               "history_count":len(benchmark["bars"])}
     except Exception as exc:
-        result["warnings"].append("BENCHMARK:"+type(exc).__name__+":"+str(exc)[:180])
-        return result
+        benchmark=None
+        result["warnings"].append("BENCHMARK:"+type(exc).__name__+":"+str(exc)[:380])
+        # Continue *read-only* per-stock source audit even if ETF quote is stale.
+        # Do not compute relative strength or produce a frozen selection.
     try:
         names,name_provider=x.stock_names(ak)
         result["security_name_provider"]=name_provider
@@ -62,6 +64,9 @@ def read_only_probe(ak, now):
             if not item["name"]:raise ValueError("NAME_UNVERIFIED_ST_STATUS_UNKNOWN")
             if "ST" in item["name"].upper() or "退" in item["name"]:
                 item["status"]="VERIFIED_EXCLUDED_ST"
+            elif benchmark is None:
+                item["status"]="DAILY_STOCK_VERIFIED_BENCHMARK_MISSING"
+                item["indicator_error"]="BENCHMARK_DAILY_NOT_VERIFIED"
             else:
                 for group in ("A2","B"):
                     try:
@@ -79,7 +84,9 @@ def read_only_probe(ak, now):
             item["error"]=type(exc).__name__+":"+str(exc)[:180]
         result["candidates"].append(item)
     result["groups"]={
-       group:{"data_verified":sum(v["status"]=="MARKET_DATA_VERIFIED_NO_FREEZE" for v in result["candidates"]),
+       group:{"data_verified":sum(v["status"] in ("MARKET_DATA_VERIFIED_NO_FREEZE",
+                                                     "DAILY_STOCK_VERIFIED_BENCHMARK_MISSING")
+                                     for v in result["candidates"]),
               "indicative_eligible":sum(v["group_gates"].get(group,{}).get("eligible_indicative_only",False)
                                          for v in result["candidates"]),
               "not_a_frozen_signal":True}

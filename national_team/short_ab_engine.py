@@ -193,6 +193,18 @@ def prices(ak,code,through):
             return result
         except Exception as exc:
             failures.append("SINA_ETF:"+type(exc).__name__+":"+str(exc)[:120])
+    if code=="510300":
+        # Same ETF identifier on the independent Sina securities K-line endpoint.
+        # This must *never* be replaced by CSI300 index prices or latest NAV.
+        try:
+            frame=ak.stock_zh_a_daily(symbol="sh510300",start_date="20250101",
+                                      end_date=end,adjust="")
+            if frame is None or frame.empty:raise ValueError("EMPTY_SINA_SECURITY_ETF")
+            result=normalize(frame,code,"SINA_SECURITY_510300_DAILY_NO_ADJUST")
+            if bar(result,through) is None:raise ValueError("SINA_SECURITY_ETF_ASOF_MISSING")
+            return result
+        except Exception as exc:
+            failures.append("SINA_SECURITY_ETF:"+type(exc).__name__+":"+str(exc)[:240])
     raise ValueError(f"{code}:DAILY_PROVIDERS_UNVERIFIED:"+";".join(failures))
 
 
