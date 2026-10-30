@@ -365,6 +365,22 @@ def locked_freezes(group,root=RECORD_ROOT):
     return frozen
 
 
+def freeze_archive_commit_at(path):
+    """Checkout must prove the freeze had a Git commit before market entry."""
+    import subprocess
+    command=["git","log","-1","--format=%cI","--",str(path)]
+    result=subprocess.run(command,text=True,capture_output=True,check=False,timeout=8)
+    stamp=result.stdout.strip()
+    if result.returncode!=0 or not stamp:
+        return None
+    try:
+        parsed=datetime.fromisoformat(stamp)
+        if parsed.tzinfo is None:return None
+        return parsed.astimezone(BJ)
+    except ValueError:
+        return None
+
+
 def opening_allowed(stock_open,prior,ind,cfg):
     gap=stock_open/prior-1
     return 0<=gap<=cfg["gap_limit"] and (cfg is GROUPS["B"] or stock_open>=ind["breakout"])
@@ -526,12 +542,21 @@ def run(ak,now,group,root=RECORD_ROOT):
     # Evaluate only ALREADY PERSISTED historical freeze files; never the fresh one.
     for p,f in locked_freezes(group,root):
         if f["next_open_session"]>today:continue
+        # No settled bot commit before 09:25, no retrospectively filled entry.
+        archive_time=freeze_archive_commit_at(p)
+        cutoff=datetime.combine(date.fromisoformat(f["next_open_session"]),time(9,25),BJ)
+        if archive_time is None or archive_time>=cutoff:
+            records["prior_freezes"].append({"path":str(p),"signal_sha256":f["signal_sha256"],
+                "result":{"status":"ARCHIVED_FREEZE_COMMIT_BEFORE_OPEN_NOT_VERIFIED",
+                          "archive_commit_time":archive_time.isoformat() if archive_time else None}})
+            continue
         # Only recently frozen events can still be T+3 open; older ones stay immutable in archives.
         from datetime import timedelta
         if date.fromisoformat(f["next_open_session"])<now.date()-timedelta(days=9):
             continue
         try:
             records["prior_freezes"].append({"path":str(p),"signal_sha256":f["signal_sha256"],
+                                             "archive_commit_at":archive_time.isoformat(),
                                              "result":assess(ak,group,f,now)})
         except Exception as e:
             records["errors"].append(f"ASSESS:{p.name}:{type(e).__name__}:{str(e)[:150]}")
