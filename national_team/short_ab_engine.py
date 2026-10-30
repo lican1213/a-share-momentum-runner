@@ -1054,18 +1054,80 @@ def run(ak,now,group,root=RECORD_ROOT):
                         for arm in ("S1","S2")}
                     records["unconsumed_funding_day"]=freeze["four_etf_flow"]["day"]
                     records["selected_codes"]=[]
-                    # No formal entry signal until both branches are complete.
+                    # An arm with all FIVE securities verified can freeze
+                    # independently. The unknown opposite arm may retry later
+                    # under the same funding event, but must never change this
+                    # first valid arm or fabricate a B third stock prematurely.
+                    records["independent_frozen_arms"]=[]
+                    for arm in ("S1","S2"):
+                        if not records["independent_verified_arms"][arm]["complete"]:
+                            continue
+                        branch_path=root/"freezes"/group/f"{day}-{arm}.json"
+                        if branch_path.exists():
+                            stored=json.loads(branch_path.read_text(encoding="utf-8"))
+                            if (stored.get("signal_sha256")!=sha({
+                                k:v for k,v in stored.items() if k!="signal_sha256"})
+                                or stored.get("cohort_scope")!=arm):
+                                raise ValueError("PREVIOUS_ARM_FREEZE_INTEGRITY_MISMATCH")
+                            records["independent_frozen_arms"].append({
+                                "arm":arm,"path":str(branch_path),
+                                "status":"PREVIOUS_ARM_UNCHANGED"})
+                            continue
+                        subset=[v for v in freeze["checked"] if v["cohort"]==arm]
+                        arm_selected=[v for v in freeze["selected"] if v["cohort"]==arm][:1]
+                        scoped=dict(freeze)
+                        scoped.update({"status":("VERIFIED_ARM_CASH_NO_SIGNAL" if not arm_selected
+                                                  else "VERIFIED_ARM_FROZEN_NO_BROKER_ORDER"),
+                                       "cohort_scope":arm,"checked":subset,
+                                       "selected":arm_selected,
+                                       "candidate_diagnostics":{
+                                           "total":len(subset),"verified":len(subset),
+                                           "unverified":0,"eligible":sum(v.get("eligible") is True
+                                                                         for v in subset),
+                                           "selected":len(arm_selected),
+                                           "blocked_unverified":[]}})
+                        scoped["signal_sha256"]=sha({k:v for k,v in scoped.items()
+                                                     if k!="signal_sha256"})
+                        branch_path.parent.mkdir(parents=True,exist_ok=True)
+                        with branch_path.open("x",encoding="utf-8") as out:
+                            out.write(json.dumps(scoped,ensure_ascii=False,indent=2)+"\n")
+                        records["freeze_created"]=True
+                        records["independent_frozen_arms"].append({
+                            "arm":arm,"path":str(branch_path),
+                            "signal_sha256":scoped["signal_sha256"],
+                            "selected_codes":[v["code"] for v in arm_selected],
+                            "status":"VERIFIED_ARM_FROZEN"})
+                    if records["independent_frozen_arms"]:
+                        records["freeze_status"]="PARTIAL_ARM_FROZEN_OTHER_ARM_RETRYABLE"
+                    # If no arm is complete: diagnostics only, zero formal freeze.
                     return records
                 funding_day=freeze["four_etf_flow"]["day"]
+                existing_today=[
+                    previous for _,previous in locked_freezes(group,root)
+                    if previous.get("asof_session")==day and
+                       previous.get("cohort_scope") in ("S1","S2")]
                 previously_frozen_days={
                     previous.get("four_etf_flow",{}).get("day")
                     for _,previous in locked_freezes(group,root)
+                    if previous.get("asof_session")!=day
                 }
                 if funding_day in previously_frozen_days:
                     records["freeze_status"]="NO_NEW_FOUR_ETF_EVENT"
                     records["duplicate_funding_day"]=funding_day
                     records["selected_codes"]=[]
                 else:
+                    if existing_today:
+                        previously_selected={v["code"] for prior_arm in existing_today
+                                              for v in prior_arm["selected"]}
+                        freeze["selected"]=[
+                            v for v in freeze["selected"]
+                            if v["code"] not in previously_selected]
+                        freeze["cohort_scope"]="REMAINDER_AFTER_PARTIAL_ARM_FREEZES"
+                        freeze["prior_arm_signal_hashes"]=[
+                            v["signal_sha256"] for v in existing_today]
+                        freeze["candidate_diagnostics"]["selected"]=len(freeze["selected"])
+                        freeze["signal_sha256"]=sha({
+                            k:v for k,v in freeze.items() if k!="signal_sha256"})
                     # A verified empty decision is different from a data failure.
                     if not freeze["selected"]:
                         freeze["status"]="VALIDATED_CASH_NO_SIGNAL"
