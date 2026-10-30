@@ -16,6 +16,8 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | Four-fund merged funding | 2026-10-30 | 41018737358 | FULL_FOUR_ETF_SHARES_NAV_OBSERVED_RESEARCH | [JSON](../../records/national_team_merged/2026-10-30/41018737358-a1.json) |
 | CSI300 stock research watches | 2026-10-29 | 41018737358 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-10-30/41018737358-a1.json) |
 | Official exchange PCF attempts | 2026-10-30 | 41018737358 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-10-30/41018737358-a1.json) |
+| Frozen paper-event cohorts | 2026-10-30 | 41027617348-a1-v2 | FROZEN_V2_PROSPECTIVE | [JSON](../../records/national_team_events/2026-10-30/41027617348-a1-v2.json) |
+| Prospective four-ETF V2 stock cohorts | 2026-10-30 | 41027617348-a1-v2 | FROZEN_PROSPECTIVE_RESEARCH | [JSON](../../records/national_team_strategy/2026-10-30/41027617348-a1-v2.json) |
 | Frozen paper-event cohorts | 2026-10-30 | 41018737358-a1 | FROZEN_PROSPECTIVE_RESEARCH_EVENTS | [JSON](../../records/national_team_events/2026-10-30/41018737358-a1.json) |
 | Matured paper outcomes | 2026-10-30 | 41018737358-a1 | PAPER_EVALUATION_ATTEMPTED | [JSON](../../records/national_team_paper/2026-10-30/41018737358-a1.json) |
 | Independent research integrity audit | 2026-10-30 | 41018737358-a1 | RESEARCH_DATA_AUDIT_PASS | [JSON](../../records/national_team_audits/2026-10-30/41018737358-a1.json) |

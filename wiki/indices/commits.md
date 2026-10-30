@@ -12,6 +12,16 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-30 | [25cc88a007](https://github.com/lican1213/a-share-momentum-runner/commit/25cc88a00764b7f477e5ae3c9ef0775b7c28ebba) | github-actions[bot] | data: archived four-ETF V2 candidate freeze 41027617348 [skip ci] |
+| 2026-10-30 | [238e73064e](https://github.com/lican1213/a-share-momentum-runner/commit/238e73064e9ead3e6a250cec2c1f7e61292c0658) | github-actions[bot] | data: short B prospective paper run 41027259254 [skip ci] |
+| 2026-10-30 | [e6bc39fa6e](https://github.com/lican1213/a-share-momentum-runner/commit/e6bc39fa6ed21c9cac473bce1bd5074756477e00) | github-actions[bot] | data: short A2 prospective paper run 41027259194 [skip ci] |
+| 2026-10-30 | [df5325e436](https://github.com/lican1213/a-share-momentum-runner/commit/df5325e436bfe00a3cee2f4a2bac1a52e09eb519) | Can Li | fix(paper): avoid false early lot rejection; verify prior ETF timestamps before freeze |
+| 2026-10-30 | [39fa55ee11](https://github.com/lican1213/a-share-momentum-runner/commit/39fa55ee119bd6b2f8bb2ea274820cf1dab7871c) | Can Li | test: validate newly archived 2026-10-29 four ETF evidence instead of hardcoded old latest dates |
+| 2026-10-30 | [48b6e3bff5](https://github.com/lican1213/a-share-momentum-runner/commit/48b6e3bff553f07c65f7cad648ab9d9c996af2ae) | github-actions[bot] | data: short B prospective paper run 41026771750 [skip ci] |
+| 2026-10-30 | [50a77c417c](https://github.com/lican1213/a-share-momentum-runner/commit/50a77c417c105ccea02e57873809c66210d561cb) | github-actions[bot] | data: short A2 prospective paper run 41026771726 [skip ci] |
+| 2026-10-30 | [68a20b9854](https://github.com/lican1213/a-share-momentum-runner/commit/68a20b9854275b18c9e5c00f2d389f71055182f5) | Can Li | fix: restore prior-freeze archive gate and valid replay try/except after ledger integration |
+| 2026-10-30 | [d850ecf064](https://github.com/lican1213/a-share-momentum-runner/commit/d850ecf0646e661d8bb913e16069316c539e229f) | Can Li | fix: A2/B candidate-data isolation, ranked screening audit and append-only paper ledger |
+| 2026-10-30 | [3b7a7f7913](https://github.com/lican1213/a-share-momentum-runner/commit/3b7a7f791380b7f445960d322981407bc9bf1bdb) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-30 | [521a3f1ed8](https://github.com/lican1213/a-share-momentum-runner/commit/521a3f1ed812061a6d8aa064b70d7fb10b93d151) | github-actions[bot] | data: archive actual ETF provider attempt 41018737358 [skip ci] |
 | 2026-10-30 | [56380b6b32](https://github.com/lican1213/a-share-momentum-runner/commit/56380b6b3203622b59a2ee5aa91279f0372ba6de) | Can Li | audit: register matched-SHA successful 29/148 pytest and persisted A2/B Actions G0 acceptance |
 | 2026-10-30 | [2a0dc6904b](https://github.com/lican1213/a-share-momentum-runner/commit/2a0dc6904b3cdcb11d78a2fc182d742a2e4be3dd) | Can Li | docs: MOC index open-source red-team CI and funding-event deduplication improvements |
