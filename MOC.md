@@ -1,5 +1,13 @@
 # MOC — 国家队资金跟踪与跟随收益研究第二大脑
 
+## 2026-10-30 P0 修复：EXP-0005-A2 / EXP-0006-B 双版本前瞻纸面交易
+
+- **旧A原件未改写**：[EXP-0005](wiki/experiments/EXP-0005-national-team-one-week-paper-pilot.md) 2026-10-29盘后未产生可验证冻结文件，2026-10-30 09:30**不得回填**，历史Workflow只保留手动审计，[P0问题 #4](https://github.com/lican1213/a-share-momentum-runner/issues/4)记录原因和缺口。
+- **A2修复方案**：[EXP-0005-A2](wiki/experiments/EXP-0005-A2-prospective-freeze-recovery.md)、[共用引擎](national_team/short_ab_engine.py)、[A2独立Actions](.github/workflows/national-team-short-a2.yml)：每交易日17:30以后盘后冻结**当天**数据，18:15/20:15/22:15定时重试，首个有效JSON仅创建一次；午夜后任务运行不倒签，次日开盘只能交易前夜已冻结记录；保持A原规则、3万元模拟现金、最多1万元首批持仓、每笔预算风险≤150元。
+- **B组积极模型真正部署**：[EXP-0006](wiki/experiments/EXP-0006-national-team-aggressive-paper-ab.md)、[B独立Actions](.github/workflows/national-team-short-b.yml)：取消MA60/10日突破/放量硬门槛，保留MA20、20日RS>0、ADV20≥5000万元；B1开盘0%—3%涨幅情景与B2 10:31—11:30有可比分钟历史的突破区分，最多2万元/3只、单笔≤150元风险。不允许使用后见之明替换十只原冻结候选。
+- **验收测试**：[A2/B对抗回归](tests/test_national_team_short_ab_engine.py)含午夜窗口、冻结哈希篡改、二次运行幂等、A/B账本隔离、入场限制、金额风险、B2分钟信号、T+1止损优先、真实四ETF来源时序及同分钟510300配对；Actions会执行pytest，并从实际捕获行情冻结至`records/national_team_short_ab/freezes/{A2,B}/`、逐次留档至`records/national_team_short_ab/runs/{A2,B}/`。业务失败必须让Actions失败，但即使失败也尝试写回诊断记录。
+- **当前真实验收边界**：上述是GitHub源代码与工作流**已部署**，不等于已有新run实际完成、次日成交或盈利。需核对第一条成功Actions的RUN_ID、SHA、完成日志、源原件与冻结JSON；如未成功，报`NO_VERIFIED_PAPER_ENTRY`，不能因为测试通过就报告股票收益。初始实盘订单0笔。原V2的5/10/20日独立评价保持不变。
+
 ## 2026-10-29 EXP-0005：短线一周严格纸面试验（尚未有可信成交或收益）
 
 - **[已冻结试验协议](wiki/experiments/EXP-0005-national-team-one-week-paper-pilot.md)**：2026-10-29午间冻结；3万元模拟账户、最多1万元首批投入、S1/S2各最多一只、100股整数手、单笔初始含成本风险≤150元；不许用2026-10-29已过去的09:30回填买入。V2原5/10/20交易日研究保持独立。
