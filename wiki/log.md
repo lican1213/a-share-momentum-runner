@@ -2,9 +2,14 @@
 id: WIKI-LOG
 type: log
 status: maintained
-updated: 2026-10-28
+updated: 2026-10-30
 ---
 # LLM Wiki维护日志（人工策展，不覆盖旧结论）
+
+## 2026-10-30：P0反例驱动修复与首个真实盘后G1
+- 接受审计任务书指出的四项执行缺陷：未知数据曾被误冻、1分钟空洞未检出、T+1/2的14:50以后尾盘漏算、独立冻结事件重复分配资金。逐项新增必须失败反例后修复执行引擎与持久化账本；选股/仓位参数和原V2十股排序均保持不变。
+- [A2实际run 41044087760](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41044087760)、[B实际run 41044087791](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41044087791)于北京时间18:54各用`40640bb97e4b`完成10/10真实源盘后冻结；原件各自归档。G1成功不等于11月2日模拟开盘或未来利润。后续引擎代码修复的验收见[唯一状态页](current-status.md)。
+
 
 > 操作型模型升级变更须在本文件**追加**事件，并在相应主题页归档；与之独立的每次运行快照自动写到 `records/`，全部Git提交历史写到 [commits.md](indices/commits.md)。下列2026-10-28条目为根据Git提交/真实Run的**回溯补录**，不是当时已经建立的Wiki日志。
 
