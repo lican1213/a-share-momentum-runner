@@ -95,8 +95,8 @@ def test_b2_cannot_use_1030_bar_as_after_1030_break():
 
 def test_b2_signals_only_with_complete_prior_same_minutes():
     earlier=[{"minute":"2026-11-02 10:30","high":10.2,"open":10.,"volume":1}]
-    after=[{"minute":f"2026-11-02 10:{j:02d}","open":10.21 if j==31 else 10.0,
-            "high":10.22 if j==31 else 10.1,"volume":20 if j==31 else 1}
+    after=[{"minute":f"2026-11-02 10:{j:02d}","open":10.21 if j==31 else 10.22 if j==32 else 10.0,
+            "high":10.22 if j in (31,32) else 10.1,"volume":20 if j==31 else 1}
            for j in range(31,60)]
     after += [{"minute":"2026-11-02 11:00","open":10.,
                "high":10.1,"volume":1}]
@@ -107,7 +107,8 @@ def test_b2_signals_only_with_complete_prior_same_minutes():
         past.append({"bars":rows})
     out=x.b2_signal({"bars":earlier+after},past)
     assert out is not None
-    assert out["minute"]=="2026-11-02 10:31"
+    assert out["minute"]=="2026-11-02 10:32"
+    assert out["signal_bar_minute"]=="2026-11-02 10:31"
 
 def test_frozen_sha_mismatch_is_discarded(tmp_path):
     d=tmp_path/"freezes"/"B";d.mkdir(parents=True)
