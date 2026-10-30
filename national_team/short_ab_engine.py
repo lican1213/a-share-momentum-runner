@@ -418,6 +418,9 @@ def build_freeze(ak, now, group, market_session, flow=None, v2=None):
             "source_run_id":os.getenv("GITHUB_RUN_ID","local"),
             "frozen_v2":v2,"four_etf_flow":flow,"security_name_provider":name_provider,
             "benchmark_sha256":benchmark["raw_sha256"],
+            "benchmark_price_provider":benchmark.get("kind","UNDECLARED"),
+            "benchmark_asof_close":bar(benchmark,market_session)["close"],
+            "benchmark_current_session_minute_sha256":benchmark.get("current_session_minute_sha256"),
             "checked":checked,"selected":selected,
              "candidate_diagnostics":{"total":len(checked),
                  "verified":sum(v.get("data_status")=="VERIFIED" for v in checked),
@@ -613,6 +616,12 @@ def assess(ak,group,frozen,now):
     series=calendar_sessions(trade,today)
     if not series or series[0]!=trade:return {"status":"NO_EXCHANGE_SESSIONS","entries":[]}
     bench=prices(ak,"510300",today)
+    if frozen.get("benchmark_asof_close") is not None:
+        source_bar=bar(bench,frozen["asof_session"])
+        if source_bar is None or abs(source_bar["close"]-frozen["benchmark_asof_close"])>1e-8:
+            return {"status":"BENCHMARK_FREEZE_CLOSE_REVISED",
+                    "reason":"asof 510300 close changed since archived signal",
+                    "entries":[]}
     used=0.0;entries=[]
     for index,item in enumerate(frozen["selected"]):
         code=item["code"]

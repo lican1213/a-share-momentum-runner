@@ -559,3 +559,16 @@ def test_etf_minute_incomplete_cannot_substitute_1450_for_1500():
                                   "volume":1000}])
     with pytest.raises(ValueError,match="ETF_1M_SESSION_NOT_COMPLETE"):
         x._completed_etf_daily_from_sina_minutes(AK(),"2026-10-30")
+
+def test_frozen_benchmark_close_cannot_be_revised_on_paper_replay(monkeypatch):
+    frozen={"group":"B","next_open_session":"2026-11-02",
+            "asof_session":"2026-10-30","benchmark_asof_close":4.065,
+            "selected":[],"signal_sha256":"fixture"}
+    monkeypatch.setattr(x,"execution_gate",lambda freeze,now:None)
+    monkeypatch.setattr(x,"calendar_sessions",lambda first,last:["2026-11-02"])
+    monkeypatch.setattr(x,"prices",lambda ak,code,day:{
+        "bars":[{"date":"2026-10-30","close":4.075}],
+        "raw_sha256":"later_revision"})
+    result=x.assess(object(),"B",frozen,now("2026-11-02T18:15:00"))
+    assert result["status"]=="BENCHMARK_FREEZE_CLOSE_REVISED"
+    assert result["entries"]==[]

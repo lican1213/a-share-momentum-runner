@@ -38,6 +38,9 @@ def read_only_probe(ak, now):
         benchmark=x.prices(ak,"510300",asof)
         if x.bar(benchmark,asof) is None:raise ValueError("CURRENT_ETF_CLOSE_MISSING")
         result["benchmark"]={"price_sha256":benchmark["raw_sha256"],
+                              "price_provider":benchmark.get("kind"),
+                              "current_session_minute_sha256":benchmark.get("current_session_minute_sha256"),
+                              "prior_daily_last_session":benchmark.get("prior_daily_last_session"),
                               "asof_close":x.bar(benchmark,asof)["close"],
                               "history_count":len(benchmark["bars"])}
     except Exception as exc:
