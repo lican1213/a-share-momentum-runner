@@ -502,6 +502,10 @@ def assess(ak,group,frozen,now):
                         closebar=m["bars"][-1];exit_quote=closebar["open"]
                     if reason is None:
                         record["status"]="EXIT_PENDING";continue
+                    previous_session=series[si-1]
+                    previous_bar=bar(history,previous_session)
+                    if previous_bar and abs(closebar["high"]-closebar["low"])<1e-8 and closebar["open"]<=previous_bar["close"]*.953:
+                        raise ValueError("POSSIBLE_LIMIT_DOWN_ONE_MINUTE_EXIT_QUEUE_UNVERIFIED")
                     matching=next((x for x in mbench["bars"] if x["minute"]==closebar["minute"]),None)
                     if matching is None:raise ValueError("BENCHMARK_SAME_MINUTE_UNAVAILABLE")
                     sell=down(exit_quote*(1-SLIP))
