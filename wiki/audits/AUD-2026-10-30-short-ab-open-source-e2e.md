@@ -48,5 +48,5 @@ updated: 2026-10-30
 - [MOC](../../MOC.md)、[综合红队](AUD-2026-10-28-e2e-release-gate.md)
 - [短线引擎](../../national_team/short_ab_engine.py)、[新增回归](../../tests/test_national_team_short_ab_engine.py)
 - [A2 workflow](../../.github/workflows/national-team-short-a2.yml)、[B workflow](../../.github/workflows/national-team-short-b.yml)
-- [A2不可回写信号](../../records/national_team_short_ab/freezes/A2/) / [B不可回写信号](../../records/national_team_short_ab/freezes/B/)（仅当真实归档存在时可访问）
+- A2不可回写信号计划归档：`records/national_team_short_ab/freezes/A2/`；B计划归档：`records/national_team_short_ab/freezes/B/`。在首次真实盘后冻结成功之前这两个目录**不应存在**，不得为通过Wiki链接检查而制造空白冻结文件。
 - [P0 issue #4](https://github.com/lican1213/a-share-momentum-runner/issues/4) 应保持OPEN直至G1/G2实际验证，工程CI通过不代表已完成行情验收。
