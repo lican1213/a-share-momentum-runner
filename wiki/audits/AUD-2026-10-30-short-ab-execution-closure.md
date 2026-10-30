@@ -24,3 +24,9 @@ Tests prove software behavior; G1 actual close freeze, G2 pre-open archived even
 ## Independent 16:40 Beijing real-source readiness probe
 
 A separate read-only workflow `national-team-short-probe.yml` probes the completed actual market session, all ten frozen V2 securities, the four-ETF archived event, and 510300/601825/600309 minute vendor reachability. The probe cannot call build_freeze, write a freeze path, generate a paper order, or increment paper positions. It saves `records/national_team_short_ab/probes/` with real run ID, SHA, provider errors and source hashes. This is a data-readiness check only, not G1/G2/G3 evidence.
+
+## 2026-10-30 actual vendor failure and fallback repair
+
+Real read-only source probe [41027686611](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41027686611) at 16:37:58 Beijing obtained verified latest 2026-10-29 four-ETF net-creation proxy 8,742,148,830 CNY and 510300 close 4.065 on 2026-10-30, but **all ten stock OHLC sources** and sampled intraday bars failed Eastmoney push2 rate-limiting; generic A-share name lookup reset connection. These are actual failures, not strategy exclusions.
+
+Remedy: query Shanghai Stock Exchange main-board names via `stock_info_sh_name_code` first, Sina unadjusted daily `stock_zh_a_daily` first for stocks, Eastmoney as secondary with per-process rate-limit circuit breaker. For 510300 ETF, prefer existing actual Eastmoney daily with Sina ETF fallback. For 1m exit/B2 evidence, Sina `stock_zh_a_minute` first, then Eastmoney only if not rate limited. Exact 1-minute completeness and terminal-bar validation remains mandatory. Never use historical daily close in place of a 14:50 bar. Fallback itself is not an assertion of available real market quotes; rerun actual probe and validate real evidence.

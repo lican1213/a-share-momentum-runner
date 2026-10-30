@@ -453,3 +453,61 @@ def test_four_etf_prior_observation_future_stamp_rejected(monkeypatch,tmp_path):
     monkeypatch.setattr(x,"calendar_sessions",lambda a,b:["2026-10-28","2026-10-29","2026-10-30"])
     with pytest.raises(ValueError,match="NO_PIT_COMPLETE"):
         x.source_flow(now("2026-10-30T18:15:00"))
+
+def test_sina_stock_history_unadjusted_schema_and_turnover(monkeypatch):
+    import pandas as pd
+    frame=pd.DataFrame([
+        {"date":"2026-10-29","open":10.,"high":11.,"low":9.,"close":10.5,
+         "volume":10000,"amount":102000000},
+        {"date":"2026-10-30","open":10.5,"high":11.,"low":10.,"close":10.8,
+         "volume":11000,"amount":119000000}])
+    class AK:
+        def stock_zh_a_daily(self,**kwargs):
+            assert kwargs["symbol"]=="sh601825" and kwargs["adjust"]==""
+            return frame
+        def stock_zh_a_hist(self,**kwargs):
+            raise AssertionError("EM must not be called when Sina works")
+    out=x.prices(AK(),"601825","2026-10-30")
+    assert out["kind"]=="SINA_STOCK_DAILY_NO_ADJUST"
+    assert out["bars"][-1]["turnover"]==119000000
+    assert out["bars"][-1]["date"]=="2026-10-30"
+    assert out["raw_sha256"]==x.sha(out["bars"])
+
+def test_official_sse_roster_over_broken_generic_name_api():
+    import pandas as pd
+    class AK:
+        def stock_info_sh_name_code(self,**kwargs):
+            assert kwargs["symbol"]=="主板A股"
+            return pd.DataFrame([{"证券代码":"601825","证券简称":"沪市样例"}])
+        def stock_info_a_code_name(self):
+            raise AssertionError("no generic call if SSE success")
+    names,provider=x.stock_names(AK())
+    assert names["601825"]=="沪市样例"
+    assert provider=="SSE_OFFICIAL_MAIN_BOARD"
+
+def test_sina_minute_history_accepted_only_if_complete(monkeypatch):
+    import pandas as pd
+    from datetime import datetime,timedelta
+    date_string="2026-10-30"
+    morning=[datetime.fromisoformat(date_string+" 09:30")+timedelta(minutes=i)
+             for i in range(121)]
+    afternoon=[datetime.fromisoformat(date_string+" 13:00")+timedelta(minutes=i)
+               for i in range(111)]
+    minutes=morning+afternoon
+    frame=pd.DataFrame([{"day":t.strftime("%Y-%m-%d %H:%M:%S"),
+                         "open":10.,"high":10.1,"low":9.9,
+                         "close":10.,"volume":100}
+                        for t in minutes])
+    class AK:
+        def stock_zh_a_minute(self,**kwargs):
+            assert kwargs["symbol"]=="sh601825"
+            return frame
+        def stock_zh_a_hist_min_em(self,**kwargs):
+            raise AssertionError("should not query EM when Sina is complete")
+    got=x.minute_rows(AK(),"601825",date_string)
+    assert got["provider"]=="SINA_1MIN"
+    assert got["bars"][-1]["minute"]==date_string+" 14:50"
+    assert got["sha256"]==x.sha(got["bars"])
+    with pytest.raises(ValueError,match="INCOMPLETE_MINUTE_SOURCE"):
+        x._normalize_minutes(frame.iloc[:-1],"601825",date_string,"09:30","14:50","SINA_1MIN")
+

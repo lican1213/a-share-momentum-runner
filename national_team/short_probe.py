@@ -42,8 +42,8 @@ def read_only_probe(ak, now):
         result["warnings"].append("BENCHMARK:"+type(exc).__name__+":"+str(exc)[:180])
         return result
     try:
-        names_df=ak.stock_info_a_code_name()
-        names={str(v["code"]).zfill(6):str(v["name"]) for _,v in names_df.iterrows()}
+        names,name_provider=x.stock_names(ak)
+        result["security_name_provider"]=name_provider
     except Exception as exc:
         names={}
         result["warnings"].append("SECURITY_NAMES:"+type(exc).__name__+":"+str(exc)[:180])

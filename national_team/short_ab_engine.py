@@ -83,34 +83,111 @@ def next_session(day):
     return next_days[0]
 
 
-def normalize(df, code, kind):
-    fields={"日期":"date","开盘":"open","最高":"high","最低":"low",
-            "收盘":"close","成交量":"volume"}
-    if code!="510300":fields["成交额"]="turnover"
-    if not all(k in df.columns for k in fields):
-        raise ValueError(f"{code}: OHLCV/turnover schema is missing")
+_EM_RATE_LIMITED=False
+
+def normalize(df,code,kind):
+    """Normalize *genuine* Eastmoney Chinese or Sina English OHLCV frames."""
+    cn={"日期":"date","开盘":"open","最高":"high","最低":"low",
+        "收盘":"close","成交量":"volume","成交额":"turnover"}
+    en={"date":"date","open":"open","high":"high","low":"low",
+        "close":"close","volume":"volume","amount":"turnover"}
+    mapping=cn if "日期" in df.columns else en
+    fields={key:out for key,out in mapping.items()
+            if out!="turnover" or code!="510300"}
+    if not all(key in df.columns for key in fields):
+        raise ValueError(f"{code}: OHLCV/turnover schema is missing in {kind}")
     out=[]
-    for _,row in df.sort_values("日期").iterrows():
-        b={dest:(str(row[src])[:10] if dest=="date" else float(row[src]))
-           for src,dest in fields.items()}
-        o,h,l,c,v=(b[k] for k in ("open","high","low","close","volume"))
-        if not all(math.isfinite(x) for x in b.values() if isinstance(x,float)):
+    for _,row in df.sort_values(next(k for k,v in fields.items() if v=="date")).iterrows():
+        item={outkey:(str(row[key])[:10] if outkey=="date" else float(row[key]))
+              for key,outkey in fields.items()}
+        o,h,l,c,v=(item[k] for k in ("open","high","low","close","volume"))
+        if not all(math.isfinite(z) for z in item.values() if isinstance(z,float)):
             raise ValueError(f"{code}: nonfinite quote")
         if min(o,h,l,c)<=0 or v<0 or not l<=min(o,c)<=max(o,c)<=h:
             raise ValueError(f"{code}: invalid OHLC")
-        if out and b["date"]<=out[-1]["date"]:
+        if "turnover" in item and item["turnover"]<0:
+            raise ValueError(f"{code}: negative turnover")
+        if out and item["date"]<=out[-1]["date"]:
             raise ValueError(f"{code}: duplicate/nonascending history")
-        out.append(b)
+        out.append(item)
     return {"kind":kind,"code":code,"bars":out,"raw_sha256":sha(out)}
 
 
+def _pause_eastmoney(error):
+    global _EM_RATE_LIMITED
+    if ("Push2RateLimitError" in type(error).__name__ or
+        "Connection reset" in str(error) or "temporarily rate" in str(error).lower()):
+        _EM_RATE_LIMITED=True
+
+
+def stock_names(ak):
+    """Prefer Shanghai exchange main-board roster; never guess ST status."""
+    failures=[]
+    try:
+        frame=ak.stock_info_sh_name_code(symbol="主板A股")
+        if "证券代码" not in frame.columns or "证券简称" not in frame.columns:
+            raise ValueError("SSE_NAME_SCHEMA_MISSING")
+        names={str(row["证券代码"]).zfill(6):str(row["证券简称"])
+               for _,row in frame.iterrows() if str(row["证券代码"]).strip()}
+        if names:return names,"SSE_OFFICIAL_MAIN_BOARD"
+        raise ValueError("EMPTY_SSE_SECURITY_ROSTER")
+    except Exception as exc:
+        failures.append("SSE:"+type(exc).__name__+":"+str(exc)[:100])
+    try:
+        frame=ak.stock_info_a_code_name()
+        if "code" not in frame.columns or "name" not in frame.columns:
+            raise ValueError("GENERIC_NAME_SCHEMA_MISSING")
+        names={str(row["code"]).zfill(6):str(row["name"])
+               for _,row in frame.iterrows() if str(row["code"]).strip()}
+        if names:return names,"AKSHARE_ALL_BOARD"
+        raise ValueError("EMPTY_ALL_BOARD_ROSTER")
+    except Exception as exc:
+        failures.append("GENERIC:"+type(exc).__name__+":"+str(exc)[:100])
+    raise ValueError("NO_VERIFIED_SECURITY_NAMES:"+";".join(failures))
+
+
 def prices(ak,code,through):
+    """Actual unadjusted daily prices; Sina is preferred for stocks to avoid EM push2 bans."""
     end=through.replace("-","")
+    prefix=("sh" if code.startswith(("5","6","9")) else "sz")+code
+    failures=[]
+    if code!="510300":
+        try:
+            frame=ak.stock_zh_a_daily(symbol=prefix,start_date="20250101",
+                                      end_date=end,adjust="")
+            if frame is None or frame.empty:raise ValueError("EMPTY_SINA_DAILY")
+            return normalize(frame,code,"SINA_STOCK_DAILY_NO_ADJUST")
+        except Exception as exc:
+            failures.append("SINA:"+type(exc).__name__+":"+str(exc)[:120])
+    if not _EM_RATE_LIMITED:
+        try:
+            if code=="510300":
+                frame=ak.fund_etf_hist_em(symbol=code,period="daily",
+                                          start_date="20250101",end_date=end,adjust="")
+                kind="EASTMONEY_ETF_DAILY_NO_ADJUST"
+            else:
+                frame=ak.stock_zh_a_hist(symbol=code,period="daily",
+                                         start_date="20250101",end_date=end,adjust="")
+                kind="EASTMONEY_STOCK_DAILY_NO_ADJUST"
+            if frame is None or frame.empty:raise ValueError("EMPTY_EASTMONEY_DAILY")
+            return normalize(frame,code,kind)
+        except Exception as exc:
+            _pause_eastmoney(exc)
+            failures.append("EASTMONEY:"+type(exc).__name__+":"+str(exc)[:120])
+    else:
+        failures.append("EASTMONEY:CIRCUIT_BREAKER_PAUSED")
     if code=="510300":
-        df=ak.fund_etf_hist_em(symbol=code,period="daily",start_date="20250101",end_date=end,adjust="")
-        return normalize(df,code,"EASTMONEY_ETF_DAILY_NO_ADJUST")
-    df=ak.stock_zh_a_hist(symbol=code,period="daily",start_date="20250101",end_date=end,adjust="")
-    return normalize(df,code,"EASTMONEY_STOCK_DAILY_NO_ADJUST")
+        try:
+            frame=ak.fund_etf_hist_sina(symbol="sh510300")
+            if frame is None or frame.empty:raise ValueError("EMPTY_SINA_ETF_DAILY")
+            date_field="date" if "date" in frame.columns else "日期"
+            frame=frame[(frame[date_field].astype(str).str[:10]>="2025-01-01") &
+                        (frame[date_field].astype(str).str[:10]<=through)]
+            if frame.empty:raise ValueError("SINA_ETF_NO_ASOF_BARS")
+            return normalize(frame,code,"SINA_ETF_DAILY_NO_ADJUST")
+        except Exception as exc:
+            failures.append("SINA_ETF:"+type(exc).__name__+":"+str(exc)[:120])
+    raise ValueError(f"{code}:DAILY_PROVIDERS_UNVERIFIED:"+";".join(failures))
 
 
 def bar(rows,day):
@@ -234,11 +311,10 @@ def build_freeze(ak, now, group, market_session, flow=None, v2=None):
     benchmark=prices(ak,"510300",market_session)
     if bar(benchmark,market_session) is None:raise ValueError("benchmark close not available")
     try:
-        names_df=ak.stock_info_a_code_name()
-        names={str(r["code"]).zfill(6):str(r["name"]) for _,r in names_df.iterrows()}
+        names,name_provider=stock_names(ak)
         name_error=None
     except Exception as error:
-        names={};name_error=f"{type(error).__name__}:{str(error)[:160]}"
+        names={};name_provider="UNVERIFIED";name_error=f"{type(error).__name__}:{str(error)[:160]}"
     checked=[]
     for cohort,code in RANK_ORDER:
         name=names.get(code)
@@ -280,7 +356,7 @@ def build_freeze(ak, now, group, market_session, flow=None, v2=None):
             "freeze_created_at":now.astimezone(BJ).isoformat(),
             "source_code_sha":os.getenv("GITHUB_SHA","UNKNOWN"),
             "source_run_id":os.getenv("GITHUB_RUN_ID","local"),
-            "frozen_v2":v2,"four_etf_flow":flow,
+            "frozen_v2":v2,"four_etf_flow":flow,"security_name_provider":name_provider,
             "benchmark_sha256":benchmark["raw_sha256"],
             "checked":checked,"selected":selected,
              "candidate_diagnostics":{"total":len(checked),
@@ -296,31 +372,60 @@ def build_freeze(ak, now, group, market_session, flow=None, v2=None):
     return freeze
 
 
-def minute_rows(ak, code, day, first="09:30", last="14:50"):
-    """Reject if provider cannot supply genuine 1-minute dated history."""
-    start=f"{day} {first}:00";end=f"{day} {last}:59"
-    if code=="510300":
-        df=ak.fund_etf_hist_min_em(symbol=code,period="1",start_date=start,end_date=end,adjust="")
-    else:
-        df=ak.stock_zh_a_hist_min_em(symbol=code,period="1",start_date=start,end_date=end,adjust="")
-    keys=("时间","开盘","最高","最低","收盘","成交量")
-    if not all(k in df.columns for k in keys):raise ValueError("MINUTE_SCHEMA_MISSING")
-    out=[]
-    for _,r in df.iterrows():
-        stamp=str(r["时间"])[:16]
+def _normalize_minutes(frame,code,day,first,last,provider):
+    """Timestamped 1min bars must be complete; never infer missing 14:50 quotes."""
+    keys_cn=("时间","开盘","最高","最低","收盘","成交量")
+    keys_en=("day","open","high","low","close","volume")
+    if all(k in frame.columns for k in keys_cn):
+        keys=keys_cn
+    elif all(k in frame.columns for k in keys_en):
+        keys=keys_en
+    else:raise ValueError("MINUTE_SCHEMA_MISSING")
+    rows=[]
+    for _,r in frame.iterrows():
+        stamp=str(r[keys[0]])[:16]
         if not (f"{day} {first}"<=stamp<=f"{day} {last}"):continue
-        b={"minute":stamp,"open":float(r["开盘"]),"high":float(r["最高"]),
-           "low":float(r["最低"]),"close":float(r["收盘"]),"volume":float(r["成交量"])}
-        if not all(math.isfinite(x) for x in (b["open"],b["high"],b["low"],b["close"],b["volume"])):
+        item={"minute":stamp,"open":float(r[keys[1]]),
+              "high":float(r[keys[2]]),"low":float(r[keys[3]]),
+              "close":float(r[keys[4]]),"volume":float(r[keys[5]])}
+        values=(item["open"],item["high"],item["low"],item["close"],item["volume"])
+        if not all(math.isfinite(v) for v in values) or item["volume"]<0:
             raise ValueError("INVALID_MINUTE_QUOTE")
-        if b["volume"]<0 or b["low"]<=0 or not b["low"]<=min(b["open"],b["close"])<=max(b["open"],b["close"])<=b["high"]:
+        if item["low"]<=0 or not item["low"]<=min(item["open"],item["close"])<=max(item["open"],item["close"])<=item["high"]:
             raise ValueError("INCONSISTENT_MINUTE_QUOTE")
-        if out and stamp<=out[-1]["minute"]:raise ValueError("MINUTE_ORDER_OR_DUPLICATE")
-        out.append(b)
+        if rows and stamp<=rows[-1]["minute"]:raise ValueError("MINUTE_ORDER_OR_DUPLICATE")
+        rows.append(item)
     min_rows=110 if last=="11:30" else 215
-    if len(out)<min_rows or out[0]["minute"]>f"{day} 09:35" or out[-1]["minute"]!=f"{day} {last}":
-        raise ValueError("INCOMPLETE_MINUTE_SOURCE")
-    return {"bars":out,"sha256":sha(out),"provider":"EASTMONEY_1MIN"}
+    if (len(rows)<min_rows or not rows or
+        rows[0]["minute"]>f"{day} 09:35" or rows[-1]["minute"]!=f"{day} {last}"):
+        raise ValueError(f"INCOMPLETE_MINUTE_SOURCE:{provider}:{len(rows)}")
+    return {"bars":rows,"sha256":sha(rows),"provider":provider,"code":code}
+
+
+def minute_rows(ak,code,day,first="09:30",last="14:50"):
+    """Sina 1m primary, EM last resort; exact dated 1m evidence required."""
+    prefix=("sh" if code.startswith(("5","6","9")) else "sz")+code
+    errors=[]
+    try:
+        frame=ak.stock_zh_a_minute(symbol=prefix,period="1",adjust="")
+        return _normalize_minutes(frame,code,day,first,last,"SINA_1MIN")
+    except Exception as exc:
+        errors.append("SINA:"+type(exc).__name__+":"+str(exc)[:130])
+    if not _EM_RATE_LIMITED:
+        try:
+            start=f"{day} {first}:00";end=f"{day} {last}:59"
+            if code=="510300":
+                frame=ak.fund_etf_hist_min_em(symbol=code,period="1",
+                                             start_date=start,end_date=end,adjust="")
+            else:
+                frame=ak.stock_zh_a_hist_min_em(symbol=code,period="1",
+                                                start_date=start,end_date=end,adjust="")
+            return _normalize_minutes(frame,code,day,first,last,"EASTMONEY_1MIN")
+        except Exception as exc:
+            _pause_eastmoney(exc)
+            errors.append("EASTMONEY:"+type(exc).__name__+":"+str(exc)[:130])
+    else:errors.append("EASTMONEY:CIRCUIT_BREAKER_PAUSED")
+    raise ValueError(f"{code}:MINUTE_PROVIDERS_UNVERIFIED:"+";".join(errors))
 
 
 def b2_signal(today_minutes, prior_minutes):
