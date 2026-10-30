@@ -1,0 +1,15 @@
+{
+  "captured_at": "2026-10-30T16:45:14.042207+08:00",
+  "group": "B",
+  "experiment": "EXP-0006",
+  "version": "EXP0006_B_20261030",
+  "github_run_id": "41028539886",
+  "github_sha": "0ec9dea480cc69110fafeb997c71d4b39519bf6f",
+  "real_broker_orders": 0,
+  "freeze_created": false,
+  "prior_freezes": [],
+  "errors": [],
+  "freeze_status": "OUTSIDE_TODAY_COMPLETED_EXCHANGE_SESSION",
+  "status": "RESEARCH_ONLY_NO_BROKER_ORDERS",
+  "runtime_akshare": "1.20.13"
+}
