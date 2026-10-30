@@ -412,3 +412,44 @@ def test_entry_exit_create_only_replay_drift(tmp_path):
     wrong=dict(row,net_pnl=999.)
     assert x.lock_paper_replay("B",frozen,{"entries":[wrong]},tmp_path,when)["drifts"]
     assert wrong["status"]=="EXIT_LEDGER_DRIFT_BLOCKED" and "net_pnl" not in wrong
+
+def test_preopen_possible_three_percent_gap_is_not_a_false_rejection(monkeypatch):
+    """Buying one lot at a legal low-gap quote may fit even if +3% doesn't."""
+    monkeypatch.setattr(x,"next_session",lambda day:"2026-11-02")
+    class Names:
+        def iterrows(self):
+            return iter((i,{"code":c,"name":"SAFE"}) for i,(_,c) in enumerate(x.RANK_ORDER))
+    class AK:
+        def stock_info_a_code_name(self):return Names()
+    def price(ak,code,day):
+        return {"bars":[{"date":day,"close":49.5}],"raw_sha256":"test","kind":"TEST"}
+    def ind(hist,ref,day,group):
+        return {"eligible":True,"close":49.5,"breakout":49.5,
+                "atr14":.2,"rejection_reasons":[],"gate_checks":{}}
+    monkeypatch.setattr(x,"prices",price)
+    monkeypatch.setattr(x,"indicator",ind)
+    f=x.build_freeze(AK(),now("2026-10-30T18:15:00"),"A2","2026-10-30",
+                     flow={"day":"2026-10-29","net_cny":"500"},v2={"path":"V2"})
+    assert f["checked"][0]["eligible"] is True
+    assert 100*49.5*1.03>5000
+    assert [i["code"] for i in f["selected"]]==["601825","600309"]
+
+def test_four_etf_prior_observation_future_stamp_rejected(monkeypatch,tmp_path):
+    folder=tmp_path/"merged"/"2026-10-30"
+    folder.mkdir(parents=True)
+    stamp="2026-10-29T15:10:00+08:00"
+    older={code:{"shares":"100","nav":"4",
+                 "shares_first_observed_at":stamp,"nav_first_observed_at":stamp}
+           for code in x.CORE}
+    current={code:{"shares":"101","nav":"4",
+                   "shares_first_observed_at":stamp,"nav_first_observed_at":stamp}
+             for code in x.CORE}
+    older["510300"]["shares_first_observed_at"]="2026-10-31T00:00:00+08:00"
+    (folder/"evidence.json").write_text(json.dumps({
+        "first_observed_no_earlier_than":stamp,
+        "observations_by_date":{"2026-10-27":older,"2026-10-28":current}}))
+    monkeypatch.setattr(x,"FLOW_ROOT",tmp_path/"merged")
+    monkeypatch.setattr(x,"next_session",lambda d:"2026-10-28")
+    monkeypatch.setattr(x,"calendar_sessions",lambda a,b:["2026-10-28","2026-10-29","2026-10-30"])
+    with pytest.raises(ValueError,match="NO_PIT_COMPLETE"):
+        x.source_flow(now("2026-10-30T18:15:00"))

@@ -174,11 +174,13 @@ def source_flow(now):
             amount=Decimal("0")
             for code in CORE:
                 latest=by[last][code];older=by[prior][code]
-                for name in ("shares_first_observed_at","nav_first_observed_at"):
-                    if name not in latest:
-                        raise ValueError(f"{code}: missing PIT timestamp")
-                    if datetime.fromisoformat(latest[name]).astimezone(BJ)>now:
-                        raise ValueError(f"{code}: observation from the future")
+                for snapshot in (older,latest):
+                    for name in ("shares_first_observed_at","nav_first_observed_at"):
+                        if name not in snapshot:
+                            raise ValueError(f"{code}: missing PIT timestamp")
+                        first=datetime.fromisoformat(snapshot[name])
+                        if first.tzinfo is None or first.astimezone(BJ)>now:
+                            raise ValueError(f"{code}: missing timezone or future observation")
                 amount+=(Decimal(str(latest["shares"]))-Decimal(str(older["shares"])))*Decimal(str(latest["nav"]))
             valid.append((last,created,str(path),hashlib.sha256(blob).hexdigest(),amount))
         except (OSError,KeyError,ValueError,TypeError,ArithmeticError):
@@ -255,9 +257,16 @@ def build_freeze(ak, now, group, market_session, flow=None, v2=None):
                 item.update(ind)
                 item.update({"data_status":"VERIFIED","price_sha256":hist["raw_sha256"],
                              "price_provider":hist["kind"]})
-                if ind["eligible"] and 100*ind["close"]*1.03>GROUPS[group]["max_each"]:
+                # Do not pre-reject an affordable one-lot buy on a hypothetical
+                # maximum gap. The exact budget and risk are checked at entry.
+                # A2 cannot open below both prior close and breakout. B2 can
+                # open below prior close; 80% is only a conservative price floor.
+                cheapest=max(ind["close"],ind["breakout"]) if group=="A2" else .8*ind["close"]
+                minimum_lot=100*up(cheapest*(1+SLIP))
+                item["minimum_possible_lot_cny"]=minimum_lot
+                if ind["eligible"] and minimum_lot>GROUPS[group]["max_each"]:
                     item["eligible"]=False
-                    item["reason"]="ONE_LOT_EXCEEDS_PER_STOCK_BUDGET"
+                    item["reason"]="MINIMUM_OPEN_LOT_UNAFFORDABLE"
                     item["rejection_reasons"].append(item["reason"])
             except Exception as error:
                 item.update({"eligible":False,"data_status":"UNVERIFIED",
