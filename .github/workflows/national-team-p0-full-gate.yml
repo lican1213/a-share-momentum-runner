@@ -1,0 +1,39 @@
+name: Short-paper P0 full-repository acceptance gate
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'national_team/short_ab_engine.py'
+      - 'tests/test_national_team_short_ab_engine.py'
+      - '.github/workflows/national-team-p0-full-gate.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: p0-full-gate-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  all-test-and-docs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout pinned commit
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install full project test dependencies
+        run: |
+          python -m pip install -r requirements.txt 'lxml>=5,<7' 'beautifulsoup4>=4.12,<5'
+      - name: Complete repository pytest (not just short-paper subset)
+        run: python -m pytest -q
+      - name: Canonical MOC and internal links
+        run: python scripts/wiki_lint.py
+      - name: Verify python syntax of execution and persistence
+        run: |
+          python -m py_compile national_team/short_ab_engine.py scripts/wiki_lint.py
+      - name: Evidence boundary
+        run: |
+          echo "Full suite and wiki checks do not prove a broker order or alpha."
+          echo "G1: immutable Oct 30 freeze; G2/G3/G4 require separate market-timed proof."
