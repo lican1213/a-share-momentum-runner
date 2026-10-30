@@ -185,3 +185,29 @@ def test_R5_partial_missing_V2_stock_blocks_full_portfolio_pnl():
     assert result["status"]=="STOCK_ENTRY_DATA_UNKNOWN"
     assert result["unknown_entry_symbols"]==["600309"]
     assert result["paired_excess_net_return"] is None
+
+
+def test_R1_manual_expiry_is_immutable_and_never_backfills(monkeypatch,tmp_path):
+    frozen={"group":"B","signal_sha256":"source-frozen","asof_session":"2026-10-30",
+            "next_open_session":"2026-11-02","selected":[]}
+    monkeypatch.setattr(x,"locked_freezes",lambda group,root:[(tmp_path/"source.json",frozen)])
+    entry={"signal_id":"source-frozen-0-601825","code":"601825","cohort":"S1",
+           "group":"B","entry_session":"2026-11-02",
+           "status":"ENTRY_DATA_UNKNOWN","reason":"vendor source unavailable"}
+    assert x.persist_entry_decision("B",frozen,entry,tmp_path,now("2026-11-02T18:15:00"))
+    assert x.load_entry_decisions("B",tmp_path)[entry["signal_id"]]["decision_status"]=="ENTRY_DATA_UNKNOWN"
+    expiry=x.expire_unknown_entry("B",tmp_path,entry["signal_id"],
+                                  now("2026-11-03T18:30:00"),
+                                  "human-reviewed: no verified paper fill, permanently abandon entry")
+    assert expiry.is_file()
+    before=x.load_entry_decisions("B",tmp_path,now=now("2026-11-03T18:00:00"))
+    assert before[entry["signal_id"]]["decision_status"]=="ENTRY_DATA_UNKNOWN"
+    after=x.load_entry_decisions("B",tmp_path,now=now("2026-11-03T19:00:00"))
+    assert after[entry["signal_id"]]["decision_status"]=="ENTRY_EXPIRED"
+    assert x.expire_unknown_entry("B",tmp_path,entry["signal_id"],
+                                  now("2026-11-03T18:30:00"),
+                                  "human-reviewed: no verified paper fill, permanently abandon entry")==expiry
+    import pytest
+    with pytest.raises(ValueError,match="IMMUTABLE_ENTRY_EXPIRY_DRIFT"):
+        x.expire_unknown_entry("B",tmp_path,entry["signal_id"],
+                               now("2026-11-03T20:00:00"),"trying to backdate a changed decision")
