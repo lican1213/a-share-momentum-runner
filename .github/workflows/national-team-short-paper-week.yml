@@ -1,14 +1,8 @@
-name: National-team one-week SHORT paper pilot - experiment EXP-0005
+name: Historical EXP-0005 V1 - missed freeze (manual replay only)
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'national_team/short_paper_pilot.py'
-      - '.github/workflows/national-team-short-paper-week.yml'
-  schedule:
-    # 18:15 Beijing every weekday; source and exchange-calendar gates run in Python.
-    - cron: '15 10 * * 1-5'
+  # V1 2026-10-29 freeze was missed. No more scheduled V1 runs.
+  # New prospective A2 and B jobs have separate workflow definitions.
 permissions:
   contents: write
 concurrency:
