@@ -123,8 +123,9 @@ def test_empty_prior_freeze_cannot_be_recreated_at_midnight(monkeypatch,tmp_path
 def test_freeze_retries_are_idempotent(monkeypatch,tmp_path):
     monkeypatch.setattr(x,"calendar_sessions",lambda a,b:["2026-10-30"])
     def stub(ak,now,group,day):
-        return {"signal_sha256":x.sha({"group":group,"day":day}),"group":group,
-                "selected":[],"asof_session":day,"next_open_session":"2026-11-02"}
+        obj={"group":group,"selected":[],"asof_session":day,
+             "next_open_session":"2026-11-02"}
+        return dict(obj,signal_sha256=x.sha(obj))
     monkeypatch.setattr(x,"build_freeze",stub)
     r1=x.run(object(),now("2026-10-30T18:15:00"),"B",tmp_path)
     r2=x.run(object(),now("2026-10-30T20:15:00"),"B",tmp_path)
