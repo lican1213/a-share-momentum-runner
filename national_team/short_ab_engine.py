@@ -943,8 +943,35 @@ def persist_entry_decision(group,frozen,entry,root,observed_at):
     return write_paper_event_once(path,obj)
 
 
-def load_entry_decisions(group,root,freeze=None):
-    """Read immutable judgment files, refusing identity drift."""
+def expire_unknown_entry(group,root,signal_id,effective_at,reason):
+    """Explicit append-only NO-BACKFILL resolution; not an automatic fill.
+
+    A source outage cannot resolve itself by recovering historical quotations.
+    An auditor may explicitly retire the paper candidate after its entry
+    session; earlier dependent funding sessions remain censored.
+    """
+    path=_entry_decision_path(root,group,signal_id)
+    original=json.loads(path.read_text(encoding="utf-8"))
+    if original.get("decision_status")!="ENTRY_DATA_UNKNOWN":
+        raise ValueError("ONLY_UNKNOWN_ENTRIES_CAN_EXPIRE")
+    if effective_at.tzinfo is None:
+        raise ValueError("EXPIRY_TIME_REQUIRES_TIMEZONE")
+    at=effective_at.astimezone(BJ)
+    cutoff=datetime.combine(date.fromisoformat(original["entry_session"]),time(15,0),BJ)
+    if at<=cutoff or not str(reason).strip():
+        raise ValueError("EXPIRY_REQUIRES_POST_SESSION_AUDITED_REASON")
+    out=_entry_decision_path(root,group,signal_id).parent.parent.parent/"resolutions"/group/f"{signal_id}.json"
+    resolution={"signal_id":signal_id,"original_decision_sha256":sha(original),
+                "resolution":"ENTRY_EXPIRED","effective_at":at.isoformat(),
+                "reason":str(reason).strip()[:250],"backfilled_paper_orders":0}
+    if not write_paper_event_once(out,resolution):
+        raise ValueError("IMMUTABLE_ENTRY_EXPIRY_DRIFT")
+    return out
+
+
+def load_entry_decisions(group,root,freeze=None,now=None):
+    """Read immutable judgment and optional append-only expiry evidence."""
+
     known={f["signal_sha256"] for _,f in locked_freezes(group,root)}
     allowed={freeze["signal_sha256"]} if freeze else known
     result={}
@@ -958,6 +985,24 @@ def load_entry_decisions(group,root,freeze=None):
                     "NO_FILL_RULE_REJECTED","CONFIRMED_PAPER_ENTRY","ENTRY_EXPIRED")
                 or obj.get("broker_fill_confirmed") is not False):
                 raise ValueError("ENTRY_DECISION_INTEGRITY")
+            expiry=Path(root)/"ledger"/"resolutions"/group/f"{obj['signal_id']}.json"
+            if expiry.exists():
+                resolution=json.loads(expiry.read_text(encoding="utf-8"))
+                if (obj["decision_status"]!="ENTRY_DATA_UNKNOWN"
+                    or resolution.get("resolution")!="ENTRY_EXPIRED"
+                    or resolution.get("signal_id")!=obj["signal_id"]
+                    or resolution.get("original_decision_sha256")!=sha(obj)
+                    or resolution.get("backfilled_paper_orders")!=0):
+                    raise ValueError("ENTRY_EXPIRY_INTEGRITY")
+                at=datetime.fromisoformat(resolution["effective_at"])
+                cutoff=datetime.combine(date.fromisoformat(obj["entry_session"]),time(15,0),BJ)
+                if (at.tzinfo is None or at.astimezone(BJ)<=cutoff
+                    or (now is not None and at>now)):
+                    if now is None or at.tzinfo is None or at.astimezone(BJ)<=cutoff:
+                        raise ValueError("ENTRY_EXPIRY_TIME_INVALID")
+                else:
+                    obj["resolution_effective_at"]=at.astimezone(BJ).isoformat()
+                    obj["decision_status"]="ENTRY_EXPIRED"
             if obj["frozen_signal_sha256"] in allowed:
                 result[obj["signal_id"]]=obj
         except (OSError,KeyError,ValueError,TypeError) as e:
@@ -1101,7 +1146,7 @@ def run(ak,now,group,root=RECORD_ROOT):
         records["freeze_status"]="ACCOUNT_LEDGER_INTEGRITY_FAILED"
         return records
     try:
-        existing_decisions=load_entry_decisions(group,root)
+        existing_decisions=load_entry_decisions(group,root,now=now)
     except ValueError as exc:
         records["errors"].append(str(exc))
         records["freeze_status"]="ENTRY_DECISION_INTEGRITY_FAILED"
@@ -1135,7 +1180,23 @@ def run(ak,now,group,root=RECORD_ROOT):
             preceding=[e for e in account_history
                        if e.get("frozen_signal_sha256")!=f["signal_sha256"]]
             portfolio=account_snapshot_before(preceding,f["next_open_session"],group)
-            decisions=load_entry_decisions(group,root,f)
+            # A later expiry cannot retrospectively finance a downstream
+            # event that would already have entered before that expiry.
+            expired_cutoffs=[
+                datetime.fromisoformat(d["resolution_effective_at"])
+                for d in existing_decisions.values()
+                if d["decision_status"]=="ENTRY_EXPIRED"]
+            open_cutoff=datetime.combine(
+                date.fromisoformat(f["next_open_session"]),time(9,25),BJ)
+            if (any(open_cutoff<=t for t in expired_cutoffs)
+                and not any(e.get("frozen_signal_sha256")==f["signal_sha256"]
+                            for e in account_history)):
+                records["prior_freezes"].append({
+                    "path":str(p),"signal_sha256":f["signal_sha256"],
+                    "result":{"status":"ENTRY_EXPIRED_NO_RETROACTIVE_REPLAY",
+                              "entries":[]}})
+                continue
+            decisions=load_entry_decisions(group,root,f,now=now)
             if any(d["decision_status"] in ("NO_FILL_RULE_REJECTED","ENTRY_EXPIRED")
                    for d in decisions.values()):
                 assessment=assess(ak,group,f,now,portfolio=portfolio,decisions=decisions)
