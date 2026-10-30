@@ -264,7 +264,7 @@ def test_end_to_end_synthetic_source_freeze_persist_idempotent_and_next_open(mon
     """Hermetic full pipeline, NOT evidence of genuine market fills or alpha."""
     class FakeNames:
         def iterrows(self):
-            return iter((i,{"code":code,"name":"TEST"+code})
+            return iter((i,{"code":code,"name":"SYN"+code})
                         for i,(_,code) in enumerate(x.RANK_ORDER))
     class FakeAK:
         def stock_info_a_code_name(self):return FakeNames()
