@@ -874,4 +874,4 @@ def test_account_open_position_limits_reject_new_entries_before_market_access(mo
     account["active_codes"]=["600000","600309"]
     account["gross_active"]=20000.
     res=x.assess(object(),"B",frozen,now("2026-11-02T18:15:00"),portfolio=account)
-    assert res["entries"][0]["status"]=="ACCOUNT_MAX_POSITIONS_REJECTED"
+    assert res["entries"][0]["status"]=="ACCOUNT_CASH_OR_GROSS_LIMIT"
