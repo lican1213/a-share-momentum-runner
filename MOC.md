@@ -1,3 +1,8 @@
+## 2026-10-30 全仓库最终G0：206项PASS、Wiki 34页PASS
+
+- [全库Gate实际run 41045697242](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41045697242) 基于`9b0a78ebf807`（仅新增[全量Gate工作流](.github/workflows/national-team-p0-full-gate.yml)，原引擎代码仍为`543f6dacaac5`）：真实安装项目依赖后执行`python -m pytest -q` **206 passed**，`python scripts/wiki_lint.py` **34页、ID唯一、内部链接全部有效**。G0测试完整覆盖本轮修复；此前182项指标专项和60项短线专项也已独立通过。
+- **G1盘后首次合法冻结**依旧以[当前状态](wiki/current-status.md)两份原始JSON为准。**G2/G3/G4仍未验证、无模拟成交、无券商订单**；历史冻结不随新修复代码重新生成。
+
 ## 2026-10-30 19:00后优先级：短线执行红队四项P0修复（参数不变）
 
 - [**唯一当前状态**](wiki/current-status.md) · [执行层四P0审计](wiki/audits/AUD-2026-10-30-short-ab-execution-closure.md) · [当前引擎](national_team/short_ab_engine.py) · [对抗集成测试](tests/test_national_team_short_ab_engine.py) · [待办](wiki/open-questions.md)。后续Agent一律先核对新run及本页，AGENTS/EXP-0006已同步。
