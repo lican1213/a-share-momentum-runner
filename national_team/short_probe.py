@@ -16,7 +16,7 @@ def read_only_probe(ak, now):
     until=today if now.time()>=time(15,35) else today-timedelta(days=1)
     days=x.calendar_sessions((until-timedelta(days=20)).isoformat(),until.isoformat())
     result={"status":"DIAGNOSTIC_ONLY_NO_FREEZE_NO_ORDER",
-            "source_readiness_version":"SSE_SINA_SOURCE_FAILOVER_V2_20261030",
+            "source_readiness_version":"SINA_ETF_VERIFIED_1500_SESSION_V3_20261030",
             "captured_at":now.isoformat(),
             "run_id":os.getenv("GITHUB_RUN_ID","local"),
             "source_commit_sha":os.getenv("GITHUB_SHA","UNKNOWN"),
