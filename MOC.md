@@ -1,3 +1,7 @@
+## 2026-10-30 第二轮R1—R5最终软件G0通过（之后G2/G3/G4未成熟）
+
+- [原始5反例与修复完成审计](wiki/audits/AUD-2026-10-30-round2-independent-redteam.md)：[合并main 7ef5da1cd725](https://github.com/lican1213/a-share-momentum-runner/commit/7ef5da1cd725a8384a3f730ffdd8d454a49067ca)，[main同SHA全量Run 41058487212](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41058487212) `216 passed` / Wiki 35页PASS。A2[41058487108](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41058487108)与B[41058486901](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41058486901)同SHA真实重跑均`EXISTING_FREEZE_UNCHANGED`、无业务错误。旧10月30日原始冻结未改写。R1未知入场决策账本、R2资金事件跨日去重、R3分支身份恢复、R4 14:50分钟标签时间语义、R5 V2未知不算超额。**软件G0=PASS，G2/G3/G4未到期；不改变选股参数、不授权真实券商交易。**
+
 ## 2026-10-30 第二轮独立红队审计（优先级覆盖之前“全库206 PASS”的结论）
 
 - [**第二轮5缺陷与真实修复范围**](wiki/audits/AUD-2026-10-30-round2-independent-redteam.md) · [修复PR #5](https://github.com/lican1213/a-share-momentum-runner/pull/5) · [当前状态](wiki/current-status.md) · [独立反例](tests/test_audit2_independent_redteam.py)。原`88dfa97dac20`五个新反例失败，不能用既有206个旧通过宣布执行层完成。
