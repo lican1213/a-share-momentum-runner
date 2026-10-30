@@ -959,6 +959,28 @@ def load_account_ledger(group,root):
     return out
 
 
+def funding_event_history(group,root,funding_day,version=None):
+    """All immutable arm/full/remnant freezes share ONE economic ETF event key.
+
+    The scope of a full freeze is both arms, a partial freeze is its own arm.
+    Blank-version legacy source is associated with the current group's version.
+    """
+    found=[]
+    for path,frozen in locked_freezes(group,root):
+        if frozen.get("four_etf_flow",{}).get("day")!=funding_day:
+            continue
+        if frozen.get("version",GROUPS[group]["version"]) != (version or GROUPS[group]["version"]):
+            continue
+        scope=frozen.get("cohort_scope")
+        arms=({scope} if scope in ("S1","S2") else
+              set(frozen.get("remaining_arms",[])) if scope=="REMAINDER_AFTER_PARTIAL_ARM_FREEZES"
+              else {"S1","S2"})
+        if not arms<=set(RANKS):
+            raise ValueError("FUNDING_EVENT_ARM_SCOPE_UNVERIFIED")
+        found.append((path,frozen,arms))
+    return found
+
+
 def run(ak,now,group,root=RECORD_ROOT):
     now=now.astimezone(BJ);today=now.date().isoformat()
     records={"captured_at":now.isoformat(),"group":group,"experiment":GROUPS[group]["experiment"],
@@ -1032,6 +1054,14 @@ def run(ak,now,group,root=RECORD_ROOT):
         else:
             try:
                 freeze=build_freeze(ak,now,group,day)
+                funding_day=freeze["four_etf_flow"]["day"]
+                history=funding_event_history(group,root,funding_day,freeze.get("version"))
+                if any(previous.get("asof_session")!=day for _,previous,_ in history):
+                    records["freeze_status"]="NO_NEW_FOUR_ETF_EVENT"
+                    records["duplicate_funding_day"]=funding_day
+                    records["selected_codes"]=[]
+                    return records
+                locked_arms=set().union(*(arms for _,_,arms in history)) if history else set()
                 diag=freeze.get("candidate_diagnostics")
                 # Unknown upstream data is never a verified "no signal".
                 # Keep the attempt, eligible arms and exact errors in the run
@@ -1066,9 +1096,13 @@ def run(ak,now,group,root=RECORD_ROOT):
                         if v.get("asof_session")==day
                         and v.get("cohort_scope") in ("S1","S2")}
                     if (previous_arm_days and
-                        previous_arm_days!={freeze["four_etf_flow"]["day"]}):
+                        previous_arm_days!={funding_day}):
                         raise ValueError("FUNDING_EVENT_CHANGED_AFTER_PARTIAL_ARM_FREEZE")
                     for arm in ("S1","S2"):
+                        if arm in locked_arms:
+                            records["independent_frozen_arms"].append({
+                                "arm":arm,"status":"PREVIOUS_EVENT_ARM_UNCHANGED"})
+                            continue
                         if not records["independent_verified_arms"][arm]["complete"]:
                             continue
                         branch_path=root/"freezes"/group/f"{day}-{arm}.json"
@@ -1110,9 +1144,8 @@ def run(ak,now,group,root=RECORD_ROOT):
                         records["freeze_status"]="PARTIAL_ARM_FROZEN_OTHER_ARM_RETRYABLE"
                     # If no arm is complete: diagnostics only, zero formal freeze.
                     return records
-                funding_day=freeze["four_etf_flow"]["day"]
                 existing_today=[
-                    previous for _,previous in locked_freezes(group,root)
+                    previous for _,previous,arms in history
                     if previous.get("asof_session")==day and
                        previous.get("cohort_scope") in ("S1","S2")]
                 if any(v.get("four_etf_flow",{}).get("day")!=funding_day
@@ -1129,12 +1162,16 @@ def run(ak,now,group,root=RECORD_ROOT):
                     records["selected_codes"]=[]
                 else:
                     if existing_today:
-                        previously_selected={v["code"] for prior_arm in existing_today
-                                              for v in prior_arm["selected"]}
+                        # Lock the whole S1/S2 branch decision, including an
+                        # independently verified CASH branch. A changed leading
+                        # ticker cannot reopen the same arm.
+                        remaining=set(RANKS)-locked_arms
                         freeze["selected"]=[
-                            v for v in freeze["selected"]
-                            if v["code"] not in previously_selected]
+                            next((v for v in freeze["selected"] if v["cohort"]==arm),None)
+                            for arm in ("S1","S2") if arm in remaining]
+                        freeze["selected"]=[v for v in freeze["selected"] if v is not None]
                         freeze["cohort_scope"]="REMAINDER_AFTER_PARTIAL_ARM_FREEZES"
+                        freeze["remaining_arms"]=sorted(remaining)
                         freeze["prior_arm_signal_hashes"]=[
                             v["signal_sha256"] for v in existing_today]
                         freeze["candidate_diagnostics"]["selected"]=len(freeze["selected"])
