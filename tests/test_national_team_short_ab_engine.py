@@ -315,3 +315,31 @@ def test_end_to_end_synthetic_source_freeze_persist_idempotent_and_next_open(mon
     # 10/30 signal can be forged or rewritten.
     missed=x.run(ak,now("2026-10-31T00:55:00"),"B",tmp_path)
     assert not missed["freeze_created"]
+
+
+def test_same_funding_date_cannot_generate_second_session_paper_signal(monkeypatch,tmp_path):
+    monkeypatch.setattr(x,"calendar_sessions",lambda a,b:[a] if a==b else [a,b])
+    monkeypatch.setattr(x,"next_session",lambda day:"2026-11-02" if day=="2026-10-30" else "2026-11-03")
+    def fake_freeze(ak,now,group,day):
+        freeze={"group":group,"asof_session":day,"selected":[],
+                "next_open_session":x.next_session(day),
+                "four_etf_flow":{"day":"2026-10-28","net_cny":"3246374430"}}
+        return dict(freeze,signal_sha256=x.sha(freeze))
+    monkeypatch.setattr(x,"build_freeze",fake_freeze)
+    assert x.run(object(),now("2026-10-30T18:15:00"),"B",tmp_path)["freeze_created"]
+    next_day=x.run(object(),now("2026-11-02T18:15:00"),"B",tmp_path)
+    assert next_day["freeze_status"]=="NO_NEW_FOUR_ETF_EVENT"
+    assert next_day["duplicate_funding_day"]=="2026-10-28"
+    assert not next_day["freeze_created"]
+    assert not (tmp_path/"freezes"/"B"/"2026-11-02.json").exists()
+
+
+def test_negative_funding_is_valid_cash_decision_not_ci_failure(monkeypatch,tmp_path):
+    monkeypatch.setattr(x,"calendar_sessions",lambda a,b:[a])
+    def no_positive(ak,now,group,day):
+        raise ValueError("FOUR_ETF_FLOW_NOT_POSITIVE:2026-10-29:-100")
+    monkeypatch.setattr(x,"build_freeze",no_positive)
+    result=x.run(object(),now("2026-10-30T18:15:00"),"B",tmp_path)
+    assert result["freeze_status"]=="NO_POSITIVE_CORE_FOUR_FLOW"
+    assert result["errors"]==[]
+    assert not result["freeze_created"]
