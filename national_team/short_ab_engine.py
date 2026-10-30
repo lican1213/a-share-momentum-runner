@@ -637,6 +637,15 @@ def run(ak,now,group,root=RECORD_ROOT):
         archive_time=freeze_archive_commit_at(p)
         cutoff=datetime.combine(date.fromisoformat(f["next_open_session"]),time(9,25),BJ)
         if archive_time is None or archive_time>=cutoff:
+            records["prior_freezes"].append({"path":str(p),"signal_sha256":f["signal_sha256"],
+                "result":{"status":"ARCHIVED_FREEZE_COMMIT_BEFORE_OPEN_NOT_VERIFIED",
+                          "archive_commit_time":archive_time.isoformat() if archive_time else None}})
+            continue
+        # Old frozen events remain immutable on disk even after the replay window.
+        from datetime import timedelta
+        if date.fromisoformat(f["next_open_session"])<now.date()-timedelta(days=9):
+            continue
+        try:
             assessment=assess(ak,group,f,now)
             locks=lock_paper_replay(group,f,assessment,root,archive_time)
             if locks["drifts"]:
@@ -644,8 +653,8 @@ def run(ak,now,group,root=RECORD_ROOT):
             records["prior_freezes"].append({"path":str(p),"signal_sha256":f["signal_sha256"],
                                              "archive_commit_at":archive_time.isoformat(),
                                              "paper_ledger":locks,"result":assessment})
-        except Exception as e:
-            records["errors"].append(f"ASSESS:{p.name}:{type(e).__name__}:{str(e)[:150]}")
+        except Exception as exc:
+            records["errors"].append(f"ASSESS:{p.name}:{type(exc).__name__}:{str(exc)[:150]}")
     day=close_day(now)
     if day:
         path=root/"freezes"/group/f"{day}.json"
