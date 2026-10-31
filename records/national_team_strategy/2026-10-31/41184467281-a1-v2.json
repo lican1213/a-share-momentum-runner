@@ -1,0 +1,180 @@
+{
+  "status": "FROZEN_PROSPECTIVE_RESEARCH",
+  "model_version": "NT_FLOW_PIT_V2_20261028",
+  "flow_scope": "FULL_CORE_FOUR",
+  "flow_date": "2026-10-29",
+  "stock_data_date": "2026-10-30",
+  "strategy_first_public_at": "2026-10-31T16:24:25.555806+08:00",
+  "four_etf_flow_cny": "8742148830.000000",
+  "five_day_flow_intensity": "0.2133357172911533065340284694",
+  "flow_direction": "NET_CREATION",
+  "stock_pool_size": 150,
+  "rankable_count": 150,
+  "missing_price_strength_count": 0,
+  "covered_index_weight": "0.83015",
+  "s1_ranked": [
+    {
+      "symbol": "601825",
+      "benchmark_weight": "0.00201",
+      "signed_exposure_over_adv20": "0.07057686340239340660918041601",
+      "relative_strength20": "0.1355248819742424815835365253",
+      "adv20_cny": "248972797.9",
+      "stock_data_date": "2026-10-30"
+    },
+    {
+      "symbol": "600000",
+      "benchmark_weight": "0.0051",
+      "signed_exposure_over_adv20": "0.05894360685274825257403693915",
+      "relative_strength20": "0.2155248819742424815835365253",
+      "adv20_cny": "756400251.25",
+      "stock_data_date": "2026-10-30"
+    },
+    {
+      "symbol": "601229",
+      "benchmark_weight": "0.00392",
+      "signed_exposure_over_adv20": "0.05727600821429474876063890978",
+      "relative_strength20": "0.0811610544242950578190780609",
+      "adv20_cny": "598317244.55",
+      "stock_data_date": "2026-10-30"
+    },
+    {
+      "symbol": "600519",
+      "benchmark_weight": "0.03178",
+      "signed_exposure_over_adv20": "0.05569037828721170836465117344",
+      "relative_strength20": "0.2275351218017822282825394893",
+      "adv20_cny": "4988752067.45",
+      "stock_data_date": "2026-10-30"
+    },
+    {
+      "symbol": "601166",
+      "benchmark_weight": "0.01234",
+      "signed_exposure_over_adv20": "0.05526638475160130456185351142",
+      "relative_strength20": "0.2011848372315131750958407763",
+      "adv20_cny": "1951966227.7",
+      "stock_data_date": "2026-10-30"
+    }
+  ],
+  "s2_ranked": [
+    {
+      "symbol": "601012",
+      "benchmark_weight": "0.00275",
+      "signed_exposure_over_adv20": "0.02701705022237763053943793846",
+      "relative_strength20": "0.0985683602351120468009278300",
+      "adv20_cny": "889842121.35",
+      "stock_data_date": "2026-10-30"
+    },
+    {
+      "symbol": "600926",
+      "benchmark_weight": "0.00351",
+      "signed_exposure_over_adv20": "0.04201531645433345346322405009",
+      "relative_strength20": "0.0963877181127605701886825887",
+      "adv20_cny": "730327532.5",
+      "stock_data_date": "2026-10-30"
+    },
+    {
+      "symbol": "601601",
+      "benchmark_weight": "0.00429",
+      "signed_exposure_over_adv20": "0.03097592549470143269728989135",
+      "relative_strength20": "0.0950671963093029306336228814",
+      "adv20_cny": "1210740853.8",
+      "stock_data_date": "2026-10-30"
+    },
+    {
+      "symbol": "601318",
+      "benchmark_weight": "0.02295",
+      "signed_exposure_over_adv20": "0.05324418312242379951415599538",
+      "relative_strength20": "0.0937408444155570355741468543",
+      "adv20_cny": "3768154639.3",
+      "stock_data_date": "2026-10-30"
+    },
+    {
+      "symbol": "600089",
+      "benchmark_weight": "0.00354",
+      "signed_exposure_over_adv20": "0.03591547271763721064731268021",
+      "relative_strength20": "0.0891233668227273300683850105",
+      "adv20_cny": "861667813.8",
+      "stock_data_date": "2026-10-30"
+    }
+  ],
+  "s2_eligible_pool_count": 33,
+  "source_watch": "records/national_team_watch/2026-10-31/41178966064-a1.json",
+  "source_merged": "records/national_team_merged/2026-10-31/41178966064-a1.json",
+  "source_sha": "a6f0b6c74e3d0c4448cb607b934aef074ff244ed",
+  "limitations": {
+    "actual_etf_pcf": false,
+    "state_actor_stock_purchase_verified": false,
+    "index_weight_proxy_identical_for_all_four_etfs": true,
+    "funding_only_times_entries_not_cross_sectional_rank": true,
+    "backtest_alpha_claimed": false,
+    "broker_execution": false
+  },
+  "benchmark": "510300",
+  "paper_only": true,
+  "trade_authorized": false,
+  "frozen_candidate_cohorts": [
+    {
+      "id": "NT2-ad35a9672ceaff278fb4-S1_FLOW_OVER_ADV20",
+      "strategy_id": "S1_FLOW_OVER_ADV20",
+      "model_version": "NT_FLOW_PIT_V2_20261028",
+      "candidate_symbols": [
+        "601825",
+        "600000",
+        "601229",
+        "600519",
+        "601166"
+      ],
+      "first_public_at": "2026-10-31T16:24:25.555806+08:00",
+      "frozen_by_commit": "a6f0b6c74e3d0c4448cb607b934aef074ff244ed",
+      "funding_underlying_day": "2026-10-29",
+      "stock_data_day": "2026-10-30",
+      "benchmark_etf": "510300",
+      "source_watch": "records/national_team_watch/2026-10-31/41178966064-a1.json",
+      "source_merged": "records/national_team_merged/2026-10-31/41178966064-a1.json",
+      "source_kind": "CSI300_INDEX_PROXY_NOT_ETF_PCF",
+      "ETF_PCF_verified": false,
+      "central_huijin_order_verified": false,
+      "broker_trades_authorized": false,
+      "portfolio_weight_rule": "EQUAL_WEIGHT_INITIAL_FIVE; UNFILLED_ALLOCATION_STAYS_CASH",
+      "planned_entry": "FIRST_EXCHANGE_OPEN_AFTER_FIRST_PUBLIC_AVAILABILITY",
+      "holding_sessions": [
+        5,
+        10,
+        20
+      ],
+      "paper_cost_model": "3bps EACH_SIDE COMMISSION + 5bps EACH_SIDE SLIPPAGE + STOCK 5bps SELL STAMP"
+    },
+    {
+      "id": "NT2-ad35a9672ceaff278fb4-S2_INDEPENDENT_RELATIVE_CONFIRMATION",
+      "strategy_id": "S2_INDEPENDENT_RELATIVE_CONFIRMATION",
+      "model_version": "NT_FLOW_PIT_V2_20261028",
+      "candidate_symbols": [
+        "601012",
+        "600926",
+        "601601",
+        "601318",
+        "600089"
+      ],
+      "first_public_at": "2026-10-31T16:24:25.555806+08:00",
+      "frozen_by_commit": "a6f0b6c74e3d0c4448cb607b934aef074ff244ed",
+      "funding_underlying_day": "2026-10-29",
+      "stock_data_day": "2026-10-30",
+      "benchmark_etf": "510300",
+      "source_watch": "records/national_team_watch/2026-10-31/41178966064-a1.json",
+      "source_merged": "records/national_team_merged/2026-10-31/41178966064-a1.json",
+      "source_kind": "CSI300_INDEX_PROXY_NOT_ETF_PCF",
+      "ETF_PCF_verified": false,
+      "central_huijin_order_verified": false,
+      "broker_trades_authorized": false,
+      "portfolio_weight_rule": "EQUAL_WEIGHT_INITIAL_FIVE; UNFILLED_ALLOCATION_STAYS_CASH",
+      "planned_entry": "FIRST_EXCHANGE_OPEN_AFTER_FIRST_PUBLIC_AVAILABILITY",
+      "holding_sessions": [
+        5,
+        10,
+        20
+      ],
+      "paper_cost_model": "3bps EACH_SIDE COMMISSION + 5bps EACH_SIDE SLIPPAGE + STOCK 5bps SELL STAMP"
+    }
+  ],
+  "new_event_count": 0,
+  "previously_frozen_event_count": 2
+}
