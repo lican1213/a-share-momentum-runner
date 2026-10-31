@@ -2,9 +2,11 @@
 id: OPEN-QUESTIONS
 type: open-questions
 status: active
-updated: 2026-10-30
+updated: 2026-10-31
 ---
 # 尚未搞定的问题与验收门槛
+
+**2026-10-31 新增低位跟随研究P0：** [EXP-0007预注册计划](experiments/EXP-0007-flow-absorption-low-entry-plan.md) / [ADR-0005](decisions/ADR-0005-low-entry-research.md)已归档，未实现。下一步必须：①验证原四ETF连续份额/NAV、公司行动和实际首次可得时间；②构建历史CSI300点时成分、价格收益/MA20与PCF来源质量；③独立F1左侧和F2弱确认及S0/无资金对照；④12类红队反例、实际GitHub CI、完整T+1/T+3分钟可执行账本；⑤至少30个非重复事件簇和5/10/20日成熟收益证据。**严禁将旧A2/B高涨突破股或尚未落实的F1/F2称为国家队低位新买点。**
 
 **2026-10-30第二轮优先未解决项（先于以下旧清单）：** [独立审计与修复](audits/AUD-2026-10-30-round2-independent-redteam.md) R1入场未知后账户错误放资、R2跨日重复ETF事件、R3恢复重复同分支、R4 14:50时间标签、R5 V2缺失股票变现金伪超额。必须新5红测转绿、全库旧例无退化、匹配最新SHA的Actions、原始冻结文件逐字不变。真实2026-11-02 G2/G3还未发生。**不可说206项旧CI已覆盖以上缺陷。**
 
