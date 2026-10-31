@@ -1,0 +1,59 @@
+{
+  "status": "FROZEN_PROSPECTIVE_RESEARCH_EVENTS",
+  "source_watch": "records/national_team_watch/2026-10-31/41178966064-a1.json",
+  "frozen_at": "2026-10-31T15:06:39.327388+08:00",
+  "events": [
+    {
+      "id": "NT-25b73ef7e287394c4763-S1_FLOW_OVER_ADV20",
+      "strategy_id": "S1_FLOW_OVER_ADV20",
+      "candidate_symbols": [
+        "601825",
+        "600000",
+        "601229",
+        "600519",
+        "601166"
+      ],
+      "first_public_at": "2026-10-31T15:06:39.327388+08:00",
+      "frozen_by_commit": "346018b9ec8c2d6469bdd6fa9d7173006e555957",
+      "benchmark_etf": "510300",
+      "funding_underlying_day": "2026-10-30",
+      "source_watch": "records/national_team_watch/2026-10-31/41178966064-a1.json",
+      "source_kind": "CSI300_LATEST_INDEX_WEIGHT_PROXY_NOT_ETF_PCF",
+      "ETF_PCF_verified": false,
+      "central_huijin_order_verified": false,
+      "broker_trades_authorized": false,
+      "data_quality": {
+        "source_ETF_scope": "PARTIAL_SSE_THREE_EXCLUDES_159919",
+        "observed_fund_count": 3,
+        "pool_is_partial": true
+      }
+    },
+    {
+      "id": "NT-25b73ef7e287394c4763-S2_FLOW_PLUS_PRICE_STRENGTH",
+      "strategy_id": "S2_FLOW_PLUS_PRICE_STRENGTH",
+      "candidate_symbols": [
+        "600519",
+        "600000",
+        "601816",
+        "601166",
+        "000333"
+      ],
+      "first_public_at": "2026-10-31T15:06:39.327388+08:00",
+      "frozen_by_commit": "346018b9ec8c2d6469bdd6fa9d7173006e555957",
+      "benchmark_etf": "510300",
+      "funding_underlying_day": "2026-10-30",
+      "source_watch": "records/national_team_watch/2026-10-31/41178966064-a1.json",
+      "source_kind": "CSI300_LATEST_INDEX_WEIGHT_PROXY_NOT_ETF_PCF",
+      "ETF_PCF_verified": false,
+      "central_huijin_order_verified": false,
+      "broker_trades_authorized": false,
+      "data_quality": {
+        "source_ETF_scope": "PARTIAL_SSE_THREE_EXCLUDES_159919",
+        "observed_fund_count": 3,
+        "pool_is_partial": true
+      }
+    }
+  ],
+  "no_broker_orders": true,
+  "duplicate_already_frozen": 0
+}

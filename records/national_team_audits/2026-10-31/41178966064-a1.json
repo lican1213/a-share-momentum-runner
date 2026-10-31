@@ -1,0 +1,38 @@
+{
+  "status": "RESEARCH_PRIOR_FOUR_CURRENT_PARTIAL_AUDITED",
+  "latest_complete_four_factor_date": "2026-10-29",
+  "stock_signal_trading_day": "2026-10-30",
+  "funding_and_stock_signals_use_distinct_dates": true,
+  "funds": {
+    "result": "FOUR_ETF_FUNDING_RECALCULATED",
+    "verified": true,
+    "day_net_creation_proxy_cny": "8742148830.000000",
+    "five_day_net_creation_proxy_cny": "61835311530.000000",
+    "five_day_intensity": "0.2133357172911533065340284694",
+    "unusually_large_abs_five_day_intensity": true,
+    "unusually_large_is_review_flag_not_auto_rejection": true,
+    "not_actual_huijin_buy": true
+  },
+  "stock_proxy": {
+    "result": "INDEX_PROXY_RANKING_RECALCULATED",
+    "verified": true,
+    "candidate_rows_checked": 10,
+    "sampled_constituents": 150,
+    "all_300_constituents_covered": false
+  },
+  "paper": {
+    "result": "IMMUTABLE_FROZEN_EVENTS_CHECKED",
+    "count": 2
+  },
+  "audit_does_not_prove_alpha": true,
+  "audit_does_not_verify_actual_broker_execution": true,
+  "investor_identity_verified": false,
+  "failures": [],
+  "source_paths": {
+    "source": "records/national_team_etf/2026-10-31/41178966064-a1.json",
+    "merged": "records/national_team_merged/2026-10-31/41178966064-a1.json",
+    "watch": "records/national_team_watch/2026-10-31/41178966064-a1.json",
+    "frozen": "records/national_team_events/2026-10-31/41178966064-a1.json"
+  },
+  "evaluated_at": "2026-10-31T15:06:51.118107+08:00"
+}
