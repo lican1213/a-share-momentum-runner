@@ -1,3 +1,10 @@
+## 2026-10-31 国家队逆势承接—低位跟随研究方案（计划已归档，未上线）
+
+- **用户目标再次明确**：最初固定四ETF入金/出金指标继续作为疑似国家队/大机构入场的**主触发器**；希望在市场仍下跌、“刀正在落”时观察资金逆势承接并低位跟随，而非把A2 10日突破高价股当抄底。
+- [**EXP-0007完整预注册计划**](wiki/experiments/EXP-0007-flow-absorption-low-entry-plan.md) · [**ADR-0005研究取向决策**](wiki/decisions/ADR-0005-low-entry-research.md) · [原始四ETF公式](wiki/data/original-four-etf-indicator.md)；审阅7个GitHub案例（ETF资金、机构披露、RQAlpha、Qlib、真实Forward冻结等），记录具体可借鉴与不可照搬之处。
+- 拟独立F1“左侧抗跌滞涨”与F2“3日内低位弱确认”，对照S0直接510300、原A2/B动量及无资金事件的普通抗跌组。首要检验10日费用后净超额，保留5/20日、可成交/回撤及失败样本。
+- **当前仅冻结方案**：没有实现F1/F2、没有新预测或买单，旧2026-10-30 A2/B冻结、执行门槛、代码参数和历史run全不变。核心四ETF全体净申购≠汇金本人持仓变化；新实验不赋予交易授权。
+
 ## 2026-10-30 第二轮R1—R5最终软件G0通过（之后G2/G3/G4未成熟）
 
 - [原始5反例与修复完成审计](wiki/audits/AUD-2026-10-30-round2-independent-redteam.md)：[合并main 7ef5da1cd725](https://github.com/lican1213/a-share-momentum-runner/commit/7ef5da1cd725a8384a3f730ffdd8d454a49067ca)，[main同SHA全量Run 41058487212](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41058487212) `216 passed` / Wiki 35页PASS。A2[41058487108](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41058487108)与B[41058486901](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41058486901)同SHA真实重跑均`EXISTING_FREEZE_UNCHANGED`、无业务错误。旧10月30日原始冻结未改写。R1未知入场决策账本、R2资金事件跨日去重、R3分支身份恢复、R4 14:50分钟标签时间语义、R5 V2未知不算超额。**软件G0=PASS，G2/G3/G4未到期；不改变选股参数、不授权真实券商交易。**
