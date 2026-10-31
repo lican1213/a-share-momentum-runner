@@ -12,6 +12,14 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-31 | [ad9e9dcb82](https://github.com/lican1213/a-share-momentum-runner/commit/ad9e9dcb82f42d5ce28495f19f1c5b72e9e75654) | github-actions[bot] | data: archive actual ETF provider attempt 41178966064 [skip ci] |
+| 2026-10-31 | [346018b9ec](https://github.com/lican1213/a-share-momentum-runner/commit/346018b9ec8c2d6469bdd6fa9d7173006e555957) | Can Li | docs(open): add low-entry research evidence gates |
+| 2026-10-31 | [c0858df523](https://github.com/lican1213/a-share-momentum-runner/commit/c0858df523b6e82bc0e96841f8ff21ca4a210459) | Can Li | docs(log): record EXP-0007 plan-only evidence and sources |
+| 2026-10-31 | [efecb6a22d](https://github.com/lican1213/a-share-momentum-runner/commit/efecb6a22d95351e4acc34afb0167c75a1a96b5a) | Can Li | docs(wiki): index EXP-0007 and ADR-0005 |
+| 2026-10-31 | [3dd1efc69d](https://github.com/lican1213/a-share-momentum-runner/commit/3dd1efc69d9d00ad7df3192f4c937b9df2acea8c) | Can Li | docs(moc): link EXP-0007 low-entry national-team flow plan |
+| 2026-10-31 | [d494bf3b64](https://github.com/lican1213/a-share-momentum-runner/commit/d494bf3b6413aecf580a4238c0f42025f63b6e65) | Can Li | docs(ADR-0005): prioritize original four-ETF flow for low-entry research |
+| 2026-10-31 | [a99ff217fc](https://github.com/lican1213/a-share-momentum-runner/commit/a99ff217fc6594099abbb7e6fb77cac37be43884) | Can Li | docs(EXP-0007): preregister ETF-flow left-side accumulation research plan |
+| 2026-10-30 | [f2fa05587c](https://github.com/lican1213/a-share-momentum-runner/commit/f2fa05587ccd3dfe6f9fb1a73fe8b2bfd6e73d33) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-30 | [0d2233c766](https://github.com/lican1213/a-share-momentum-runner/commit/0d2233c76699179c1275b16c457741dd7524502e) | github-actions[bot] | data: short B prospective paper run 41092370244 [skip ci] |
 | 2026-10-30 | [9ed69dea16](https://github.com/lican1213/a-share-momentum-runner/commit/9ed69dea16d57a748e2c8566dd0c7a2b175b8e4c) | github-actions[bot] | data: short A2 prospective paper run 41092115940 [skip ci] |
 | 2026-10-30 | [494f967943](https://github.com/lican1213/a-share-momentum-runner/commit/494f9679430961e6caeaab4ce8a47ebdb5f688f6) | github-actions[bot] | data: independent prefreeze A2-B market source probe 41079944349 [skip ci] |
