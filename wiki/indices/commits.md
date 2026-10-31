@@ -12,6 +12,8 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-10-31 | [6af3ad4fff](https://github.com/lican1213/a-share-momentum-runner/commit/6af3ad4fff1f1ab44874d940aa6d3894b234809b) | github-actions[bot] | data: archived four-ETF V2 candidate freeze 41184467281 [skip ci] |
+| 2026-10-31 | [a6f0b6c74e](https://github.com/lican1213/a-share-momentum-runner/commit/a6f0b6c74e3d0c4448cb607b934aef074ff244ed) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-31 | [ad9e9dcb82](https://github.com/lican1213/a-share-momentum-runner/commit/ad9e9dcb82f42d5ce28495f19f1c5b72e9e75654) | github-actions[bot] | data: archive actual ETF provider attempt 41178966064 [skip ci] |
 | 2026-10-31 | [346018b9ec](https://github.com/lican1213/a-share-momentum-runner/commit/346018b9ec8c2d6469bdd6fa9d7173006e555957) | Can Li | docs(open): add low-entry research evidence gates |
 | 2026-10-31 | [c0858df523](https://github.com/lican1213/a-share-momentum-runner/commit/c0858df523b6e82bc0e96841f8ff21ca4a210459) | Can Li | docs(log): record EXP-0007 plan-only evidence and sources |
