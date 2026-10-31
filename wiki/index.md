@@ -2,9 +2,13 @@
 id: MOC-WIKI
 type: moc
 status: maintained
-updated: 2026-10-30
+updated: 2026-10-31
 ---
 # Wiki 总索引（Map of Content）
+
+## 2026-10-31 左侧低位跟随研究（计划，尚未实现）
+- [EXP-0007完整计划：四ETF资金逆势承接→抗跌未涨个股→F1/F2对照](experiments/EXP-0007-flow-absorption-low-entry-plan.md) · [ADR-0005：回归用户原始四ETF主信号](decisions/ADR-0005-low-entry-research.md)。
+- 保留旧A2/B追突破信号做反事实，不能回写原始G1冻结；不把全ETF净申购写成国家队账户逐股买入。新方案没有新代码、模拟成交或净超额证明。
 
 ## 2026-10-30 单一当前执行状态（优先于旧三日项目）
 - [当前状态与唯一验收Gate](current-status.md) · [源码](../national_team/short_ab_engine.py) · [最新对抗测试](../tests/test_national_team_short_ab_engine.py) · [四P0真实修复](audits/AUD-2026-10-30-short-ab-execution-closure.md)
