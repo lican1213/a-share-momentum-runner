@@ -6,6 +6,9 @@ updated: 2026-11-01
 ---
 # EXP-0010｜V3 原四ETF覆盖率主指标及2021—2026历史事件自动回放
 
+**最新已验收执行（2026-11-01）**：[V3真实源运行#41281158666](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158666) · [完整永久记录含74个新增日收盘和腾讯源响应SHA256](../../records/national_team_v3/2026-11-01/41281158666-a1.json) · [全仓库#41281158714](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158714) **228 passed/Wiki41页** · [原四ETF专项#41281158654](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158654) **成功**，同源代码SHA `16828ce8770084295a0da264c28f8964bcf65d61`。本轮东财历史行情服务器临时断连，腾讯独立备源读取最近74日期，重叠10日期收盘一致；将URL、增量完整日价格、SHA256、日期覆盖与首次公开时间缺口逐一写入原始JSON。交易信号开关仍OFF，原主分母仍缺失，本页下方最终数字保持不变。
+
+
 **预注册于 2026-11-01。** 基线代码 SHA：`d28971a027751ba8c9eb13cbcb07010e0f8e911a`。继承 [ADR-0006](../decisions/ADR-0006-coverage-ratio-primary.md)，不变更任何旧A2/B执行层或2026-10-30冻结记录。
 
 ## 固定假设与失败条件

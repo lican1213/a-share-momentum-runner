@@ -1,3 +1,8 @@
+## 2026-11-01 V3最终工程验收（最新验证标记）
+
+- **源码SHA `16828ce8770084295a0da264c28f8964bcf65d61`**：[V3源回放#41281158666成功](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158666)（[全量源哈希与新增74日价格](records/national_team_v3/2026-11-01/41281158666-a1.json)，东财受限后腾讯备用源成功）；[同SHA全库#41281158714成功](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158714) **228 passed，Wiki 41页无断链**；[原四ETF专项#41281158654成功](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158654)。
+- 真实延伸至2026-10-30，5/10/20日指数方向份额代理 **52.54% / 47.46% / 41.38%**，下跌基准50.00% /47.87% /38.71%。原真实AUM/CSI300流通市值分母尚无日度记录：原主覆盖率0可算日，**不可称60%净收益策略通过**。细节和负例见[EXP-0010](wiki/experiments/EXP-0010-v3-four-etf-coverage-replay.md)。
+
 ## 2026-11-01 V3已衔接10月30日行情：主结论和真实运行
 
 - [EXP-0010最新追加：截止10月30日的源实跑与失败事件](wiki/experiments/EXP-0010-v3-four-etf-coverage-replay.md) · [实际Actions 41280867133](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41280867133) · [最新原始JSON记录](records/national_team_v3/2026-11-01/41280867133-a1.json)，回放源码SHA `9d23a12a8c3110fce52db8cf8b87b905a4b11fb9`。

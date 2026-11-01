@@ -6,6 +6,9 @@ updated: 2026-10-30
 ---
 # 模型及执行器版本登记（唯一有效升级台账）
 
+**2026-11-01 V3工程最终已验（最新）：** `EXP-0010 + GitSHA 16828ce8770084295a0da264c28f8964bcf65d61 + [源回放41281158666](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158666)`。东财行情断连自动重试并切腾讯K线，10个历史重叠日一致、追加74个交易日源级价格及SHA256；校验14日行情新鲜度；相应[全库228 passed+Wiki41页 41281158714](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158714)、[ETF专项41281158654](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158654)均成功。研究结论份额代理5/10/20日52.54/47.46/41.38%，原主比值尚无真实指数流通市值分母、收入不被证明；旧A2/B原始冻结不变。
+
+
 **2026-11-01 最新V3代码/run（EXP-0010，非A2/B变更）：** 东财沪深300历史CSV后续74交易日的原样增量K线，经10个重叠日期收盘核对后，与四ETF历史份额/NAV构成2021—2026-10-30历史范围；[实际成功run 41280867133](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41280867133)，源码SHA`9d23a12a8c3110fce52db8cf8b87b905a4b11fb9`，[完整记录](../../records/national_team_v3/2026-11-01/41280867133-a1.json)。60去重簇中已成熟5日31/59、10日28/59、20日24/58；真实日度指数普通流通市值还缺，原覆盖率可算0日。后续对直播源的专项单测变化须按最新Git SHA查CI；整个实验仍为回溯研究，旧冻结不改。
 
 

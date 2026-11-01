@@ -6,6 +6,9 @@ updated: 2026-10-31
 ---
 # Wiki 总索引（Map of Content）
 
+**V3最终软件/来源验收：** [同源码SHA的历史真实回放#41281158666](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158666) · [228项全库+Wiki41页#41281158714](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158714) · [原ETF专项#41281158654](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158654)。源码 `16828ce8770084295a0da264c28f8964bcf65d61`；腾讯二级源补74日并留每日收盘及源哈希，详细[EXP-0010](experiments/EXP-0010-v3-four-etf-coverage-replay.md)。主比值真实分母缺失、盈利未验证。
+
+
 ## 2026-11-01 V3衔接当期十月行情（最新）
 - [EXP-0010完整实际结论与失败事件](experiments/EXP-0010-v3-four-etf-coverage-replay.md) · [10月30日源回放#41280867133](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41280867133) · [可核验原始结果](../records/national_team_v3/2026-11-01/41280867133-a1.json)。指数补74个交易日至10月30日后，份额代理5/10/20日方向52.5%/47.5%/41.4%；同范围纯下跌对照50.0%/47.9%/38.7%。原覆盖率日度分母仍0个真实交易日，国家队个人账户动向未知。
 
