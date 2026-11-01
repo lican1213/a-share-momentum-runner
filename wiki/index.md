@@ -6,6 +6,10 @@ updated: 2026-10-31
 ---
 # Wiki 总索引（Map of Content）
 
+## 2026-11-01 V3衔接当期十月行情（最新）
+- [EXP-0010完整实际结论与失败事件](experiments/EXP-0010-v3-four-etf-coverage-replay.md) · [10月30日源回放#41280867133](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41280867133) · [可核验原始结果](../records/national_team_v3/2026-11-01/41280867133-a1.json)。指数补74个交易日至10月30日后，份额代理5/10/20日方向52.5%/47.5%/41.4%；同范围纯下跌对照50.0%/47.9%/38.7%。原覆盖率日度分母仍0个真实交易日，国家队个人账户动向未知。
+
+
 ## 2026-11-01 V3 P0＋P1实际实现（EXP-0010）
 - [EXP-0010新模型和可复算运行门槛](experiments/EXP-0010-v3-four-etf-coverage-replay.md) · [历史计算代码](../national_team/coverage_v3.py) · [回放命令](../scripts/replay_national_team_v3.py) · [对抗测试](../tests/test_national_team_coverage_v3.py) · [公开源Actions](../.github/workflows/national-team-v3-replay.yml)。
 - [已完成回放run 41280606518](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41280606518)：份额代理54已到期簇5/10/20日55.6%/50.0%/44.4%，同范围下跌对照52.3%/50.6%/40.2%；首次run已按run+attempt追加 `records/national_team_v3/`，不覆盖历史记录；官方同日沪深300普通/自由流通市值若尚未按[CSV契约](../data/national_team/csi300_float_mv.csv)补到位，原比值保持空，份额代理5/10/20日照常独立报告。

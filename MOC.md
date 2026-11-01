@@ -1,3 +1,9 @@
+## 2026-11-01 V3已衔接10月30日行情：主结论和真实运行
+
+- [EXP-0010最新追加：截止10月30日的源实跑与失败事件](wiki/experiments/EXP-0010-v3-four-etf-coverage-replay.md) · [实际Actions 41280867133](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41280867133) · [最新原始JSON记录](records/national_team_v3/2026-11-01/41280867133-a1.json)，回放源码SHA `9d23a12a8c3110fce52db8cf8b87b905a4b11fb9`。
+- 东财沪深300 K线与既有历史CSV重叠10交易日成功对齐，补入74个交易日至**2026-10-30**。四ETF份额代理去重60簇，5日**31/59=52.5%**、10日**28/59=47.5%**、20日**24/58=41.4%**；同样数据范围纯下跌对照分别50.0%、47.9%、38.7%。10月9日事件5日−2.89%、10日−5.29%属失败例；10月26日再次触发但未到期。
+- 原始**四ETF AUM／沪深300普通流通市值**仍是主指标：NAV和份额交集已有1262个交易日，**官方日度市值分母0日、主覆盖率有效历史事件0**，不冒充国家队法人账户买入或60%净超额；下一P0补[真实分母数据](data/national_team/csi300_float_mv.csv)。旧A2/B原始冻结不变，券商开关OFF。
+
 ## 2026-11-01 V3 P0＋P1已进入可复算代码和公开源CI阶段
 
 - [EXP-0010：原四ETF真实覆盖率主指标+5/10/20日历史事件引擎](wiki/experiments/EXP-0010-v3-four-etf-coverage-replay.md) · [纯计算](national_team/coverage_v3.py) · [CSV真实市值契约](data/national_team/csi300_float_mv.csv) · [公开源回放Actions](.github/workflows/national-team-v3-replay.yml) · [8组对抗反例](tests/test_national_team_coverage_v3.py)。

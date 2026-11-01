@@ -6,6 +6,9 @@ updated: 2026-10-31
 ---
 # 尚未搞定的问题与验收门槛
 
+**最新2026-11-01 当前缺口：** [V3最新实跑 41280867133](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41280867133)已补到10月30日真实沪深300日线，四ETF回溯NAV份额有1262交集日、5/10/20日命中52.5/47.5/41.4%，留存10月9日失效与10月26日未成熟事件。但[CSI300逐日普通流通市值CSV](../data/national_team/csi300_float_mv.csv)仍只有表头；**要真正追踪用户原始国家队占比，下一手必须获取中证/上交所该口径逐日真实市值并核验公布时点（不能将月末单一数值横推每天）**，然后才能做市值比值的历史有效事件和F1/F2费用后超额。可核验官方候选：[上交所月度指数统计](https://www.sse.com.cn/aboutus/publication/monthly/index/)（现可见2026-09沪深300流通市值日度表）；截止10月30日最新公布覆盖的完整性仍需审查。
+
+
 **2026-11-01 EXP-0010 P0＋P1工程进度：** [V3事件回放](../national_team/coverage_v3.py)、[自动公开源留证](../.github/workflows/national-team-v3-replay.yml)、[EXP-0010预注册](experiments/EXP-0010-v3-four-etf-coverage-replay.md)已经写入代码与测试，已由[真实源Actions 41280606518](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41280606518)验证可回放，净值+份额1188日、原覆盖率真实分母0日，匹配最新SHA的全库回归另核对。后续**优先补入[真实沪深300逐日普通/自由流通市值CSV](../data/national_team/csi300_float_mv.csv)**，查官方CSI公司历史数据或交易所年度/月报而非套用当月最新市值；核对四ETF历史基金NAV、拆并、历史首次披露时间。然后才能对覆盖率信号做真正点时回测，再接F1/F2 10日费用后对照；**严格源空值是当前指标采集缺口，不代表国家队没有买入**。
 
 

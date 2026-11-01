@@ -172,7 +172,10 @@ def test_events_are_debounced_and_immature_horizons_are_unknown():
 
 
 def test_live_csi300_incremental_cross_source_check(monkeypatch):
-    import requests
+    import sys
+    from types import ModuleType
+    requests = ModuleType("requests")
+    monkeypatch.setitem(sys.modules, "requests", requests)
     from scripts.replay_national_team_v3 import fetch_live_csi300
 
     class Response:
@@ -187,7 +190,7 @@ def test_live_csi300_incremental_cross_source_check(monkeypatch):
     good = ["2026-07-09,4000,4000,4000,4000,100",
             "2026-07-10,4100,4100,4100,4100,100",
             "2026-07-13,4120,4120,4120,4120,100"]
-    monkeypatch.setattr(requests, "get", lambda *a, **kw: Response(good))
+    monkeypatch.setattr(requests, "get", lambda *a, **kw: Response(good), raising=False)
     merged, meta = fetch_live_csi300(old)
     assert meta["status"] == "SUCCESS"
     assert meta["overlap_days"] == 2

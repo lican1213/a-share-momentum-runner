@@ -6,6 +6,9 @@ updated: 2026-10-30
 ---
 # 模型及执行器版本登记（唯一有效升级台账）
 
+**2026-11-01 最新V3代码/run（EXP-0010，非A2/B变更）：** 东财沪深300历史CSV后续74交易日的原样增量K线，经10个重叠日期收盘核对后，与四ETF历史份额/NAV构成2021—2026-10-30历史范围；[实际成功run 41280867133](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41280867133)，源码SHA`9d23a12a8c3110fce52db8cf8b87b905a4b11fb9`，[完整记录](../../records/national_team_v3/2026-11-01/41280867133-a1.json)。60去重簇中已成熟5日31/59、10日28/59、20日24/58；真实日度指数普通流通市值还缺，原覆盖率可算0日。后续对直播源的专项单测变化须按最新Git SHA查CI；整个实验仍为回溯研究，旧冻结不改。
+
+
 **2026-11-01 新V3研究层（EXP-0010，不代替执行层）：** [预注册协议](../experiments/EXP-0010-v3-four-etf-coverage-replay.md)及[源码](../../national_team/coverage_v3.py)把固定四ETF市值/CSI300**真实普通流通市值**恢复为主因子；自由流通另列，净份额×NAV辅助；历史下跌事件独立去重、T+2收盘后5/10/20日、Wilson、逐年、市场纯下跌对照。已取得[实际回放run 41280606518](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41280606518)，代码SHA`c6527b07469b74a0b24ff6b8e587341e1f393323`、[原始结果JSON](../../records/national_team_v3/2026-11-01/41280606518-a1.json)留证：份额代理5/10/20日30/54、27/54、24/54，原市值覆盖率0个可算日，纯软件/源回放不等于交易净超额。基线为`d28971a027751ba8c9eb13cbcb07010e0f8e911a`。无历史真实市值分母时原覆盖率为NULL、不能以份额代理冒名；不能以软件G0证明60%收益。旧2026-10-30冻结不变。
 
 **2026-10-30第二轮执行版本：** [AUD-R2](../audits/AUD-2026-10-30-round2-independent-redteam.md)与[PR #5](https://github.com/lican1213/a-share-momentum-runner/pull/5)修改短线`short_ab_engine.py`的真实前瞻判定、事件/臂唯一性、分钟时钟，及独立V2`forward_evaluation.py`的未知收益口径；**不改变候选规则/成交成本/ATR参数**。旧10月30日正式冻结的来源SHA仍为`40640bb97e4b`，修复后引擎必须用新的源码SHA与它配对，不能把历史冻结更新为新版本。新回归的实际run ID和结论以[审计页](../audits/AUD-2026-10-30-round2-independent-redteam.md)后续记录为准。
