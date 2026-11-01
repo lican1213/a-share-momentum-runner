@@ -22,6 +22,10 @@ updated: 2026-11-01
 
 [EXP-0008逐日事件台账](../experiments/EXP-0008-original-coverage-ratio-and-october-flow-event-ledger.md)：2026-10-15—29连续11日四ETF申购代理正值，其中7个沪深300下跌日；10-14→29指数-4.17%、基金估算AUM+55.90%、指数调整足迹代理100→162.68。ETF金额和现有持有人身份属于不同数据粒度，不能把1371.23亿元净申购代理等同中央汇金账户实际支出。
 
+## 60%历史检验后的补充证据
+
+[EXP-0009](../experiments/EXP-0009-four-etf-share-proxy-60pct-historical-pilot.md)首次用2021—2026公开四ETF份额缓存和沪深300价格实算53个去重事件：5日30/53=56.6%，10日26/53=49.1%；目前没有证据证明单纯份额扩张达到60%稳定方向胜率。必须补足真实覆盖率和F1/F2的个股净超额再判定。
+
 ## 对旧决策的影响
 
 - 不推翻[ADR-0005](ADR-0005-low-entry-research.md)及[EXP-0007](../experiments/EXP-0007-flow-absorption-low-entry-plan.md)的F1/F2低位进场比较；**只纠正其主指标排序**：先覆盖率与份额双确认，再找抗跌滞涨股票。原A2/B已冻结记录与策略参数不改。
