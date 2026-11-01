@@ -4,6 +4,12 @@ type: model-registry
 status: maintained
 updated: 2026-10-30
 ---
+
+## 2026-11-01 EXP-0011（V4，50%小仓位左侧纸面准入）
+
+- 基线16828ce8770084295a0da264c28f8964bcf65d61（V3真实源复盘31/59=52.54%五日上涨），实施前主分支48ab8afc470d068583398770dc74b9718df85412。新 [EXP-0011协议](../experiments/EXP-0011-fifty-percent-low-left-paper-pilot.md)、[独立V4纯选股](../../national_team/left_entry_v4.py)、[OHLC采集](../../scripts/run_national_team_left_entry_v4.py)和[CI](../../.github/workflows/national-team-left-entry-v4.yml)。研究政策将5日历史份额代理≥50%作为**小额纸面候选准入**，不准将52.54%写成F1个股赚钱概率；主覆盖率分母缺失仍为NULL。
+- 首仓最多2只、单只昨收试算≤5000、总≤10000、两个独立F1/F2各30000研究账户；真实后验开盘前所有候选 fill=NULL、持股0、净收益NULL，需前瞻单独验证。旧A2/B冻结文件不可改。运行SHA、record路径及CI需自动化实际完成后在本页追记。
+
 # 模型及执行器版本登记（唯一有效升级台账）
 
 **2026-11-01 V3工程最终已验（最新）：** `EXP-0010 + GitSHA 16828ce8770084295a0da264c28f8964bcf65d61 + [源回放41281158666](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158666)`。东财行情断连自动重试并切腾讯K线，10个历史重叠日一致、追加74个交易日源级价格及SHA256；校验14日行情新鲜度；相应[全库228 passed+Wiki41页 41281158714](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158714)、[ETF专项41281158654](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158654)均成功。研究结论份额代理5/10/20日52.54/47.46/41.38%，原主比值尚无真实指数流通市值分母、收入不被证明；旧A2/B原始冻结不变。

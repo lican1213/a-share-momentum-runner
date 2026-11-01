@@ -1,3 +1,9 @@
+## 2026-11-01 EXP-0011：50%即启动低位跟随纸面试错（最新执行研究）
+
+- 用户拍板：**不再以60%作为研究启动线；历史5日方向胜率≥50%即可开始小仓位纸面试错**。真实四ETF份额代理31/59=52.54%通过研究准入；同样10日28/59=47.46%、20日24/58=41.38%并未达50%，且5日比普通跌市对照只高2.54百分点。**不是个股盈利概率。**
+- [独立EXP-0011协议](wiki/experiments/EXP-0011-fifty-percent-low-left-paper-pilot.md) · [F1/F2低位筛选与纸面尺寸](national_team/left_entry_v4.py) · [150股真实OHLC采集](scripts/run_national_team_left_entry_v4.py) · [自动化来源冻结](.github/workflows/national-team-left-entry-v4.yml)。F1最多两股、合计初始敞口≤1万元，F2等待3日弱确认；旧A2/B冻结一字不动。
+- **现阶段仅候选冻结，不是纸面已买入：** 2026-10-30最新完整四ETF信号+10月26日去重簇，下一首个实际可交易时点才能尝试；首批看历史源回放真实5日50%准入，后续检验10日扣费后相对510300及无资金对照的净超额。原头部ETF/沪深300真实流通市值比例仍因缺分母为NULL；真实国家队主体每日买入未知。
+
 ## 2026-11-01 V3最终工程验收（最新验证标记）
 
 - **源码SHA `16828ce8770084295a0da264c28f8964bcf65d61`**：[V3源回放#41281158666成功](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158666)（[全量源哈希与新增74日价格](records/national_team_v3/2026-11-01/41281158666-a1.json)，东财受限后腾讯备用源成功）；[同SHA全库#41281158714成功](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158714) **228 passed，Wiki 41页无断链**；[原四ETF专项#41281158654成功](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158654)。

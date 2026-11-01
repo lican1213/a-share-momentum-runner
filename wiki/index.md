@@ -4,6 +4,11 @@ type: moc
 status: maintained
 updated: 2026-10-31
 ---
+
+## 2026-11-01 EXP-0011新启动：50%研究准入及左侧F1/F2源码
+
+- 用户允许**历史五日52.54%（31/59）命中即可小额纸面试错**；10/20日低于50%如实保留，不能冒充个股概率。[完整预注册](experiments/EXP-0011-fifty-percent-low-left-paper-pilot.md) · [F1/F2筛选](../national_team/left_entry_v4.py) · [OHLC采集](../scripts/run_national_team_left_entry_v4.py) · [新专用CI](../.github/workflows/national-team-left-entry-v4.yml)。预计2026-11-02或之后实际首交易日才核实纸面成交，冻结中不提前填写盈亏；旧EXP-0007计划得到新独立实施，不重写历史实验。
+
 # Wiki 总索引（Map of Content）
 
 **V3最终软件/来源验收：** [同源码SHA的历史真实回放#41281158666](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158666) · [228项全库+Wiki41页#41281158714](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158714) · [原ETF专项#41281158654](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158654)。源码 `16828ce8770084295a0da264c28f8964bcf65d61`；腾讯二级源补74日并留每日收盘及源哈希，详细[EXP-0010](experiments/EXP-0010-v3-four-etf-coverage-replay.md)。主比值真实分母缺失、盈利未验证。

@@ -6,6 +6,8 @@ updated: 2026-10-31
 ---
 # EXP-0007｜逆势ETF承接 → 低位未充分反应股：左侧跟随实验（PLAN ONLY）
 
+**2026-11-01实施追踪：** 用户将小仓位**研究启动准入**调为历史5日方向命中≥50%。新 [EXP-0011独立F1/F2代码与真实OHLC冻结协议](EXP-0011-fifty-percent-low-left-paper-pilot.md)已实施本计划的首步；本文件原2026-10-31阈值、假说、尚未实施记录均属于原时点，不能回写成当时已有成交。本次新版本不修改旧A2/B。
+
 **2026-11-01后续优先级纠正**：[ADR-0006](../decisions/ADR-0006-coverage-ratio-primary.md)正式把用户最初的**四ETF AUM／沪深300流通市值覆盖率**升为资金判断第一主指标，净申购作为解释与确认；[EXP-0008](EXP-0008-original-coverage-ratio-and-october-flow-event-ledger.md)已总结10月7个跌中申购日，[EXP-0009](EXP-0009-four-etf-share-proxy-60pct-historical-pilot.md)已实算历史份额代理但未达到稳健60%。本计划F1/F2低位选股对照保留，等待真实覆盖率分母后迭代。
 
 > 研究计划冻结日：2026-10-31；现有仓库基线 main f2fa05587ccd3dfe6f9fb1a73fe8b2bfd6e73d33。**仅提出计划，未实施新模型、未生成新买点、未取得新收益。** 新逻辑必须另建模型版本、独立代码与未来冻结，绝不改写10月28日V2、10月30日A2/B历史原件。
