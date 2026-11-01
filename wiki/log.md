@@ -6,6 +6,10 @@ updated: 2026-10-31
 ---
 # LLM Wiki维护日志（人工策展，不覆盖旧结论）
 
+## 2026-11-01：EXP-0010第二轮源实跑+同样本对照
+- [真实成功V3 Actions 41280606518](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41280606518)、[不可覆盖事件JSON](../records/national_team_v3/2026-11-01/41280606518-a1.json)，源码SHA `c6527b07469b74a0b24ff6b8e587341e1f393323`。1262个四ETF完整份额日、1188个四ETF历史NAV+指数日期；主覆盖率缺沪深300真正的每日市值分母为NULL，不冒充股东持仓。严格10交易日去重，代理5/10/20日上涨30/54、27/54、24/54，同数据日期纯下跌对照46/88、44/87、35/87。2022下跌年份5日5/14；10/20日也5/14。仍无60%稳定胜率及选股净超额。
+- 另修复了旧日报两处以10/28固定排名顺序代替当前实际首次冻结文件的脆弱测试；现在按真实归档首次公开名单/同组成员核验，不更改任何旧冻结果或策略参数。最新全库CI须与最终代码SHA匹配。
+
 ## 2026-11-01：EXP-0010 V3原四ETF真实覆盖率模型和历史可复算引擎落仓
 - 实现[每日四ETF市值覆盖率、下跌期持续增份额与净申购事件](../national_team/coverage_v3.py)，[公开源+SHA256回放CLI](../scripts/replay_national_team_v3.py)，[独立ETF缺数/分母晚发布/份额拆并/去重/收益未到期等反例](../tests/test_national_team_coverage_v3.py)，以及[GitHub Actions自动抓源并追加记录](../.github/workflows/national-team-v3-replay.yml)。旧10/30 A2/B冻结及旧records不修改。
 - [EXP-0010完整预注册和验收](experiments/EXP-0010-v3-four-etf-coverage-replay.md)冻结原主指标优先级，20日/5日/10日严格T+2观察，原比值和份额代理两条报告不混淆，年度及市场下跌对照。新代码实际CI与公开历史源run尚须新SHA验证，历史市值分母CSV只给真实来源字段契约、**不添加虚构市值**。输出第一版依旧属于回溯研究，非已验证60%选股净胜率。

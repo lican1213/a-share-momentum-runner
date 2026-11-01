@@ -2,7 +2,7 @@
 
 - [EXP-0010：原四ETF真实覆盖率主指标+5/10/20日历史事件引擎](wiki/experiments/EXP-0010-v3-four-etf-coverage-replay.md) · [纯计算](national_team/coverage_v3.py) · [CSV真实市值契约](data/national_team/csi300_float_mv.csv) · [公开源回放Actions](.github/workflows/national-team-v3-replay.yml) · [8组对抗反例](tests/test_national_team_coverage_v3.py)。
 - 份额代理指数方向研究已经有[EXP-0009初测](wiki/experiments/EXP-0009-four-etf-share-proxy-60pct-historical-pilot.md)的5日56.6%、10日49.1%；V3从公开源**重新独立运行**，并输出普通流通和自由流通双比值的逐日空值、完整事件、到期/未到期5/10/20日收益、年度切片及来源哈希。历史ETF份额/净值首次公开时刻和真实逐日流通市值仍是有效性缺口，**不得用任意市值填充来“完成”60%**。
-- 新代码/工作流并非已验收：实际成功run ID、SHA、完成条件按[EXP-0010](wiki/experiments/EXP-0010-v3-four-etf-coverage-replay.md)和[Actions](https://github.com/lican1213/a-share-momentum-runner/actions/workflows/national-team-v3-replay.yml)后续填写；旧A2/B G1原件不动，券商信号仍OFF。
+- 历史V3回放已由[run 41280606518](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41280606518)在源码SHA `c6527b0746`真实运行并永久留证，5/10/20日份额代理命中55.6%/50.0%/44.4%；原覆盖率市值分母仍缺失、该指标没有验证。最终全库G0应继续核对最新SHA，详细条件见[EXP-0010](wiki/experiments/EXP-0010-v3-four-etf-coverage-replay.md)和[Actions](https://github.com/lican1213/a-share-momentum-runner/actions/workflows/national-team-v3-replay.yml)后续填写；旧A2/B G1原件不动，券商信号仍OFF。
 
 ## 2026-11-01 原始国家队覆盖率指标回归第一位、2021—2026历史初测
 

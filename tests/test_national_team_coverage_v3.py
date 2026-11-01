@@ -66,6 +66,17 @@ def test_late_market_cap_publication_blocks_ex_post_coverage_event():
     assert all(not x["denominator_known_by_t_plus_1"] for x in out["daily"])
 
 
+def test_nav_published_after_decision_does_not_enter_coverage_signal():
+    days, prices, shares, nav, caps = data()
+    day = days[30]
+    nav[day]["510300"]["published_at"] = "2026-12-31T20:00:00+08:00"
+    report = replay(prices, shares, nav=nav, denominators=caps)
+    at = next(x for x in report["daily"] if x["date"] == day)
+    assert at["ordinary_float_coverage_ratio"] is not None  # hindsight arithmetic
+    assert at["nav_not_known_late_by_t_plus_1"] is False
+    assert at["coverage_primary_event"] is False
+
+
 def test_missing_fourth_etf_never_fills_yesterday_and_blocks_signal():
     dates, prices, shares, nav, caps = data()
     del shares[dates[35]]["159919"]

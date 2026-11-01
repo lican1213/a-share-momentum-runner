@@ -151,6 +151,7 @@ def _ratio_and_flow(date, dates, pos, shares, nav, caps):
              "net_creation_1d_cny": None, "net_creation_5d_cny": None,
              "ratio_pit_verified": False,
              "denominator_known_by_t_plus_1": False,
+             "nav_not_known_late_by_t_plus_1": True,
              "ratio_status": "NAV_MISSING"}
     def per_day(j):
         d = dates[j]
@@ -215,6 +216,13 @@ def _ratio_and_flow(date, dates, pos, shares, nav, caps):
             all(row and _timestamp(row["published_at"], "denominator") <= disclosure_cutoff
                 for row in rows_needed)
         )
+        nav_stamps = (nav[dates[j]][c].get("published_at")
+                      for j in (pos, pos - 1, pos - 5) for c in CORE_FOUR
+                      if dates[j] in nav and c in nav[dates[j]])
+        state["nav_not_known_late_by_t_plus_1"] = all(
+            not stamp or _timestamp(stamp, "NAV") <= disclosure_cutoff
+            for stamp in nav_stamps
+        )
     # Historical cache has no first-public-time series for ETF shares. A stamped
     # NAV/denominator alone cannot retroactively establish when the signal was known.
     state["ratio_pit_verified"] = False
@@ -246,7 +254,8 @@ def _rows(prices, shares, nav, caps):
         ratio_signal = bool(down and ratio1 is not None and ratio5 is not None
                             and flow1 is not None and flow5 is not None
                             and ratio1 > 0 and ratio5 > 0 and flow1 > 0 and flow5 > 0
-                            and detail["denominator_known_by_t_plus_1"])
+                            and detail["denominator_known_by_t_plus_1"]
+                            and detail["nav_not_known_late_by_t_plus_1"])
         rows.append({"date": day, "index_close": p, "index_ret5": ret5,
                      "index_draw20": draw20, "market_down": down,
                      "shares_growth_1d": share1, "shares_growth_5d": share5,
