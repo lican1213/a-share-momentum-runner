@@ -127,7 +127,14 @@ def test_primary_report_restores_only_v2_freeze_public_at_its_actual_cutoff():
         # Different real first-public freezes can rank the same set differently;
         # verify membership, then assert the actual immutable event source below.
         assert set(restored["v2_s1_frozen_symbols"])=={"601825","600000","601229","601166","600519"}
-        assert restored["v2_s2_frozen_symbols"]==["600309","601919","600660","601012","601838"]
+        # Restored group can belong to a newer immutable event; assert that
+        # every symbol/order matches the exact selected event, not a stale 10/28 list.
+        s2_key="S2_INDEPENDENT_RELATIVE_CONFIRMATION"
+        s2_archive=json.loads((ROOT/restored["v2_event_sources"][s2_key]).read_text(encoding="utf-8"))
+        source_event=next(ev for ev in s2_archive["events"]
+                          if ev["id"]==restored["v2_event_ids"][s2_key])
+        assert restored["v2_s2_frozen_symbols"]==source_event["candidate_symbols"]
+        assert len(restored["v2_s2_frozen_symbols"])==5
         assert restored["v2_s2_frozen_symbols"]!=restored["S2_frozen_observation"]
         prose=human_readable(restored)
         assert "V2 独立选股" in prose and "V1 旧版" in prose
