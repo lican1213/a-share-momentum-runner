@@ -6,6 +6,11 @@ updated: 2026-10-31
 ---
 # Wiki 总索引（Map of Content）
 
+## 2026-11-01 原始ETF覆盖率与历史事件判断（新的最高研究优先级）
+- [ADR-0006：ETF AUM／沪深300流通市值覆盖率升为主指标](decisions/ADR-0006-coverage-ratio-primary.md) · [EXP-0008：10月11日持续申购与7个下跌日逐日账本](experiments/EXP-0008-original-coverage-ratio-and-october-flow-event-ledger.md) · [EXP-0009：2021—2026实际历史初测（5日56.6%、10日49.1%）](experiments/EXP-0009-four-etf-share-proxy-60pct-historical-pilot.md)。
+- **已实算是ETF份额代理的指数方向诊断，不是60%已达标的原覆盖率模型或F1/F2股票收益。** 原四ETF核心不变；沪深300十月真实普通/自由流通市值分母、历史NAV/公司行动待回填；10/30仅3/4ETF观察不能冒充完整。
+
+
 ## 2026-10-31 左侧低位跟随研究（计划，尚未实现）
 - [EXP-0007完整计划：四ETF资金逆势承接→抗跌未涨个股→F1/F2对照](experiments/EXP-0007-flow-absorption-low-entry-plan.md) · [ADR-0005：回归用户原始四ETF主信号](decisions/ADR-0005-low-entry-research.md)。
 - 保留旧A2/B追突破信号做反事实，不能回写原始G1冻结；不把全ETF净申购写成国家队账户逐股买入。新方案没有新代码、模拟成交或净超额证明。
