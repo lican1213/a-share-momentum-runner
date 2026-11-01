@@ -6,6 +6,9 @@ updated: 2026-10-31
 ---
 # 尚未搞定的问题与验收门槛
 
+**2026-11-01 EXP-0010 P0＋P1工程进度：** [V3事件回放](../national_team/coverage_v3.py)、[自动公开源留证](../.github/workflows/national-team-v3-replay.yml)、[EXP-0010预注册](experiments/EXP-0010-v3-four-etf-coverage-replay.md)已经写入代码与测试，运行验收须等匹配新SHA的成功Actions。后续**优先补入[真实沪深300逐日普通/自由流通市值CSV](../data/national_team/csi300_float_mv.csv)**，查官方CSI公司历史数据或交易所年度/月报而非套用当月最新市值；核对四ETF历史基金NAV、拆并、历史首次披露时间。然后才能对覆盖率信号做真正点时回测，再接F1/F2 10日费用后对照；**严格源空值是当前指标采集缺口，不代表国家队没有买入**。
+
+
 **2026-11-01 国家队覆盖率/60%模型 P0：** [ADR-0006主指标优先级](decisions/ADR-0006-coverage-ratio-primary.md)、[EXP-0008实际逆势事件](experiments/EXP-0008-original-coverage-ratio-and-october-flow-event-ledger.md)、[EXP-0009实算份额代理回测](experiments/EXP-0009-four-etf-share-proxy-60pct-historical-pilot.md)已新增。继续完成：(1) 建立2026年10月及2021—2026沪深300**真实日度普通流通市值和自由流通市值**来源/日期、历史成分/股本/PIT；(2) 核验四ETF逐日官方NAV、SSE份额单位及份额折算、10/30深市159919缺失；(3) 真实原始覆盖率变化＋净申购共同判定逆势事件、保存每次最早公开时刻；(4) 按≥100个不重叠事件簇评估5/10/20日方向和F1/F2费用后个股超额收益，固定同状态S0/N对照与失败样本。**当前实测份额代理5日56.6%/10日49.1%，不等于原模型达到60%；不要为追求60%挑选幸存事件。**
 
 

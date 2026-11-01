@@ -1,0 +1,78 @@
+name: National-team V3 four-ETF coverage and historical event replay
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'national_team/coverage_v3.py'
+      - 'scripts/replay_national_team_v3.py'
+      - 'tests/test_national_team_coverage_v3.py'
+      - 'data/national_team/csi300_float_mv.csv'
+      - '.github/workflows/national-team-v3-replay.yml'
+permissions:
+  contents: write
+concurrency:
+  group: national-team-v3-records
+  cancel-in-progress: false
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 24
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install replay dependencies
+        run: python -m pip install 'pytest>=8,<10' 'akshare>=1.17,<2'
+      - name: Regressions: fixed four, zero lookahead, no denominator invention
+        run: python -m pytest -q tests/test_national_team_coverage_v3.py
+      - name: Download explicitly attributed historical upstream snapshots
+        shell: bash
+        run: |
+          curl --fail --location --silent --show-error --retry 3 \
+            'https://raw.githubusercontent.com/wwww1998/national-team-etf-flow/main/_etf_shares_cache.json' \
+            --output "$RUNNER_TEMP/v3-etf-shares.json"
+          curl --fail --location --silent --show-error --retry 3 \
+            'https://raw.githubusercontent.com/sky910140/financial-agent-takehome/main/data/market/csi300.csv' \
+            --output "$RUNNER_TEMP/v3-csi300.csv"
+          python -m json.tool "$RUNNER_TEMP/v3-etf-shares.json" >/dev/null
+      - name: Replay 5/10/20d with retrospective four-ETF NAV if available
+        shell: bash
+        run: |
+          python scripts/replay_national_team_v3.py \
+            --shares "$RUNNER_TEMP/v3-etf-shares.json" \
+            --index "$RUNNER_TEMP/v3-csi300.csv" \
+            --fetch-nav-akshare \
+            --denominators data/national_team/csi300_float_mv.csv \
+            --out "$RUNNER_TEMP/v3-run.json"
+      - name: Independent evidence sanity (no empty-source false-green)
+        shell: bash
+        run: |
+          python - "$RUNNER_TEMP/v3-run.json" <<'PY'
+          import json,sys
+          run=json.load(open(sys.argv[1],encoding="utf-8"))
+          quality=run["data_quality"]
+          assert quality["four_share_days"]>=500,quality
+          assert run["summary"]["share_proxy"]["event_clusters"]>=20,quality
+          assert run["trade_authorized"] is False
+          assert quality["ratio_pit_verified_days"]==0
+          print("EXTERNAL_REPLAY_GATE_PASS",quality["four_share_days"],
+                run["summary"]["share_proxy"]["event_clusters"])
+          PY
+      - name: Append immutable V3 run to the project evidence ledger
+        shell: bash
+        run: |
+          RUN_DATE="$(date -u +%Y-%m-%d)"
+          RECORD_DIR="records/national_team_v3/$RUN_DATE"
+          RECORD_PATH="$RECORD_DIR/${GITHUB_RUN_ID}-a${GITHUB_RUN_ATTEMPT}.json"
+          mkdir -p "$RECORD_DIR"
+          test ! -e "$RECORD_PATH"
+          cp "$RUNNER_TEMP/v3-run.json" "$RECORD_PATH"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- "$RECORD_PATH"
+          git commit -m "records(v3): append source-hashed four-ETF replay ${GITHUB_RUN_ID}-a${GITHUB_RUN_ATTEMPT}"
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main

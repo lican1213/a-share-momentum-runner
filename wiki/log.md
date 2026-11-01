@@ -6,6 +6,11 @@ updated: 2026-10-31
 ---
 # LLM Wiki维护日志（人工策展，不覆盖旧结论）
 
+## 2026-11-01：EXP-0010 V3原四ETF真实覆盖率模型和历史可复算引擎落仓
+- 实现[每日四ETF市值覆盖率、下跌期持续增份额与净申购事件](../national_team/coverage_v3.py)，[公开源+SHA256回放CLI](../scripts/replay_national_team_v3.py)，[独立ETF缺数/分母晚发布/份额拆并/去重/收益未到期等反例](../tests/test_national_team_coverage_v3.py)，以及[GitHub Actions自动抓源并追加记录](../.github/workflows/national-team-v3-replay.yml)。旧10/30 A2/B冻结及旧records不修改。
+- [EXP-0010完整预注册和验收](experiments/EXP-0010-v3-four-etf-coverage-replay.md)冻结原主指标优先级，20日/5日/10日严格T+2观察，原比值和份额代理两条报告不混淆，年度及市场下跌对照。新代码实际CI与公开历史源run尚须新SHA验证，历史市值分母CSV只给真实来源字段契约、**不添加虚构市值**。输出第一版依旧属于回溯研究，非已验证60%选股净胜率。
+
+
 ## 2026-11-01：用户恢复“ETF市值占流通市值”主指标，独立历史复盘检验60%（源证据与失败保留）
 - 用户明确 **头部沪深300ETF市值／沪深300流通市值** 是其最初判断疑似国家队入金出金的第一指标。新增[ADR-0006](decisions/ADR-0006-coverage-ratio-primary.md)纠正上一轮以净申购为首的顺序：覆盖率水平/趋势为主、净份额×NAV解释新增资金，双分母分开，指数调整足迹代理不得冒名真实比值。
 - 真实[10月历史事件台账EXP-0008](experiments/EXP-0008-original-coverage-ratio-and-october-flow-event-ledger.md)：逐项读取原四ETF 2026-10-31归档份额NAV并与10月沪深300收盘对齐。10/15—10/29连续11个正申购代理日，7个指数下跌日（10/15、20、21、22、26、27、29）；11日累计+1371.23亿，同期指数-4.17%、四ETF估算AUM+1260.68亿，价格重估-110.55亿。10/30 SZSE份额缺失只作三ETF附注；真实2026-10流通市值分母未得到。

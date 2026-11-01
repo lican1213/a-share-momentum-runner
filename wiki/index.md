@@ -6,6 +6,10 @@ updated: 2026-10-31
 ---
 # Wiki 总索引（Map of Content）
 
+## 2026-11-01 V3 P0＋P1实际实现（EXP-0010）
+- [EXP-0010新模型和可复算运行门槛](experiments/EXP-0010-v3-four-etf-coverage-replay.md) · [历史计算代码](../national_team/coverage_v3.py) · [回放命令](../scripts/replay_national_team_v3.py) · [对抗测试](../tests/test_national_team_coverage_v3.py) · [公开源Actions](../.github/workflows/national-team-v3-replay.yml)。
+- 首次公开数据运行会按run+attempt追加 `records/national_team_v3/`，不覆盖历史记录；官方同日沪深300普通/自由流通市值若尚未按[CSV契约](../data/national_team/csi300_float_mv.csv)补到位，原比值保持空，份额代理5/10/20日照常独立报告。
+
 ## 2026-11-01 原始ETF覆盖率与历史事件判断（新的最高研究优先级）
 - [ADR-0006：ETF AUM／沪深300流通市值覆盖率升为主指标](decisions/ADR-0006-coverage-ratio-primary.md) · [EXP-0008：10月11日持续申购与7个下跌日逐日账本](experiments/EXP-0008-original-coverage-ratio-and-october-flow-event-ledger.md) · [EXP-0009：2021—2026实际历史初测（5日56.6%、10日49.1%）](experiments/EXP-0009-four-etf-share-proxy-60pct-historical-pilot.md)。
 - **已实算是ETF份额代理的指数方向诊断，不是60%已达标的原覆盖率模型或F1/F2股票收益。** 原四ETF核心不变；沪深300十月真实普通/自由流通市值分母、历史NAV/公司行动待回填；10/30仅3/4ETF观察不能冒充完整。

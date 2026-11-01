@@ -6,6 +6,8 @@ updated: 2026-10-30
 ---
 # 模型及执行器版本登记（唯一有效升级台账）
 
+**2026-11-01 新V3研究层（EXP-0010，不代替执行层）：** [预注册协议](../experiments/EXP-0010-v3-four-etf-coverage-replay.md)及[源码](../../national_team/coverage_v3.py)把固定四ETF市值/CSI300**真实普通流通市值**恢复为主因子；自由流通另列，净份额×NAV辅助；历史下跌事件独立去重、T+2收盘后5/10/20日、Wilson、逐年、市场纯下跌对照。部署提交SHA与首个真实Actions run ID**待以实际新run回填**，基线为`d28971a027751ba8c9eb13cbcb07010e0f8e911a`。无历史真实市值分母时原覆盖率为NULL、不能以份额代理冒名；不能以软件G0证明60%收益。旧2026-10-30冻结不变。
+
 **2026-10-30第二轮执行版本：** [AUD-R2](../audits/AUD-2026-10-30-round2-independent-redteam.md)与[PR #5](https://github.com/lican1213/a-share-momentum-runner/pull/5)修改短线`short_ab_engine.py`的真实前瞻判定、事件/臂唯一性、分钟时钟，及独立V2`forward_evaluation.py`的未知收益口径；**不改变候选规则/成交成本/ATR参数**。旧10月30日正式冻结的来源SHA仍为`40640bb97e4b`，修复后引擎必须用新的源码SHA与它配对，不能把历史冻结更新为新版本。新回归的实际run ID和结论以[审计页](../audits/AUD-2026-10-30-round2-independent-redteam.md)后续记录为准。
 
 **现行执行层（2026-10-30）：** [EXP-0005-A2](../experiments/EXP-0005-A2-prospective-freeze-recovery.md)与[EXP-0006-B](../experiments/EXP-0006-national-team-aggressive-paper-ab.md)已在真实Actions`41044087760 / 41044087791`取得首次盘后完整冻结，冻结引擎SHA`40640bb97e4b`且不可回写。后续修复版引擎参见[当前状态页](../current-status.md)与[short_ab_engine.py](../../national_team/short_ab_engine.py)；将“数据异常尝试/合法空仓/有效臂或完整冻结”区分，并增加严格分钟、T+1/2收盘检查、跨事件现金/持仓持久化。冻结SHA与后来复算的执行引擎SHA不得混为一个版本；新CI必须匹配最新代码。G2/G3/G4尚未通过，不能说策略获利。

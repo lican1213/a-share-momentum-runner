@@ -5,6 +5,10 @@ on:
   push:
     branches: [main]
     paths:
+      - 'national_team/coverage_v3.py'
+      - 'scripts/replay_national_team_v3.py'
+      - 'tests/test_national_team_coverage_v3.py'
+      - '.github/workflows/national-team-v3-replay.yml'
       - 'national_team/short_ab_engine.py'
       - 'national_team/forward_evaluation.py'
       - 'national_team/live_paper_tracker.py'
