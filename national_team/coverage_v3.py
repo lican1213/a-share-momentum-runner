@@ -241,7 +241,8 @@ def _rows(prices, shares, nav, caps):
         detail = _ratio_and_flow(day, dates, i, shares, nav, caps)
         ratio1, ratio5 = detail["coverage_change_1d"], detail["coverage_change_5d"]
         flow1, flow5 = detail["net_creation_1d_cny"], detail["net_creation_5d_cny"]
-        share_signal = bool(down and share1 is not None and share1 > 0 and share5 > 0)
+        control_signal = bool(down and share1 is not None and share5 is not None)
+        share_signal = bool(control_signal and share1 > 0 and share5 > 0)
         ratio_signal = bool(down and ratio1 is not None and ratio5 is not None
                             and flow1 is not None and flow5 is not None
                             and ratio1 > 0 and ratio5 > 0 and flow1 > 0 and flow5 > 0
@@ -249,6 +250,7 @@ def _rows(prices, shares, nav, caps):
         rows.append({"date": day, "index_close": p, "index_ret5": ret5,
                      "index_draw20": draw20, "market_down": down,
                      "shares_growth_1d": share1, "shares_growth_5d": share5,
+                     "downturn_control_event": control_signal,
                      "share_proxy_event": share_signal,
                      "coverage_primary_event": ratio_signal, **detail})
     return rows
@@ -326,7 +328,7 @@ def replay(prices, shares, *, nav=None, denominators=None, source_provenance=Non
     groups = {kind: _events(rows, key)
               for kind, key in (("coverage_primary", "coverage_primary_event"),
                                 ("share_proxy", "share_proxy_event"),
-                                ("downturn_control", "market_down"))}
+                                ("downturn_control", "downturn_control_event"))}
     return {
         "version": VERSION,
         "experiment_id": "EXP-0010",
@@ -344,7 +346,7 @@ def replay(prices, shares, *, nav=None, denominators=None, source_provenance=Non
             "exit": "T+2+h close for h=5,10,20 sessions",
             "cooldown_sessions": 10,
             "coverage_pit_warning": "Historical NAV and ETF share-cache publication time not independently verified",
-            "baseline_warning": "downturn control is separately clustered, not date-matched causal lift",
+            "baseline_warning": "same four-share complete-date universe; separately clustered, not paired causal lift",
         },
         "data_quality": {
             "first_index_day": rows[0]["date"] if rows else None,

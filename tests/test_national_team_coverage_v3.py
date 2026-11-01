@@ -53,6 +53,7 @@ def test_four_fund_coverage_and_no_denominator_is_null():
     assert no_cap["data_quality"]["ratio_days"] == 0
     assert no_cap["summary"]["coverage_primary"]["event_clusters"] == 0
     assert no_cap["summary"]["share_proxy"]["event_clusters"] > 0
+    assert no_cap["summary"]["downturn_control"]["event_clusters"] > 0
 
 
 def test_late_market_cap_publication_blocks_ex_post_coverage_event():
@@ -134,6 +135,15 @@ def test_share_cache_and_nav_no_forward_fill(tmp_path):
     }}), encoding="utf-8")
     assert "510300" in read_nav(n)["2026-10-29"]
     assert "159919" not in read_nav(n)["2026-10-29"]
+
+
+def test_downturn_control_uses_same_complete_four_share_universe():
+    days, prices, shares, nav, caps = data()
+    only_late = {d: funds for d, funds in shares.items() if d >= days[40]}
+    report = replay(prices, only_late, nav=nav, denominators=caps)
+    assert all(e["signal_date"] >= days[45]
+               for e in report["events"]["downturn_control"])
+    assert report["summary"]["downturn_control"]["event_clusters"] < 10
 
 
 def test_events_are_debounced_and_immature_horizons_are_unknown():
