@@ -54,7 +54,12 @@ jobs:
           import json,sys
           run=json.load(open(sys.argv[1],encoding="utf-8"))
           quality=run["data_quality"]
+          from datetime import date,timedelta
           assert quality["four_share_days"]>=500,quality
+          # Successful job must actually have a current CSI300 index, not just
+          # replay the public CSV whose price history ends in July 2026.
+          assert (date.today()-date.fromisoformat(quality["last_index_day"])).days<=14,quality
+          assert (date.today()-date.fromisoformat(quality["last_full_four_share_day"])).days<=14,quality
           assert run["summary"]["share_proxy"]["event_clusters"]>=20,quality
           assert run["trade_authorized"] is False
           assert quality["ratio_pit_verified_days"]==0

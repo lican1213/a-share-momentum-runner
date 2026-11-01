@@ -195,6 +195,8 @@ def test_live_csi300_incremental_cross_source_check(monkeypatch):
     assert meta["status"] == "SUCCESS"
     assert meta["overlap_days"] == 2
     assert meta["added_days"] == 1
+    assert meta["added_close_by_date"] == {"2026-07-13": 4120}
+    assert len(meta["payload_sha256"]) == 64
     assert merged["2026-07-10"] == 4100  # frozen original CSV preserved
     assert merged["2026-07-13"] == 4120
 
@@ -204,7 +206,40 @@ def test_live_csi300_incremental_cross_source_check(monkeypatch):
     retained, diagnostic = fetch_live_csi300(old)
     assert retained == old
     assert diagnostic["status"] == "FETCH_FAILED"
-    assert "conflict" in diagnostic["error"]
+    assert any("conflict" in err for err in diagnostic["attempts"])
+
+
+
+def test_live_csi300_tencent_fallback_if_eastmoney_rejects(monkeypatch):
+    import sys
+    from types import ModuleType
+    requests = ModuleType("requests")
+    monkeypatch.setitem(sys.modules, "requests", requests)
+    from scripts.replay_national_team_v3 import fetch_live_csi300
+
+    class Response:
+        def __init__(self, body):
+            self.body = body
+        def raise_for_status(self):
+            return None
+        def json(self):
+            return self.body
+
+    def get(url, **kwargs):
+        if "eastmoney" in url:
+            raise ConnectionError("exchange mirror temporarily unavailable")
+        return Response({"data": {"sh000300": {"qfqday": [
+            ["2026-07-10", "4099", "4100", "4101", "4098", "100"],
+            ["2026-07-13", "4120", "4120", "4128", "4115", "100"],
+        ]}}})
+    monkeypatch.setattr(requests, "get", get, raising=False)
+    before = {"2026-07-10": 4100}
+    merged, info = fetch_live_csi300(before)
+    assert info["status"] == "SUCCESS"
+    assert info["provider"].startswith("Tencent")
+    assert info["added_days"] == 1
+    assert merged["2026-07-10"] == 4100
+    assert merged["2026-07-13"] == 4120
 
 
 def test_wrong_fund_counts_not_renamed_as_account_trades():

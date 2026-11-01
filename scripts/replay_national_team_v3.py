@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import hashlib
 import math
 import os
 import sys
@@ -55,55 +56,85 @@ def fetch_nav_akshare():
 
 
 def fetch_live_csi300(prices):
-    """Augment the frozen Tencent CSV with Eastmoney CSI300 K-line observations.
+    """Add recent CSI300 closes using two independent public K-line routes.
 
-    Cross-check the overlapping last historic close. Retain source provenance
-    and never overwrite earlier frozen prices from the CSV.
+    Preserve the old CSV, cross-check overlapping dates, persist every appended
+    daily close and raw response SHA256 for later independent reproduction.
     """
     import requests
+    import time
     last = max(prices)
     start = (datetime.strptime(last, "%Y-%m-%d") - timedelta(days=12)).strftime("%Y%m%d")
     end = datetime.now(timezone(timedelta(hours=8))).strftime("%Y%m%d")
-    url = "https://push2his.eastmoney.com/api/qt/stock/kline/get?" + urlencode({
+    primary = "https://push2his.eastmoney.com/api/qt/stock/kline/get?" + urlencode({
         "fields1": "f1,f2,f3,f4,f5,f6",
         "fields2": "f51,f52,f53,f54,f55,f56",
         "ut": "7eea3edcaed734bea9cbfc24409ed989",
         "klt": 101, "fqt": 0, "secid": "1.000300",
         "beg": start, "end": end, "lmt": 1000,
     })
-    metadata = {"source_url": url, "provider": "Eastmoney CSI300 index Kline",
-                "source_first_public_times": "UNVERIFIED", "baseline_last_day": last}
-    try:
-        resp = requests.get(url, timeout=30, headers={
-            "User-Agent": "Mozilla/5.0", "Referer": "https://quote.eastmoney.com/",
-        })
-        resp.raise_for_status()
-        payload = resp.json()
-        lines = (payload.get("data") or {}).get("klines") or []
-        updated = {}
-        overlap = 0
-        for line in lines:
-            parts = line.split(",")
-            if len(parts) < 3:
-                continue
-            day, close = parts[0], float(parts[2])
-            if not math.isfinite(close) or close <= 0 or day > datetime.now(timezone.utc).date().isoformat():
-                continue
-            if day in prices:
-                overlap += 1
-                if abs(close / prices[day] - 1) > 0.01:
-                    raise ValueError(f"overlapping CSI300 close source conflict on {day}")
-            if day > last:
-                updated[day] = close
-        if overlap == 0:
-            raise ValueError("no index-source overlapping close for independent cross-check")
-        metadata.update({"status": "SUCCESS", "overlap_days": overlap, "added_days": len(updated),
-                         "last_added": max(updated) if updated else None})
-        return {**prices, **updated}, metadata
-    except Exception as exc:
-        metadata.update({"status": "FETCH_FAILED", "error": f"{type(exc).__name__}: {str(exc)[:180]}",
-                         "added_days": 0})
-        return prices, metadata
+    secondary = ("https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param="
+                 f"sh000300,day,{start[:4]}-{start[4:6]}-{start[6:]},"
+                 f"{end[:4]}-{end[4:6]}-{end[6:]},300,qfq")
+    errors = []
+    for provider, url in (("Eastmoney CSI300 index Kline", primary),
+                          ("Tencent CSI300 index Kline", secondary)):
+        for attempt in (1, 2):
+            try:
+                response = requests.get(url, timeout=25, headers={
+                    "User-Agent": "Mozilla/5.0",
+                    "Referer": "https://quote.eastmoney.com/" if "Eastmoney" in provider
+                               else "https://gu.qq.com/",
+                })
+                response.raise_for_status()
+                payload = response.json()
+                if provider.startswith("Eastmoney"):
+                    lines = (payload.get("data") or {}).get("klines") or []
+                else:
+                    bucket = (payload.get("data") or {}).get("sh000300") or {}
+                    lines = bucket.get("qfqday") or bucket.get("day") or []
+                updated = {}
+                overlap = 0
+                for raw in lines:
+                    parts = raw.split(",") if isinstance(raw, str) else raw
+                    if len(parts) < 3:
+                        continue
+                    day, close = str(parts[0]), float(parts[2])
+                    if not math.isfinite(close) or close <= 0:
+                        continue
+                    if day > datetime.now(timezone.utc).date().isoformat():
+                        continue
+                    if day in prices:
+                        overlap += 1
+                        if abs(close / prices[day] - 1) > 0.01:
+                            raise ValueError(f"overlapping CSI300 close source conflict on {day}")
+                    if day > last:
+                        updated[day] = close
+                if overlap == 0:
+                    raise ValueError("no overlapping CSI300 close for independent cross-check")
+                if not updated:
+                    raise ValueError("no dated recent index observations")
+                meta = {
+                    "status": "SUCCESS", "source_url": url, "provider": provider,
+                    "source_first_public_times": "UNVERIFIED",
+                    "baseline_last_day": last, "overlap_days": overlap,
+                    "added_days": len(updated), "last_added": max(updated),
+                    "added_close_by_date": updated,
+                    "payload_sha256": hashlib.sha256(json.dumps(
+                        payload, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest(),
+                    "attempt": attempt,
+                }
+                return {**prices, **updated}, meta
+            except Exception as exc:
+                errors.append(f"{provider}:attempt{attempt}:{type(exc).__name__}:{str(exc)[:120]}")
+                if attempt == 1:
+                    time.sleep(1)
+    return prices, {
+        "status": "FETCH_FAILED", "attempts": errors,
+        "added_days": 0, "baseline_last_day": last,
+        "providers": ["Eastmoney", "Tencent"],
+    }
+
 
 
 def main(argv=None):
