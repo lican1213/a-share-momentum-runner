@@ -7,10 +7,14 @@ updated: 2026-10-31
 
 ## 2026-11-01：EXP-0011按用户50%可试口径启动独立低位实验
 
+- 添加[EXP-0011前瞻F1/F2同刻S0自动追踪](../national_team/left_entry_outcomes.py)与[工作日盘后任务](../.github/workflows/national-team-left-outcomes-v4.yml)，仅以未来真实OHLC作开盘成交情景，3/5/10/20日未到期收益为空、对照缺数不得视为零；在首次公开完整冻结前不提前生成未来结果。
+
 - 基于实际[V3 31/59五日方向](../records/national_team_v3/2026-11-01/41281158666-a1.json)达52.54%（同状态纯跌市50%；10/20日47.46/41.38），将阈值定义为**小额纸面实验准入**。[EXP-0011](experiments/EXP-0011-fifty-percent-low-left-paper-pilot.md)新增纯F1左侧筛选、F2弱确认接口、股价追高剔除、100股整手/成本风险预算、S0/N/M对照待成熟、真实OHLC源hash与不可覆盖新记录工作流。所有未来成交先填NULL不伪造，10/09历史失效保留，10/26事件未成熟；旧A2/B不修改。
 - 当前实现需要观察本次提交后的真实Actions运行结果，代码完成≠已证实证券超额盈利；首个2026-11-02实际交易日尚未来临。
 
 # LLM Wiki维护日志（人工策展，不覆盖旧结论）
+
+- **首轮P1真实源冻成功：** [V4 Actions #41283487731](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41283487731)，[150/150历史股价与30低位候选JSON](../records/national_team_left_entry/2026-11-01/41283487731-a1.json)。F1冻结600016民生银行、600019宝钢股份，10/30昨收试算8823元，未成交；[同SHA全库241项 #41283487764](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41283487764)、[Wiki #41283487760](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41283487760)通过；10/09失败和未成熟标签原样保留。
 
 ## 2026-11-01：V3最终同SHA全绿/十月行情可靠留证
 - 新增行情双源重试与重叠收盘一致性核验，14天数据新鲜度失败门槛；[实际源码SHA `16828ce8770084295a0da264c28f8964bcf65d61`的V3成功run 41281158666](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158666) 在东财断连后自动用腾讯K线补入74日期，保存全部新增收盘/上游响应SHA256，研究结果保持5/10/20日31/59、28/59、24/58，2026-10-09亏损及10-26未到期不被藏起。对应[全库#41281158714](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158714) **228 passed/Wiki41页 PASS**、[原四ETF专项#41281158654](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158654) **PASS**；[不可覆盖结果](../records/national_team_v3/2026-11-01/41281158666-a1.json)。原用户主指标沪深300实际流通市值分母仍0日；未达到60%或费用后盈利检验。

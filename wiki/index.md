@@ -7,12 +7,16 @@ updated: 2026-10-31
 
 ## 2026-11-01 EXP-0011新启动：50%研究准入及左侧F1/F2源码
 
+- 后续[前瞻收益跟踪引擎](../national_team/left_entry_outcomes.py) · [自动化](../.github/workflows/national-team-left-outcomes-v4.yml)：每工作日盘后读取首个V4合法冻结，用新日线生成F1/F2各自开盘价情景、510300同刻净超额；3/5/10/20日未到期NULL，不伪造执行。
+
 - 用户允许**历史五日52.54%（31/59）命中即可小额纸面试错**；10/20日低于50%如实保留，不能冒充个股概率。[完整预注册](experiments/EXP-0011-fifty-percent-low-left-paper-pilot.md) · [F1/F2筛选](../national_team/left_entry_v4.py) · [OHLC采集](../scripts/run_national_team_left_entry_v4.py) · [新专用CI](../.github/workflows/national-team-left-entry-v4.yml)。预计2026-11-02或之后实际首交易日才核实纸面成交，冻结中不提前填写盈亏；旧EXP-0007计划得到新独立实施，不重写历史实验。
 
 # Wiki 总索引（Map of Content）
 
 **V3最终软件/来源验收：** [同源码SHA的历史真实回放#41281158666](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158666) · [228项全库+Wiki41页#41281158714](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158714) · [原ETF专项#41281158654](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158654)。源码 `16828ce8770084295a0da264c28f8964bcf65d61`；腾讯二级源补74日并留每日收盘及源哈希，详细[EXP-0010](experiments/EXP-0010-v3-four-etf-coverage-replay.md)。主比值真实分母缺失、盈利未验证。
 
+
+- [首次150/150源实跑 #41283487731](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41283487731)已归档[不可覆写冻结JSON](../records/national_team_left_entry/2026-11-01/41283487731-a1.json)：30个低位合格，F1预先锁600016与600019（按10/30昨收试算占用8823元），正式未来开盘成交未发生；同SHA[全库241项 #41283487764](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41283487764)及[Wiki #41283487760](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41283487760)通过。
 
 ## 2026-11-01 V3衔接当期十月行情（最新）
 - [EXP-0010完整实际结论与失败事件](experiments/EXP-0010-v3-four-etf-coverage-replay.md) · [10月30日源回放#41280867133](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41280867133) · [可核验原始结果](../records/national_team_v3/2026-11-01/41280867133-a1.json)。指数补74个交易日至10月30日后，份额代理5/10/20日方向52.5%/47.5%/41.4%；同范围纯下跌对照50.0%/47.9%/38.7%。原覆盖率日度分母仍0个真实交易日，国家队个人账户动向未知。

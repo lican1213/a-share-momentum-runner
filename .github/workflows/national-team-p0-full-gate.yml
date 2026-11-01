@@ -5,6 +5,10 @@ on:
   push:
     branches: [main]
     paths:
+      - 'national_team/left_entry_outcomes.py'
+      - 'scripts/track_national_team_left_entry_v4.py'
+      - 'tests/test_national_team_left_entry_outcomes.py'
+      - '.github/workflows/national-team-left-outcomes-v4.yml'
       - 'national_team/left_entry_v4.py'
       - 'scripts/run_national_team_left_entry_v4.py'
       - 'tests/test_national_team_left_entry_v4.py'

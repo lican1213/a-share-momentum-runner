@@ -7,10 +7,14 @@ updated: 2026-10-30
 
 ## 2026-11-01 EXP-0011（V4，50%小仓位左侧纸面准入）
 
+- 新增[EXP-0011前瞻观察引擎](../../national_team/left_entry_outcomes.py)、[自动日线获取](../../scripts/track_national_team_left_entry_v4.py)、[工作日Actions](../../.github/workflows/national-team-left-outcomes-v4.yml)：首次开盘模拟仅在获取对应日期后产生、两个独立账户、同日同成本510300对照、未到期NULL。此代码新增不等于已取得未来真实市场价格；后续审核以不可覆写新run为准。
+
 - 基线16828ce8770084295a0da264c28f8964bcf65d61（V3真实源复盘31/59=52.54%五日上涨），实施前主分支48ab8afc470d068583398770dc74b9718df85412。新 [EXP-0011协议](../experiments/EXP-0011-fifty-percent-low-left-paper-pilot.md)、[独立V4纯选股](../../national_team/left_entry_v4.py)、[OHLC采集](../../scripts/run_national_team_left_entry_v4.py)和[CI](../../.github/workflows/national-team-left-entry-v4.yml)。研究政策将5日历史份额代理≥50%作为**小额纸面候选准入**，不准将52.54%写成F1个股赚钱概率；主覆盖率分母缺失仍为NULL。
 - 首仓最多2只、单只昨收试算≤5000、总≤10000、两个独立F1/F2各30000研究账户；真实后验开盘前所有候选 fill=NULL、持股0、净收益NULL，需前瞻单独验证。旧A2/B冻结文件不可改。运行SHA、record路径及CI需自动化实际完成后在本页追记。
 
 # 模型及执行器版本登记（唯一有效升级台账）
+
+- **同源码SHA实际跑通** `1027c6087316153fb8769521d7213a556e74f50d`：[V4首轮150股真实OHLC #41283487731](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41283487731)成功，[不可覆写冻结](../../records/national_team_left_entry/2026-11-01/41283487731-a1.json)30只合格、F1昨收价锁定600016和600019、共8823元试算；[全库241项 #41283487764](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41283487764)与[Wiki #41283487760](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41283487760)绿。下次开盘前持股0、净收益NULL。
 
 **2026-11-01 V3工程最终已验（最新）：** `EXP-0010 + GitSHA 16828ce8770084295a0da264c28f8964bcf65d61 + [源回放41281158666](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158666)`。东财行情断连自动重试并切腾讯K线，10个历史重叠日一致、追加74个交易日源级价格及SHA256；校验14日行情新鲜度；相应[全库228 passed+Wiki41页 41281158714](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158714)、[ETF专项41281158654](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41281158654)均成功。研究结论份额代理5/10/20日52.54/47.46/41.38%，原主比值尚无真实指数流通市值分母、收入不被证明；旧A2/B原始冻结不变。
 

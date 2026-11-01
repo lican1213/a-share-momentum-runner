@@ -51,3 +51,11 @@ updated: 2026-11-01
 借鉴 [wwww1998/national-team-etf-flow](https://github.com/wwww1998/national-team-etf-flow)的ETF日份额缓存、[kitaki-Ciallo/etf-national-tracker](https://github.com/kitaki-Ciallo/etf-national-tracker)的ETF与法人披露分层、[ricequant/rqalpha](https://github.com/ricequant/rqalpha)的T+1费用/事件模型、[microsoft/qlib](https://github.com/microsoft/qlib)的历史收益与时点剥离；只采借规范，不复制因果结论。股票OHLC采用本仓库2026-10-31已经实跑150股的AKShare新浪→东财独立回退方案。源码基线/时间戳/原始hash必须留下；有缺失可继续排名剩余证券，不得把缺失收益当0。
 
 参见[模型登记](../models/registry.md)、[Wiki日志](../log.md)、[开放问题](../open-questions.md)、[根MOC](../../MOC.md)。
+
+**2026-11-01首次真实P1已通过：** [源抓取/测试/记录Actions #41283487731](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41283487731)（源码SHA `1027c6087316153fb8769521d7213a556e74f50d`），[不可覆写冻结+150股OHLC源JSON](../../records/national_team_left_entry/2026-11-01/41283487731-a1.json)成功归档。150/150个真实历史OHLC有效，30个符合低位，F1锁定600016民生银行（10/30昨收3.54，5日+2.91%，距MA20+1.04%；昨收试算1300股4602元）及600019宝钢股份（昨收6.03，5日+2.55%，距MA20+1.16%；昨收试算700股4221元），合计8823元。601166、601919均被高涨风险剔除。F1/F2截至11/1**未成交，收益NULL**。同源码SHA[全库241项PASS #41283487764](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41283487764)，[Wiki检查 #41283487760](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41283487760)PASS；下一真实交易日再观察。
+
+## 5. 前瞻自动跟踪已经编码（不提前宣称成交）
+
+新增[源时钟追踪引擎](../../national_team/left_entry_outcomes.py)、[后续行情采集脚本](../../scripts/track_national_team_left_entry_v4.py)、[自动工作日盘后追踪](../../.github/workflows/national-team-left-outcomes-v4.yml)及[完整测试](../../tests/test_national_team_left_entry_outcomes.py)。每个真实工作日北京时间约17:40调度（GitHub定时可能延迟），从首个不可改写V4候选冻结读取已锁定股票，在当日后验行情中单独产生F1开盘纸面**价格情景**、F2最多3日弱确认、510300同日期同金额对照；报告3/5/10/20日是否成熟及费用后相对收益。以交易所后续真实日线为准；停牌/涨跌停/分钟订单簿未证实时不宣称真实成交；S0缺价则净超额NULL，绝不将缺数当0。每次新输入原始OHLC及哈希写入独立`records/national_team_left_outcomes/YYYY-MM-DD/RUN-aATTEMPT.json`，追加而不覆盖旧冻结。
+
+**当前验收界线**：此代码仅准备将2026-11-02以后的真实日线作为纸面开盘情景跟踪，首次自动追踪必须有已成功归档的V4源冻结；实际运行ID、成熟收益、交易可能性一律等公开Actions后续产生再追记。
