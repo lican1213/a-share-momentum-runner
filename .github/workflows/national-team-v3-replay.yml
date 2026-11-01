@@ -43,6 +43,7 @@ jobs:
           python scripts/replay_national_team_v3.py \
             --shares "$RUNNER_TEMP/v3-etf-shares.json" \
             --index "$RUNNER_TEMP/v3-csi300.csv" \
+            --fetch-live-index \
             --fetch-nav-akshare \
             --denominators data/national_team/csi300_float_mv.csv \
             --out "$RUNNER_TEMP/v3-run.json"

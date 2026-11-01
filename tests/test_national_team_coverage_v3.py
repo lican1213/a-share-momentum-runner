@@ -170,6 +170,40 @@ def test_events_are_debounced_and_immature_horizons_are_unknown():
     assert out["trade_authorized"] is False
 
 
+
+def test_live_csi300_incremental_cross_source_check(monkeypatch):
+    import requests
+    from scripts.replay_national_team_v3 import fetch_live_csi300
+
+    class Response:
+        def __init__(self, lines):
+            self.lines = lines
+        def raise_for_status(self):
+            return None
+        def json(self):
+            return {"data": {"klines": self.lines}}
+
+    old = {"2026-07-09": 4000, "2026-07-10": 4100}
+    good = ["2026-07-09,4000,4000,4000,4000,100",
+            "2026-07-10,4100,4100,4100,4100,100",
+            "2026-07-13,4120,4120,4120,4120,100"]
+    monkeypatch.setattr(requests, "get", lambda *a, **kw: Response(good))
+    merged, meta = fetch_live_csi300(old)
+    assert meta["status"] == "SUCCESS"
+    assert meta["overlap_days"] == 2
+    assert meta["added_days"] == 1
+    assert merged["2026-07-10"] == 4100  # frozen original CSV preserved
+    assert merged["2026-07-13"] == 4120
+
+    bad = ["2026-07-10,5000,5000,5000,5000,100",
+           "2026-07-13,4120,4120,4120,4120,100"]
+    monkeypatch.setattr(requests, "get", lambda *a, **kw: Response(bad))
+    retained, diagnostic = fetch_live_csi300(old)
+    assert retained == old
+    assert diagnostic["status"] == "FETCH_FAILED"
+    assert "conflict" in diagnostic["error"]
+
+
 def test_wrong_fund_counts_not_renamed_as_account_trades():
     _, prices, shares, nav, caps = data()
     report = replay(prices, shares, nav=nav, denominators=caps)
