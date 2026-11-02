@@ -12,6 +12,10 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-02 | [9f6d220903](https://github.com/lican1213/a-share-momentum-runner/commit/9f6d2209039847720557d176036e67cf90412071) | github-actions[bot] | data: archive actual ETF provider attempt 41375876907 [skip ci] |
+| 2026-11-02 | [90ed2203c7](https://github.com/lican1213/a-share-momentum-runner/commit/90ed2203c7710ec96f69f2207e7c845b5ab62f72) | Can Li | ci(exp-0013): verify collector-only ETF workflow and include its config in full gate |
+| 2026-11-02 | [58ba9b2aa5](https://github.com/lican1213/a-share-momentum-runner/commit/58ba9b2aa5ba1ad3b1e036ec02bb918a3fdf8f5e) | Can Li | test(exp-0013): update deployment contract for one active ETF-to-V5 pipeline |
+| 2026-11-02 | [c6370f79df](https://github.com/lican1213/a-share-momentum-runner/commit/c6370f79dfd77f7cd967041b1c19a8eac58a6fae) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-02 | [56b317fd3b](https://github.com/lican1213/a-share-momentum-runner/commit/56b317fd3bc0476b479a612bab649f01cf1bff04) | github-actions[bot] | records(exp0012): append actual future OHLC paper feedback 41375272899 [skip ci] |
 | 2026-11-02 | [6717c88a96](https://github.com/lican1213/a-share-momentum-runner/commit/6717c88a9605ebd34c7135bdccce26672f35b5a9) | github-actions[bot] | records(exp0012): route event and append paper evidence 41375272862 [skip ci] |
 | 2026-11-02 | [4abd90e8f6](https://github.com/lican1213/a-share-momentum-runner/commit/4abd90e8f6a06aaa5122fad9ca844880cf05dd4d) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
