@@ -12,6 +12,8 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-02 | [e3d9921abe](https://github.com/lican1213/a-share-momentum-runner/commit/e3d9921abec1c60449f775cc9342c23c89a0ba7f) | Can Li | feat(exp-0013): source fallback, forward MAE/MFE and right-side shadow; retire five legacy workflows |
+| 2026-11-02 | [cb1e589a80](https://github.com/lican1213/a-share-momentum-runner/commit/cb1e589a80b3ae704edb53bbc9a836ef120d6f97) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-02 | [c53ae247fe](https://github.com/lican1213/a-share-momentum-runner/commit/c53ae247fe35952bedeac341c5e7eb4eb543cdb1) | Can Li | ci(exp-0012): run full regression gate on autonomous loop changes |
 | 2026-11-02 | [64909aa736](https://github.com/lican1213/a-share-momentum-runner/commit/64909aa73618afaf8e80867e8a266528c2ed0284) | github-actions[bot] | data: archive actual ETF provider attempt 41369083901 [skip ci] |
 | 2026-11-02 | [769a7775a2](https://github.com/lican1213/a-share-momentum-runner/commit/769a7775a263c25e34d2c0e6d11688cd03e96cc6) | github-actions[bot] | records(exp0012): route event and append paper evidence 41369336446 [skip ci] |
