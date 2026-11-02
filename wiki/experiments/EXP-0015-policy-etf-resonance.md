@@ -37,6 +37,13 @@ updated: 2026-11-02
 - 路由用 [发布于当前资金日之前/当天] ∩ [近7天] ∩ [本次首次观察已发生] 判断 POLICY_ETF_RESONANCE，同时保留仅政策无资金、仅资金无政策的反事实组。事件日之后公布的政策不能倒填为当天资金入场原因。
 - 归档 records/national_team_policy/YYYY-MM-DD/RUN-aATTEMPT.json，路由 records/national_team_router/ 同 run 一对一保存 policy_overlay；发生新V5冻结时 records/national_team_left_entry_v5/ 保存当时政策标签和对应路由SHA；三组 EXP-0014 现金、持仓、订单、成本和T+1/T+2不改。
 
+## 2026-11-02 实际运行与失败复现
+
+- 主线[首次生产 run #41460990262](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41460990262) SUCCESS：证监会官方接口读取20条、国务院30条；PBC首次因非标准文章链接形式导致0条。源级问题没有挡四ETF路由及原始不可覆盖快照。
+- PBC修复后[真实 run #41462220387](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41462220387) SUCCESS（代码f26b231890d428c76bbd1be794070fdd274868d2）：PBC_RSS成功读取6条、GOV_POLICY成功30条，CSRC_NEWS本轮超时（上轮已实抓20条）；source_health=PARTIAL、政策命中0条，非凭空认定“全国没有政策”。[官方政策JSON](../../records/national_team_policy/2026-11-02/41462220387-a1.json) 与[同run路由JSON](../../records/national_team_router/2026-11-02/41462220387-a1.json)两份归档校对。
+- 本轮ETF资金日仍是2026-10-30，已冻结不可重开：router.status=ALREADY_FROZEN_FOR_SESSION；policy_overlay.status=ETF_FLOW_WITHOUT_POLICY_MATCH。SHALLOW_DIP/DEEP_DIP/R_BOUNCE模拟盘引擎和账户均未改，资金事件有效样本不因政策源错误降低。
+- PR#6 [全量275通过+Wiki47页](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41460796515)；PR#7 [全量276通过+Wiki47页](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41461424475)，另有主线政策专项按真实GitHub Actions运行。今后新政策与资金事件同刻前瞻积累，才有资格比较3/5/10日净超额。
+
 ## 后续独立验收与晋升条件
 
 - **软件：** 多源同事件去重、失联、时间在未来、仅日期发布时间、政策先于/后于资金交易日、无政策也继续产生原V5买入研究、券商授权仍false、历史first-seen恢复；必须全库测试和Wiki校验。

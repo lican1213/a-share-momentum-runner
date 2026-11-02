@@ -6,6 +6,9 @@ on:
     branches: [main]
     paths:
       - 'national_team/event_router_v5.py'
+      - 'national_team/policy_overlay.py'
+      - 'scripts/collect_national_team_policy.py'
+      - 'tests/test_national_team_policy_overlay.py'
       - 'national_team/ohlc_fallback_v5.py'
       - 'national_team/paper_account_v5.py'
       - 'tests/test_national_team_paper_account_v5.py'

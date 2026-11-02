@@ -7,7 +7,7 @@ updated: 2026-11-02
 
 ## 2026-11-02 EXP-0015：官方政策事件证据层（非第4个纸面账户）
 
-- **基线树SHA** d5ef599acb9d9f726b308564e9a1474286c524c9。借AIHOT官方源分级/事件去重思路，用[一份无LLM Python政策Overlay](../../national_team/policy_overlay.py)、[采集器](../../scripts/collect_national_team_policy.py)和[原V5事件路由](../../national_team/event_router_v5.py)记录政策首次可得时点、7日稳市/宽松政策与ETF逆势申购共振。固定四ETF覆盖率优先、份额代理及V5本来准入照旧；无新Runner，现有三组EXP-0014纸面现金/持仓/出场逻辑全部保持，未来以不可覆盖的政策快照对应run和独立成熟净超额测增益。具体[EXP-0015](../experiments/EXP-0015-policy-etf-resonance.md)；实际新版本commit SHA与Action/run待执行记录后补。
+- **基线树SHA** d5ef599acb9d9f726b308564e9a1474286c524c9。借AIHOT官方源分级/事件去重思路，用[一份无LLM Python政策Overlay](../../national_team/policy_overlay.py)、[采集器](../../scripts/collect_national_team_policy.py)和[原V5事件路由](../../national_team/event_router_v5.py)记录政策首次可得时点、7日稳市/宽松政策与ETF逆势申购共振。固定四ETF覆盖率优先、份额代理及V5本来准入照旧；无新Runner，现有三组EXP-0014纸面现金/持仓/出场逻辑全部保持，未来以不可覆盖的政策快照对应run和独立成熟净超额测增益。具体[EXP-0015](../experiments/EXP-0015-policy-etf-resonance.md)；**落地源码** f26b231890d428c76bbd1be794070fdd274868d2：[策略真实路由#41462220387](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41462220387)、[政策源记录](../../records/national_team_policy/2026-11-02/41462220387-a1.json)、[事件归档](../../records/national_team_router/2026-11-02/41462220387-a1.json)；央行RSS6条、国务院30条成功，证监会本次限时失败但在[先前同源run#41460990262](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41460990262)实取20条。当前政策命中0，事件资金日10/30已冻结，无新增模拟单；代码软件全库CI [275通过#41460796515](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41460796515)，PBC首次观察回归[276通过#41461424475](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41461424475)。
 
 
 

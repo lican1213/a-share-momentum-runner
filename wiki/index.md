@@ -7,7 +7,7 @@ updated: 2026-11-02
 
 ## 2026-11-02：EXP-0015 官方政策 × 四ETF逆势申购共振
 
-[完整实验协议](experiments/EXP-0015-policy-etf-resonance.md) · [一手政策采集与事件分组](../national_team/policy_overlay.py) · [采集命令](../scripts/collect_national_team_policy.py) · [原V5每日18:05路由](../.github/workflows/national-team-event-router-v5.yml)。增加官方政策日期/首次观察时间与四ETF资金事件的同源关联；不新增进场硬条件，不改三组纸面账户和原始沪深300ETF覆盖率指标。实际官方源成功与否以当次归档 records/national_team_policy/ 为准。
+[完整实验协议](experiments/EXP-0015-policy-etf-resonance.md) · [一手政策采集与事件分组](../national_team/policy_overlay.py) · [采集命令](../scripts/collect_national_team_policy.py) · [原V5每日18:05路由](../.github/workflows/national-team-event-router-v5.yml)。增加官方政策日期/首次观察时间与四ETF资金事件的同源关联；不新增进场硬条件，不改三组纸面账户和原始沪深300ETF覆盖率指标。[真实三源归档#41462220387](../records/national_team_policy/2026-11-02/41462220387-a1.json)已成功：本轮央行6条、国务院30条，证监会临时超时（上轮正常20条）；政策命中0，ETF资金日10/30已冻，不追认新纸面交易。
 
 
 

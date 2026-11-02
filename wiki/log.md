@@ -9,7 +9,7 @@ updated: 2026-11-02
 
 - 用户提出缺少政策作用，并明确授权开发；核对原V5只看四ETF逆势申购和股票低位，没有政策公告首次可得时间、政策工具事件。对照[AIHOT](https://github.com/KKKKhazix/AIHOT)的RSS/JSON多源、信源分级与同事合并，及[ashares_data_collect](https://github.com/YangSal/ashares_data_collect)证监会/国务院官方API实现，选择Python标准库版最小政策Overlay。
 - 在原18:05 V5工作流增央行RSS、证监会JSON、国务院政策文件JSON；独立失败记录、标题事件合并、首次观察时间、政策支持/宏观宽松/收紧/行业分类、7日政策—资金共振标签，随原路由和纸面冻结留证。**不改变ETF触发、资金/选股排序、三组模拟账本、任何真实券商权限。**
-- [EXP-0015协议及未来评估](experiments/EXP-0015-policy-etf-resonance.md)。待新源码GitHub Actions、全库pytest、真实政策归档的SHA/run后续追加，当前不填造胜率/盈利。
+- [EXP-0015协议及未来评估](experiments/EXP-0015-policy-etf-resonance.md)。**实际运行闭环：** [275项通过#41460796515](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41460796515)、[PBC异常重放276通过#41461424475](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41461424475)，[官方三源真实归档#41462220387](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41462220387)取得央行RSS6条、国务院30条；证监会在[首次run#41460990262](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41460990262)实得20条，但最后一轮临时超时。抓取健康度PARTIAL，[快照](../records/national_team_policy/2026-11-02/41462220387-a1.json)当前符合稳市文本规则0条；[路由](../records/national_team_router/2026-11-02/41462220387-a1.json)标ETF_FLOW_WITHOUT_POLICY_MATCH，旧资金日ALREADY_FROZEN，无新增交易。MOC与三时段ChatGPT推送已接入政策字段；没有成熟政策分组净收益。
 
 
 
