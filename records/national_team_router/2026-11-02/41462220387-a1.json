@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "version": "NT_EVENT_ROUTER_V5",
+  "experiment_id": "EXP-0012",
+  "observed_at": "2026-11-02T22:30:23.752662+08:00",
+  "event_id": "ETF4_DOWNFLOW_2026-10-30",
+  "signal_session": "2026-10-30",
+  "signal_age_calendar_days": 3,
+  "status": "ALREADY_FROZEN_FOR_SESSION",
+  "four_etfs": [
+    "510300",
+    "510310",
+    "510330",
+    "159919"
+  ],
+  "v3_path": "records/national_team_v3/2026-11-02/41369083973-a1.json",
+  "watch_path": null,
+  "selected_policy": "SHALLOW_DIP",
+  "feedback": {
+    "paired_10d_events": 0,
+    "mean_10d_excess_s0": {
+      "SHALLOW_DIP": null,
+      "DEEP_DIP": null
+    },
+    "selected_policy": "SHALLOW_DIP",
+    "right_side_reference": {
+      "paired_10d_clusters": 0,
+      "mean_R_minus_SHALLOW_excess_s0": null,
+      "not_used_to_gate_left_side_research": true
+    },
+    "policy_rule": "8 distinct event clusters with paired 10d outcomes; DEEP_DIP +0.2pct",
+    "not_a_calibrated_profit_probability": true
+  },
+  "funding": {
+    "net_creation_1d_cny_proxy": 8590983660.0,
+    "net_creation_5d_cny_proxy": 47907928530.0,
+    "ordinary_float_coverage_ratio": null,
+    "ratio_status": "DENOMINATOR_MISSING",
+    "index_ret5": -0.02918888371945738,
+    "share_proxy_not_state_account_trade": true
+  },
+  "policy_overlay": {
+    "experiment_id": "EXP-0015",
+    "status": "ETF_FLOW_WITHOUT_POLICY_MATCH",
+    "source_health": "PARTIAL",
+    "snapshot_sha256": "ecd62f16e4a709a6e0ce82f38fcdfada81c3acc10642d83595bb3e21e4179bd9",
+    "support_count": 0,
+    "matched_funding_event_ids": [],
+    "recent_event_ids": [],
+    "top_events": [],
+    "changes_admission": false,
+    "trade_authorized": false,
+    "not_a_policy_implied_etf_purchase": true
+  },
+  "dispatcher": "NO_NEW_PAPER_FREEZE",
+  "trade_authorized": false,
+  "broker_orders": [],
+  "github_run_id": "41462220387",
+  "github_source_commit": "f26b231890d428c76bbd1be794070fdd274868d2",
+  "snapshot_sha256": "8124eb0a758cad886ad32034663ce0ccefb27b2acf8bf7dabd49960e878070e1"
+}
