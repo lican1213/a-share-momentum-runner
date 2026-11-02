@@ -122,20 +122,23 @@ def _read_pbc(raw):
         for child in node:
             key = child.tag.rsplit("}", 1)[-1].lower()
             fields[key] = child.attrib.get("href") or child.text or ""
-        url = _canonical_url(fields.get("link"), "pbc.gov.cn")
-        if url and fields.get("title") and (fields.get("pubdate") or fields.get("published") or fields.get("updated")):
+        url = _canonical_url(fields.get("link") or fields.get("guid"), "pbc.gov.cn")
+        if url and fields.get("title"):
             yield {
                 "title": fields["title"], "summary": fields.get("description") or fields.get("summary") or "",
                 "url": url,
-                "published": fields.get("pubdate") or fields.get("published") or fields.get("updated"),
+                "published": (fields.get("pubdate") or fields.get("published")
+                              or fields.get("updated") or fields.get("date")),
             }
 
 
 PARSERS = {"PBC_RSS": _read_pbc, "CSRC_NEWS": _read_csrc, "GOV_POLICY": _read_gov}
 
 
-def _published(value):
-    """Date-only metadata stays date-only; never manufacture an intraday release."""
+def _published(value, observed):
+    """Date-only stays date-only; absent PBC date means first-observed only."""
+    if not value:
+        return observed.date().isoformat(), None, "FIRST_OBSERVED_ONLY"
     raw = str(value).strip()
     if re.fullmatch(r"\d{4}-\d{2}-\d{2}", raw):
         return date.fromisoformat(raw).isoformat(), None, "DATE_ONLY"
@@ -189,7 +192,7 @@ def collect_snapshot(*, now, fetcher=None, prior_first_seen=None):
                 tagged = classify(row["title"], row["summary"])
                 if tagged is None:
                     continue
-                day, instant, precision = _published(row["published"])
+                day, instant, precision = _published(row["published"], observed.astimezone(BJ))
                 # Only classify announcements that already have a release date.
                 if day > observed.astimezone(BJ).date().isoformat():
                     continue
@@ -283,6 +286,7 @@ def summarize(snapshot, *, now, funding_day, etf_flow_active):
         recent.append(event)
     support = [e for e in recent if e["direction"] == "SUPPORT"]
     matched = [e for e in support if
+               e["publication_precision"] != "FIRST_OBSERVED_ONLY" and
                0 <= (date.fromisoformat(funding_day) -
                      date.fromisoformat(e["published_date"])).days <= WINDOW_DAYS]
     if snapshot.get("source_health") == "UNAVAILABLE":
