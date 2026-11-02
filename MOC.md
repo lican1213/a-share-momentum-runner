@@ -1,3 +1,7 @@
+## 2026-11-02：EXP-0012 自迭代资金事件执行链（DeepSeek Super-agent仅作架构参考）
+
+已把“观察→事件路由→纸面低位实验→未来收益反馈→调整下一次排序”写入项目工作流，**不安装DeepSeek服务、不生成自动券商单**。四ETF源每日盘后刷新；相同资金交易日只冻一次，原EXP-0011旧事件不自动重开。新模型优先五日还在跌的抗跌股，浅跌与深跌两组同源纸面竞争；至少8个独立已成熟10日配对事件后自动按扣费净超额选择下一次默认组。资金主比值缺分母保留NULL，份额净申购辅助发现不因此停机。完整实现见[EXP-0012](wiki/experiments/EXP-0012-four-etf-autonomous-event-loop.md)、[路由](national_team/event_router_v5.py)、[选股](national_team/left_entry_v5.py)、[事件Actions](.github/workflows/national-team-event-router-v5.yml)、[收益Actions](.github/workflows/national-team-left-outcomes-v5.yml)，实际通过与收益以新SHA真实Actions和不可改写记录为准。
+
 ## 2026-11-01 用户最新想法：**机会优先、主动试错、不要过度防御**（此后研究最高取向）
 
 **用户要求：要在A股下跌时，通过原始国家队相关沪深300ETF资金指标寻找大资金低位承接，不是在涨完后追突破。只要历史证据有50%以上的机会，允许在独立小仓位纸面账户大胆试；不要再用层层均线/放量/高置信度条件把机会全部挡成空仓。** 此为研究和纸面试错准入取向，非宣称已经测出个股未来赢钱概率，更非自动券商授权。

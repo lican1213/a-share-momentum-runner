@@ -2,8 +2,14 @@
 id: MOC-WIKI
 type: moc
 status: maintained
-updated: 2026-11-01
+updated: 2026-11-02
 ---
+
+## 2026-11-02：EXP-0012 已编码的主动循环
+
+[自动资金事件路由与自迭代实验](experiments/EXP-0012-four-etf-autonomous-event-loop.md) · [四ETF事件引擎](../national_team/event_router_v5.py) · [低位浅跌/深跌双组](../national_team/left_entry_v5.py) · [每日事件工作流](../.github/workflows/national-team-event-router-v5.yml) · [每日未来收益反馈](../.github/workflows/national-team-left-outcomes-v5.yml)。优先观察尚未涨的股票，同源比较10交易日费用后相对510300收益；独立8组成熟反馈后可自动切换下一次纸面排序。全程保留真实ETF覆盖率分母的NULL与旧冻结，代码合入不等于未来股票已盈利。
+
+
 
 ## 2026-11-01 用户强调“机会优先、不要过度防御”
 

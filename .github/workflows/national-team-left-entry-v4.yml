@@ -1,13 +1,6 @@
 name: National-team EXP-0011 50pct low-left paper candidate freeze
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'national_team/left_entry_v4.py'
-      - 'scripts/run_national_team_left_entry_v4.py'
-      - 'tests/test_national_team_left_entry_v4.py'
-      - '.github/workflows/national-team-left-entry-v4.yml'
 permissions:
   contents: write
 concurrency:

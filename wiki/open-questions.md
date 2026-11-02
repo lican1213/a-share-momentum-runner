@@ -2,8 +2,15 @@
 id: OPEN-QUESTIONS
 type: open-questions
 status: active
-updated: 2026-11-01
+updated: 2026-11-02
 ---
+
+## 2026-11-02：EXP-0012 当前自动学习的下一步数据重点
+
+- [EXP-0012](experiments/EXP-0012-four-etf-autonomous-event-loop.md)已将未涨优先、双组对照和反馈选优实现为日常自动化；待新交易日的**真实source-anchored首次冻结和10个交易日后配对收益**出现，才能验收自适应政策的经济效果。保留当前未成熟值为NULL，纯软件通过不写成收益。
+- 继续补沪深300**逐日真实普通流通市值**用于用户原始四ETF AUM占比。自动化在分母未到位前使用明标份额净申赎的研究代理，不把国家队身份与ETF全体投资者混同。
+
+
 
 ## 2026-11-01 用户“别过度防御”的下一设计P0
 

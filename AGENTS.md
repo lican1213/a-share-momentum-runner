@@ -1,3 +1,5 @@
+**2026-11-02 新增自迭代研究分支：** [EXP-0012](wiki/experiments/EXP-0012-four-etf-autonomous-event-loop.md)将原四ETF资金事件→动态同日股票候选→浅跌/深跌影子纸面两组→未来10日净超额反馈串入GitHub Actions；≥8个独立成对成熟事件自动选下一默认组。新交易日事件才新冻结，旧EXP-0011与A2/B immutable不改；始终无真实券商单。对用户“不要过度防御”的要求，采用已涨与仍跌可见分组和自动学习，不让缺失市值分母阻断份额代理研究。
+
 # Agent entrypoint — national-team ETF funding and stock selection
 
 **NEW controlling round-two audit (2026-10-30):** [AUD-R2](wiki/audits/AUD-2026-10-30-round2-independent-redteam.md) and [single status](wiki/current-status.md). Five independent red cases overturned the prior claim of full execution acceptance: undecided entry misallocated later capital, repeat partial funding event, duplicate recovered S1/S2, 14:50 interval timestamp order, V2 missing stock becoming profitable cash. Do not tune picks. Only trust new matched-SHA full pytest plus actual immutable G1, and distinguish future G2/G3/G4.

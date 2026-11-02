@@ -2,8 +2,15 @@
 id: WIKI-LOG
 type: log
 status: maintained
-updated: 2026-11-01
+updated: 2026-11-02
 ---
+
+## 2026-11-02：落地Super-agent式观察→行动→反馈循环（EXP-0012）
+
+- 无需运行DeepSeek原型：在现有Python/GitHub Actions中增加固定四ETF盘后历史刷新、同日源事件路由、自动独立低位纸面冻结、两组未来OHLC跟踪、8个10日成熟事件后的自适应排序。见[实验合同](experiments/EXP-0012-four-etf-autonomous-event-loop.md)与[事件工作流](../.github/workflows/national-team-event-router-v5.yml)。
+- 修复旧V3没有日常cron、旧V4因源push反复读取10/30固定事件的问题；保留手动复现实验，不覆盖旧记录。低位选股新组先排仍跌的股票，旧最高相对强度优先模型保留为历史基线。相关源码SHA及Actions运行ID以实际验证结果再追加，不提前声称赚钱。
+
+
 
 ## 2026-11-01：用户反对过度防御，完成旧策略和V4逐项源码审查
 

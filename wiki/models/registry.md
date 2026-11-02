@@ -2,8 +2,15 @@
 id: MODEL-REGISTRY
 type: model-registry
 status: maintained
-updated: 2026-10-30
+updated: 2026-11-02
 ---
+
+## 2026-11-02 EXP-0012：自迭代四ETF事件路由＋左侧双排序
+
+- **实施前主分支：** `89f03ee9341458e244b0895ca6247cf7d2ba17cc`。[独立EXP-0012协议](../experiments/EXP-0012-four-etf-autonomous-event-loop.md)登记SHALLOW_DIP/DEEP_DIP并行纸面、同刻S0、每事件唯一、≥8个10日独立成熟配对且深跌组多0.2个百分点净超额时自动切换。使用动态四ETF实源和日期匹配的150股来源，旧EXP-0011不重复自动冻结。
+- [事件路由](../../national_team/event_router_v5.py) · [左侧选股](../../national_team/left_entry_v5.py) · [追踪](../../scripts/track_national_team_left_entry_v5.py) · [自动调度](../../.github/workflows/national-team-event-router-v5.yml)。新模型源码SHA、真实Actions、10日成熟收益均以后续记录为准；研究无券商成交授权。
+
+
 
 ## 2026-11-01 EXP-0011（V4，50%小仓位左侧纸面准入）
 

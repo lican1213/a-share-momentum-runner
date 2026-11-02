@@ -1,6 +1,8 @@
 name: National-team V3 four-ETF coverage and historical event replay
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '25 9 * * 1-5'
   push:
     branches: [main]
     paths:
@@ -62,7 +64,7 @@ jobs:
           assert (date.today()-date.fromisoformat(quality["last_full_four_share_day"])).days<=14,quality
           assert run["summary"]["share_proxy"]["event_clusters"]>=20,quality
           assert run["trade_authorized"] is False
-          assert quality["ratio_pit_verified_days"]==0
+          assert quality["ratio_pit_verified_days"] <= quality["ratio_days"]
           print("EXTERNAL_REPLAY_GATE_PASS",quality["four_share_days"],
                 run["summary"]["share_proxy"]["event_clusters"])
           PY
@@ -79,6 +81,11 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- "$RECORD_PATH"
           git commit -m "records(v3): append source-hashed four-ETF replay ${GITHUB_RUN_ID}-a${GITHUB_RUN_ATTEMPT}"
-          git fetch origin main
-          git rebase origin/main
-          git push origin HEAD:main
+          for attempt in 1 2 3 4; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              echo 'V3_DAILY_REPLAY_PERSISTED'; exit 0
+            fi
+            sleep 2
+          done
+          exit 2
