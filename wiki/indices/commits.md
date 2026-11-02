@@ -12,6 +12,9 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-02 | [1a641ddb9c](https://github.com/lican1213/a-share-momentum-runner/commit/1a641ddb9cfea49db423267a827cb66f66e31a6c) | github-actions[bot] | data: archive actual ETF provider attempt 41407601458 [skip ci] |
+| 2026-11-02 | [94dc8b7713](https://github.com/lican1213/a-share-momentum-runner/commit/94dc8b77131c08c1465a30f3ffd5e774197e8b94) | Can Li | ops(exp-0013): align tri-daily alerts and retire A2/B automatic triggers |
+| 2026-11-02 | [24312a87c6](https://github.com/lican1213/a-share-momentum-runner/commit/24312a87c66c30c0b2d8e90e8703529911cf1781) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-02 | [9f6d220903](https://github.com/lican1213/a-share-momentum-runner/commit/9f6d2209039847720557d176036e67cf90412071) | github-actions[bot] | data: archive actual ETF provider attempt 41375876907 [skip ci] |
 | 2026-11-02 | [90ed2203c7](https://github.com/lican1213/a-share-momentum-runner/commit/90ed2203c7710ec96f69f2207e7c845b5ab62f72) | Can Li | ci(exp-0013): verify collector-only ETF workflow and include its config in full gate |
 | 2026-11-02 | [58ba9b2aa5](https://github.com/lican1213/a-share-momentum-runner/commit/58ba9b2aa5ba1ad3b1e036ec02bb918a3fdf8f5e) | Can Li | test(exp-0013): update deployment contract for one active ETF-to-V5 pipeline |
