@@ -1,3 +1,5 @@
+**2026-11-02 EXP-0014纸面盘恢复：** 最新V5仍是唯一新资金事件策略。原V5只有候选冻结和前瞻OHLC，不是现金账户；现由[EXP-0014](wiki/experiments/EXP-0014-v5-paper-account.md)、[纸面账本](national_team/paper_account_v5.py)接入每日18:45原V5跟踪，三独立30,000元账户按首次可得真实日线OHLC模拟买入与T+1/T+2出场，记录佣金、现金、持仓、S0比较。禁止把日K高低触及和收盘代理称实际订单成交；旧A2/B定时继续关闭，历史不动。
+
 **2026-11-02 EXP-0013主链约定：** [EXP-0013](wiki/experiments/EXP-0013-path-learning-and-retirement.md)只扩展原V5事件路由/跟踪，增加Baostock个股日线备用、MFE/MAE以及R_BOUNCE独立右侧参考，左侧政策自动选择规则不变。5项旧工作流删除并在[MOC](MOC.md)留下旧SHA永久链接。A2/B旧工作流已改为仅手动（无cron/push）；EXP-0011二十日未成熟历史后验仍定时。历史A2/B records及源码不删、不重算冒充历史。
 
 **2026-11-02 新增自迭代研究分支：** [EXP-0012](wiki/experiments/EXP-0012-four-etf-autonomous-event-loop.md)将原四ETF资金事件→动态同日股票候选→浅跌/深跌影子纸面两组→未来10日净超额反馈串入GitHub Actions；≥8个独立成对成熟事件自动选下一默认组。新交易日事件才新冻结，旧EXP-0011与A2/B immutable不改；始终无真实券商单。对用户“不要过度防御”的要求，采用已涨与仍跌可见分组和自动学习，不让缺失市值分母阻断份额代理研究。

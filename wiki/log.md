@@ -5,6 +5,10 @@ status: maintained
 updated: 2026-11-02
 ---
 
+## 2026-11-02：修复V5纸面盘功能断层，EXP-0014
+
+- 用户指出精简旧A2/B后无法观察真实持续的模拟现金和进退场。源实测：V5首次[路由#41375272862](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41375272862)未生成新冻结，[跟踪#41375272899](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41375272899)只跟踪0事件；原F1候选`fill=None`，并非完整纸面账户。认可遗漏，不复用旧右侧追高策略。
+- 在原V5 18:45结果追踪中增加[EXP-0014](experiments/EXP-0014-v5-paper-account.md)：三臂独立虚拟3万元账户，保留真实开盘情景与T+1、单笔150元/总敞口1万元、100股、买卖扣费、预设止盈止损、T+2时间退出、同日510300比较代理；失败和空仓有明示的现金状态。历史账本不覆盖，新快照逐日独立归档。
 ## 2026-11-02：定时任务跟随V5主线收敛（EXP-0013运维补完）
 
 - 原ChatGPT三时段跟踪仍使用过时V4/A2/B指令；现已保持08:30/12:30/17:30频率不变，替换为从最新MOC/真实Actions证据动态识别EXP-0013资金主指标、SHALLOW_DIP/DEEP_DIP/R_BOUNCE与3/5/10/20日MFE/MAE、510300扣费对照，不复述固定旧run。

@@ -5,6 +5,9 @@ status: maintained
 updated: 2026-11-02
 ---
 
+## 2026-11-02：V5三组真实连续纸面现金盘上线（EXP-0014）
+
+[完整纸面交易协议](experiments/EXP-0014-v5-paper-account.md) · [现金/持仓/逐笔引擎](../national_team/paper_account_v5.py) · [每日18:45原V5跟踪工作流](../.github/workflows/national-team-left-outcomes-v5.yml)。修复之前只有候选`fill=None`、没有持续模拟现金/交易结果的缺口；SHALLOW_DIP、DEEP_DIP、R_BOUNCE三组独立虚拟30,000元，次日开盘OHLC模拟入场、T+1以后止盈/止损、T+2时间退出及510300比较代理。无新资金事件明确保持现金；历史冻结不重写，真实券商订单仍为零。
 ## 2026-11-02：推送/工作流定时与V5对齐
 
 ChatGPT[国家队三时段推送](../MOC.md)保持08:30/12:30/17:30，报告以当时可得四ETF源、主市值覆盖率和最新V5同资金簇左/右侧纸面收益证据为准；不会把旧A2/B日常冻结当V5。老A2/B停止push/cron自动运行，保留手动历史研究入口；V3、ETF实源、V5事件与MFE/MAE反馈保持定时，具体见[根MOC](../MOC.md)。

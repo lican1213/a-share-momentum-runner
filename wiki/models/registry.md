@@ -5,6 +5,9 @@ status: maintained
 updated: 2026-11-02
 ---
 
+## 2026-11-02 EXP-0014：V5现金账户执行情景（不改选股）
+
+- **基线** `94dc8b77131c08c1465a30f3ffd5e774197e8b94`，原只有V5观察名单和路径收益，旧A2/B定时关闭留下模拟资金空白。新增[一个可复核纸面账本](../../national_team/paper_account_v5.py)、[EXP-0014规则](../experiments/EXP-0014-v5-paper-account.md)，将V5已冻结三组信号、下一交易日真实OHLC、T+1后止盈止损、T+2收盘代理与510300同日ETF对照写入连续不可覆盖记录。资金事件、左侧优选门槛及右侧影子仍保持原设计，真正券商指令始终为零。未来实际业务运行需记录对应SHA和快照才能称已生成模拟成交。
 ## 2026-11-02 EXP-0013：来源恢复与路径收益扩展
 
 - **改造基线** `cb1e589a80b3ae704edb53bbc9a836ef120d6f97`，具体冻结规则见[EXP-0013](../experiments/EXP-0013-path-learning-and-retirement.md)。新增R_BOUNCE独立右侧影子、3/5/10/20交易日MFE/MAE和Baostock缺源批量恢复；原SHALLOW/DEEP双组及8个独立成熟簇的自动选优不改，旧source SHA/records不改写。

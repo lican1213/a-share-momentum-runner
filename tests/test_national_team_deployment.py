@@ -64,3 +64,12 @@ def test_only_v5_owns_new_daily_paper_events():
     outcomes = (workflows / "national-team-left-outcomes-v5.yml").read_text(encoding="utf-8")
     assert "cron: '5 10 * * 1-5'" in router
     assert "cron: '45 10 * * 1-5'" in outcomes
+
+
+def test_v5_paper_account_is_continuous_and_persisted_without_new_runner():
+    s = (ROOT / ".github/workflows/national-team-left-outcomes-v5.yml").read_text(encoding="utf-8")
+    assert "cron: '45 10 * * 1-5'" in s
+    assert "--paper-out" in s
+    assert "records/national_team_paper_accounts_v5" in s
+    assert 'git add -- "$dir" "$paper_dir"' in s
+    assert "tests/test_national_team_paper_account_v5.py" in s

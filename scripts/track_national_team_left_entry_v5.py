@@ -15,6 +15,7 @@ from national_team.left_entry_outcomes import track
 from national_team.left_entry_v4 import digest
 from national_team.left_entry_v5 import POLICIES, RIGHT_POLICY
 from national_team.ohlc_fallback_v5 import backfill_future_bars
+from national_team.paper_account_v5 import advance
 from scripts.track_national_team_left_entry_v4 import collect
 
 BJ = ZoneInfo("Asia/Shanghai")
@@ -83,11 +84,22 @@ def follow_one(ak, frozen, source_path, asof):
     }
 
 
+def latest_paper_snapshot(root, asof):
+    prior = []
+    for path in Path(root).glob("*/*.json"):
+        obj = json.loads(path.read_text(encoding="utf-8"))
+        if obj.get("version") == "NT_V5_PAPER_ACCOUNT_EXP0014" and obj.get("asof", "") <= asof:
+            prior.append((obj["capture_time"], str(path), obj))
+    return max(prior)[2] if prior else None
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--freeze-root", default="records/national_team_left_entry_v5")
     ap.add_argument("--max-events", type=int, default=24)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--paper-out", help="append-only shared three-arm cash and trade snapshot")
+    ap.add_argument("--paper-root", default="records/national_team_paper_accounts_v5")
     args = ap.parse_args()
     now = datetime.now(BJ)
     asof = now.date().isoformat()
@@ -96,6 +108,16 @@ def main():
     results = []
     for path, frozen in freezes:
         results.append(follow_one(ak, frozen, path, asof))
+    previous = latest_paper_snapshot(args.paper_root, asof) if args.paper_out else None
+    account = advance(previous, [(frozen, result["source_new_ohlc"])
+                                 for (_, frozen), result in zip(freezes, results)],
+                      asof=asof, captured_at=datetime.now(BJ).isoformat()) if args.paper_out else None
+    if account:
+        account["github_run_id"] = os.environ.get("GITHUB_RUN_ID")
+        account["github_run_attempt"] = os.environ.get("GITHUB_RUN_ATTEMPT")
+        account["github_source_commit"] = os.environ.get("GITHUB_SHA")
+        account.pop("snapshot_sha256", None)
+        account["snapshot_sha256"] = digest(account)
     batch = {
         "schema": 1, "version": "NT_EVENT_FOLLOWUP_V5",
         "experiment_id": "EXP-0012", "asof": asof,
@@ -105,6 +127,8 @@ def main():
         "github_run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT"),
         "results": results,
         "tracked_freeze_count": len(results),
+        "paper_account_snapshot_sha256": account["snapshot_sha256"] if account else None,
+        "paper_account_summary": {k: v["summary"] for k, v in account["accounts"].items()} if account else None,
         "trade_authorized": False, "broker_orders": [],
     }
     batch["snapshot_sha256"] = digest(batch)
@@ -114,9 +138,16 @@ def main():
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(batch, indent=2, ensure_ascii=False) + "\n",
                    encoding="utf-8")
+    if args.paper_out:
+        paper_path = Path(args.paper_out)
+        if paper_path.exists():
+            raise FileExistsError("refuse to overwrite paper account snapshot")
+        paper_path.parent.mkdir(parents=True, exist_ok=True)
+        paper_path.write_text(json.dumps(account, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(json.dumps({
         "asof": asof, "tracked_events": len(results),
         "policies": list((*POLICIES, RIGHT_POLICY)),
+        "paper_accounts": {k: v["summary"] for k, v in account["accounts"].items()} if account else None,
         "paired_10d": sum(any(
             h.get("status") == "PAIRED"
             for p in r["policy_results"].values()
