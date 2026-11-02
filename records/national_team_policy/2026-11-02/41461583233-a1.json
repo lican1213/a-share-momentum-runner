@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "experiment_id": "EXP-0015",
+  "version": "NT_OFFICIAL_POLICY_OVERLAY",
+  "captured_at_bj": "2026-11-02T22:24:24.828810+08:00",
+  "sources": [
+    {
+      "source": "PBC_RSS",
+      "tier": "T1_OFFICIAL",
+      "status": "FAILED",
+      "fetched": 0,
+      "relevant": 0,
+      "error": "ValueError: no parseable entries"
+    },
+    {
+      "source": "CSRC_NEWS",
+      "tier": "T1_OFFICIAL",
+      "status": "OK",
+      "fetched": 20,
+      "relevant": 0,
+      "error": null
+    },
+    {
+      "source": "GOV_POLICY",
+      "tier": "T1_OFFICIAL",
+      "status": "FAILED",
+      "fetched": 0,
+      "relevant": 0,
+      "error": "TimeoutError: The read operation timed out"
+    }
+  ],
+  "source_health": "PARTIAL",
+  "events": [],
+  "source_tier": "T1_OFFICIAL",
+  "no_broker_orders": true,
+  "snapshot_sha256": "f5a3c0b97c189671b1a0fc4b49af03d77c34c0f77d2e4bc6eac10af4df434195"
+}
