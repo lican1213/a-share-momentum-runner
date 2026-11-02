@@ -2,7 +2,7 @@
 id: GENERATED-COMMITS
 type: log
 status: maintained
-updated: 2026-10-31
+updated: 2026-11-02
 ---
 # 全部Git提交历史（自动索引）
 
@@ -12,6 +12,46 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-02 | [c53ae247fe](https://github.com/lican1213/a-share-momentum-runner/commit/c53ae247fe35952bedeac341c5e7eb4eb543cdb1) | Can Li | ci(exp-0012): run full regression gate on autonomous loop changes |
+| 2026-11-02 | [64909aa736](https://github.com/lican1213/a-share-momentum-runner/commit/64909aa73618afaf8e80867e8a266528c2ed0284) | github-actions[bot] | data: archive actual ETF provider attempt 41369083901 [skip ci] |
+| 2026-11-02 | [769a7775a2](https://github.com/lican1213/a-share-momentum-runner/commit/769a7775a263c25e34d2c0e6d11688cd03e96cc6) | github-actions[bot] | records(exp0012): route event and append paper evidence 41369336446 [skip ci] |
+| 2026-11-02 | [db41215b41](https://github.com/lican1213/a-share-momentum-runner/commit/db41215b419ab55d9e25f58252309550b48fab83) | github-actions[bot] | records(exp0012): append actual future OHLC paper feedback 41369336416 [skip ci] |
+| 2026-11-02 | [8502fbd174](https://github.com/lican1213/a-share-momentum-runner/commit/8502fbd174c2cb1a9aa57f4f045d727d88511a38) | Can Li | fix(exp-0012): learn from independent funding clusters, not correlated daily signals |
+| 2026-11-02 | [5bd524c6f3](https://github.com/lican1213/a-share-momentum-runner/commit/5bd524c6f355dd7d5afca34323b3c65a6150b283) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 41369083973-a1 |
+| 2026-11-02 | [e848de3831](https://github.com/lican1213/a-share-momentum-runner/commit/e848de3831c267d66da2c56cc9df0e997d9ca600) | github-actions[bot] | records(exp0012): route event and append paper evidence 41369083859 [skip ci] |
+| 2026-11-02 | [98c93b0e69](https://github.com/lican1213/a-share-momentum-runner/commit/98c93b0e69697eae415188ced76617c465d85a08) | github-actions[bot] | records(exp0012): append actual future OHLC paper feedback 41369083892 [skip ci] |
+| 2026-11-02 | [65b85e0970](https://github.com/lican1213/a-share-momentum-runner/commit/65b85e097018db867d8268ded527dafc63d46787) | Can Li | feat(exp-0012): autonomous four-ETF event router, low-left paired learning and daily jobs |
+| 2026-11-01 | [89f03ee934](https://github.com/lican1213/a-share-momentum-runner/commit/89f03ee9341458e244b0895ca6247cf7d2ba17cc) | Can Li | docs(moc): prioritize early ETF-flow opportunity and audit excessive entry gates |
+| 2026-11-01 | [42bb45f9ac](https://github.com/lican1213/a-share-momentum-runner/commit/42bb45f9ac5151d069fe93da1fdead0ba5d33a86) | Can Li | feat(exp-0011): schedule prospective F1/F2 OHLC and S0 paper tracking |
+| 2026-11-01 | [7a566a269f](https://github.com/lican1213/a-share-momentum-runner/commit/7a566a269ff33bed8de3323a6281ed0a64fb6cc1) | github-actions[bot] | records(v4): append real-OHLC low-left paper intent 41283487731-a1 |
+| 2026-11-01 | [1027c60873](https://github.com/lican1213/a-share-momentum-runner/commit/1027c6087316153fb8769521d7213a556e74f50d) | Can Li | feat(exp-0011): admit 50pct historical signal to PIT low-left F1/F2 paper trial |
+| 2026-11-01 | [48ab8afc47](https://github.com/lican1213/a-share-momentum-runner/commit/48ab8afc470d068583398770dc74b9718df85412) | Can Li | docs(moc): verify latest V3 dual-source Oct30 replay and 228-test full gate |
+| 2026-11-01 | [30e5137f0e](https://github.com/lican1213/a-share-momentum-runner/commit/30e5137f0e11d3f2ff6cd7690c7ca0c339492c45) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 41281158666-a1 |
+| 2026-11-01 | [16828ce877](https://github.com/lican1213/a-share-momentum-runner/commit/16828ce8770084295a0da264c28f8964bcf65d61) | Can Li | fix(v3): replay live index via retried Eastmoney/Tencent and archive full source values |
+| 2026-11-01 | [cc38c5684f](https://github.com/lican1213/a-share-momentum-runner/commit/cc38c5684f68dc911e682ad05b270993ba27a544) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 41281005513-a1 |
+| 2026-11-01 | [fccad09415](https://github.com/lican1213/a-share-momentum-runner/commit/fccad09415a4bde5f007ad52a95810e512c7c167) | Can Li | docs(v3): file through Oct30 live replay and October drawdown counterexamples |
+| 2026-11-01 | [3dd4ca2d8d](https://github.com/lican1213/a-share-momentum-runner/commit/3dd4ca2d8dccc11b1fcc6a91f7cb2ee29f645a4d) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 41280867133-a1 |
+| 2026-11-01 | [9d23a12a8c](https://github.com/lican1213/a-share-momentum-runner/commit/9d23a12a8c3110fce52db8cf8b87b905a4b11fb9) | Can Li | feat(v3): append cross-checked current CSI300 sessions beyond historical July CSV |
+| 2026-11-01 | [27f3501658](https://github.com/lican1213/a-share-momentum-runner/commit/27f3501658a04d65ed417fcc120ea6efaa256a34) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 41280752866-a1 |
+| 2026-11-01 | [329c2dd1d8](https://github.com/lican1213/a-share-momentum-runner/commit/329c2dd1d8fc8884b53967a8b7315a96b04731f5) | Can Li | docs(v3): archive actual source replay, fair downturn control and NAV publication gate |
+| 2026-11-01 | [3ef996cc3b](https://github.com/lican1213/a-share-momentum-runner/commit/3ef996cc3baa138d7f18243f20bbb5c0cb15488f) | Can Li | test(archive): assert V2 recovered cohort against its actual frozen source record |
+| 2026-11-01 | [e506f9ab79](https://github.com/lican1213/a-share-momentum-runner/commit/e506f9ab79198382aac0690080187536abbeb420) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 41280606518-a1 |
+| 2026-11-01 | [c6527b0746](https://github.com/lican1213/a-share-momentum-runner/commit/c6527b07469b74a0b24ff6b8e587341e1f393323) | Can Li | fix(v3): compare ETF event hits against same complete-four market-down universe |
+| 2026-11-01 | [4a7b91ff79](https://github.com/lican1213/a-share-momentum-runner/commit/4a7b91ff7949277ea20279040b2d6f85e5ba802b) | Can Li | test(regression): validate immutable cohort membership without stale hardcoded rank order |
+| 2026-11-01 | [cc169f6628](https://github.com/lican1213/a-share-momentum-runner/commit/cc169f662817b1ea6d6dc8973ee37ca81d4fab77) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 41280523857-a1 |
+| 2026-11-01 | [7c2ad2778d](https://github.com/lican1213/a-share-momentum-runner/commit/7c2ad2778dbe1ba5f8324e3315698a103dde4950) | Can Li | fix(v3): quote YAML step label so replay workflow parses |
+| 2026-11-01 | [11021fb1be](https://github.com/lican1213/a-share-momentum-runner/commit/11021fb1be318b4ce08bb25ac36ed2d03b8f8e83) | Can Li | feat(v3): primary CSI300 four-ETF coverage gate and historical event replay (EXP-0010) |
+| 2026-11-01 | [d28971a027](https://github.com/lican1213/a-share-momentum-runner/commit/d28971a027751ba8c9eb13cbcb07010e0f8e911a) | Can Li | docs(events): cross-reference shares-only 60pct pilot |
+| 2026-11-01 | [9c31a82a8a](https://github.com/lican1213/a-share-momentum-runner/commit/9c31a82a8aa6291b0a045aaf5a47177ed7428758) | Can Li | docs(decision): link 60pct historical evidence |
+| 2026-11-01 | [383e2c5d76](https://github.com/lican1213/a-share-momentum-runner/commit/383e2c5d768b733689413fb15e3ed740b6d0bc41) | Can Li | docs(experiment): link original coverage KPI and October evidence |
+| 2026-11-01 | [19802d18fc](https://github.com/lican1213/a-share-momentum-runner/commit/19802d18fce2cb5772c42c31e2e3a18f41965acd) | Can Li | docs(open): prioritize actual CSI300 float denominator and historical NAV |
+| 2026-11-01 | [ab5376c199](https://github.com/lican1213/a-share-momentum-runner/commit/ab5376c199f79fdb3833427b37dfdaf955d43931) | Can Li | docs(log): record verified October events and shares-only 2021-26 pilot |
+| 2026-11-01 | [816f57a710](https://github.com/lican1213/a-share-momentum-runner/commit/816f57a71015d488afd5b4d74af8b0f476f4e75f) | Can Li | docs(wiki): index coverage and 60pct historical pilot |
+| 2026-11-01 | [3f961d2a45](https://github.com/lican1213/a-share-momentum-runner/commit/3f961d2a4508fdf93bd19b7d5214131254a0fd00) | Can Li | docs(moc): foreground coverage ratio and real historical hit-rate |
+| 2026-11-01 | [8ded5f1f77](https://github.com/lican1213/a-share-momentum-runner/commit/8ded5f1f773ce3aa303bd8c17db94c95e9732100) | Can Li | docs(backtest): record 2021-2026 ETF-share proxy 60pct pilot |
+| 2026-11-01 | [4d64ece3d1](https://github.com/lican1213/a-share-momentum-runner/commit/4d64ece3d1ec62b230be220ecf6a92428a7e4c06) | Can Li | docs(evidence): record October 2026 falling-day ETF creation events |
+| 2026-11-01 | [1e54685942](https://github.com/lican1213/a-share-momentum-runner/commit/1e54685942d7b03d75a514a0a28f1412d5855519) | Can Li | docs(national-team): prioritize original CSI300 ETF coverage ratio |
+| 2026-10-31 | [b262d1906d](https://github.com/lican1213/a-share-momentum-runner/commit/b262d1906dd0fb2ae6c3ddb3b8bfdd327baa77bb) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-31 | [6af3ad4fff](https://github.com/lican1213/a-share-momentum-runner/commit/6af3ad4fff1f1ab44874d940aa6d3894b234809b) | github-actions[bot] | data: archived four-ETF V2 candidate freeze 41184467281 [skip ci] |
 | 2026-10-31 | [a6f0b6c74e](https://github.com/lican1213/a-share-momentum-runner/commit/a6f0b6c74e3d0c4448cb607b934aef074ff244ed) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-10-31 | [ad9e9dcb82](https://github.com/lican1213/a-share-momentum-runner/commit/ad9e9dcb82f42d5ce28495f19f1c5b72e9e75654) | github-actions[bot] | data: archive actual ETF provider attempt 41178966064 [skip ci] |
