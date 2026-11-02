@@ -117,19 +117,27 @@ def _read_pbc(raw):
         items = [node for node in root if node.tag.rsplit("}", 1)[-1] == "entry"]
     if not items:
         raise ValueError("PBC feed contained no items")
+    accepted = 0
+    sample = ""
     for node in items:
         fields = {}
         for child in node:
             key = child.tag.rsplit("}", 1)[-1].lower()
             fields[key] = child.attrib.get("href") or child.text or ""
-        url = _canonical_url(fields.get("link") or fields.get("guid"), "pbc.gov.cn")
+        link = fields.get("link") or fields.get("guid") or ""
+        url = _canonical_url(link, "pbc.gov.cn")
+        if not sample:
+            sample = "keys=" + ",".join(sorted(fields))[:65] + " host=" + str(urlsplit(link).hostname)[:60]
         if url and fields.get("title"):
+            accepted += 1
             yield {
                 "title": fields["title"], "summary": fields.get("description") or fields.get("summary") or "",
                 "url": url,
                 "published": (fields.get("pubdate") or fields.get("published")
                               or fields.get("updated") or fields.get("date")),
             }
+    if accepted == 0:
+        raise ValueError("PBC RSS no canonical items: " + sample)
 
 
 PARSERS = {"PBC_RSS": _read_pbc, "CSRC_NEWS": _read_csrc, "GOV_POLICY": _read_gov}
