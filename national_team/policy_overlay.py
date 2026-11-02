@@ -71,8 +71,12 @@ def _clean(value):
 
 def _canonical_url(url, host):
     url = str(url or "").strip()
-    if url.startswith("/"):
-        url = urljoin("https://" + host + "/", url)
+    if url.startswith("//"):
+        url = "https:" + url
+    elif url.startswith(("www." + host + "/", host + "/")):
+        url = "https://" + url
+    elif url.startswith("/") or url.startswith(("goutongjiaoliu/", "zhengcehuobisi/")):
+        url = urljoin("https://www." + host + "/", url)
     parsed = urlsplit(url)
     if parsed.hostname not in (host, "www." + host) or parsed.scheme not in ("http", "https"):
         return None
@@ -124,10 +128,12 @@ def _read_pbc(raw):
         for child in node:
             key = child.tag.rsplit("}", 1)[-1].lower()
             fields[key] = child.attrib.get("href") or child.text or ""
-        link = fields.get("link") or fields.get("guid") or ""
-        url = _canonical_url(link, "pbc.gov.cn")
+        link = fields.get("link") or ""
+        guid = fields.get("guid") or ""
+        url = _canonical_url(link, "pbc.gov.cn") or _canonical_url(guid, "pbc.gov.cn")
         if not sample:
-            sample = "keys=" + ",".join(sorted(fields))[:65] + " host=" + str(urlsplit(link).hostname)[:60]
+            sample = ("keys=" + ",".join(sorted(fields))[:45] +
+                      " link=" + repr(link[:48]) + " guid=" + repr(guid[:38]))
         if url and fields.get("title"):
             accepted += 1
             yield {

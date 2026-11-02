@@ -175,3 +175,16 @@ def test_pbc_rss_without_pubdate_is_observed_not_backdated():
                     funding_day="2026-11-02", etf_flow_active=True)
     assert event["event_id"] in out["recent_event_ids"]
     assert event["event_id"] not in out["matched_funding_event_ids"]
+
+
+def test_pbc_guid_and_scheme_less_official_url_are_recognized():
+    feed = ("<rss><channel><item><title>央行启动证券基金保险公司互换便利</title>"
+            "<link>not-a-web-link</link>"
+            "<guid>www.pbc.gov.cn/goutongjiaoliu/113456/113469/x/index.html</guid>"
+            "<pubDate>Fri, 30 Oct 2026 09:00:00 +0800</pubDate>"
+            "</item></channel></rss>")
+    snap = collect_snapshot(now=AT, fetcher=sources(pbc=feed))
+    assert snap["sources"][0]["status"] == "OK"
+    event = next(e for e in snap["events"] if e["title"].startswith("央行启动"))
+    assert event["url"].startswith("https://www.pbc.gov.cn/")
+    assert event["publication_precision"] == "TIMESTAMP"
