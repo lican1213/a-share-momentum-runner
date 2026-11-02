@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "version": "NT_EVENT_FOLLOWUP_V5",
+  "experiment_id": "EXP-0012",
+  "asof": "2026-11-02",
+  "capture_time": "2026-11-02T08:51:12.870873+08:00",
+  "akshare_version": "1.20.21",
+  "github_run_id": "41369336416",
+  "github_run_attempt": "1",
+  "results": [],
+  "tracked_freeze_count": 0,
+  "trade_authorized": false,
+  "broker_orders": [],
+  "snapshot_sha256": "66903e94b4cc308b101b78a9305ef59621969a648b9e0405d819494bec045869"
+}
