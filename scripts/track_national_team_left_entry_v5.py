@@ -61,6 +61,7 @@ def follow_one(ak, frozen, source_path, asof, observed_at):
         "source_freeze_sha256": frozen["freeze_payload_sha256"],
         "freeze_path": str(source_path),
         "signal_session": frozen["signal_session"],
+        "cluster_anchor": frozen["cluster_anchor"],
         "asof": asof,
         "first_observed_at": observed_at,
         "policy_results": policy_results,

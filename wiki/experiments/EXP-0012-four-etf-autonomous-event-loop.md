@@ -24,8 +24,8 @@ updated: 2026-11-02
 
 ## 自动反馈与升级
 
-- 每天只使用已成熟、两策略都能与S0成对比较的**第10交易日真实收益**。同一资金事件的多次跟踪取最新一份、最多记一次。
-- 少于8个独立成熟事件，继续默认SHALLOW_DIP；达到8个后，若DEEP_DIP平均10日扣费净超额比SHALLOW_DIP至少高0.2个百分点，则**后续新事件自动选择DEEP_DIP**；否则继续SHALLOW_DIP。影子组始终记录，允许新证据自然反向改变选择。规则事前固定，软件不会偷改过去的冻结。
+- 每天只使用已成熟、两策略都能与S0成对比较的**第10交易日真实收益**。同一冻结的多次跟踪取最新一份；连续多日若属于同一个资金**事件簇**，只用该簇首次冻结计一次独立样本。
+- 少于8个独立成熟事件簇，继续默认SHALLOW_DIP；达到8簇后，若DEEP_DIP平均10日扣费净超额比SHALLOW_DIP至少高0.2个百分点，则**后续新事件自动选择DEEP_DIP**；否则继续SHALLOW_DIP。影子组始终记录，允许新证据自然反向改变选择。规则事前固定，软件不会偷改过去的冻结。
 - 方向历史命中率≥50%才允许原V4的小额纸面准入；这不是个股盈利概率；不发真实券商指令。
 
 **源码：** [事件路由](../../national_team/event_router_v5.py) · [双组低位选股](../../national_team/left_entry_v5.py) · [纸面追踪](../../scripts/track_national_team_left_entry_v5.py) · [每日调度](../../.github/workflows/national-team-event-router-v5.yml) · [每日反馈](../../.github/workflows/national-team-left-outcomes-v5.yml) · [专项测试](../../tests/test_national_team_event_router_v5.py)。

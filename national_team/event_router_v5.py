@@ -89,8 +89,18 @@ def paper_feedback(root):
             if freeze_sha and (freeze_sha not in latest or
                                item.get("asof", "") >= latest[freeze_sha].get("asof", "")):
                 latest[freeze_sha] = item
-    paired = []
+    # Consecutive down-market funding days can belong to one event cluster.
+    # Evaluate the earliest paper freeze per cluster to avoid fake independence.
+    clusters = {}
     for item in latest.values():
+        anchor = (item.get("cluster_anchor") or item.get("signal_session")
+                  or item["source_freeze_sha256"])
+        existing = clusters.get(anchor)
+        if (existing is None or item.get("signal_session", "") <
+                existing.get("signal_session", "")):
+            clusters[anchor] = item
+    paired = []
+    for item in clusters.values():
         by_policy = {}
         for policy in POLICIES:
             entries = item.get("policy_results", {}).get(policy, {}).get("F1_LEFT", [])
@@ -115,7 +125,7 @@ def paper_feedback(root):
         "mean_10d_excess_s0": {k: (format(v, "f") if v is not None else None)
                                for k, v in means.items()},
         "selected_policy": best,
-        "policy_rule": "8 paired 10d events; DEEP_DIP wins by >=0.2pct net excess",
+        "policy_rule": "8 distinct event clusters with paired 10d outcomes; DEEP_DIP +0.2pct",
         "not_a_calibrated_profit_probability": True,
     }
 

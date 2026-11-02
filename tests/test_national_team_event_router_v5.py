@@ -137,3 +137,25 @@ def test_no_marked_profit_for_unmatured_pair(tmp_path):
     feedback = paper_feedback(root)
     assert feedback["paired_10d_events"] == 0
     assert feedback["mean_10d_excess_s0"]["SHALLOW_DIP"] is None
+
+
+
+def test_consecutive_sessions_in_one_funding_cluster_do_not_double_count(tmp_path):
+    root = tmp_path / "followups"
+    rows = []
+    for i in range(8):
+        rows.append({
+            "experiment_id": "EXP-0012", "source_freeze_sha256": f"sha{i}",
+            "signal_session": f"2026-11-{i+2:02d}",
+            "cluster_anchor": "2026-11-02",
+            "asof": "2026-12-02",
+            "policy_results": {
+                policy: {"F1_LEFT": [{"horizons": {
+                    "10": {"status": "PAIRED", "excess_s0": ".02"}}}]}
+                for policy in ("SHALLOW_DIP", "DEEP_DIP")
+            },
+        })
+    write(root, "cluster.json", {"results": rows})
+    feedback = paper_feedback(root)
+    assert feedback["paired_10d_events"] == 1
+    assert feedback["selected_policy"] == "SHALLOW_DIP"
