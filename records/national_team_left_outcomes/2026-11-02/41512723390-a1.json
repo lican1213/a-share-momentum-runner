@@ -1,0 +1,142 @@
+{
+  "schema": 1,
+  "version": "NT_LEFT_ENTRY_FOLLOWUP_EXP0011",
+  "source_freeze_sha256": "a07684cea255393273c1a3b4065bb386ba21bb2aa6e755cbab9114d4028db9cf",
+  "first_observed_at": "2026-11-03T03:44:57.792394+08:00",
+  "asof": "2026-11-03",
+  "source_new_ohlc_sha256": "b024f82c2ed3b9c2547fb5f9a3de212a5a78d95c1fbd7f81428d774e493fb2b6",
+  "source_new_ohlc": {
+    "first_observed_at": "2026-11-03T03:44:57.792376+08:00",
+    "capture_time": "2026-11-03T03:44:57.792376+08:00",
+    "bars_by_symbol": {
+      "510300": [
+        {
+          "date": "2026-11-02",
+          "open": "4.084",
+          "high": "4.12",
+          "low": "4.065",
+          "close": "4.085"
+        }
+      ],
+      "600016": [
+        {
+          "date": "2026-11-02",
+          "open": "3.48",
+          "high": "3.5",
+          "low": "3.42",
+          "close": "3.42"
+        }
+      ],
+      "600019": [
+        {
+          "date": "2026-11-02",
+          "open": "6.03",
+          "high": "6.14",
+          "low": "6.02",
+          "close": "6.13"
+        }
+      ]
+    },
+    "source_sha256": {
+      "510300": "596494b9b00a3ebefeff1da200e931bf6edbd9b148e85dc143a1a71d83105282",
+      "600016": "1a51f4238dc09609ea0eb7bbc10581af9b12705bcd72621e6041f16277358776",
+      "600019": "e4de828e0cccfde7d1ae4b850e57a3e20a7a0b2de4f00b30a992ebe6603af158"
+    },
+    "source_url": {
+      "510300": "https://quote.eastmoney.com/sh510300.html",
+      "600016": "https://finance.sina.com.cn/realstock/company/",
+      "600019": "https://finance.sina.com.cn/realstock/company/"
+    },
+    "errors": {}
+  },
+  "first_actual_benchmark_session": "2026-11-02",
+  "F1_LEFT": [
+    {
+      "stock": "600016",
+      "status": "OHLC_OPEN_PAPER_SCENARIO",
+      "entry_session": "2026-11-02",
+      "entry_open_raw": "3.48",
+      "shares_scenario": 1300,
+      "gross_cny": "4524.00",
+      "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+      "horizons": {
+        "3": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "5": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "10": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "20": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        }
+      }
+    },
+    {
+      "stock": "600019",
+      "status": "OHLC_OPEN_PAPER_SCENARIO",
+      "entry_session": "2026-11-02",
+      "entry_open_raw": "6.03",
+      "shares_scenario": 700,
+      "gross_cny": "4221.00",
+      "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+      "horizons": {
+        "3": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "5": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "10": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "20": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        }
+      }
+    }
+  ],
+  "F2_WEAK": [
+    {
+      "stock": "600016",
+      "status": "WAIT_CONFIRMATION",
+      "confirmation_day": null,
+      "horizons": {}
+    },
+    {
+      "stock": "600019",
+      "status": "WAIT_NEXT_OPEN_AFTER_CONFIRMATION",
+      "confirmation_day": "2026-11-02",
+      "horizons": {}
+    }
+  ],
+  "S0": "PER_LEG_SAME_ENTRY_TIME_AND_CASH_PAIRED_WHEN_MATURE",
+  "N_NON_FLOW": "NOT_YET_MATURED_MATCHED_CONTROL",
+  "errors": {},
+  "trade_authorized": false,
+  "broker_orders": [],
+  "execution_assertion": "OHLC_OPEN_SCENARIO_NOT_AN_EXECUTED_TRADE",
+  "snapshot_sha256": "f1db03eb1c4d2dd437097379f13db9c6bb9db0e06d6fb759c6ecbd58fe7e6771",
+  "freeze_path": "records/national_team_left_entry/2026-11-01/41283487731-a1.json",
+  "github_run_id": "41512723390",
+  "github_run_attempt": "1",
+  "github_source_commit": "657f4fee2ac189d32d90eadfde0d31a79bd59337"
+}
