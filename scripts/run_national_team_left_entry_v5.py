@@ -24,6 +24,7 @@ def main():
     parser.add_argument("--watch", required=True)
     parser.add_argument("--policy", choices=("SHALLOW_DIP", "DEEP_DIP"), required=True)
     parser.add_argument("--out", required=True)
+    parser.add_argument("--router", help="source-pinned EXP-0015 overlay, observation only")
     parser.add_argument("--prices", help="test-only previously captured OHLC")
     parser.add_argument("--max-stocks", type=int, default=150)
     args = parser.parse_args()
@@ -40,6 +41,12 @@ def main():
     result = freeze(v3, watch, prices, now=now.isoformat(),
                     next_session=next_weekday(now.date()),
                     selected_policy=args.policy)
+    if args.router:
+        router = json.loads(Path(args.router).read_text(encoding="utf-8"))
+        if router["signal_session"] != asof:
+            raise ValueError("router policy signal session does not match stock freeze")
+        result["policy_overlay"] = router.get("policy_overlay")
+        result["source_router_snapshot_sha256"] = router.get("snapshot_sha256")
     result["collection_errors"] = prices.get("collection_errors", {})
     result["collection_scope"] = {
         "completed_stock_source_count": len(prices.get("stocks", {})),

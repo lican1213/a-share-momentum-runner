@@ -5,6 +5,12 @@ status: maintained
 updated: 2026-11-02
 ---
 
+## 2026-11-02：EXP-0015 官方政策 × 四ETF逆势申购共振
+
+[完整实验协议](experiments/EXP-0015-policy-etf-resonance.md) · [一手政策采集与事件分组](../national_team/policy_overlay.py) · [采集命令](../scripts/collect_national_team_policy.py) · [原V5每日18:05路由](../.github/workflows/national-team-event-router-v5.yml)。增加官方政策日期/首次观察时间与四ETF资金事件的同源关联；不新增进场硬条件，不改三组纸面账户和原始沪深300ETF覆盖率指标。实际官方源成功与否以当次归档 records/national_team_policy/ 为准。
+
+
+
 ## 2026-11-02：V5三组真实连续纸面现金盘上线（EXP-0014）
 
 [完整纸面交易协议](experiments/EXP-0014-v5-paper-account.md) · [现金/持仓/逐笔引擎](../national_team/paper_account_v5.py) · [每日18:45原V5跟踪工作流](../.github/workflows/national-team-left-outcomes-v5.yml)。修复之前只有候选`fill=None`、没有持续模拟现金/交易结果的缺口；SHALLOW_DIP、DEEP_DIP、R_BOUNCE三组独立虚拟30,000元，次日开盘OHLC模拟入场、T+1以后止盈/止损、T+2时间退出及510300比较代理。无新资金事件明确保持现金；历史冻结不重写，真实券商订单仍为零。
