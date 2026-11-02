@@ -51,3 +51,16 @@ def test_retired_legacy_workflows_stay_out_of_the_daily_runner():
                for name in retired)
     assert (ROOT / ".github/workflows/national-team-event-router-v5.yml").exists()
     assert (ROOT / ".github/workflows/national-team-left-outcomes-v5.yml").exists()
+
+
+def test_only_v5_owns_new_daily_paper_events():
+    workflows = ROOT / ".github/workflows"
+    for name in ("national-team-short-a2.yml", "national-team-short-b.yml"):
+        s = (workflows / name).read_text(encoding="utf-8")
+        assert "workflow_dispatch:" in s
+        assert "\n  push:" not in s
+        assert "\n  schedule:" not in s
+    router = (workflows / "national-team-event-router-v5.yml").read_text(encoding="utf-8")
+    outcomes = (workflows / "national-team-left-outcomes-v5.yml").read_text(encoding="utf-8")
+    assert "cron: '5 10 * * 1-5'" in router
+    assert "cron: '45 10 * * 1-5'" in outcomes

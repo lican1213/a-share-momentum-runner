@@ -1,3 +1,10 @@
+## 2026-11-02：三时段推送与EXP-0013调度完成同步
+
+- **ChatGPT国家队三时段任务**（ID `6ae0adff0a2c8191b6b9bda593b1c940`）保持北京时间交易日 **08:30 / 12:30 / 17:30**；推送指令按最新[MOC](MOC.md)动态读取资金主指标、事件路由、三组同源候选及未来MFE/MAE。此前指向固定V4/A2/B运行号的长提示词已退役，不把旧纸面冻结混成新建议。
+- **每日主链**：ETF实源09:15、16:20 → V3回放17:25 → [V5事件路由18:05](.github/workflows/national-team-event-router-v5.yml) → [V5收益路径18:45](.github/workflows/national-team-left-outcomes-v5.yml)（均北京时间交易日）。三时段推送只读当时已可验证数据，17:30不提前报告18:05新冻结。
+- **旧A2/B执行器转为手动入口**：[A2](.github/workflows/national-team-short-a2.yml)、[B](.github/workflows/national-team-short-b.yml)均移除每日3次cron及push自动触发，只留`workflow_dispatch`供历史实验复核；历史源码、10/30冻结及所有`records/`一字不改。原历史三日收益未成熟的部分不得冒充已实现。EXP-0011的20日历史后验仍按原定时追踪。
+- **验证范围**：定时编排属于EXP-0013运维收口，不另起模型/选股版本；GitHub全量pytest、Wiki链接校验及现有自动推送配置以实际运行/查询结果验收。
+
 ## 2026-11-02：EXP-0013，小主链迭代与历史路线退役
 
 保留**一条研究新事件主链**：[四ETF V3资金回放](.github/workflows/national-team-v3-replay.yml) → [盘后ETF/成分股观察](.github/workflows/national-team-live.yml) → [EXP-0012事件路由＋EXP-0013扩展候选](.github/workflows/national-team-event-router-v5.yml) → [未来真实OHLC收益反馈](.github/workflows/national-team-left-outcomes-v5.yml)。**不新增独立Runner或硬选股门槛。** [EXP-0013实施定义](wiki/experiments/EXP-0013-path-learning-and-retirement.md)：新浪/东财缺失的个股日线用Baostock批量备用；同源3/5/10/20日MFE/MAE观察；R_BOUNCE右侧小涨组只作为独立影子，对比左侧SHALLOW_DIP/DEEP_DIP。后续默认组的自动选优仍只看左侧两组的独立10日成熟资金簇。原四ETF主市值覆盖率缺分母保留NULL，不拿额外技术指标堵低位机会。

@@ -5,6 +5,9 @@ status: maintained
 updated: 2026-11-02
 ---
 
+## 2026-11-02：推送/工作流定时与V5对齐
+
+ChatGPT[国家队三时段推送](../MOC.md)保持08:30/12:30/17:30，报告以当时可得四ETF源、主市值覆盖率和最新V5同资金簇左/右侧纸面收益证据为准；不会把旧A2/B日常冻结当V5。老A2/B停止push/cron自动运行，保留手动历史研究入口；V3、ETF实源、V5事件与MFE/MAE反馈保持定时，具体见[根MOC](../MOC.md)。
 ## 2026-11-02：EXP-0013收益路径＋右侧参考＋退役旧入口
 
 [EXP-0013](experiments/EXP-0013-path-learning-and-retirement.md)在原V5事件路由/跟踪器内新增真实3/5/10/20日MFE/MAE、Baostock个股备用源和独立R_BOUNCE观察组。没有新的Runner；5个过时工作流在[根MOC](../MOC.md)用旧SHA归档后移除。左侧SHALLOW_DIP/DEEP_DIP及成熟簇自动优选机制维持不变。

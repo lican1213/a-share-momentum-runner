@@ -1,15 +1,8 @@
 name: National-team prospective short paper A2 - EXP-0005-A2
+# Legacy A2/B is now an opt-in historical study. No cron/push for new events.
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'national_team/short_ab_engine.py'
-      - 'tests/test_national_team_short_ab_engine.py'
-      - '.github/workflows/national-team-short-a2.yml'
-  schedule:
-    # 18:15 / 20:15 / 22:15 Asia/Shanghai; same-session retries, no midnight backfill.
-    - cron: '15 10,12,14 * * 1-5'
+
 permissions:
   contents: write
 concurrency:
