@@ -2,7 +2,7 @@
 id: GENERATED-COMMITS
 type: log
 status: maintained
-updated: 2026-11-02
+updated: 2026-11-03
 ---
 # 全部Git提交历史（自动索引）
 
@@ -12,6 +12,24 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-02 | [531b07e59b](https://github.com/lican1213/a-share-momentum-runner/commit/531b07e59b57857d2ce0087f175ff2bf293f31e9) | github-actions[bot] | data: archive actual ETF provider attempt 41501518990 [skip ci] |
+| 2026-11-02 | [8c6540cbda](https://github.com/lican1213/a-share-momentum-runner/commit/8c6540cbda0a3eeb86de1f73360dbab042d77dd3) | Can Li | docs(exp0015): record final 277-test policy integration gate in MOC |
+| 2026-11-02 | [e9dcb885e0](https://github.com/lican1213/a-share-momentum-runner/commit/e9dcb885e0f4c5ef0fbb13ef57fdac6bcc04af84) | Can Li | docs(exp0015): record real official-source runs and full test trigger |
+| 2026-11-02 | [cbe0c124fe](https://github.com/lican1213/a-share-momentum-runner/commit/cbe0c124fea6ab13a72028e25fb4ab15378dc29e) | github-actions[bot] | records(exp0012): route event and append paper evidence 41462220387 [skip ci] |
+| 2026-11-02 | [f26b231890](https://github.com/lican1213/a-share-momentum-runner/commit/f26b231890d428c76bbd1be794070fdd274868d2) | Can Li | fix(exp0015): parse PBC RSS canonical link and GUID variants |
+| 2026-11-02 | [bf8fa491f7](https://github.com/lican1213/a-share-momentum-runner/commit/bf8fa491f79ba6fba89b9ddabcfb73e758fd383f) | github-actions[bot] | records(exp0012): route event and append paper evidence 41461880010 [skip ci] |
+| 2026-11-02 | [e091314b18](https://github.com/lican1213/a-share-momentum-runner/commit/e091314b18a304ce2f3fa12d2348851ff4a4bad0) | Can Li | diagnostics(exp0015): expose official PBC RSS item shape when rejected |
+| 2026-11-02 | [107650f465](https://github.com/lican1213/a-share-momentum-runner/commit/107650f465c660e8af62fd782052aec5e00b4468) | github-actions[bot] | records(exp0012): route event and append paper evidence 41461583233 [skip ci] |
+| 2026-11-02 | [e092aee02a](https://github.com/lican1213/a-share-momentum-runner/commit/e092aee02aa406fff88c9346688ee20a43b27080) | Can Li | fix(exp0015): preserve PBC RSS first-observed-only policy events |
+| 2026-11-02 | [86e3089b80](https://github.com/lican1213/a-share-momentum-runner/commit/86e3089b80947d5c26535e97a640b35b16fcfeaf) | Can Li | fix(exp0015): retain undated PBC RSS as first-observed policy evidence |
+| 2026-11-02 | [df59977c41](https://github.com/lican1213/a-share-momentum-runner/commit/df59977c41bdd806f4a450417f02c1bb1340e850) | github-actions[bot] | records(exp0012): route event and append paper evidence 41460990262 [skip ci] |
+| 2026-11-02 | [c77f436c60](https://github.com/lican1213/a-share-momentum-runner/commit/c77f436c60f638355f63da938605b6d145cb5d1b) | Can Li | feat(exp0015): official policy resonance in V5 ETF funding loop |
+| 2026-11-02 | [d8c2164744](https://github.com/lican1213/a-share-momentum-runner/commit/d8c216474447622c9547b7ff3f7b8f5af607a421) | Can Li | fix(exp0015): canonicalize official hosts for persistent first-seen identity |
+| 2026-11-02 | [2a45390346](https://github.com/lican1213/a-share-momentum-runner/commit/2a45390346cc4cac14b5f661a7f0d80e610af088) | Can Li | feat(exp0015): official policy ETF resonance overlay in V5 router |
+| 2026-11-02 | [d5ef599acb](https://github.com/lican1213/a-share-momentum-runner/commit/d5ef599acb9d9f726b308564e9a1474286c524c9) | Can Li | docs(exp-0014): record verified 267-test V5 paper cash run in MOC |
+| 2026-11-02 | [6022d3c8d3](https://github.com/lican1213/a-share-momentum-runner/commit/6022d3c8d353b6989023ecfb09ed1b75d1a4d517) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 41421490570 [skip ci] |
+| 2026-11-02 | [2fe0415238](https://github.com/lican1213/a-share-momentum-runner/commit/2fe04152383d2d488c66055b7f313a47775a315d) | Can Li | feat(exp-0014): restore continuous V5 three-arm paper cash and trade accounts |
+| 2026-11-02 | [69a445a44e](https://github.com/lican1213/a-share-momentum-runner/commit/69a445a44eb3fdb70c86f680b4966852ba6c7842) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-02 | [1a641ddb9c](https://github.com/lican1213/a-share-momentum-runner/commit/1a641ddb9cfea49db423267a827cb66f66e31a6c) | github-actions[bot] | data: archive actual ETF provider attempt 41407601458 [skip ci] |
 | 2026-11-02 | [94dc8b7713](https://github.com/lican1213/a-share-momentum-runner/commit/94dc8b77131c08c1465a30f3ffd5e774197e8b94) | Can Li | ops(exp-0013): align tri-daily alerts and retire A2/B automatic triggers |
 | 2026-11-02 | [24312a87c6](https://github.com/lican1213/a-share-momentum-runner/commit/24312a87c66c30c0b2d8e90e8703529911cf1781) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
