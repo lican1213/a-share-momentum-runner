@@ -2,6 +2,8 @@
 
 此前精简A2/B定时后，V5实际上只冻结候选和观察未来OHLC，未承接现金、持仓及逐笔收益：首轮真实结果[事件#41375272862](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41375272862)跳过新冻结、[跟踪#41375272899](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41375272899)记录0个事件。**现在在同一18:45收益工作流修复：** [EXP-0014三组纸面账户协议](wiki/experiments/EXP-0014-v5-paper-account.md) · [现金/逐笔账本](national_team/paper_account_v5.py) · [日常追踪器](scripts/track_national_team_left_entry_v5.py)。浅跌SHALLOW_DIP、深跌DEEP_DIP、温和右侧R_BOUNCE三账户各30,000元，先冻结下一可得开盘，再按真实日线的固定OHLC执行情景记佣金、现金、持仓、T+1以后预设±3%以及T+2退出、510300同期交易日比较代理；**无未来OHLC就不补模拟成交**。每日快照独立保存到`records/national_team_paper_accounts_v5/日期/run-a.json`，并与原MFE/MAE路径观察分开；旧A2/B仍为手动历史入口，不重启老追高路线。该日若没有新V5资金事件，模拟账户明确展示**现金30,000元、0持仓、0成交**，不能凭代码上线给出进场指令。
 
+**本次真实验收：** [EXP-0014首个三账户实源运行#41421490570](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41421490570) · [不可覆盖现金账本](records/national_team_paper_accounts_v5/2026-11-02/41421490570-a1.json) · [同源码全库267测试#41421490651](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41421490651)。当天无新V5事件，SHALLOW_DIP/DEEP_DIP/R_BOUNCE各30,000元现金、0持仓、0已模拟成交，正好验证无信号时不会编造成交。未来首次新事件后的真实日线模拟进退场仍待新交易日出现。
+
 ## 2026-11-02：三时段推送与EXP-0013调度完成同步
 
 - **ChatGPT国家队三时段任务**（ID `6ae0adff0a2c8191b6b9bda593b1c940`）保持北京时间交易日 **08:30 / 12:30 / 17:30**；推送指令按最新[MOC](MOC.md)动态读取资金主指标、事件路由、三组同源候选及未来MFE/MAE。此前指向固定V4/A2/B运行号的长提示词已退役，不把旧纸面冻结混成新建议。

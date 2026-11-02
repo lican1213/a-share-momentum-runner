@@ -25,3 +25,8 @@ updated: 2026-11-02
 **源码：** [一份纸面账本引擎](../../national_team/paper_account_v5.py) · [原V5追踪器](../../scripts/track_national_team_left_entry_v5.py) · [逐笔规则测试](../../tests/test_national_team_paper_account_v5.py)。
 
 **验收：** 测空仓30,000元、各臂独立资金、T+1禁止当日卖、两触先止损、T+2退出、手续费与S0、缺开盘价不补单、同日重跑不重复成交、真实Actions与新增不可改写JSON。任务运行成功不自动说明今天已有资金事件、成交或可复制正收益。
+
+## 2026-11-02 同源码首轮真实执行
+
+- [V5生产#41421490570](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41421490570) SUCCESS：工作流执行了23项专项测试，实际写入[三账户唯一原始账本](../../records/national_team_paper_accounts_v5/2026-11-02/41421490570-a1.json)；SHALLOW_DIP、DEEP_DIP、R_BOUNCE分别30,000元现金、0持仓、0平仓，`source_event_count=0`。这是正确的现金初始化，不是三组已经赢利。
+- 源码`2fe04152383d2d488c66055b7f313a47775a315d`的[全库#41421490651](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41421490651) **267 passed**、Wiki46页链接校验PASS；真实新事件入场/止盈止损与S0仍要等下一次不可覆盖前瞻数据验收。ChatGPT08:30/12:30/17:30报告已接入本账本并保持日程不变。
