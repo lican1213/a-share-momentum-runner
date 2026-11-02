@@ -12,6 +12,9 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-02 | [56b317fd3b](https://github.com/lican1213/a-share-momentum-runner/commit/56b317fd3bc0476b479a612bab649f01cf1bff04) | github-actions[bot] | records(exp0012): append actual future OHLC paper feedback 41375272899 [skip ci] |
+| 2026-11-02 | [6717c88a96](https://github.com/lican1213/a-share-momentum-runner/commit/6717c88a9605ebd34c7135bdccce26672f35b5a9) | github-actions[bot] | records(exp0012): route event and append paper evidence 41375272862 [skip ci] |
+| 2026-11-02 | [4abd90e8f6](https://github.com/lican1213/a-share-momentum-runner/commit/4abd90e8f6a06aaa5122fad9ca844880cf05dd4d) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-02 | [e3d9921abe](https://github.com/lican1213/a-share-momentum-runner/commit/e3d9921abec1c60449f775cc9342c23c89a0ba7f) | Can Li | feat(exp-0013): source fallback, forward MAE/MFE and right-side shadow; retire five legacy workflows |
 | 2026-11-02 | [cb1e589a80](https://github.com/lican1213/a-share-momentum-runner/commit/cb1e589a80b3ae704edb53bbc9a836ef120d6f97) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-02 | [c53ae247fe](https://github.com/lican1213/a-share-momentum-runner/commit/c53ae247fe35952bedeac341c5e7eb4eb543cdb1) | Can Li | ci(exp-0012): run full regression gate on autonomous loop changes |
