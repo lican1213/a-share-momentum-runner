@@ -21,13 +21,17 @@ def main():
     ap.add_argument("--watch-root", default="records/national_team_watch")
     ap.add_argument("--freeze-root", default="records/national_team_left_entry_v5")
     ap.add_argument("--followup-root", default="records/national_team_left_outcomes_v5")
+    ap.add_argument("--policy-file", help="official policy snapshot captured before route")
     ap.add_argument("--out", required=True)
     ap.add_argument("--github-output", help="GITHUB_OUTPUT from Actions; optional")
     ap.add_argument("--now", help="timezone-aware fixture time; defaults to Asia/Shanghai now")
     args = ap.parse_args()
     stamp = args.now or datetime.now(BJ).isoformat()
+    policy_snapshot = (json.loads(Path(args.policy_file).read_text(encoding="utf-8"))
+                       if args.policy_file else None)
     decision = route(args.v3_root, args.watch_root,
-                     args.freeze_root, args.followup_root, now=stamp)
+                     args.freeze_root, args.followup_root, now=stamp,
+                     policy_snapshot=policy_snapshot)
     decision["github_run_id"] = os.environ.get("GITHUB_RUN_ID")
     decision["github_source_commit"] = os.environ.get("GITHUB_SHA")
     decision = with_digest(decision)
@@ -55,6 +59,7 @@ def main():
         "event": decision["event_id"], "status": decision["status"],
         "policy": decision["selected_policy"],
         "paired_10d_events": decision["feedback"]["paired_10d_events"],
+        "policy_overlay": decision["policy_overlay"]["status"],
     }, ensure_ascii=False))
 
 

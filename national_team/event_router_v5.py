@@ -14,6 +14,7 @@ from zoneinfo import ZoneInfo
 
 from national_team.core_flow_factors import CORE_FOUR
 from national_team.left_entry_v4 import digest
+from national_team.policy_overlay import summarize as summarize_policy
 
 BJ = ZoneInfo("Asia/Shanghai")
 POLICIES = ("SHALLOW_DIP", "DEEP_DIP")
@@ -146,7 +147,7 @@ def paper_feedback(root):
 
 
 def route(v3_root, watch_root, freeze_root, followup_root, *, now,
-          legacy_freeze_root="records/national_team_left_entry"):
+          legacy_freeze_root="records/national_team_left_entry", policy_snapshot=None):
     observed = datetime.fromisoformat(now)
     if observed.utcoffset() is None:
         raise ValueError("router requires timezone-aware observation")
@@ -158,6 +159,10 @@ def route(v3_root, watch_root, freeze_root, followup_root, *, now,
     feedback = paper_feedback(followup_root)
     status = "NO_NEW_FUNDING_EVENT"
     watch_path = None
+    flow_active = bool(signal.get("market_down") and signal.get("share_proxy_event")
+                       and Decimal(str(signal.get("net_creation_1d_cny") or 0)) > 0
+                       and Decimal(str(signal.get("net_creation_5d_cny") or 0)) > 0
+                       and 0 <= age <= MAX_SOURCE_LAG_CALENDAR_DAYS)
     if age < 0:
         status = "FUTURE_SOURCE_SESSION"
     elif age > MAX_SOURCE_LAG_CALENDAR_DAYS:
@@ -165,9 +170,7 @@ def route(v3_root, watch_root, freeze_root, followup_root, *, now,
     elif (asof in frozen_sessions(freeze_root) or
           asof in frozen_sessions(legacy_freeze_root, "EXP-0011")):
         status = "ALREADY_FROZEN_FOR_SESSION"
-    elif (signal.get("market_down") and signal.get("share_proxy_event")
-          and Decimal(str(signal.get("net_creation_1d_cny") or 0)) > 0
-          and Decimal(str(signal.get("net_creation_5d_cny") or 0)) > 0):
+    elif flow_active:
         watch_path, watch = matching_watch(watch_root, asof)
         status = "NEW_FUNDING_EVENT" if watch is not None else "WAIT_MATCHING_STOCK_WATCH"
     return {
@@ -191,6 +194,8 @@ def route(v3_root, watch_root, freeze_root, followup_root, *, now,
             "index_ret5": signal.get("index_ret5"),
             "share_proxy_not_state_account_trade": True,
         },
+        "policy_overlay": summarize_policy(policy_snapshot, now=now, funding_day=asof,
+                                           etf_flow_active=flow_active),
         "dispatcher": "FREEZE_LEFT_SIDE_RESEARCH" if status == "NEW_FUNDING_EVENT"
                       else "NO_NEW_PAPER_FREEZE",
         "trade_authorized": False, "broker_orders": [],

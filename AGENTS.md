@@ -1,3 +1,5 @@
+**2026-11-02 EXP-0015政策共振层：** [实验协议](wiki/experiments/EXP-0015-policy-etf-resonance.md)、[官方政策抓取](national_team/policy_overlay.py)只在原18:05 V5事件路由之前采集央行/证监会/国务院一手公告，并给原资金事件和纸面冻结添加可核验政策标签。借鉴AIHOT源分级与去重，不引入LLM/新闻热点选股、额外cron/硬入场条件；原ETF主指标、V5三组模拟盘、A2/B退役安排不变。发布日期不能晚于资金日冒充共振，首次观察时点不可回填。每次结果必须读官方源状态和不可覆盖record。
+
 **2026-11-02 EXP-0014纸面盘恢复：** 最新V5仍是唯一新资金事件策略。原V5只有候选冻结和前瞻OHLC，不是现金账户；现由[EXP-0014](wiki/experiments/EXP-0014-v5-paper-account.md)、[纸面账本](national_team/paper_account_v5.py)接入每日18:45原V5跟踪，三独立30,000元账户按首次可得真实日线OHLC模拟买入与T+1/T+2出场，记录佣金、现金、持仓、S0比较。禁止把日K高低触及和收盘代理称实际订单成交；旧A2/B定时继续关闭，历史不动。
 
 **2026-11-02 EXP-0013主链约定：** [EXP-0013](wiki/experiments/EXP-0013-path-learning-and-retirement.md)只扩展原V5事件路由/跟踪，增加Baostock个股日线备用、MFE/MAE以及R_BOUNCE独立右侧参考，左侧政策自动选择规则不变。5项旧工作流删除并在[MOC](MOC.md)留下旧SHA永久链接。A2/B旧工作流已改为仅手动（无cron/push）；EXP-0011二十日未成熟历史后验仍定时。历史A2/B records及源码不删、不重算冒充历史。

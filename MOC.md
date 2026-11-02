@@ -1,3 +1,7 @@
+## 2026-11-02：EXP-0015 正式接入政策 × 国家队ETF资金共振层
+
+按用户要求，将政策影响纳入**原V5单一链路**，不另造新闻/选股Runner。借鉴[AIHOT](https://github.com/KKKKhazix/AIHOT)的分级信源与事件去重、[A股采集项目](https://github.com/YangSal/ashares_data_collect)的证监会/国务院官方接口。原18:05路由先采央行RSS、证监会JSON、国务院政策文件JSON，保存[不可覆盖的政策快照](national_team/policy_overlay.py)于 records/national_team_policy/，再把 POLICY_ETF_RESONANCE / 政策独立 / ETF独立 标签及原文时间写入V5路由与新模拟冻结。**四ETF 510300/510310/510330/159919和原AUM/普通流通市值核心比值优先级不变；政策仅增强解释与历史分组，不多加买入硬门槛；三组连续模拟账户不改。** [EXP-0015预注册、数据接口、时间点及对照评估](wiki/experiments/EXP-0015-policy-etf-resonance.md) · [官方采集器](scripts/collect_national_team_policy.py) · [V5事件工作流](.github/workflows/national-team-event-router-v5.yml)。待本次同源码全量CI、真实官方源拉取及18:05归档完成后，在实验页补run/SHA；不可先将政策工具额度、新闻热度或旧历史事件算作国家队实际买入/50%以上股票胜率。
+
 ## 2026-11-02：EXP-0014恢复V5三组连续模拟盘（修复遗漏）
 
 此前精简A2/B定时后，V5实际上只冻结候选和观察未来OHLC，未承接现金、持仓及逐笔收益：首轮真实结果[事件#41375272862](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41375272862)跳过新冻结、[跟踪#41375272899](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41375272899)记录0个事件。**现在在同一18:45收益工作流修复：** [EXP-0014三组纸面账户协议](wiki/experiments/EXP-0014-v5-paper-account.md) · [现金/逐笔账本](national_team/paper_account_v5.py) · [日常追踪器](scripts/track_national_team_left_entry_v5.py)。浅跌SHALLOW_DIP、深跌DEEP_DIP、温和右侧R_BOUNCE三账户各30,000元，先冻结下一可得开盘，再按真实日线的固定OHLC执行情景记佣金、现金、持仓、T+1以后预设±3%以及T+2退出、510300同期交易日比较代理；**无未来OHLC就不补模拟成交**。每日快照独立保存到`records/national_team_paper_accounts_v5/日期/run-a.json`，并与原MFE/MAE路径观察分开；旧A2/B仍为手动历史入口，不重启老追高路线。该日若没有新V5资金事件，模拟账户明确展示**现金30,000元、0持仓、0成交**，不能凭代码上线给出进场指令。

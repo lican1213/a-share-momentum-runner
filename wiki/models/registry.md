@@ -5,6 +5,12 @@ status: maintained
 updated: 2026-11-02
 ---
 
+## 2026-11-02 EXP-0015：官方政策事件证据层（非第4个纸面账户）
+
+- **基线树SHA** d5ef599acb9d9f726b308564e9a1474286c524c9。借AIHOT官方源分级/事件去重思路，用[一份无LLM Python政策Overlay](../../national_team/policy_overlay.py)、[采集器](../../scripts/collect_national_team_policy.py)和[原V5事件路由](../../national_team/event_router_v5.py)记录政策首次可得时点、7日稳市/宽松政策与ETF逆势申购共振。固定四ETF覆盖率优先、份额代理及V5本来准入照旧；无新Runner，现有三组EXP-0014纸面现金/持仓/出场逻辑全部保持，未来以不可覆盖的政策快照对应run和独立成熟净超额测增益。具体[EXP-0015](../experiments/EXP-0015-policy-etf-resonance.md)；实际新版本commit SHA与Action/run待执行记录后补。
+
+
+
 ## 2026-11-02 EXP-0014：V5现金账户执行情景（不改选股）
 
 - **基线** `94dc8b77131c08c1465a30f3ffd5e774197e8b94`，原只有V5观察名单和路径收益，旧A2/B定时关闭留下模拟资金空白。新增[一个可复核纸面账本](../../national_team/paper_account_v5.py)、[EXP-0014规则](../experiments/EXP-0014-v5-paper-account.md)，将V5已冻结三组信号、下一交易日真实OHLC、T+1后止盈止损、T+2收盘代理与510300同日ETF对照写入连续不可覆盖记录。资金事件、左侧优选门槛及右侧影子仍保持原设计，真正券商指令始终为零。未来实际业务运行需记录对应SHA和快照才能称已生成模拟成交。

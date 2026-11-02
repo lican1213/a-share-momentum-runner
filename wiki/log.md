@@ -5,6 +5,14 @@ status: maintained
 updated: 2026-11-02
 ---
 
+## 2026-11-02：EXP-0015 政策增强（与原V5资金路由合并）
+
+- 用户提出缺少政策作用，并明确授权开发；核对原V5只看四ETF逆势申购和股票低位，没有政策公告首次可得时间、政策工具事件。对照[AIHOT](https://github.com/KKKKhazix/AIHOT)的RSS/JSON多源、信源分级与同事合并，及[ashares_data_collect](https://github.com/YangSal/ashares_data_collect)证监会/国务院官方API实现，选择Python标准库版最小政策Overlay。
+- 在原18:05 V5工作流增央行RSS、证监会JSON、国务院政策文件JSON；独立失败记录、标题事件合并、首次观察时间、政策支持/宏观宽松/收紧/行业分类、7日政策—资金共振标签，随原路由和纸面冻结留证。**不改变ETF触发、资金/选股排序、三组模拟账本、任何真实券商权限。**
+- [EXP-0015协议及未来评估](experiments/EXP-0015-policy-etf-resonance.md)。待新源码GitHub Actions、全库pytest、真实政策归档的SHA/run后续追加，当前不填造胜率/盈利。
+
+
+
 ## 2026-11-02：修复V5纸面盘功能断层，EXP-0014
 
 - 用户指出精简旧A2/B后无法观察真实持续的模拟现金和进退场。源实测：V5首次[路由#41375272862](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41375272862)未生成新冻结，[跟踪#41375272899](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41375272899)只跟踪0事件；原F1候选`fill=None`，并非完整纸面账户。认可遗漏，不复用旧右侧追高策略。
