@@ -76,7 +76,7 @@ def _canonical_url(url, host):
     parsed = urlsplit(url)
     if parsed.hostname not in (host, "www." + host) or parsed.scheme not in ("http", "https"):
         return None
-    return urlunsplit(("https", parsed.netloc.lower(), parsed.path, "", ""))
+    return urlunsplit(("https", "www." + host, parsed.path, "", ""))
 
 
 def _read_csrc(raw):
