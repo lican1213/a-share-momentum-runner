@@ -1,0 +1,233 @@
+{
+  "schema": 1,
+  "version": "NT_EVENT_FOLLOWUP_V5",
+  "experiment_id": "EXP-0012",
+  "asof": "2026-11-03",
+  "capture_time": "2026-11-03T04:30:20.270008+08:00",
+  "akshare_version": "1.20.22",
+  "github_run_id": "41519712835",
+  "github_run_attempt": "1",
+  "results": [
+    {
+      "experiment_id": "EXP-0012",
+      "source_freeze_sha256": "7c57ff7f74bc3232fabeea01a06dc66723aed510793b903d1f15de51c8616ca2",
+      "freeze_path": "records/national_team_left_entry_v5/2026-11-03/41515451702-a1.json",
+      "signal_session": "2026-11-02",
+      "cluster_anchor": "2026-10-26",
+      "extension_experiment_id": "EXP-0013",
+      "asof": "2026-11-03",
+      "first_observed_at": "2026-11-03T04:30:20.236653+08:00",
+      "policy_results": {
+        "SHALLOW_DIP": {
+          "F1_LEFT": [
+            {
+              "stock": "002648",
+              "status": "NEXT_ACTUAL_SESSION_PENDING",
+              "horizons": {}
+            },
+            {
+              "stock": "002714",
+              "status": "NEXT_ACTUAL_SESSION_PENDING",
+              "horizons": {}
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "002648",
+              "status": "WAIT_CONFIRMATION",
+              "confirmation_day": null,
+              "horizons": {}
+            },
+            {
+              "stock": "002714",
+              "status": "WAIT_CONFIRMATION",
+              "confirmation_day": null,
+              "horizons": {}
+            }
+          ],
+          "errors": {
+            "510300": "Push2RateLimitError:东方财富 push2 行情服务器断开了连接，通常是短时间内请求过多，当前 IP 被临时限流。首次限流一般约 5 分钟后恢复，反复触发后可能需要 40 分钟以上；等待期间不要重复调用东方财富的行情接口，否则会延长限流。",
+            "002648": "ValueError:no later daily market source",
+            "002714": "ValueError:no later daily market source",
+            "000100": "ValueError:no later daily market source",
+            "601211": "ValueError:no later daily market source",
+            "002142": "ValueError:no later daily market source",
+            "600926": "ValueError:no later daily market source",
+            "BAOSTOCK:510300": "ValueError:no dated OHLC bars",
+            "BAOSTOCK:000100": "ValueError:no dated OHLC bars",
+            "BAOSTOCK:002142": "ValueError:no dated OHLC bars",
+            "BAOSTOCK:002648": "ValueError:no dated OHLC bars",
+            "BAOSTOCK:002714": "ValueError:no dated OHLC bars",
+            "BAOSTOCK:600926": "ValueError:no dated OHLC bars",
+            "BAOSTOCK:601211": "ValueError:no dated OHLC bars"
+          },
+          "source_new_ohlc_sha256": "a0080dfd17457aea9579fdc7d9ea823c4dd0d21a04d214b6eaa5facff2f8c20c"
+        },
+        "DEEP_DIP": {
+          "F1_LEFT": [
+            {
+              "stock": "000100",
+              "status": "NEXT_ACTUAL_SESSION_PENDING",
+              "horizons": {}
+            },
+            {
+              "stock": "601211",
+              "status": "NEXT_ACTUAL_SESSION_PENDING",
+              "horizons": {}
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "000100",
+              "status": "WAIT_CONFIRMATION",
+              "confirmation_day": null,
+              "horizons": {}
+            },
+            {
+              "stock": "601211",
+              "status": "WAIT_CONFIRMATION",
+              "confirmation_day": null,
+              "horizons": {}
+            }
+          ],
+          "errors": {
+            "510300": "Push2RateLimitError:东方财富 push2 行情服务器断开了连接，通常是短时间内请求过多，当前 IP 被临时限流。首次限流一般约 5 分钟后恢复，反复触发后可能需要 40 分钟以上；等待期间不要重复调用东方财富的行情接口，否则会延长限流。",
+            "002648": "ValueError:no later daily market source",
+            "002714": "ValueError:no later daily market source",
+            "000100": "ValueError:no later daily market source",
+            "601211": "ValueError:no later daily market source",
+            "002142": "ValueError:no later daily market source",
+            "600926": "ValueError:no later daily market source",
+            "BAOSTOCK:510300": "ValueError:no dated OHLC bars",
+            "BAOSTOCK:000100": "ValueError:no dated OHLC bars",
+            "BAOSTOCK:002142": "ValueError:no dated OHLC bars",
+            "BAOSTOCK:002648": "ValueError:no dated OHLC bars",
+            "BAOSTOCK:002714": "ValueError:no dated OHLC bars",
+            "BAOSTOCK:600926": "ValueError:no dated OHLC bars",
+            "BAOSTOCK:601211": "ValueError:no dated OHLC bars"
+          },
+          "source_new_ohlc_sha256": "a0080dfd17457aea9579fdc7d9ea823c4dd0d21a04d214b6eaa5facff2f8c20c"
+        },
+        "R_BOUNCE": {
+          "F1_LEFT": [
+            {
+              "stock": "002142",
+              "status": "NEXT_ACTUAL_SESSION_PENDING",
+              "horizons": {}
+            },
+            {
+              "stock": "600926",
+              "status": "NEXT_ACTUAL_SESSION_PENDING",
+              "horizons": {}
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "002142",
+              "status": "WAIT_CONFIRMATION",
+              "confirmation_day": null,
+              "horizons": {}
+            },
+            {
+              "stock": "600926",
+              "status": "WAIT_CONFIRMATION",
+              "confirmation_day": null,
+              "horizons": {}
+            }
+          ],
+          "errors": {
+            "510300": "Push2RateLimitError:东方财富 push2 行情服务器断开了连接，通常是短时间内请求过多，当前 IP 被临时限流。首次限流一般约 5 分钟后恢复，反复触发后可能需要 40 分钟以上；等待期间不要重复调用东方财富的行情接口，否则会延长限流。",
+            "002648": "ValueError:no later daily market source",
+            "002714": "ValueError:no later daily market source",
+            "000100": "ValueError:no later daily market source",
+            "601211": "ValueError:no later daily market source",
+            "002142": "ValueError:no later daily market source",
+            "600926": "ValueError:no later daily market source",
+            "BAOSTOCK:510300": "ValueError:no dated OHLC bars",
+            "BAOSTOCK:000100": "ValueError:no dated OHLC bars",
+            "BAOSTOCK:002142": "ValueError:no dated OHLC bars",
+            "BAOSTOCK:002648": "ValueError:no dated OHLC bars",
+            "BAOSTOCK:002714": "ValueError:no dated OHLC bars",
+            "BAOSTOCK:600926": "ValueError:no dated OHLC bars",
+            "BAOSTOCK:601211": "ValueError:no dated OHLC bars"
+          },
+          "source_new_ohlc_sha256": "a0080dfd17457aea9579fdc7d9ea823c4dd0d21a04d214b6eaa5facff2f8c20c"
+        }
+      },
+      "source_new_ohlc": {
+        "first_observed_at": "2026-11-03T04:30:20.236639+08:00",
+        "capture_time": "2026-11-03T04:30:20.236639+08:00",
+        "bars_by_symbol": {},
+        "source_sha256": {},
+        "source_url": {},
+        "errors": {
+          "510300": "Push2RateLimitError:东方财富 push2 行情服务器断开了连接，通常是短时间内请求过多，当前 IP 被临时限流。首次限流一般约 5 分钟后恢复，反复触发后可能需要 40 分钟以上；等待期间不要重复调用东方财富的行情接口，否则会延长限流。",
+          "002648": "ValueError:no later daily market source",
+          "002714": "ValueError:no later daily market source",
+          "000100": "ValueError:no later daily market source",
+          "601211": "ValueError:no later daily market source",
+          "002142": "ValueError:no later daily market source",
+          "600926": "ValueError:no later daily market source",
+          "BAOSTOCK:510300": "ValueError:no dated OHLC bars",
+          "BAOSTOCK:000100": "ValueError:no dated OHLC bars",
+          "BAOSTOCK:002142": "ValueError:no dated OHLC bars",
+          "BAOSTOCK:002648": "ValueError:no dated OHLC bars",
+          "BAOSTOCK:002714": "ValueError:no dated OHLC bars",
+          "BAOSTOCK:600926": "ValueError:no dated OHLC bars",
+          "BAOSTOCK:601211": "ValueError:no dated OHLC bars"
+        },
+        "fallback_recovered_codes": []
+      },
+      "source_new_ohlc_sha256": "a0080dfd17457aea9579fdc7d9ea823c4dd0d21a04d214b6eaa5facff2f8c20c",
+      "trade_authorized": false,
+      "broker_orders": [],
+      "execution": "OHLC_OPEN_SCENARIO_NOT_BROKER_FILL"
+    }
+  ],
+  "tracked_freeze_count": 1,
+  "paper_account_snapshot_sha256": "0161906221cdf159bcc36242ece95ad2b3adbfd93d1de937f67b1f7f223fcd15",
+  "paper_account_summary": {
+    "SHALLOW_DIP": {
+      "cash_cny": "30000.00",
+      "equity_after_estimated_exit_cost_cny": "30000.00",
+      "net_pnl_cny": "0.00",
+      "realized_pnl_cny": "0.00",
+      "open_positions": 0,
+      "closed_trades": 0,
+      "win_rate": null,
+      "paired_s0_trades": 0,
+      "realized_excess_s0_cny": null,
+      "mark_status": "CASH_ONLY",
+      "market_session": null
+    },
+    "DEEP_DIP": {
+      "cash_cny": "30000.00",
+      "equity_after_estimated_exit_cost_cny": "30000.00",
+      "net_pnl_cny": "0.00",
+      "realized_pnl_cny": "0.00",
+      "open_positions": 0,
+      "closed_trades": 0,
+      "win_rate": null,
+      "paired_s0_trades": 0,
+      "realized_excess_s0_cny": null,
+      "mark_status": "CASH_ONLY",
+      "market_session": null
+    },
+    "R_BOUNCE": {
+      "cash_cny": "30000.00",
+      "equity_after_estimated_exit_cost_cny": "30000.00",
+      "net_pnl_cny": "0.00",
+      "realized_pnl_cny": "0.00",
+      "open_positions": 0,
+      "closed_trades": 0,
+      "win_rate": null,
+      "paired_s0_trades": 0,
+      "realized_excess_s0_cny": null,
+      "mark_status": "CASH_ONLY",
+      "market_session": null
+    }
+  },
+  "trade_authorized": false,
+  "broker_orders": [],
+  "snapshot_sha256": "4aa5fa73da61449dd45f50d8db5750878c220f3220c34e3d40706dfaba6b6504"
+}

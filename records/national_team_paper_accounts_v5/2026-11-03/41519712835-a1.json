@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "version": "NT_V5_PAPER_ACCOUNT_EXP0014",
+  "asof": "2026-11-03",
+  "capture_time": "2026-11-03T04:30:20.269885+08:00",
+  "last_market_session": null,
+  "accounts": {
+    "SHALLOW_DIP": {
+      "cash_cny": "30000.00",
+      "positions": [],
+      "closed_trades": [],
+      "decisions": [],
+      "realized_pnl_cny": "0.00",
+      "s0_realized_pnl_cny": "0.00",
+      "summary": {
+        "cash_cny": "30000.00",
+        "equity_after_estimated_exit_cost_cny": "30000.00",
+        "net_pnl_cny": "0.00",
+        "realized_pnl_cny": "0.00",
+        "open_positions": 0,
+        "closed_trades": 0,
+        "win_rate": null,
+        "paired_s0_trades": 0,
+        "realized_excess_s0_cny": null,
+        "mark_status": "CASH_ONLY",
+        "market_session": null
+      }
+    },
+    "DEEP_DIP": {
+      "cash_cny": "30000.00",
+      "positions": [],
+      "closed_trades": [],
+      "decisions": [],
+      "realized_pnl_cny": "0.00",
+      "s0_realized_pnl_cny": "0.00",
+      "summary": {
+        "cash_cny": "30000.00",
+        "equity_after_estimated_exit_cost_cny": "30000.00",
+        "net_pnl_cny": "0.00",
+        "realized_pnl_cny": "0.00",
+        "open_positions": 0,
+        "closed_trades": 0,
+        "win_rate": null,
+        "paired_s0_trades": 0,
+        "realized_excess_s0_cny": null,
+        "mark_status": "CASH_ONLY",
+        "market_session": null
+      }
+    },
+    "R_BOUNCE": {
+      "cash_cny": "30000.00",
+      "positions": [],
+      "closed_trades": [],
+      "decisions": [],
+      "realized_pnl_cny": "0.00",
+      "s0_realized_pnl_cny": "0.00",
+      "summary": {
+        "cash_cny": "30000.00",
+        "equity_after_estimated_exit_cost_cny": "30000.00",
+        "net_pnl_cny": "0.00",
+        "realized_pnl_cny": "0.00",
+        "open_positions": 0,
+        "closed_trades": 0,
+        "win_rate": null,
+        "paired_s0_trades": 0,
+        "realized_excess_s0_cny": null,
+        "mark_status": "CASH_ONLY",
+        "market_session": null
+      }
+    }
+  },
+  "source_event_count": 1,
+  "source_errors": [],
+  "execution": "OHLC_PAPER_SCENARIO_NOT_BROKER_TRADE",
+  "trade_authorized": false,
+  "broker_orders": [],
+  "github_run_id": "41519712835",
+  "github_run_attempt": "1",
+  "github_source_commit": "46315ed8e3ae0e4f89df93d9753a9490b7aca038",
+  "snapshot_sha256": "0161906221cdf159bcc36242ece95ad2b3adbfd93d1de937f67b1f7f223fcd15"
+}
