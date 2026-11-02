@@ -16,6 +16,7 @@ on:
       - 'tests/test_national_team_event_router_v5.py'
       - '.github/workflows/national-team-event-router-v5.yml'
       - '.github/workflows/national-team-left-outcomes-v5.yml'
+      - '.github/workflows/national-team-live.yml'
       - 'national_team/left_entry_outcomes.py'
       - 'scripts/track_national_team_left_entry_v4.py'
       - 'tests/test_national_team_left_entry_outcomes.py'
