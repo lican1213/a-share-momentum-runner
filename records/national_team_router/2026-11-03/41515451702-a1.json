@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "version": "NT_EVENT_ROUTER_V5",
+  "experiment_id": "EXP-0012",
+  "observed_at": "2026-11-03T04:02:39.262637+08:00",
+  "event_id": "ETF4_DOWNFLOW_2026-11-02",
+  "signal_session": "2026-11-02",
+  "signal_age_calendar_days": 1,
+  "status": "NEW_FUNDING_EVENT",
+  "four_etfs": [
+    "510300",
+    "510310",
+    "510330",
+    "159919"
+  ],
+  "v3_path": "records/national_team_v3/2026-11-02/41511425563-a1.json",
+  "watch_path": "records/national_team_watch/2026-11-03/41501518990-a1.json",
+  "selected_policy": "SHALLOW_DIP",
+  "feedback": {
+    "paired_10d_events": 0,
+    "mean_10d_excess_s0": {
+      "SHALLOW_DIP": null,
+      "DEEP_DIP": null
+    },
+    "selected_policy": "SHALLOW_DIP",
+    "right_side_reference": {
+      "paired_10d_clusters": 0,
+      "mean_R_minus_SHALLOW_excess_s0": null,
+      "not_used_to_gate_left_side_research": true
+    },
+    "policy_rule": "8 distinct event clusters with paired 10d outcomes; DEEP_DIP +0.2pct",
+    "not_a_calibrated_profit_probability": true
+  },
+  "funding": {
+    "net_creation_1d_cny_proxy": 14150259090.000002,
+    "net_creation_5d_cny_proxy": 40341969540.0,
+    "ordinary_float_coverage_ratio": null,
+    "ratio_status": "DENOMINATOR_MISSING",
+    "index_ret5": -0.021108603790873204,
+    "share_proxy_not_state_account_trade": true
+  },
+  "policy_overlay": {
+    "experiment_id": "EXP-0015",
+    "status": "ETF_FLOW_WITHOUT_POLICY_MATCH",
+    "source_health": "OK",
+    "snapshot_sha256": "0aa323096093bd40665cfa5f6670064bb72125926fc5055077e867244e96e78b",
+    "support_count": 0,
+    "matched_funding_event_ids": [],
+    "recent_event_ids": [],
+    "top_events": [],
+    "changes_admission": false,
+    "trade_authorized": false,
+    "not_a_policy_implied_etf_purchase": true
+  },
+  "dispatcher": "FREEZE_LEFT_SIDE_RESEARCH",
+  "trade_authorized": false,
+  "broker_orders": [],
+  "github_run_id": "41515451702",
+  "github_source_commit": "b077201bc0f004ae1ed788df9e2498dbcd5af2e4",
+  "snapshot_sha256": "1e4c56828b81ae8dc2e514cca043a1441813201de07434989fb5928f03065385"
+}
