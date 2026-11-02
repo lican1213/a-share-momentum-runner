@@ -17,9 +17,15 @@ def test_production_evidence_commits_only_append_only_records():
     line=next(x for x in s.splitlines() if "git add -- records/national_team_etf/" in x)
     assert "wiki/compiled" not in line and "wiki/indices" not in line
     assert "records/national_team_watch/" in line
-    assert "records/national_team_audits/" in line
+    assert "records/national_team_merged/" in line
+    assert "records/national_team_pcf/" in line
+    assert "records/national_team_events/" not in line
+    assert "records/national_team_paper/" not in line
     assert "git restore -- wiki/indices/ wiki/compiled/" in s
-    assert s.index("Independent red-team integrity audit")<s.index("Persist unique run evidence")
+    assert s.index("Build real CSI300 index-weight stock watchlist") < s.index(
+        "Persist unique run evidence")
+    assert "Freeze first-observed S1 and S2 paper events" not in s
+    assert "python -m national_team.live_paper_tracker" not in s
 
 def test_derived_wiki_uses_separate_clean_checkout_and_retry():
     s=WIKI.read_text(encoding="utf-8")
@@ -30,3 +36,18 @@ def test_derived_wiki_uses_separate_clean_checkout_and_retry():
     assert "wiki/compiled/" in s and "wiki/indices/" in s
     assert "workflow_run:" in s
     assert "cancel-in-progress: false" in s
+
+
+
+def test_retired_legacy_workflows_stay_out_of_the_daily_runner():
+    retired = (
+        "ashare.yml",
+        "national-team-short-paper-week.yml",
+        "national-team-short-probe.yml",
+        "national-team-strategy-v2.yml",
+        "national-team-left-entry-v4.yml",
+    )
+    assert all(not (ROOT / ".github/workflows" / name).exists()
+               for name in retired)
+    assert (ROOT / ".github/workflows/national-team-event-router-v5.yml").exists()
+    assert (ROOT / ".github/workflows/national-team-left-outcomes-v5.yml").exists()
