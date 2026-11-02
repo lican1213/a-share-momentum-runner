@@ -160,3 +160,18 @@ def test_original_etf_dispatch_unchanged_when_policy_is_present(tmp_path):
         assert before[key] == after[key]
     assert after["status"] == "NEW_FUNDING_EVENT"
     assert after["policy_overlay"]["status"] == "POLICY_ETF_RESONANCE"
+
+
+def test_pbc_rss_without_pubdate_is_observed_not_backdated():
+    pbc = ("<rss><channel><item><title>央行启动证券基金保险公司互换便利</title>"
+           "<link>https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/x/index.html</link>"
+           "</item></channel></rss>")
+    snap = collect_snapshot(now=AT, fetcher=sources(pbc=pbc))
+    assert snap["sources"][0]["status"] == "OK"
+    event = next(e for e in snap["events"] if e["title"].startswith("央行启动"))
+    assert event["publication_precision"] == "FIRST_OBSERVED_ONLY"
+    assert event["published_at_bj"] is None
+    out = summarize(snap, now="2026-11-02T18:05:00+08:00",
+                    funding_day="2026-11-02", etf_flow_active=True)
+    assert event["event_id"] in out["recent_event_ids"]
+    assert event["event_id"] not in out["matched_funding_event_ids"]

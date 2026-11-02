@@ -27,7 +27,7 @@ updated: 2026-11-02
 
 | 源 | 接入 | 实际字段及时间语义 |
 | --- | --- | --- |
-| PBC_RSS | 央行新闻 RSS/Atom XML | 官方原文标题、URL、pubDate；无RSS/断连则标源失败 |
+| PBC_RSS | 央行新闻 RSS/Atom XML | 官方原文标题、URL、pubDate（若有）；若RSS缺逐条日期则标FIRST_OBSERVED_ONLY，仅作观察、不作为回溯资金日的共振证明；断连单源记录失败 |
 | CSRC_NEWS | 官方搜索 JSON searchList/a1a078ee... | publishedTimeStr、标题、原文链接、文章摘要；时间转北京时间 |
 | GOV_POLICY | 官方政策库 JSON search-gov/data | pubtimeStr（只有日期）、标题、摘要、原文链接；日期不伪装为精确的盘中发布时间 |
 
