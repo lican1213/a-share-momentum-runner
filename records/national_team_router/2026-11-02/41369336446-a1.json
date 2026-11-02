@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "version": "NT_EVENT_ROUTER_V5",
+  "experiment_id": "EXP-0012",
+  "observed_at": "2026-11-02T08:51:24.020468+08:00",
+  "event_id": "ETF4_DOWNFLOW_2026-10-30",
+  "signal_session": "2026-10-30",
+  "signal_age_calendar_days": 3,
+  "status": "ALREADY_FROZEN_FOR_SESSION",
+  "four_etfs": [
+    "510300",
+    "510310",
+    "510330",
+    "159919"
+  ],
+  "v3_path": "records/national_team_v3/2026-11-02/41369083973-a1.json",
+  "watch_path": null,
+  "selected_policy": "SHALLOW_DIP",
+  "feedback": {
+    "paired_10d_events": 0,
+    "mean_10d_excess_s0": {
+      "SHALLOW_DIP": null,
+      "DEEP_DIP": null
+    },
+    "selected_policy": "SHALLOW_DIP",
+    "policy_rule": "8 distinct event clusters with paired 10d outcomes; DEEP_DIP +0.2pct",
+    "not_a_calibrated_profit_probability": true
+  },
+  "funding": {
+    "net_creation_1d_cny_proxy": 8590983660.0,
+    "net_creation_5d_cny_proxy": 47907928530.0,
+    "ordinary_float_coverage_ratio": null,
+    "ratio_status": "DENOMINATOR_MISSING",
+    "index_ret5": -0.02918888371945738,
+    "share_proxy_not_state_account_trade": true
+  },
+  "dispatcher": "NO_NEW_PAPER_FREEZE",
+  "trade_authorized": false,
+  "broker_orders": [],
+  "github_run_id": "41369336446",
+  "github_source_commit": "8502fbd174c2cb1a9aa57f4f045d727d88511a38",
+  "snapshot_sha256": "95b9df9348d722042f0c83f52ad2bf68256ad83570ddc3549f7f66590f50d737"
+}
