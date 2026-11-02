@@ -52,6 +52,9 @@ def test_f1_and_f2_are_separate_forward_scenarios_with_same_entry_s0():
     assert f2["confirmation_day"] == "2026-11-02"
     assert f2["entry_session"] == "2026-11-03"
     assert f1["horizons"]["5"]["status"] == "PAIRED"
+    assert f1["horizons"]["5"]["path_excursions"]["mfe_from_entry_open"] == "0.04"
+    assert f1["horizons"]["5"]["path_excursions"]["mae_from_entry_open"] == "-0.02"
+    assert f2["horizons"]["5"]["path_excursions"]["mfe_session"] >= f2["entry_session"]
     assert f2["horizons"]["5"]["status"] == "PAIRED"
     assert f1["horizons"]["5"]["s0"]["exit_session"] == "2026-11-09"
     assert f2["horizons"]["5"]["s0"]["exit_session"] == "2026-11-10"
@@ -67,6 +70,7 @@ def test_never_claim_matured_return_without_future_sessions():
     p["first_observed_at"] = p["capture_time"]
     result = track(f, p, observed_at="2026-11-02T18:01:00+08:00")
     assert result["F1_LEFT"][0]["horizons"]["5"]["after_cost_return"] is None
+    assert "path_excursions" not in result["F1_LEFT"][0]["horizons"]["5"]
     assert result["F2_WEAK"][0]["status"] == "WAIT_NEXT_OPEN_AFTER_CONFIRMATION"
 
 

@@ -5,6 +5,12 @@ status: maintained
 updated: 2026-11-02
 ---
 
+## 2026-11-02：EXP-0013收益路径＋右侧参考＋退役旧入口
+
+[EXP-0013](experiments/EXP-0013-path-learning-and-retirement.md)在原V5事件路由/跟踪器内新增真实3/5/10/20日MFE/MAE、Baostock个股备用源和独立R_BOUNCE观察组。没有新的Runner；5个过时工作流在[根MOC](../MOC.md)用旧SHA归档后移除。左侧SHALLOW_DIP/DEEP_DIP及成熟簇自动优选机制维持不变。
+
+
+
 ## 2026-11-02：EXP-0012 已编码的主动循环
 
 [自动资金事件路由与自迭代实验](experiments/EXP-0012-four-etf-autonomous-event-loop.md) · [四ETF事件引擎](../national_team/event_router_v5.py) · [低位浅跌/深跌双组](../national_team/left_entry_v5.py) · [每日事件工作流](../.github/workflows/national-team-event-router-v5.yml) · [每日未来收益反馈](../.github/workflows/national-team-left-outcomes-v5.yml)。优先观察尚未涨的股票，同源比较10交易日费用后相对510300收益；独立8组成熟反馈后可自动切换下一次纸面排序。全程保留真实ETF覆盖率分母的NULL与旧冻结，代码合入不等于未来股票已盈利。
@@ -20,7 +26,7 @@ updated: 2026-11-02
 
 - 后续[前瞻收益跟踪引擎](../national_team/left_entry_outcomes.py) · [自动化](../.github/workflows/national-team-left-outcomes-v4.yml)：每工作日盘后读取首个V4合法冻结，用新日线生成F1/F2各自开盘价情景、510300同刻净超额；3/5/10/20日未到期NULL，不伪造执行。
 
-- 用户允许**历史五日52.54%（31/59）命中即可小额纸面试错**；10/20日低于50%如实保留，不能冒充个股概率。[完整预注册](experiments/EXP-0011-fifty-percent-low-left-paper-pilot.md) · [F1/F2筛选](../national_team/left_entry_v4.py) · [OHLC采集](../scripts/run_national_team_left_entry_v4.py) · [新专用CI](../.github/workflows/national-team-left-entry-v4.yml)。预计2026-11-02或之后实际首交易日才核实纸面成交，冻结中不提前填写盈亏；旧EXP-0007计划得到新独立实施，不重写历史实验。
+- 用户允许**历史五日52.54%（31/59）命中即可小额纸面试错**；10/20日低于50%如实保留，不能冒充个股概率。[完整预注册](experiments/EXP-0011-fifty-percent-low-left-paper-pilot.md) · [F1/F2筛选](../national_team/left_entry_v4.py) · [OHLC采集](../scripts/run_national_team_left_entry_v4.py) · [新专用CI](https://github.com/lican1213/a-share-momentum-runner/blob/cb1e589a80b3ae704edb53bbc9a836ef120d6f97/.github/workflows/national-team-left-entry-v4.yml)。预计2026-11-02或之后实际首交易日才核实纸面成交，冻结中不提前填写盈亏；旧EXP-0007计划得到新独立实施，不重写历史实验。
 
 # Wiki 总索引（Map of Content）
 
@@ -55,7 +61,7 @@ updated: 2026-11-02
 
 ## B16真实四ETF→V2独立股票名单与前瞻收益跟踪
 - [EXP-0004研究协议与结构限制](experiments/EXP-0004-four-etf-strategy-v2.md) · [正式V2选股代码](../national_team/strategy_v2.py) · [GitHub实际完整运行40719359363](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40719359363)
-- [固定两组V2研究股与完整排名原始证据](../records/national_team_strategy/2026-10-28/40719359363-a1-v2.json) · [第一次前瞻冻结事件](../records/national_team_events/2026-10-28/40719359363-a1-v2.json) · [专用自动化](../.github/workflows/national-team-strategy-v2.yml)
+- [固定两组V2研究股与完整排名原始证据](../records/national_team_strategy/2026-10-28/40719359363-a1-v2.json) · [第一次前瞻冻结事件](../records/national_team_events/2026-10-28/40719359363-a1-v2.json) · [专用自动化](https://github.com/lican1213/a-share-momentum-runner/blob/cb1e589a80b3ae704edb53bbc9a836ef120d6f97/.github/workflows/national-team-strategy-v2.yml)
 - [20日到期覆盖修复](../national_team/live_paper_tracker.py)：保留最近60自然日中至多64个冻结事件，缓存同股票OHLC源；不再让后续两组/天把前八条尚未成熟结果挤掉。
 - 研究股单尚非国家队逐股订单；相同中证权重无法用四ETF金额区分股票，只能验证资金事件择时对S1/S2是否有超额收益。
 

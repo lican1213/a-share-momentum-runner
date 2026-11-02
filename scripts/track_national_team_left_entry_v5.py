@@ -13,7 +13,8 @@ from zoneinfo import ZoneInfo
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from national_team.left_entry_outcomes import track
 from national_team.left_entry_v4 import digest
-from national_team.left_entry_v5 import POLICIES
+from national_team.left_entry_v5 import POLICIES, RIGHT_POLICY
+from national_team.ohlc_fallback_v5 import backfill_future_bars
 from scripts.track_national_team_left_entry_v4 import collect
 
 BJ = ZoneInfo("Asia/Shanghai")
@@ -33,11 +34,13 @@ def recent_freezes(root, *, today, max_events=24):
     return [latest[key] for key in sorted(latest)[-max_events:]]
 
 
-def follow_one(ak, frozen, source_path, asof, observed_at):
+def follow_one(ak, frozen, source_path, asof):
     # A common OHLC snapshot for both models: no one gets more recent prices.
     group_orders = []
     stock_codes = set()
-    for policy in POLICIES:
+    active_policies = [p for p in (*POLICIES, RIGHT_POLICY)
+                       if p in frozen["paper_policies"]]
+    for policy in active_policies:
         for order in frozen["paper_policies"][policy]["orders"]:
             if order["stock"] not in stock_codes:
                 group_orders.append(order)
@@ -45,8 +48,14 @@ def follow_one(ak, frozen, source_path, asof, observed_at):
     shared = copy.deepcopy(frozen)
     shared["accounts"]["F1_LEFT"]["orders"] = group_orders
     seen = collect(ak, shared, asof)
+    seen = backfill_future_bars(seen, ["510300", *sorted(stock_codes)],
+                                frozen["signal_session"], asof)
+    # All market-source retrieval must predate the actual evaluation clock.
+    seen["capture_time"] = datetime.now(BJ).isoformat()
+    seen["first_observed_at"] = seen["capture_time"]
+    observed_at = datetime.now(BJ).isoformat()
     policy_results = {}
-    for policy in POLICIES:
+    for policy in active_policies:
         model = copy.deepcopy(frozen)
         model["accounts"]["F1_LEFT"]["orders"] = frozen["paper_policies"][policy]["orders"]
         outcome = track(model, seen, observed_at=observed_at)
@@ -62,6 +71,7 @@ def follow_one(ak, frozen, source_path, asof, observed_at):
         "freeze_path": str(source_path),
         "signal_session": frozen["signal_session"],
         "cluster_anchor": frozen["cluster_anchor"],
+        "extension_experiment_id": frozen.get("extension_experiment_id"),
         "asof": asof,
         "first_observed_at": observed_at,
         "policy_results": policy_results,
@@ -85,7 +95,7 @@ def main():
     freezes = recent_freezes(args.freeze_root, today=asof, max_events=args.max_events)
     results = []
     for path, frozen in freezes:
-        results.append(follow_one(ak, frozen, path, asof, datetime.now(BJ).isoformat()))
+        results.append(follow_one(ak, frozen, path, asof))
     batch = {
         "schema": 1, "version": "NT_EVENT_FOLLOWUP_V5",
         "experiment_id": "EXP-0012", "asof": asof,
@@ -106,7 +116,7 @@ def main():
                    encoding="utf-8")
     print(json.dumps({
         "asof": asof, "tracked_events": len(results),
-        "policies": list(POLICIES),
+        "policies": list((*POLICIES, RIGHT_POLICY)),
         "paired_10d": sum(any(
             h.get("status") == "PAIRED"
             for p in r["policy_results"].values()

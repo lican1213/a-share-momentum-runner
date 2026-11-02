@@ -26,9 +26,9 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install public future OHLC providers
-        run: python -m pip install 'pytest>=8,<10' 'akshare>=1.17,<2'
+        run: python -m pip install 'pytest>=8,<10' 'akshare>=1.17,<2' 'baostock>=0.8,<1'
       - name: Validate first-observed future scenarios and feedback
-        run: python -m pytest -q tests/test_national_team_event_router_v5.py tests/test_national_team_left_entry_outcomes.py
+        run: python -m pytest -q tests/test_national_team_event_router_v5.py tests/test_national_team_ohlc_fallback_v5.py tests/test_national_team_left_entry_outcomes.py
       - name: Fetch new real OHLC and compare both paper policies with 510300
         shell: bash
         run: |
@@ -41,7 +41,7 @@ jobs:
           j=json.load(open(sys.argv[1],encoding="utf-8"))
           assert j["trade_authorized"] is False and j["broker_orders"]==[]
           for event in j["results"]:
-              assert set(event["policy_results"])=={"SHALLOW_DIP","DEEP_DIP"}
+              assert {"SHALLOW_DIP","DEEP_DIP"}.issubset(event["policy_results"])
               assert event["trade_authorized"] is False and event["broker_orders"]==[]
               assert event["source_new_ohlc_sha256"]
           print("EXP0012_FORWARD_LEARNING",j["tracked_freeze_count"])

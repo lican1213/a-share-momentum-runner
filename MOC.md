@@ -1,3 +1,19 @@
+## 2026-11-02：EXP-0013，小主链迭代与历史路线退役
+
+保留**一条研究新事件主链**：[四ETF V3资金回放](.github/workflows/national-team-v3-replay.yml) → [盘后ETF/成分股观察](.github/workflows/national-team-live.yml) → [EXP-0012事件路由＋EXP-0013扩展候选](.github/workflows/national-team-event-router-v5.yml) → [未来真实OHLC收益反馈](.github/workflows/national-team-left-outcomes-v5.yml)。**不新增独立Runner或硬选股门槛。** [EXP-0013实施定义](wiki/experiments/EXP-0013-path-learning-and-retirement.md)：新浪/东财缺失的个股日线用Baostock批量备用；同源3/5/10/20日MFE/MAE观察；R_BOUNCE右侧小涨组只作为独立影子，对比左侧SHALLOW_DIP/DEEP_DIP。后续默认组的自动选优仍只看左侧两组的独立10日成熟资金簇。原四ETF主市值覆盖率缺分母保留NULL，不拿额外技术指标堵低位机会。
+
+**删繁开发记录：** 从基线代码SHA `cb1e589a80b3ae704edb53bbc9a836ef120d6f97`移除5个已被主链替代的工作流入口，永久源码在旧提交可复现：
+
+| 归档入口 | 旧职责 | 替代 |
+| --- | --- | --- |
+| [ashare.yml旧版](https://github.com/lican1213/a-share-momentum-runner/blob/cb1e589a80b3ae704edb53bbc9a836ef120d6f97/.github/workflows/ashare.yml) | 旧三日动量主线 | V5 |
+| [national-team-short-paper-week.yml旧版](https://github.com/lican1213/a-share-momentum-runner/blob/cb1e589a80b3ae704edb53bbc9a836ef120d6f97/.github/workflows/national-team-short-paper-week.yml) | V1漏冻手动回放 | 历史records |
+| [national-team-short-probe.yml旧版](https://github.com/lican1213/a-share-momentum-runner/blob/cb1e589a80b3ae704edb53bbc9a836ef120d6f97/.github/workflows/national-team-short-probe.yml) | 旧A2/B日常源探针 | 盘后ETF/V3 |
+| [national-team-strategy-v2.yml旧版](https://github.com/lican1213/a-share-momentum-runner/blob/cb1e589a80b3ae704edb53bbc9a836ef120d6f97/.github/workflows/national-team-strategy-v2.yml) | V2独立每日冻结 | V5动态事件路由 |
+| [national-team-left-entry-v4.yml旧版](https://github.com/lican1213/a-share-momentum-runner/blob/cb1e589a80b3ae704edb53bbc9a836ef120d6f97/.github/workflows/national-team-left-entry-v4.yml) | 固定10/30再冻的V4入口 | V5新日冻结 |
+
+旧A2/B三日与EXP-0011的20日**已有纸面后验观察暂保留**，到期后再退役；盘后ETF采集器不再持续启动旧S1/S2冻结和纸面跟踪。所有历史源代码、单测、`records/`、协议与失败样本保留，只删这5个过时入口。新版以实际GitHub Actions的源码SHA及不可覆盖新记录验收。
+
 ## 2026-11-02：EXP-0012 自迭代资金事件执行链（DeepSeek Super-agent仅作架构参考）
 
 已把“观察→事件路由→纸面低位实验→未来收益反馈→调整下一次排序”写入项目工作流，**不安装DeepSeek服务、不生成自动券商单**。四ETF源每日盘后刷新；相同资金交易日只冻一次，原EXP-0011旧事件不自动重开。新模型优先五日还在跌的抗跌股，浅跌与深跌两组同源纸面竞争；至少8个独立已成熟10日配对事件后自动按扣费净超额选择下一次默认组。资金主比值缺分母保留NULL，份额净申购辅助发现不因此停机。完整实现见[EXP-0012](wiki/experiments/EXP-0012-four-etf-autonomous-event-loop.md)、[路由](national_team/event_router_v5.py)、[选股](national_team/left_entry_v5.py)、[事件Actions](.github/workflows/national-team-event-router-v5.yml)、[收益Actions](.github/workflows/national-team-left-outcomes-v5.yml)，实际通过与收益以新SHA真实Actions和不可改写记录为准。
@@ -16,7 +32,7 @@
 ## 2026-11-01 EXP-0011：50%即启动低位跟随纸面试错（最新执行研究）
 
 - 用户拍板：**不再以60%作为研究启动线；历史5日方向胜率≥50%即可开始小仓位纸面试错**。真实四ETF份额代理31/59=52.54%通过研究准入；同样10日28/59=47.46%、20日24/58=41.38%并未达50%，且5日比普通跌市对照只高2.54百分点。**不是个股盈利概率。**
-- [独立EXP-0011协议](wiki/experiments/EXP-0011-fifty-percent-low-left-paper-pilot.md) · [F1/F2低位筛选与纸面尺寸](national_team/left_entry_v4.py) · [150股真实OHLC采集](scripts/run_national_team_left_entry_v4.py) · [自动化来源冻结](.github/workflows/national-team-left-entry-v4.yml)。F1最多两股、合计初始敞口≤1万元，F2等待3日弱确认；旧A2/B冻结一字不动。
+- [独立EXP-0011协议](wiki/experiments/EXP-0011-fifty-percent-low-left-paper-pilot.md) · [F1/F2低位筛选与纸面尺寸](national_team/left_entry_v4.py) · [150股真实OHLC采集](scripts/run_national_team_left_entry_v4.py) · [自动化来源冻结](https://github.com/lican1213/a-share-momentum-runner/blob/cb1e589a80b3ae704edb53bbc9a836ef120d6f97/.github/workflows/national-team-left-entry-v4.yml)。F1最多两股、合计初始敞口≤1万元，F2等待3日弱确认；旧A2/B冻结一字不动。
 - **现阶段仅候选冻结，不是纸面已买入：** 2026-10-30最新完整四ETF信号+10月26日去重簇，下一首个实际可交易时点才能尝试；首批看历史源回放真实5日50%准入，后续检验10日扣费后相对510300及无资金对照的净超额。原头部ETF/沪深300真实流通市值比例仍因缺分母为NULL；真实国家队主体每日买入未知。
 - 后续自动化也已经编码：[F1/F2前瞻纸面日线跟踪](national_team/left_entry_outcomes.py) · [日线采集](scripts/track_national_team_left_entry_v4.py) · [每工作日盘后自动化](.github/workflows/national-team-left-outcomes-v4.yml)。与510300同一开盘时点比较、3/5/10/20日扣费后收益；未到期收益保持NULL，日线开盘价只是模拟情景并非可成交订单。
 
@@ -81,7 +97,7 @@
 - **最后一次实源预检**：[Run 41029766462](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41029766462) · [归档证据](records/national_team_short_ab/probes/2026-10-30/41029766462-a1.json)，16:56北京时间。510300 10月30日收盘4.065，来源为新浪ETF截至10月29日日线＋同标的10月30日完整到15:00的实际1分钟数据，证据哈希已归档；上交所主板证券名册成功；10个原V2候选中**9个本轮真实日线验证通过**，600000（浦发银行）本轮新浪请求超时而东方财富仍熔断，不能当作技术指标筛选淘汰；510300/601825/600309三组分钟抽查通过。
 - **预检信号不作交易**：当轮指标A2=3只、B=6只，尚未执行整手数量、每股/组合预算及次交易日09:30开盘限制。早一轮 [Run 41029341126](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41029341126) 10/10数据通过、A2=3只、B=7只；两轮差异来自600000单股间歇性数据超时，不允许事后补当日入场。
 - **下一验证关口**：G1：2026-10-30 17:30后至23:59:59当日正式交易日冻结；预定18:15、20:15、22:15自动尝试；G2：2026-11-02 09:25前Git提交不可回写冻结；G3：11月2日真实开盘后OHLC纸面入场及T+1到T+3逐分钟止盈止损，与510300同期配对，费用后考察超额。2026-10-30 16:56时冻结=0、模拟成交=0、券商订单=0。失败必须以源错误或规则拒绝记录，不回填过往交易。
-- **文档链路**：[对抗审计](wiki/audits/AUD-2026-10-30-short-ab-execution-closure.md) · [A2/B引擎](national_team/short_ab_engine.py) · [只读源预检](national_team/short_probe.py) · [测试](tests/test_national_team_short_ab_engine.py) · [预检工作流](.github/workflows/national-team-short-probe.yml)。
+- **文档链路**：[对抗审计](wiki/audits/AUD-2026-10-30-short-ab-execution-closure.md) · [A2/B引擎](national_team/short_ab_engine.py) · [只读源预检](national_team/short_probe.py) · [测试](tests/test_national_team_short_ab_engine.py) · [预检工作流](https://github.com/lican1213/a-share-momentum-runner/blob/cb1e589a80b3ae704edb53bbc9a836ef120d6f97/.github/workflows/national-team-short-probe.yml)。
 
 ## 2026-10-30 16:52实际行情验收：软件G0通过，市场冻结G1待18:15
 
@@ -95,7 +111,7 @@
 
 ## 2026-10-30 盘后冻结前16:40行情可达性预检（不产生交易）
 
-- [只读探针](national_team/short_probe.py) · [16:40独立Actions](.github/workflows/national-team-short-probe.yml) · [源故障与测试](tests/test_national_team_short_probe.py)。盘后预读当天真实10只股票/510300日线、归档四ETF及少量真实分钟行情，写入 `records/national_team_short_ab/probes/`，无冻结、无模拟入场、无券商订单；不允许把预检指标冒充正式A2/B首次冻结。
+- [只读探针](national_team/short_probe.py) · [16:40独立Actions](https://github.com/lican1213/a-share-momentum-runner/blob/cb1e589a80b3ae704edb53bbc9a836ef120d6f97/.github/workflows/national-team-short-probe.yml) · [源故障与测试](tests/test_national_team_short_probe.py)。盘后预读当天真实10只股票/510300日线、归档四ETF及少量真实分钟行情，写入 `records/national_team_short_ab/probes/`，无冻结、无模拟入场、无券商订单；不允许把预检指标冒充正式A2/B首次冻结。
 
 ## 2026-10-30 执行闭环P0修复（待实盘行情/远端Actions逐级验收）
 
@@ -122,7 +138,7 @@
 ## 2026-10-29 EXP-0005：短线一周严格纸面试验（尚未有可信成交或收益）
 
 - **[已冻结试验协议](wiki/experiments/EXP-0005-national-team-one-week-paper-pilot.md)**：2026-10-29午间冻结；3万元模拟账户、最多1万元首批投入、S1/S2各最多一只、100股整数手、单笔初始含成本风险≤150元；不许用2026-10-29已过去的09:30回填买入。V2原5/10/20交易日研究保持独立。
-- **[专用纸面试验程序](national_team/short_paper_pilot.py)**、[定时执行任务](.github/workflows/national-team-short-paper-week.yml)及[对抗测试](tests/test_national_team_short_pilot.py)：从确认行情计算MA/突破/ATR、价格与整数手约束，情景性次交易日开盘入场，T+1至T+3固定出场规则，14:50必须有分钟行情才能记时间退出，和510300同起点对照；GitHub Actions工作日18:15采集并试图保存不可回写审计记录。**文件已部署≠Actions实际运行/真实行情抓取/买入成功**，查证最新run、提交SHA及freeze记录后才可宣称启动。
+- **[专用纸面试验程序](national_team/short_paper_pilot.py)**、[定时执行任务](https://github.com/lican1213/a-share-momentum-runner/blob/cb1e589a80b3ae704edb53bbc9a836ef120d6f97/.github/workflows/national-team-short-paper-week.yml)及[对抗测试](tests/test_national_team_short_pilot.py)：从确认行情计算MA/突破/ATR、价格与整数手约束，情景性次交易日开盘入场，T+1至T+3固定出场规则，14:50必须有分钟行情才能记时间退出，和510300同起点对照；GitHub Actions工作日18:15采集并试图保存不可回写审计记录。**文件已部署≠Actions实际运行/真实行情抓取/买入成功**，查证最新run、提交SHA及freeze记录后才可宣称启动。
 - **初始状态**：0笔经核验的纸面成交、0笔真实成交、0元已证明收益；如果2026-10-29 17:30后冻结失败，就不得2026-10-30回填。2026-11-05晚间仅依据已持久化来源和真实已执行程序作阶段结论。
 
 ## 2026-10-29 B17 修复与验收进度
@@ -130,7 +146,7 @@
 - **V2日报与V1历史分栏**：[报告编译代码](national_team/daily_report.py)从首次不可回写V2事件及对应策略JSON恢复S1/S2，避免将旧版V1 S2误当主模型；[最新日报](wiki/compiled/national_team_daily.md)已通过真实Wiki生成任务，显示V2 S2为600309/601919/600660/601012/601838，旧版600000/601816/601166/600519/000333单列历史。
 - **成交情景修复**：[OHLC审慎过滤](national_team/ohlc_execution_guard.py)与[实际行情接入](national_team/live_paper_tracker.py)：此前仅依日成交量假设能按开盘价买/卖的缺陷，改为读取高低价、上一交易日收盘价；出现疑似一字涨停/跌停则按不可成交处理，并保留每条记录仅为OHLC情景、非真实券商成交的证据。
 - **资金源改进**：[ETF采集](national_team/live_etf_sources.py)对上交所HTTP403启用本轮熔断，缩减无效重试，并增加按具体交易日的AKShare SSE后备采集；逐基金/日期保留来源哈希与冲突记录，不用未知份额填充。没有稳定的官方PCF、全部日期SSE/SZSE网络可达性尚不可被单元测试替代。
-- **披露时点纠正**：[ETF定时采集](.github/workflows/national-team-live.yml)调整为北京时间每周二至周六09:15、[V2冻结](.github/workflows/national-team-strategy-v2.yml)调整为10:15，避免在官方每日份额未公布前将缺数误当新交易信号。源更新通常在T+1上午，见[Tushare数据文档](https://tushare.pro/document/2?doc_id=408)；具体日期必须依真实归档确认。
+- **披露时点纠正**：[ETF定时采集](.github/workflows/national-team-live.yml)调整为北京时间每周二至周六09:15、[V2冻结](https://github.com/lican1213/a-share-momentum-runner/blob/cb1e589a80b3ae704edb53bbc9a836ef120d6f97/.github/workflows/national-team-strategy-v2.yml)调整为10:15，避免在官方每日份额未公布前将缺数误当新交易信号。源更新通常在T+1上午，见[Tushare数据文档](https://tushare.pro/document/2?doc_id=408)；具体日期必须依真实归档确认。
 - **工程测试不是收益验证**：[118项通过的CI 40787840541](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40787840541)已覆盖V2日报分流等回归，独立实盘成交和扣成本超额收益仍为OPEN。新增[二级份额规范化器](national_team/tushare_share_fallback.py)仅为待授权数据接口的单元适配基础，**尚未接入生产，绝不报告为已取得Tushare数据**。
 
 
@@ -140,7 +156,7 @@
 ## B16：真实四ETF资金驱动的独立选股V2首次运行成功（2026-10-28）
 
 - **[V2真实Github运行40719359363](https://github.com/lican1213/a-share-momentum-runner/actions/runs/40719359363)成功**：18项策略/评价对抗测试，2026-10-27完整四ETF真实净申赎代理+56.12亿元，2026-10-28实际150只股票样本（覆盖83.015%），同一数据源生成新版本两个前瞻冻结股票组合；源码 [strategy_v2.py](national_team/strategy_v2.py)，[EXP-0004完整协议](wiki/experiments/EXP-0004-four-etf-strategy-v2.md)。
-- **[首次策略原始JSON](records/national_team_strategy/2026-10-28/40719359363-a1-v2.json)**、[两组首次冻结事件](records/national_team_events/2026-10-28/40719359363-a1-v2.json)：S1为601825/600000/601229/601166/600519；独立S2为600309/601919/600660/601012/601838。冻结首次可用策略时点2026-10-28 23:46（北京时间），资金底层交易日不是股票成交日。V2有[自动每日运行及Git原件归档](.github/workflows/national-team-strategy-v2.yml)。
+- **[首次策略原始JSON](records/national_team_strategy/2026-10-28/40719359363-a1-v2.json)**、[两组首次冻结事件](records/national_team_events/2026-10-28/40719359363-a1-v2.json)：S1为601825/600000/601229/601166/600519；独立S2为600309/601919/600660/601012/601838。冻结首次可用策略时点2026-10-28 23:46（北京时间），资金底层交易日不是股票成交日。V2有[自动每日运行及Git原件归档](https://github.com/lican1213/a-share-momentum-runner/blob/cb1e589a80b3ae704edb53bbc9a836ef120d6f97/.github/workflows/national-team-strategy-v2.yml)。
 - **结构限制必须传给后续Agent**：四ETF若仅用同一个CSI300权重代理，资金规模不会影响股票横截面排序，**ETF净申赎仅充当时间触发器**。真实PCF、2026法人主体身份与5/10/20日S1/S2相对直接持有510300的净超额收益还没有证实，真实交易授权依旧OFF。
 
 ## B14 最新事实：真实生产链路通过，旧汇金持仓被新总份额证伪

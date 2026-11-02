@@ -12,6 +12,7 @@ from zoneinfo import ZoneInfo
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from national_team.left_entry_v5 import freeze
 from national_team.left_entry_v4 import digest
+from national_team.ohlc_fallback_v5 import backfill_asof_prices
 from scripts.run_national_team_left_entry_v4 import collect, next_weekday
 
 BJ = ZoneInfo("Asia/Shanghai")
@@ -34,6 +35,7 @@ def main():
     else:
         import akshare as ak
         prices = collect(ak, watch, asof, max_stocks=args.max_stocks)
+        prices = backfill_asof_prices(prices, asof)
     now = datetime.now(BJ)
     result = freeze(v3, watch, prices, now=now.isoformat(),
                     next_session=next_weekday(now.date()),
@@ -42,6 +44,7 @@ def main():
     result["collection_scope"] = {
         "completed_stock_source_count": len(prices.get("stocks", {})),
         "requested_source_count": len(prices.get("universe", [])),
+        "baostock_recovered": len(prices.get("fallback_recovered_codes", [])),
         "github_run_id": os.environ.get("GITHUB_RUN_ID"),
         "github_run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT"),
         "run_commit": os.environ.get("GITHUB_SHA"),

@@ -62,6 +62,8 @@ def test_freeze_shadow_paper_not_broker_order(monkeypatch):
     shadow = [x["stock"] for x in result["paper_policies"]["DEEP_DIP"]["orders"]]
     assert primary == ["600002", "600003"]
     assert shadow == ["600003", "600002"]
+    assert [o["stock"] for o in result["paper_policies"]["R_BOUNCE"]["orders"]] == ["600001"]
+    assert result["extension_experiment_id"] == "EXP-0013"
     assert all(x["fill"] is None and x["paper_position"] == 0 for x in
                result["accounts"]["F1_LEFT"]["orders"])
     assert result["broker_orders"] == []
@@ -159,3 +161,22 @@ def test_consecutive_sessions_in_one_funding_cluster_do_not_double_count(tmp_pat
     feedback = paper_feedback(root)
     assert feedback["paired_10d_events"] == 1
     assert feedback["selected_policy"] == "SHALLOW_DIP"
+
+
+
+def test_independent_right_reference_does_not_change_left_policy(tmp_path):
+    root = tmp_path / "outcomes"
+    def arm(v):
+        return {"F1_LEFT": [{"horizons": {"10": {
+            "status": "PAIRED", "excess_s0": str(v)}}}]}
+    write(root, "right.json", {"results": [{
+        "experiment_id": "EXP-0012", "source_freeze_sha256": "right-event",
+        "signal_session": "2026-11-02", "cluster_anchor": "2026-11-02",
+        "asof": "2026-12-01",
+        "policy_results": {
+            "SHALLOW_DIP": arm(".01"), "DEEP_DIP": arm(".02"),
+            "R_BOUNCE": arm(".03")}}]})
+    fb = paper_feedback(root)
+    assert fb["selected_policy"] == "SHALLOW_DIP"  # only one left mature cluster
+    assert fb["right_side_reference"]["paired_10d_clusters"] == 1
+    assert fb["right_side_reference"]["mean_R_minus_SHALLOW_excess_s0"] == "0.02"

@@ -6,6 +6,8 @@ on:
     branches: [main]
     paths:
       - 'national_team/event_router_v5.py'
+      - 'national_team/ohlc_fallback_v5.py'
+      - 'tests/test_national_team_ohlc_fallback_v5.py'
       - 'national_team/left_entry_v5.py'
       - 'scripts/run_national_team_event_router_v5.py'
       - 'scripts/run_national_team_left_entry_v5.py'

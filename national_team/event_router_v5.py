@@ -100,6 +100,7 @@ def paper_feedback(root):
                 existing.get("signal_session", "")):
             clusters[anchor] = item
     paired = []
+    right_minus_left = []
     for item in clusters.values():
         by_policy = {}
         for policy in POLICIES:
@@ -113,6 +114,13 @@ def paper_feedback(root):
                 by_policy[policy] = sum(excess) / len(excess)
         if len(by_policy) == len(POLICIES):
             paired.append(by_policy)
+            right_entries = item.get("policy_results", {}).get("R_BOUNCE", {}).get("F1_LEFT", [])
+            right_excess = [Decimal(str(h["excess_s0"])) for entry in right_entries
+                            for h in [entry.get("horizons", {}).get("10", {})]
+                            if h.get("status") == "PAIRED" and h.get("excess_s0") is not None]
+            if right_excess:
+                right_minus_left.append(sum(right_excess) / len(right_excess)
+                                        - by_policy["SHALLOW_DIP"])
     count = len(paired)
     means = {policy: (sum(x[policy] for x in paired) / count if count else None)
              for policy in POLICIES}
@@ -125,6 +133,13 @@ def paper_feedback(root):
         "mean_10d_excess_s0": {k: (format(v, "f") if v is not None else None)
                                for k, v in means.items()},
         "selected_policy": best,
+        "right_side_reference": {
+            "paired_10d_clusters": len(right_minus_left),
+            "mean_R_minus_SHALLOW_excess_s0": (
+                format(sum(right_minus_left) / len(right_minus_left), "f")
+                if right_minus_left else None),
+            "not_used_to_gate_left_side_research": True,
+        },
         "policy_rule": "8 distinct event clusters with paired 10d outcomes; DEEP_DIP +0.2pct",
         "not_a_calibrated_profit_probability": True,
     }

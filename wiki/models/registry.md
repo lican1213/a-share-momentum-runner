@@ -5,6 +5,13 @@ status: maintained
 updated: 2026-11-02
 ---
 
+## 2026-11-02 EXP-0013：来源恢复与路径收益扩展
+
+- **改造基线** `cb1e589a80b3ae704edb53bbc9a836ef120d6f97`，具体冻结规则见[EXP-0013](../experiments/EXP-0013-path-learning-and-retirement.md)。新增R_BOUNCE独立右侧影子、3/5/10/20交易日MFE/MAE和Baostock缺源批量恢复；原SHALLOW/DEEP双组及8个独立成熟簇的自动选优不改，旧source SHA/records不改写。
+- 5个退役工作流通过[根MOC](../../MOC.md)旧SHA链接可复现；A2/B与EXP-0011只保留至既有纸面成熟后验，ETF新事件统一由V5路由。新测试结果/真实未来收益须待相同源码SHA的Actions和前瞻不可覆盖记录确认。
+
+
+
 ## 2026-11-02 EXP-0012：自迭代四ETF事件路由＋左侧双排序
 
 - **实施前主分支：** `89f03ee9341458e244b0895ca6247cf7d2ba17cc`。[独立EXP-0012协议](../experiments/EXP-0012-four-etf-autonomous-event-loop.md)登记SHALLOW_DIP/DEEP_DIP并行纸面、同刻S0、每事件唯一、≥8个10日独立成熟配对且深跌组多0.2个百分点净超额时自动切换。使用动态四ETF实源和日期匹配的150股来源，旧EXP-0011不重复自动冻结。
@@ -16,7 +23,7 @@ updated: 2026-11-02
 
 - 新增[EXP-0011前瞻观察引擎](../../national_team/left_entry_outcomes.py)、[自动日线获取](../../scripts/track_national_team_left_entry_v4.py)、[工作日Actions](../../.github/workflows/national-team-left-outcomes-v4.yml)：首次开盘模拟仅在获取对应日期后产生、两个独立账户、同日同成本510300对照、未到期NULL。此代码新增不等于已取得未来真实市场价格；后续审核以不可覆写新run为准。
 
-- 基线16828ce8770084295a0da264c28f8964bcf65d61（V3真实源复盘31/59=52.54%五日上涨），实施前主分支48ab8afc470d068583398770dc74b9718df85412。新 [EXP-0011协议](../experiments/EXP-0011-fifty-percent-low-left-paper-pilot.md)、[独立V4纯选股](../../national_team/left_entry_v4.py)、[OHLC采集](../../scripts/run_national_team_left_entry_v4.py)和[CI](../../.github/workflows/national-team-left-entry-v4.yml)。研究政策将5日历史份额代理≥50%作为**小额纸面候选准入**，不准将52.54%写成F1个股赚钱概率；主覆盖率分母缺失仍为NULL。
+- 基线16828ce8770084295a0da264c28f8964bcf65d61（V3真实源复盘31/59=52.54%五日上涨），实施前主分支48ab8afc470d068583398770dc74b9718df85412。新 [EXP-0011协议](../experiments/EXP-0011-fifty-percent-low-left-paper-pilot.md)、[独立V4纯选股](../../national_team/left_entry_v4.py)、[OHLC采集](../../scripts/run_national_team_left_entry_v4.py)和[CI](https://github.com/lican1213/a-share-momentum-runner/blob/cb1e589a80b3ae704edb53bbc9a836ef120d6f97/.github/workflows/national-team-left-entry-v4.yml)。研究政策将5日历史份额代理≥50%作为**小额纸面候选准入**，不准将52.54%写成F1个股赚钱概率；主覆盖率分母缺失仍为NULL。
 - 首仓最多2只、单只昨收试算≤5000、总≤10000、两个独立F1/F2各30000研究账户；真实后验开盘前所有候选 fill=NULL、持股0、净收益NULL，需前瞻单独验证。旧A2/B冻结文件不可改。运行SHA、record路径及CI需自动化实际完成后在本页追记。
 
 # 模型及执行器版本登记（唯一有效升级台账）

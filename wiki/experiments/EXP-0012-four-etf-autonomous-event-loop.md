@@ -31,3 +31,7 @@ updated: 2026-11-02
 **源码：** [事件路由](../../national_team/event_router_v5.py) · [双组低位选股](../../national_team/left_entry_v5.py) · [纸面追踪](../../scripts/track_national_team_left_entry_v5.py) · [每日调度](../../.github/workflows/national-team-event-router-v5.yml) · [每日反馈](../../.github/workflows/national-team-left-outcomes-v5.yml) · [专项测试](../../tests/test_national_team_event_router_v5.py)。
 
 **证据：** `records/national_team_router/`、`records/national_team_left_entry_v5/`、`records/national_team_left_outcomes_v5/`。状态由真实Actions的源码SHA/运行ID和不可覆盖记录证明。旧EXP-0011、A2/B完全不修改；原市值分母缺失、基金投资者身份不明继续在数据层标注。
+
+## 2026-11-02：兼容扩展
+
+[EXP-0013](EXP-0013-path-learning-and-retirement.md)在同一V5存储/调度链追加R_BOUNCE独立参考、MFE/MAE与日线备用；不改EXP-0012的左侧双组及8独立成熟簇自动策略选择，旧冻结不变。新记录标记extension_experiment_id与源码SHA。

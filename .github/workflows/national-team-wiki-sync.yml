@@ -8,7 +8,7 @@ on:
       - 'scripts/national_team_wiki.py'
       - 'data/national_team_holders/**'
   workflow_run:
-    workflows: ["National-team four ETF actual exchange data collection", "National-team V2 frozen stock strategy from verified four ETF evidence"]
+    workflows: ["National-team four ETF actual exchange data collection"]
     types: [completed]
   workflow_dispatch:
   schedule:

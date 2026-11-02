@@ -6,9 +6,11 @@ on:
     paths:
       - 'national_team/event_router_v5.py'
       - 'national_team/left_entry_v5.py'
+      - 'national_team/ohlc_fallback_v5.py'
       - 'scripts/run_national_team_event_router_v5.py'
       - 'scripts/run_national_team_left_entry_v5.py'
       - 'tests/test_national_team_event_router_v5.py'
+      - 'tests/test_national_team_ohlc_fallback_v5.py'
       - '.github/workflows/national-team-event-router-v5.yml'
   schedule:
     - cron: '5 10 * * 1-5'
@@ -30,9 +32,9 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install public OHLC source and tests
-        run: python -m pip install 'pytest>=8,<10' 'akshare>=1.17,<2'
+        run: python -m pip install 'pytest>=8,<10' 'akshare>=1.17,<2' 'baostock>=0.8,<1'
       - name: Check deterministic routing, rankings and legacy freezing
-        run: python -m pytest -q tests/test_national_team_event_router_v5.py tests/test_national_team_left_entry_v4.py tests/test_national_team_left_entry_outcomes.py
+        run: python -m pytest -q tests/test_national_team_event_router_v5.py tests/test_national_team_ohlc_fallback_v5.py tests/test_national_team_left_entry_v4.py tests/test_national_team_left_entry_outcomes.py
       - name: Observe source event and select proven paper policy
         id: route
         shell: bash
@@ -62,6 +64,7 @@ jobs:
           assert j["candidate_policy"] in ("SHALLOW_DIP","DEEP_DIP")
           assert j["paper_policies"]["SHALLOW_DIP"]
           assert j["paper_policies"]["DEEP_DIP"]
+          assert j["paper_policies"]["R_BOUNCE"]
           assert all(x["fill"] is None for x in j["accounts"]["F1_LEFT"]["orders"])
           print("EXP0012_NEW_LOW_LEFT",j["signal_session"],
                 j["universe"],j["candidate_policy"])

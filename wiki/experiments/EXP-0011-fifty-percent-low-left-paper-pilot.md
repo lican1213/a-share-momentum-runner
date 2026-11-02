@@ -2,7 +2,7 @@
 id: EXP-0011
 type: experiment
 status: active
-updated: 2026-11-01
+updated: 2026-11-02
 ---
 # EXP-0011｜五日历史命中≥50%即可启动小仓位左侧纸面试错（V4）
 
@@ -39,7 +39,7 @@ updated: 2026-11-01
 
 ### 模型阶段边界（清清楚楚）
 
-- P0 **代码/预注册**：[纯选股及试算](../../national_team/left_entry_v4.py)、[行情采集+冻账脚本](../../scripts/run_national_team_left_entry_v4.py)、[对抗测试](../../tests/test_national_team_left_entry_v4.py)、[自动源运行](../../.github/workflows/national-team-left-entry-v4.yml)已经提交，运行是否成功只按同SHA Actions结果认定。
+- P0 **代码/预注册**：[纯选股及试算](../../national_team/left_entry_v4.py)、[行情采集+冻账脚本](../../scripts/run_national_team_left_entry_v4.py)、[对抗测试](../../tests/test_national_team_left_entry_v4.py)、[自动源运行](https://github.com/lican1213/a-share-momentum-runner/blob/cb1e589a80b3ae704edb53bbc9a836ef120d6f97/.github/workflows/national-team-left-entry-v4.yml)已经提交，运行是否成功只按同SHA Actions结果认定。
 - P1 **真实来源冻结**：Actions采集150只中实际可得股票OHLC、全部输入哈希和足够多的完整样本后，追加 `records/national_team_left_entry/YYYY-MM-DD/RUN-aATTEMPT.json`；失败的股票写出缺口，不能假造填补。
 - P2 **前瞻纸面成交**：仍需下一真实交易日开盘/停牌/涨跌停可成交数据；冻结中的 `shares_indicative` 是昨收试算，`paper_position=0`、`fill=null`，不能当成买入成功。F2及S0/N同样等待未来数据。
 - P3 **真实检验**：等5/10/20日结果成熟，按成本后超额跑足与S0、N、M的对照；盈利率不足仍保留失败并调整下一实验版本，不回写本次选择。

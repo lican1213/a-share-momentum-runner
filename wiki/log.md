@@ -5,6 +5,13 @@ status: maintained
 updated: 2026-11-02
 ---
 
+## 2026-11-02：收敛旧执行路线，给V5增加收益路径学习（EXP-0013）
+
+- 单一V5冻结/追踪扩展[EXP-0013](experiments/EXP-0013-path-learning-and-retirement.md)：左侧浅跌/深跌之外新增温和右侧R_BOUNCE影子，未来同源3/5/10/20日MFE/MAE、资金事件S0净超额与Baostock末级个股日线恢复。缺源、不成熟仍NULL，不伪造止盈订单。
+- 退役5个旧任务文件并在根MOC记录可永久访问的旧SHA；直播ETF采集器删除旧S1/S2每日冻结与旧纸面跟踪分支，新数据只供V5路由。仍有短期到期需要的A2/B与EXP-0011后验跟踪不删。
+
+
+
 ## 2026-11-02：落地Super-agent式观察→行动→反馈循环（EXP-0012）
 
 - 无需运行DeepSeek原型：在现有Python/GitHub Actions中增加固定四ETF盘后历史刷新、同日源事件路由、自动独立低位纸面冻结、两组未来OHLC跟踪、8个10日成熟事件后的自适应排序。见[实验合同](experiments/EXP-0012-four-etf-autonomous-event-loop.md)与[事件工作流](../.github/workflows/national-team-event-router-v5.yml)。

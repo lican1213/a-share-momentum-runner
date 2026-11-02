@@ -6,8 +6,6 @@ on:
       - 'national_team/live_etf_sources.py'
       - 'national_team/record_merge.py'
       - 'national_team/live_stock_watch.py'
-      - 'national_team/live_paper_tracker.py'
-      - 'national_team/paper_events.py'
       - 'national_team/pcf_official.py'
       - 'national_team/szse_json.py'
       - 'national_team/sse_direct.py'
@@ -48,28 +46,8 @@ jobs:
           date_beijing=$(TZ=Asia/Shanghai date +%F)
           src="records/national_team_merged/${date_beijing}/${GITHUB_RUN_ID}-a${GITHUB_RUN_ATTEMPT}.json"
           python -m national_team.live_stock_watch --source "$src" --max-stocks 150
-      - name: Freeze first-observed S1 and S2 paper events (no backdated trades)
-        shell: bash
-        run: |
-          set -euo pipefail
-          date_beijing=$(TZ=Asia/Shanghai date +%F)
-          source="records/national_team_watch/${date_beijing}/${GITHUB_RUN_ID}-a${GITHUB_RUN_ATTEMPT}.json"
-          python -m national_team.paper_events --source "$source"
-      - name: Recheck matured frozen paper events with authentic price histories
-        run: python -m national_team.live_paper_tracker --max-events 64
       - name: Collect original official SSE PCF for three Shanghai core funds
         run: python -m national_team.pcf_official
-      - name: Independent red-team integrity audit of source, merged factors, stock ranking, frozen events
-        shell: bash
-        run: |
-          set -euo pipefail
-          date_beijing=$(TZ=Asia/Shanghai date +%F)
-          file="${GITHUB_RUN_ID}-a${GITHUB_RUN_ATTEMPT}.json"
-          python -m national_team.audit_gate \
-            --source "records/national_team_etf/${date_beijing}/$file" \
-            --merged "records/national_team_merged/${date_beijing}/$file" \
-            --watch "records/national_team_watch/${date_beijing}/$file" \
-            --frozen "records/national_team_events/${date_beijing}/$file"
       - name: Rebuild Agent LLM Wiki MOC from actual national-team run evidence
         if: always()
         shell: bash
@@ -91,7 +69,7 @@ jobs:
           # to validate them. Restore them before source-only rebase: Git
           # otherwise rejects pull --rebase for unstaged derived file changes.
           git restore -- wiki/indices/ wiki/compiled/
-          git add -- records/national_team_etf/ records/national_team_merged/ records/national_team_watch/ records/national_team_events/ records/national_team_paper/ records/national_team_pcf/ records/national_team_audits/
+          git add -- records/national_team_etf/ records/national_team_merged/ records/national_team_watch/ records/national_team_pcf/
           if git diff --staged --quiet; then
             echo 'NO_ETF_EVIDENCE_GENERATED'; exit 0
           fi
@@ -114,9 +92,6 @@ jobs:
             records/national_team_etf/
             records/national_team_merged/
             records/national_team_watch/
-            records/national_team_events/
-            records/national_team_paper/
             records/national_team_pcf/
-            records/national_team_audits/
           if-no-files-found: warn
           retention-days: 90

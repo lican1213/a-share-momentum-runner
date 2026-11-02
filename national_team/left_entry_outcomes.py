@@ -106,7 +106,18 @@ def _scenario(symbol, entry_day, series, index, budget_at_freeze, asof):
         if s0.get("exit_session") != exit_day:
             s0 = {"status": "BENCHMARK_EXIT_DATE_MISMATCH", "net_return": None}
         ret_s0 = s0["net_return"]
+        path = series[j:j + h + 1]
+        highest = max(path, key=lambda row: row["high"])
+        lowest = min(path, key=lambda row: row["low"])
+        excursions = {
+            "mfe_from_entry_open": format(highest["high"] / opening - 1, "f"),
+            "mae_from_entry_open": format(lowest["low"] / opening - 1, "f"),
+            "mfe_session": highest["date"],
+            "mae_session": lowest["date"],
+            "high_low_are_daily_bounds_not_fills": True,
+        }
         result["horizons"][str(h)] = {
+            "path_excursions": excursions,
             "status": "PAIRED" if ret_s0 is not None else "S0_MISSING",
             "exit_session": exit_day,
             "after_cost_return": format(pnl, "f"),
