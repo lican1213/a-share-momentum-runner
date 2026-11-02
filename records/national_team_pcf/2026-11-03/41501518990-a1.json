@@ -1,0 +1,37 @@
+{
+  "status": "SSE_PCF_FETCHED_BUT_NOT_VERIFIED",
+  "run_id": "41501518990",
+  "attempt": "1",
+  "captured_at": "2026-11-03T02:36:21.958995+08:00",
+  "exchange_url": "https://www.sse.com.cn/disclosure/fund/etflist/",
+  "sources": {
+    "510300": {
+      "status": "NO_DATED_OFFICIAL_PCF_IN_HTTP_RESPONSE",
+      "code": "510300",
+      "first_observed_at": "2026-11-03T02:36:23.140984+08:00",
+      "http_response_sha256": "27ae8d500597a05bf6a411e36ce919dc2fe7105a2f62a68b496d912cd3e19c99"
+    },
+    "510310": {
+      "status": "NO_DATED_OFFICIAL_PCF_IN_HTTP_RESPONSE",
+      "code": "510310",
+      "first_observed_at": "2026-11-03T02:36:24.491634+08:00",
+      "http_response_sha256": "27ae8d500597a05bf6a411e36ce919dc2fe7105a2f62a68b496d912cd3e19c99"
+    },
+    "510330": {
+      "status": "NO_DATED_OFFICIAL_PCF_IN_HTTP_RESPONSE",
+      "code": "510330",
+      "first_observed_at": "2026-11-03T02:36:25.248511+08:00",
+      "http_response_sha256": "27ae8d500597a05bf6a411e36ce919dc2fe7105a2f62a68b496d912cd3e19c99"
+    },
+    "510330_ISSUER": {
+      "status": "NO_DATED_OFFICIAL_PCF_IN_HTTP_RESPONSE",
+      "code": "510330",
+      "first_observed_at": "2026-11-03T02:36:26.385850+08:00",
+      "issuer_original": true,
+      "http_response_sha256": "c6171ce4e8d0432d132a2992b74548855df8f8ab093d53310fb1c048c518cc8d"
+    }
+  },
+  "errors": [],
+  "source_kind": "ORIGINAL_EXCHANGE_HTTP_PCF_NOT_INDEX_WEIGHTS",
+  "usable_pcf_count": 0
+}
