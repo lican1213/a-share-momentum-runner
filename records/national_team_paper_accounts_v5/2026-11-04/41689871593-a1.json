@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "version": "NT_V5_PAPER_ACCOUNT_EXP0014",
+  "asof": "2026-11-04",
+  "capture_time": "2026-11-04T02:02:40.608483+08:00",
+  "last_market_session": "2026-11-03",
+  "accounts": {
+    "SHALLOW_DIP": {
+      "cash_cny": "30000.00",
+      "positions": [],
+      "closed_trades": [],
+      "decisions": [],
+      "realized_pnl_cny": "0.00",
+      "s0_realized_pnl_cny": "0.00",
+      "summary": {
+        "cash_cny": "30000.00",
+        "equity_after_estimated_exit_cost_cny": "30000.00",
+        "net_pnl_cny": "0.00",
+        "realized_pnl_cny": "0.00",
+        "open_positions": 0,
+        "closed_trades": 0,
+        "win_rate": null,
+        "paired_s0_trades": 0,
+        "realized_excess_s0_cny": null,
+        "mark_status": "CASH_ONLY",
+        "market_session": "2026-11-03"
+      }
+    },
+    "DEEP_DIP": {
+      "cash_cny": "30000.00",
+      "positions": [],
+      "closed_trades": [],
+      "decisions": [],
+      "realized_pnl_cny": "0.00",
+      "s0_realized_pnl_cny": "0.00",
+      "summary": {
+        "cash_cny": "30000.00",
+        "equity_after_estimated_exit_cost_cny": "30000.00",
+        "net_pnl_cny": "0.00",
+        "realized_pnl_cny": "0.00",
+        "open_positions": 0,
+        "closed_trades": 0,
+        "win_rate": null,
+        "paired_s0_trades": 0,
+        "realized_excess_s0_cny": null,
+        "mark_status": "CASH_ONLY",
+        "market_session": "2026-11-03"
+      }
+    },
+    "R_BOUNCE": {
+      "cash_cny": "30000.00",
+      "positions": [],
+      "closed_trades": [],
+      "decisions": [],
+      "realized_pnl_cny": "0.00",
+      "s0_realized_pnl_cny": "0.00",
+      "summary": {
+        "cash_cny": "30000.00",
+        "equity_after_estimated_exit_cost_cny": "30000.00",
+        "net_pnl_cny": "0.00",
+        "realized_pnl_cny": "0.00",
+        "open_positions": 0,
+        "closed_trades": 0,
+        "win_rate": null,
+        "paired_s0_trades": 0,
+        "realized_excess_s0_cny": null,
+        "mark_status": "CASH_ONLY",
+        "market_session": "2026-11-03"
+      }
+    }
+  },
+  "source_event_count": 2,
+  "source_errors": [],
+  "execution": "OHLC_PAPER_SCENARIO_NOT_BROKER_TRADE",
+  "trade_authorized": false,
+  "broker_orders": [],
+  "github_run_id": "41689871593",
+  "github_run_attempt": "1",
+  "github_source_commit": "69266dac4273adccb4833570e2a8b64ed56075ba",
+  "snapshot_sha256": "e324e041dd7478ed232ab46a07c28d2eeb4369b4547627c11687a810bcecfcc2"
+}
