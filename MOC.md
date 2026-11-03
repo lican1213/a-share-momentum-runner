@@ -1,3 +1,9 @@
+## 2026-11-03：EXP-0016 修复V5事件链调度时效（不倒签模拟交易）
+
+- [真实V3 #41511425563](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41511425563)预定北京11/02 17:25，实在11/03 03:35启动；[V5 #41515451702](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41515451702)预定18:05、实际04:02；[模拟盘 #41519712835](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41519712835)预定18:45、实际04:29。三条cron均延迟约10小时，这是实际排程时效问题，不是交易收益。
+- [EXP-0016](wiki/experiments/EXP-0016-scheduling-timeliness.md)增加V3成功→V5事件路由→V5三账户盘后跟踪的`workflow_run`完成触发，原定时保留兜底；真实时间差超过60分钟打印警告且不挡研究机会。**GitHub上游cron本身延迟仍可能存在，须以下个实跑验证。**
+- **不修改**11/03已冻结的[旧意图](records/national_team_left_entry_v5/2026-11-03/41515451702-a1.json)，原`intended_session=11/04`保留；不把11/03开盘价补记为买入，三独立账户直到真实首次观察为止均应按原记录显示现金。
+
 ## 2026-11-03 08:30：V5首次新资金事件冻结、三账户仍空仓；四ETF源一致性与调度延迟审计
 
 - **首次新事件已归档，不是已成交。** 11/02资金交易日的V5路由 [#41515451702](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41515451702) 于北京时间11/03 **04:02** 执行成功，`NEW_FUNDING_EVENT`、事件ID `ETF4_DOWNFLOW_2026-11-02`、簇锚点10/26；[冻结记录](records/national_team_left_entry_v5/2026-11-03/41515451702-a1.json) 于04:05生成，150/150只真实日线、49只低位合格。SHALLOW_DIP冻结002648、002714；DEEP_DIP冻结000100、601211；R_BOUNCE冻结002142、600926。各组订单仅为下一开盘情景意图，冻结JSON写明**2026-11-04**拟观察开盘，不能倒填11/03成交。
