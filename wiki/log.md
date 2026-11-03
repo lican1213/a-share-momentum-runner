@@ -10,6 +10,8 @@ updated: 2026-11-03
 - 真实时间线：V3 11/02 UTC19:35:57（北京11/03 03:35），相对原UTC09:25晚610分钟；V5 UTC20:02:08，相对UTC10:05晚597分钟；三账户追踪UTC20:29:49，相对UTC10:45晚584分钟，见各[真实run和修复合同](experiments/EXP-0016-scheduling-timeliness.md)。
 - 新增`workflow_run`上游成功完成级联；保留全部原cron和手动启动，同时用标准库小脚本标记延迟及警告。未修改任何旧records、纸面买点、国家队ETF资金参数、政策层、现金/止盈规则；旧11/03 04:05冻结仍打算11/04开盘。根Cron若再次晚到，须如实报告尚待外部调度接入。
 
+- **合并后实跑：** **合并后真实验收（2026-11-03，北京时间09:21—09:23）：** [主分支合并SHA b926992](https://github.com/lican1213/a-share-momentum-runner/commit/b926992fe124918670db3757a75470265c6c2b2c)；[PR #8 全库CI #41558977738](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41558977738)及[main全库CI #41559156956](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41559156956)成功，**282 passed + Wiki链接校验PASS**。[V3 #41559156926](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41559156926) 于UTC01:21:49完成后，[V5 #41559251512](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41559251512) 于01:21:52被`workflow_run`实际触发（**3秒**）；该V5在UTC01:22:23完成后，[模拟盘 #41559316107](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41559316107)于01:22:26触发（**3秒**）且两者均SUCCESS。新路由[原件](../records/national_team_router/2026-11-03/41559251512-a1.json)为`ALREADY_FROZEN_FOR_SESSION`，没有重冻；[新模拟账户原件](../records/national_team_paper_accounts_v5/2026-11-03/41559316107-a1.json)仍为各30,000元现金、0持仓、0平仓、0券商单。**完成触发链已实际证实；GitHub下个正常工作日晚间定时是否准时尚未证实。**
+
 ## 2026-11-02：EXP-0015 政策增强（与原V5资金路由合并）
 
 - 用户提出缺少政策作用，并明确授权开发；核对原V5只看四ETF逆势申购和股票低位，没有政策公告首次可得时间、政策工具事件。对照[AIHOT](https://github.com/KKKKhazix/AIHOT)的RSS/JSON多源、信源分级与同事合并，及[ashares_data_collect](https://github.com/YangSal/ashares_data_collect)证监会/国务院官方API实现，选择Python标准库版最小政策Overlay。

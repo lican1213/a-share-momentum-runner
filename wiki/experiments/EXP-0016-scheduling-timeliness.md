@@ -27,3 +27,7 @@ updated: 2026-11-03
 - 任何旧交易历史倒签、基于过往开盘价回填模拟买点、新增券商权限均为直接失败。
 
 关联：[根MOC](../../MOC.md) · [三账户纸面规则](EXP-0014-v5-paper-account.md) · [事件路由](../../.github/workflows/national-team-event-router-v5.yml) · [收益工作流](../../.github/workflows/national-team-left-outcomes-v5.yml)。
+
+## 2026-11-03 合并后实际链路验收
+
+**合并后真实验收（2026-11-03，北京时间09:21—09:23）：** [主分支合并SHA b926992](https://github.com/lican1213/a-share-momentum-runner/commit/b926992fe124918670db3757a75470265c6c2b2c)；[PR #8 全库CI #41558977738](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41558977738)及[main全库CI #41559156956](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41559156956)成功，**282 passed + Wiki链接校验PASS**。[V3 #41559156926](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41559156926) 于UTC01:21:49完成后，[V5 #41559251512](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41559251512) 于01:21:52被`workflow_run`实际触发（**3秒**）；该V5在UTC01:22:23完成后，[模拟盘 #41559316107](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41559316107)于01:22:26触发（**3秒**）且两者均SUCCESS。新路由[原件](../../records/national_team_router/2026-11-03/41559251512-a1.json)为`ALREADY_FROZEN_FOR_SESSION`，没有重冻；[新模拟账户原件](../../records/national_team_paper_accounts_v5/2026-11-03/41559316107-a1.json)仍为各30,000元现金、0持仓、0平仓、0券商单。**完成触发链已实际证实；GitHub下个正常工作日晚间定时是否准时尚未证实。**
