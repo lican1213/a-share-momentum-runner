@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "version": "NT_EVENT_ROUTER_V5",
+  "experiment_id": "EXP-0012",
+  "observed_at": "2026-11-04T01:37:44.140991+08:00",
+  "event_id": "ETF4_DOWNFLOW_2026-11-03",
+  "signal_session": "2026-11-03",
+  "signal_age_calendar_days": 1,
+  "status": "ALREADY_FROZEN_FOR_SESSION",
+  "four_etfs": [
+    "510300",
+    "510310",
+    "510330",
+    "159919"
+  ],
+  "v3_path": "records/national_team_v3/2026-11-03/41681405157-a1.json",
+  "watch_path": null,
+  "selected_policy": "SHALLOW_DIP",
+  "feedback": {
+    "paired_10d_events": 0,
+    "mean_10d_excess_s0": {
+      "SHALLOW_DIP": null,
+      "DEEP_DIP": null
+    },
+    "selected_policy": "SHALLOW_DIP",
+    "right_side_reference": {
+      "paired_10d_clusters": 0,
+      "mean_R_minus_SHALLOW_excess_s0": null,
+      "not_used_to_gate_left_side_research": true
+    },
+    "policy_rule": "8 distinct event clusters with paired 10d outcomes; DEEP_DIP +0.2pct",
+    "not_a_calibrated_profit_probability": true
+  },
+  "funding": {
+    "net_creation_1d_cny_proxy": 33651846359.99997,
+    "net_creation_5d_cny_proxy": 68381612369.99997,
+    "ordinary_float_coverage_ratio": null,
+    "ratio_status": "DENOMINATOR_MISSING",
+    "index_ret5": -0.01004556061784645,
+    "share_proxy_not_state_account_trade": true
+  },
+  "policy_overlay": {
+    "experiment_id": "EXP-0015",
+    "status": "POLICY_ETF_RESONANCE",
+    "source_health": "OK",
+    "snapshot_sha256": "d73310e54dc8b7fff880393ceef434bd6d0080e3b9075627cd33eb7065564f41",
+    "support_count": 1,
+    "matched_funding_event_ids": [
+      "POL_62d6b9736d497672"
+    ],
+    "recent_event_ids": [
+      "POL_62d6b9736d497672"
+    ],
+    "top_events": [
+      {
+        "event_id": "POL_62d6b9736d497672",
+        "title": "证券、基金、保险公司互换便利...",
+        "policy_type": "CAPITAL_MARKET_SUPPORT",
+        "direction": "SUPPORT",
+        "strength": 2,
+        "published_date": "2026-11-03",
+        "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2026110313380716818/index.html"
+      }
+    ],
+    "changes_admission": false,
+    "trade_authorized": false,
+    "not_a_policy_implied_etf_purchase": true
+  },
+  "dispatcher": "NO_NEW_PAPER_FREEZE",
+  "trade_authorized": false,
+  "broker_orders": [],
+  "github_run_id": "41685945490",
+  "github_source_commit": "0b441dce05be1ec934e6675f126ef493c57b04ab",
+  "snapshot_sha256": "da61b5f2582f4671a2b442152f471f71a6f8698bafb15a2b6d47f296db457adf"
+}
