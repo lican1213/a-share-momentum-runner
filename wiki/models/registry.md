@@ -2,8 +2,12 @@
 id: MODEL-REGISTRY
 type: model-registry
 status: maintained
-updated: 2026-11-02
+updated: 2026-11-03
 ---
+
+## 2026-11-03 EXP-0016：时效修复（不变更任何交易策略）
+
+- 基线主SHA `f684891dde19672e2cff27b18a76ce0efb4a696c`；只改V3→V5路由→V5三模拟账户的工作流依赖和实际启动延迟日志。[协议](../experiments/EXP-0016-scheduling-timeliness.md)，核心四ETF因子、EXP-0012选股、EXP-0014真实现金三臂模拟、EXP-0015政策解释层和历史`records/`全不变。目标是减少上游完成到下一步的等待，不将GitHub schedule 10小时错峰包装成准时。生产触发/新实跑后需填Actions run ID和时差。
 
 ## 2026-11-02 EXP-0015：官方政策事件证据层（非第4个纸面账户）
 
