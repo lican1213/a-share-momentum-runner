@@ -1,0 +1,189 @@
+{
+  "schema": 1,
+  "version": "NT_LEFT_ENTRY_FOLLOWUP_EXP0011",
+  "source_freeze_sha256": "a07684cea255393273c1a3b4065bb386ba21bb2aa6e755cbab9114d4028db9cf",
+  "first_observed_at": "2026-11-04T01:17:56.525653+08:00",
+  "asof": "2026-11-04",
+  "source_new_ohlc_sha256": "e91ac26e05c30442ac07077b4970ae0d060a6e749858ea05165e1bd52e63f68a",
+  "source_new_ohlc": {
+    "first_observed_at": "2026-11-04T01:17:56.525636+08:00",
+    "capture_time": "2026-11-04T01:17:56.525636+08:00",
+    "bars_by_symbol": {
+      "510300": [
+        {
+          "date": "2026-11-02",
+          "open": "4.084",
+          "high": "4.12",
+          "low": "4.065",
+          "close": "4.085"
+        },
+        {
+          "date": "2026-11-03",
+          "open": "4.076",
+          "high": "4.106",
+          "low": "4.041",
+          "close": "4.092"
+        }
+      ],
+      "600016": [
+        {
+          "date": "2026-11-02",
+          "open": "3.48",
+          "high": "3.5",
+          "low": "3.42",
+          "close": "3.42"
+        },
+        {
+          "date": "2026-11-03",
+          "open": "3.42",
+          "high": "3.45",
+          "low": "3.36",
+          "close": "3.45"
+        }
+      ],
+      "600019": [
+        {
+          "date": "2026-11-02",
+          "open": "6.03",
+          "high": "6.14",
+          "low": "6.02",
+          "close": "6.13"
+        },
+        {
+          "date": "2026-11-03",
+          "open": "6.14",
+          "high": "6.25",
+          "low": "6.11",
+          "close": "6.24"
+        }
+      ]
+    },
+    "source_sha256": {
+      "510300": "c30ee6f700af664c09b93bb82e85a84a20d27716ebc9f23ff92ddd1a6b78ce70",
+      "600016": "480e0271a938df76f895ed0e9f3236ee050bbc72bad225cdfd268a110db98f68",
+      "600019": "83706c25fcc1e6524e8477f4f630818967f461b832e26d0a80ed019d1a335e14"
+    },
+    "source_url": {
+      "510300": "https://quote.eastmoney.com/sh510300.html",
+      "600016": "https://finance.sina.com.cn/realstock/company/",
+      "600019": "https://finance.sina.com.cn/realstock/company/"
+    },
+    "errors": {}
+  },
+  "first_actual_benchmark_session": "2026-11-02",
+  "F1_LEFT": [
+    {
+      "stock": "600016",
+      "status": "OHLC_OPEN_PAPER_SCENARIO",
+      "entry_session": "2026-11-02",
+      "entry_open_raw": "3.48",
+      "shares_scenario": 1300,
+      "gross_cny": "4524.00",
+      "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+      "horizons": {
+        "3": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "5": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "10": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "20": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        }
+      }
+    },
+    {
+      "stock": "600019",
+      "status": "OHLC_OPEN_PAPER_SCENARIO",
+      "entry_session": "2026-11-02",
+      "entry_open_raw": "6.03",
+      "shares_scenario": 700,
+      "gross_cny": "4221.00",
+      "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+      "horizons": {
+        "3": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "5": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "10": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "20": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        }
+      }
+    }
+  ],
+  "F2_WEAK": [
+    {
+      "stock": "600016",
+      "status": "WAIT_CONFIRMATION",
+      "confirmation_day": null,
+      "horizons": {}
+    },
+    {
+      "stock": "600019",
+      "status": "OHLC_OPEN_PAPER_SCENARIO",
+      "entry_session": "2026-11-03",
+      "entry_open_raw": "6.14",
+      "shares_scenario": 700,
+      "gross_cny": "4298.00",
+      "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+      "horizons": {
+        "3": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "5": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "10": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "20": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        }
+      },
+      "confirmation_day": "2026-11-02"
+    }
+  ],
+  "S0": "PER_LEG_SAME_ENTRY_TIME_AND_CASH_PAIRED_WHEN_MATURE",
+  "N_NON_FLOW": "NOT_YET_MATURED_MATCHED_CONTROL",
+  "errors": {},
+  "trade_authorized": false,
+  "broker_orders": [],
+  "execution_assertion": "OHLC_OPEN_SCENARIO_NOT_AN_EXECUTED_TRADE",
+  "snapshot_sha256": "b61ab39238ef73eb392c6bc8d60c389ddefb9bf32da2fff4fdcf91ab78661f1e",
+  "freeze_path": "records/national_team_left_entry/2026-11-01/41283487731-a1.json",
+  "github_run_id": "41682799499",
+  "github_run_attempt": "1",
+  "github_source_commit": "892936947d9af5fe94eda5626d74e24757b60d2f"
+}
