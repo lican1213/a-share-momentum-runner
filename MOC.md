@@ -1,3 +1,7 @@
+## 2026-11-03 09:23：EXP-0016 真实完成触发验收
+
+**合并后真实验收（2026-11-03，北京时间09:21—09:23）：** [主分支合并SHA b926992](https://github.com/lican1213/a-share-momentum-runner/commit/b926992fe124918670db3757a75470265c6c2b2c)；[PR #8 全库CI #41558977738](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41558977738)及[main全库CI #41559156956](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41559156956)成功，**282 passed + Wiki链接校验PASS**。[V3 #41559156926](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41559156926) 于UTC01:21:49完成后，[V5 #41559251512](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41559251512) 于01:21:52被`workflow_run`实际触发（**3秒**）；该V5在UTC01:22:23完成后，[模拟盘 #41559316107](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41559316107)于01:22:26触发（**3秒**）且两者均SUCCESS。新路由[原件](records/national_team_router/2026-11-03/41559251512-a1.json)为`ALREADY_FROZEN_FOR_SESSION`，没有重冻；[新模拟账户原件](records/national_team_paper_accounts_v5/2026-11-03/41559316107-a1.json)仍为各30,000元现金、0持仓、0平仓、0券商单。**完成触发链已实际证实；GitHub下个正常工作日晚间定时是否准时尚未证实。**
+
 ## 2026-11-03：EXP-0016 修复V5事件链调度时效（不倒签模拟交易）
 
 - [真实V3 #41511425563](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41511425563)预定北京11/02 17:25，实在11/03 03:35启动；[V5 #41515451702](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41515451702)预定18:05、实际04:02；[模拟盘 #41519712835](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41519712835)预定18:45、实际04:29。三条cron均延迟约10小时，这是实际排程时效问题，不是交易收益。
