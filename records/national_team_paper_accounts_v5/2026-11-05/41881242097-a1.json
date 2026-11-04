@@ -1,0 +1,198 @@
+{
+  "schema": 1,
+  "version": "NT_V5_PAPER_ACCOUNT_EXP0014",
+  "asof": "2026-11-05",
+  "capture_time": "2026-11-05T01:53:02.666398+08:00",
+  "last_market_session": "2026-11-04",
+  "accounts": {
+    "SHALLOW_DIP": {
+      "cash_cny": "23160.59",
+      "positions": [
+        {
+          "id": "2026-11-02:SHALLOW_DIP:002648",
+          "stock": "002648",
+          "freeze_sha256": "7c57ff7f74bc3232fabeea01a06dc66723aed510793b903d1f15de51c8616ca2",
+          "entry_session": "2026-11-04",
+          "entry_open_raw": "25.26",
+          "shares": 100,
+          "buy_total_cny": "2532.26",
+          "held_sessions": 0,
+          "last_mark_close": "25.41",
+          "last_mark_session": "2026-11-04",
+          "s0_shares": 600,
+          "s0_buy_total_cny": "2457.83"
+        },
+        {
+          "id": "2026-11-02:SHALLOW_DIP:002714",
+          "stock": "002714",
+          "freeze_sha256": "7c57ff7f74bc3232fabeea01a06dc66723aed510793b903d1f15de51c8616ca2",
+          "entry_session": "2026-11-04",
+          "entry_open_raw": "43.0",
+          "shares": 100,
+          "buy_total_cny": "4307.15",
+          "held_sessions": 0,
+          "last_mark_close": "43.13",
+          "last_mark_session": "2026-11-04",
+          "s0_shares": 1000,
+          "s0_buy_total_cny": "4093.04"
+        }
+      ],
+      "closed_trades": [],
+      "decisions": [
+        {
+          "id": "2026-11-02:SHALLOW_DIP:002648",
+          "session": "2026-11-04",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 100,
+          "cash_cost_cny": "2532.26"
+        },
+        {
+          "id": "2026-11-02:SHALLOW_DIP:002714",
+          "session": "2026-11-04",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 100,
+          "cash_cost_cny": "4307.15"
+        }
+      ],
+      "realized_pnl_cny": "0.00",
+      "s0_realized_pnl_cny": "0.00",
+      "summary": {
+        "cash_cny": "23160.59",
+        "equity_after_estimated_exit_cost_cny": "29997.74",
+        "net_pnl_cny": "-2.26",
+        "realized_pnl_cny": "0.00",
+        "open_positions": 2,
+        "closed_trades": 0,
+        "win_rate": null,
+        "paired_s0_trades": 0,
+        "realized_excess_s0_cny": null,
+        "mark_status": "CURRENT_CLOSE_PROXY",
+        "market_session": "2026-11-04"
+      }
+    },
+    "DEEP_DIP": {
+      "cash_cny": "26643.32",
+      "positions": [
+        {
+          "id": "2026-11-02:DEEP_DIP:601211",
+          "stock": "601211",
+          "freeze_sha256": "7c57ff7f74bc3232fabeea01a06dc66723aed510793b903d1f15de51c8616ca2",
+          "entry_session": "2026-11-04",
+          "entry_open_raw": "16.75",
+          "shares": 200,
+          "buy_total_cny": "3356.68",
+          "held_sessions": 0,
+          "last_mark_close": "16.74",
+          "last_mark_session": "2026-11-04",
+          "s0_shares": 800,
+          "s0_buy_total_cny": "3275.43"
+        }
+      ],
+      "closed_trades": [],
+      "decisions": [
+        {
+          "id": "2026-11-02:DEEP_DIP:000100",
+          "session": "2026-11-04",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "LOT_CASH_OR_RISK_BUDGET"
+        },
+        {
+          "id": "2026-11-02:DEEP_DIP:601211",
+          "session": "2026-11-04",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 200,
+          "cash_cost_cny": "3356.68"
+        }
+      ],
+      "realized_pnl_cny": "0.00",
+      "s0_realized_pnl_cny": "0.00",
+      "summary": {
+        "cash_cny": "26643.32",
+        "equity_after_estimated_exit_cost_cny": "29982.97",
+        "net_pnl_cny": "-17.03",
+        "realized_pnl_cny": "0.00",
+        "open_positions": 1,
+        "closed_trades": 0,
+        "win_rate": null,
+        "paired_s0_trades": 0,
+        "realized_excess_s0_cny": null,
+        "mark_status": "CURRENT_CLOSE_PROXY",
+        "market_session": "2026-11-04"
+      }
+    },
+    "R_BOUNCE": {
+      "cash_cny": "23238.63",
+      "positions": [
+        {
+          "id": "2026-11-02:R_BOUNCE:002142",
+          "stock": "002142",
+          "freeze_sha256": "7c57ff7f74bc3232fabeea01a06dc66723aed510793b903d1f15de51c8616ca2",
+          "entry_session": "2026-11-04",
+          "entry_open_raw": "34.0",
+          "shares": 100,
+          "buy_total_cny": "3406.70",
+          "held_sessions": 0,
+          "last_mark_close": "33.88",
+          "last_mark_session": "2026-11-04",
+          "s0_shares": 800,
+          "s0_buy_total_cny": "3275.43"
+        },
+        {
+          "id": "2026-11-02:R_BOUNCE:600926",
+          "stock": "600926",
+          "freeze_sha256": "7c57ff7f74bc3232fabeea01a06dc66723aed510793b903d1f15de51c8616ca2",
+          "entry_session": "2026-11-04",
+          "entry_open_raw": "16.74",
+          "shares": 200,
+          "buy_total_cny": "3354.67",
+          "held_sessions": 0,
+          "last_mark_close": "16.85",
+          "last_mark_session": "2026-11-04",
+          "s0_shares": 800,
+          "s0_buy_total_cny": "3275.43"
+        }
+      ],
+      "closed_trades": [],
+      "decisions": [
+        {
+          "id": "2026-11-02:R_BOUNCE:002142",
+          "session": "2026-11-04",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 100,
+          "cash_cost_cny": "3406.70"
+        },
+        {
+          "id": "2026-11-02:R_BOUNCE:600926",
+          "session": "2026-11-04",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 200,
+          "cash_cost_cny": "3354.67"
+        }
+      ],
+      "realized_pnl_cny": "0.00",
+      "s0_realized_pnl_cny": "0.00",
+      "summary": {
+        "cash_cny": "23238.63",
+        "equity_after_estimated_exit_cost_cny": "29979.87",
+        "net_pnl_cny": "-20.13",
+        "realized_pnl_cny": "0.00",
+        "open_positions": 2,
+        "closed_trades": 0,
+        "win_rate": null,
+        "paired_s0_trades": 0,
+        "realized_excess_s0_cny": null,
+        "mark_status": "CURRENT_CLOSE_PROXY",
+        "market_session": "2026-11-04"
+      }
+    }
+  },
+  "source_event_count": 3,
+  "source_errors": [],
+  "execution": "OHLC_PAPER_SCENARIO_NOT_BROKER_TRADE",
+  "trade_authorized": false,
+  "broker_orders": [],
+  "github_run_id": "41881242097",
+  "github_run_attempt": "1",
+  "github_source_commit": "7b49426c0837df7f00dc96a935519e5fd3d8341f",
+  "snapshot_sha256": "2fd1ba32d001823422d2005cf2423244c7abdbd80d91b4e39d61ca09fe7d2b72"
+}
