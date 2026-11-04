@@ -1,0 +1,111 @@
+{
+  "schema": 1,
+  "version": "NT_LEFT_ENTRY_FOLLOWUP_EXP0011",
+  "source_freeze_sha256": "a07684cea255393273c1a3b4065bb386ba21bb2aa6e755cbab9114d4028db9cf",
+  "first_observed_at": "2026-11-05T01:29:03.167506+08:00",
+  "asof": "2026-11-05",
+  "source_new_ohlc_sha256": "235c8cab990844eff2ed2a33928a5f217bf51f2e124cbdc6ebc08fd26e0b342a",
+  "source_new_ohlc": {
+    "first_observed_at": "2026-11-05T01:29:03.167484+08:00",
+    "capture_time": "2026-11-05T01:29:03.167484+08:00",
+    "bars_by_symbol": {
+      "600016": [
+        {
+          "date": "2026-11-02",
+          "open": "3.48",
+          "high": "3.5",
+          "low": "3.42",
+          "close": "3.42"
+        },
+        {
+          "date": "2026-11-03",
+          "open": "3.42",
+          "high": "3.45",
+          "low": "3.36",
+          "close": "3.45"
+        },
+        {
+          "date": "2026-11-04",
+          "open": "3.43",
+          "high": "3.47",
+          "low": "3.42",
+          "close": "3.45"
+        }
+      ],
+      "600019": [
+        {
+          "date": "2026-11-02",
+          "open": "6.03",
+          "high": "6.14",
+          "low": "6.02",
+          "close": "6.13"
+        },
+        {
+          "date": "2026-11-03",
+          "open": "6.14",
+          "high": "6.25",
+          "low": "6.11",
+          "close": "6.24"
+        },
+        {
+          "date": "2026-11-04",
+          "open": "6.22",
+          "high": "6.3",
+          "low": "6.14",
+          "close": "6.18"
+        }
+      ]
+    },
+    "source_sha256": {
+      "600016": "36e48033c90f35e75e9972a3140ab6170eeb8fc8b5cff4561791ded0aaeb1aee",
+      "600019": "f0ca75396df1262ed71e7ba5674b5bb0cf8a93b244c28827a1d8b62bfd6307eb"
+    },
+    "source_url": {
+      "600016": "https://finance.sina.com.cn/realstock/company/",
+      "600019": "https://finance.sina.com.cn/realstock/company/"
+    },
+    "errors": {
+      "510300": "Push2RateLimitError:东方财富 push2 行情服务器断开了连接，通常是短时间内请求过多，当前 IP 被临时限流。首次限流一般约 5 分钟后恢复，反复触发后可能需要 40 分钟以上；等待期间不要重复调用东方财富的行情接口，否则会延长限流。"
+    }
+  },
+  "first_actual_benchmark_session": null,
+  "F1_LEFT": [
+    {
+      "stock": "600016",
+      "status": "NEXT_ACTUAL_SESSION_PENDING",
+      "horizons": {}
+    },
+    {
+      "stock": "600019",
+      "status": "NEXT_ACTUAL_SESSION_PENDING",
+      "horizons": {}
+    }
+  ],
+  "F2_WEAK": [
+    {
+      "stock": "600016",
+      "status": "WAIT_NEXT_OPEN_AFTER_CONFIRMATION",
+      "confirmation_day": "2026-11-04",
+      "horizons": {}
+    },
+    {
+      "stock": "600019",
+      "status": "WAIT_NEXT_OPEN_AFTER_CONFIRMATION",
+      "confirmation_day": "2026-11-02",
+      "horizons": {}
+    }
+  ],
+  "S0": "PER_LEG_SAME_ENTRY_TIME_AND_CASH_PAIRED_WHEN_MATURE",
+  "N_NON_FLOW": "NOT_YET_MATURED_MATCHED_CONTROL",
+  "errors": {
+    "510300": "Push2RateLimitError:东方财富 push2 行情服务器断开了连接，通常是短时间内请求过多，当前 IP 被临时限流。首次限流一般约 5 分钟后恢复，反复触发后可能需要 40 分钟以上；等待期间不要重复调用东方财富的行情接口，否则会延长限流。"
+  },
+  "trade_authorized": false,
+  "broker_orders": [],
+  "execution_assertion": "OHLC_OPEN_SCENARIO_NOT_AN_EXECUTED_TRADE",
+  "snapshot_sha256": "047c6ce1c159e06642a84b2d97c87878d33c30abe29736f8e617e802433375f8",
+  "freeze_path": "records/national_team_left_entry/2026-11-01/41283487731-a1.json",
+  "github_run_id": "41877860138",
+  "github_run_attempt": "1",
+  "github_source_commit": "a42cf689784992de30665be7527320b4ab2c52e9"
+}
