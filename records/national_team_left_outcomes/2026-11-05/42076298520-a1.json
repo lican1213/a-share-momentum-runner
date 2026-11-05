@@ -1,0 +1,285 @@
+{
+  "schema": 1,
+  "version": "NT_LEFT_ENTRY_FOLLOWUP_EXP0011",
+  "source_freeze_sha256": "a07684cea255393273c1a3b4065bb386ba21bb2aa6e755cbab9114d4028db9cf",
+  "first_observed_at": "2026-11-06T01:37:00.226854+08:00",
+  "asof": "2026-11-06",
+  "source_new_ohlc_sha256": "441a829eda19cc0cb9086afb5f0e62a1749076344607f91c9c6fde2541bf6523",
+  "source_new_ohlc": {
+    "first_observed_at": "2026-11-06T01:37:00.226837+08:00",
+    "capture_time": "2026-11-06T01:37:00.226837+08:00",
+    "bars_by_symbol": {
+      "510300": [
+        {
+          "date": "2026-11-02",
+          "open": "4.084",
+          "high": "4.12",
+          "low": "4.065",
+          "close": "4.085"
+        },
+        {
+          "date": "2026-11-03",
+          "open": "4.076",
+          "high": "4.106",
+          "low": "4.041",
+          "close": "4.092"
+        },
+        {
+          "date": "2026-11-04",
+          "open": "4.086",
+          "high": "4.191",
+          "low": "4.062",
+          "close": "4.175"
+        },
+        {
+          "date": "2026-11-05",
+          "open": "4.149",
+          "high": "4.216",
+          "low": "4.145",
+          "close": "4.195"
+        }
+      ],
+      "600016": [
+        {
+          "date": "2026-11-02",
+          "open": "3.48",
+          "high": "3.5",
+          "low": "3.42",
+          "close": "3.42"
+        },
+        {
+          "date": "2026-11-03",
+          "open": "3.42",
+          "high": "3.45",
+          "low": "3.36",
+          "close": "3.45"
+        },
+        {
+          "date": "2026-11-04",
+          "open": "3.43",
+          "high": "3.47",
+          "low": "3.42",
+          "close": "3.45"
+        },
+        {
+          "date": "2026-11-05",
+          "open": "3.45",
+          "high": "3.46",
+          "low": "3.41",
+          "close": "3.41"
+        }
+      ],
+      "600019": [
+        {
+          "date": "2026-11-02",
+          "open": "6.03",
+          "high": "6.14",
+          "low": "6.02",
+          "close": "6.13"
+        },
+        {
+          "date": "2026-11-03",
+          "open": "6.14",
+          "high": "6.25",
+          "low": "6.11",
+          "close": "6.24"
+        },
+        {
+          "date": "2026-11-04",
+          "open": "6.22",
+          "high": "6.3",
+          "low": "6.14",
+          "close": "6.18"
+        },
+        {
+          "date": "2026-11-05",
+          "open": "6.15",
+          "high": "6.17",
+          "low": "6.02",
+          "close": "6.08"
+        }
+      ]
+    },
+    "source_sha256": {
+      "510300": "f30ad13d88f74471accd0bce34ca98c49315b26932d8b97a99f65aaac496e141",
+      "600016": "e5f484c574c19d802418391f2e376c2749b94e695148eb9d5721234e6f73c742",
+      "600019": "51370d53d5d9ec34b758ce17b048f55f1f393232beee7a0f7185bf0ec6368c22"
+    },
+    "source_url": {
+      "510300": "https://quote.eastmoney.com/sh510300.html",
+      "600016": "https://finance.sina.com.cn/realstock/company/",
+      "600019": "https://finance.sina.com.cn/realstock/company/"
+    },
+    "errors": {}
+  },
+  "first_actual_benchmark_session": "2026-11-02",
+  "F1_LEFT": [
+    {
+      "stock": "600016",
+      "status": "OHLC_OPEN_PAPER_SCENARIO",
+      "entry_session": "2026-11-02",
+      "entry_open_raw": "3.48",
+      "shares_scenario": 1300,
+      "gross_cny": "4524.00",
+      "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+      "horizons": {
+        "3": {
+          "path_excursions": {
+            "mfe_from_entry_open": "0.005747126436781609195402299",
+            "mae_from_entry_open": "-0.0344827586206896551724137931",
+            "mfe_session": "2026-11-02",
+            "mae_session": "2026-11-03",
+            "high_low_are_daily_bounds_not_fills": true
+          },
+          "status": "PAIRED",
+          "exit_session": "2026-11-05",
+          "after_cost_return": "-0.003346033513333333333333333333",
+          "s0": {
+            "status": "MATURED",
+            "shares": 1100,
+            "net_return": "0.003750280064666666666666666667",
+            "exit_session": "2026-11-05"
+          },
+          "excess_s0": "-0.007096313578000000000000000000"
+        },
+        "5": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "10": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "20": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        }
+      }
+    },
+    {
+      "stock": "600019",
+      "status": "OHLC_OPEN_PAPER_SCENARIO",
+      "entry_session": "2026-11-02",
+      "entry_open_raw": "6.03",
+      "shares_scenario": 700,
+      "gross_cny": "4221.00",
+      "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+      "horizons": {
+        "3": {
+          "path_excursions": {
+            "mfe_from_entry_open": "0.044776119402985074626865672",
+            "mae_from_entry_open": "-0.0016583747927031509121061360",
+            "mfe_session": "2026-11-04",
+            "mae_session": "2026-11-02",
+            "high_low_are_daily_bounds_not_fills": true
+          },
+          "status": "PAIRED",
+          "exit_session": "2026-11-05",
+          "after_cost_return": "0.0008697156416666666666666666667",
+          "s0": {
+            "status": "MATURED",
+            "shares": 1000,
+            "net_return": "0.003409345513333333333333333333",
+            "exit_session": "2026-11-05"
+          },
+          "excess_s0": "-0.002539629871666666666666666666"
+        },
+        "5": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "10": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "20": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        }
+      }
+    }
+  ],
+  "F2_WEAK": [
+    {
+      "stock": "600016",
+      "status": "OHLC_OPEN_PAPER_SCENARIO",
+      "entry_session": "2026-11-05",
+      "entry_open_raw": "3.45",
+      "shares_scenario": 1300,
+      "gross_cny": "4485.00",
+      "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+      "horizons": {
+        "3": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "5": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "10": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "20": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        }
+      },
+      "confirmation_day": "2026-11-04"
+    },
+    {
+      "stock": "600019",
+      "status": "OHLC_OPEN_PAPER_SCENARIO",
+      "entry_session": "2026-11-03",
+      "entry_open_raw": "6.14",
+      "shares_scenario": 700,
+      "gross_cny": "4298.00",
+      "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+      "horizons": {
+        "3": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "5": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "10": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        },
+        "20": {
+          "status": "UNMATURED",
+          "after_cost_return": null,
+          "excess_s0": null
+        }
+      },
+      "confirmation_day": "2026-11-02"
+    }
+  ],
+  "S0": "PER_LEG_SAME_ENTRY_TIME_AND_CASH_PAIRED_WHEN_MATURE",
+  "N_NON_FLOW": "NOT_YET_MATURED_MATCHED_CONTROL",
+  "errors": {},
+  "trade_authorized": false,
+  "broker_orders": [],
+  "execution_assertion": "OHLC_OPEN_SCENARIO_NOT_AN_EXECUTED_TRADE",
+  "snapshot_sha256": "915b12ae72948647193c2ca9d2592e79206cb33e771eeeac11858dedcead8589",
+  "freeze_path": "records/national_team_left_entry/2026-11-01/41283487731-a1.json",
+  "github_run_id": "42076298520",
+  "github_run_attempt": "1",
+  "github_source_commit": "a52e393549d2efd8e61be7cc8d3758b1cf89bfc5"
+}
