@@ -12,6 +12,10 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 
 | Source class | Trade/record date | Run ID | Recorded status | Evidence |
 | --- | --- | --- | --- | --- |
+| ETF source attempts | 2026-11-05 | 41990336989 | ATTEMPTED_NO_COMPLETE_FACTOR | [JSON](../../records/national_team_etf/2026-11-05/41990336989-a1.json) |
+| Four-fund merged funding | 2026-11-05 | 41990336989 | FULL_FOUR_ETF_SHARES_NAV_OBSERVED_RESEARCH | [JSON](../../records/national_team_merged/2026-11-05/41990336989-a1.json) |
+| CSI300 stock research watches | 2026-11-04 | 41990336989 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-11-05/41990336989-a1.json) |
+| Official exchange PCF attempts | 2026-11-05 | 41990336989 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-11-05/41990336989-a1.json) |
 | ETF source attempts | 2026-11-05 | 41867075476 | PRIOR_FULL_FOUR_AND_LATEST_PARTIAL_OBSERVED | [JSON](../../records/national_team_etf/2026-11-05/41867075476-a1.json) |
 | Four-fund merged funding | 2026-11-05 | 41867075476 | PARTIAL_LATEST_WITH_PRIOR_FULL_FOUR_FACTOR | [JSON](../../records/national_team_merged/2026-11-05/41867075476-a1.json) |
 | CSI300 stock research watches | 2026-11-04 | 41867075476 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-11-05/41867075476-a1.json) |
