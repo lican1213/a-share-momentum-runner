@@ -38,3 +38,9 @@ updated: 2026-11-02
 - 股票隔夜跳空开盘卖出时直接使用510300同日真实开盘代理，标 `ETF_SAME_SESSION_OPEN_PROXY`，不再拿ETF收盘对比开盘卖出；盘中触发仍保留无法同刻配对的标识。
 - 新增 `s0_notional_entry_cny`、`stock_notional_entry_cny`、`s0_equal_capital_pnl_cny`、`excess_s0_equal_capital_cny` 和账户汇总 `realized_excess_s0_equal_capital_cny`。用实际扣费的ETF整手收益率按股票买入成本归一，避免整手金额不同导致的假超额；归一化仅为研究比较，不是可执行的分数份额交易。老快照不回写；旧平仓若缺新字段，账户汇总保持NULL而不伪算历史结果。
 - 对抗测试：同日止盈止损双触发、开盘跳空止盈/止损对应ETF开盘、金额不同的等额净超额、ETF盘中界限、T+2收盘、重复执行不重复成交；匹配最终SHA的真实全库CI通过后才允许合并主分支与更新MOC。
+
+## 2026-11-06：生产快照触发的后续审计——迟到OHLC退出
+
+- 主分支V5[真实运行#42179483457](https://github.com/lican1213/a-share-momentum-runner/actions/runs/42179483457)于北京时间15:14成功：最新[账本快照](../../records/national_team_paper_accounts_v5/2026-11-06/42179483457-a1.json)已有11/06的510300市场交易日，但若干股票行情只更新到11/05，三组均显示`STALE_PRICE`、共6只持仓、0已平仓。这不是“11/06已经按T+2收盘卖出”。
+- 旧引擎用ETF的`last_market_session`排除旧日期，股票11/06日线后来恢复时会**永久漏算当日出场**；若下一交易日已有股票报价，则可能把T+2应退出的仓位错误按T+3出场。新逻辑逐只保留`pending_ohlc_sessions`，在已有冻结及ETF日历中按日期顺序补做**事前既定的退出情景估算**；旧缺价日未解决前不拿后一天价格冒充T+2。`late_ohlc_reconciliation=true`明确当次后验才拿到行情；旧`records/`不覆盖。
+- **只追回计算退出，不补模拟买入**：入场缺`intended_session`开盘价仍永久`PAPER_ENTRY_SKIPPED`；前述迟到日线不具有真实盘口可成交性。新增对抗测试先在旧代码复现“当日永远不退出”和“下日假装T+2”的两项失败，再检验恢复、连续日期以及重复运行幂等。
