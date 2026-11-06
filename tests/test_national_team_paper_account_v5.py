@@ -124,3 +124,35 @@ def test_account_rejects_incompatible_prior_state():
     with pytest.raises(ValueError, match="incompatible"):
         advance({"version": "LEGACY", "accounts": {}}, [], asof="2026-11-03",
                 captured_at="2026-11-03T18:45:00+08:00")
+
+
+def test_intraday_benchmark_is_labeled_proxy_with_ohlc_envelope():
+    f, source = event(days=("2026-11-03", "2026-11-04"))
+    first = copy.deepcopy(source)
+    for symbol in first["bars_by_symbol"]:
+        first["bars_by_symbol"][symbol] = first["bars_by_symbol"][symbol][:1]
+    first["first_observed_at"] = "2026-11-03T18:20:00+08:00"
+    p1 = advance_day(None, (f, first), "2026-11-03")
+    source["bars_by_symbol"]["600001"][1] = market(
+        "2026-11-04", "10", "9.7", "9.6", "10.4")
+    source["bars_by_symbol"]["510300"][1] = market(
+        "2026-11-04", "4", "4.02", "3.9", "4.1")
+    p2 = advance_day(p1, (f, source), "2026-11-04")
+    trade = p2["accounts"]["SHALLOW_DIP"]["closed_trades"][0]
+    assert trade["benchmark_exit_method"] == "ETF_DAILY_CLOSE_PROXY_NOT_SAME_TIME"
+    assert trade["execution_confidence"] == "DAILY_OHLC_STOP_FIRST_AMBIGUOUS"
+    envelope = trade["s0_intraday_excess_envelope_cny"]
+    assert float(envelope["excess_if_etf_high_cny"]) <= float(trade["excess_s0_cny"])
+    assert float(trade["excess_s0_cny"]) <= float(envelope["excess_if_etf_low_cny"])
+    assert p2["accounts"]["SHALLOW_DIP"]["summary"]["paired_s0_exact_intraday_trades"] == 0
+
+
+def test_planned_close_has_same_session_close_proxy_not_intraday_claim():
+    f, source = event(days=("2026-11-03", "2026-11-04", "2026-11-05"))
+    source["first_observed_at"] = "2026-11-05T18:20:00+08:00"
+    p = advance_day(None, (f, source), "2026-11-05")
+    trade = p["accounts"]["SHALLOW_DIP"]["closed_trades"][0]
+    assert trade["exit_reason"] == "T_PLUS_2_PLANNED_CLOSE_PROXY"
+    assert trade["benchmark_exit_method"] == "ETF_SAME_SESSION_CLOSE_PROXY"
+    assert trade["execution_confidence"] == "DAILY_CLOSE_PROXY"
+    assert trade["s0_intraday_excess_envelope_cny"] is None
