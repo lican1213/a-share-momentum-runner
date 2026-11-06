@@ -2,8 +2,14 @@
 id: WIKI-LOG
 type: log
 status: maintained
-updated: 2026-11-03
+updated: 2026-11-06
 ---
+
+## 2026-11-06：EXP-0014 执行收益配对与迟到OHLC红队收口
+
+- [对抗审计原件](audits/AUD-2026-11-06-exp0014-paper-execution.md)记录两轮真修复：开盘跳空出场配ETF开盘、扣费后同资本归一超额；真实生产11/06 15:14抓到ETF交易日而没抓到当日股票行情，旧账户会永久漏算T+2退出，追加两个**旧代码必失败**测试后改按账户逐日待补退出。未更改旧冻结或任何`records/`。
+- [PR#10](https://github.com/lican1213/a-share-momentum-runner/pull/10) PR门[#42179226710](https://github.com/lican1213/a-share-momentum-runner/actions/runs/42179226710) 287 passed，主分支SHA`fea1a7f`全库[#42179483356](https://github.com/lican1213/a-share-momentum-runner/actions/runs/42179483356) 287 passed；[PR#11](https://github.com/lican1213/a-share-momentum-runner/pull/11) PR门[#42180295638](https://github.com/lican1213/a-share-momentum-runner/actions/runs/42180295638) 289 passed，最终主分支SHA`ce1fe4f`全库[#42180430286](https://github.com/lican1213/a-share-momentum-runner/actions/runs/42180430286) 289 passed，Wiki均48页全通。
+- 最终[真实模拟盘#42180430149](https://github.com/lican1213/a-share-momentum-runner/actions/runs/42180430149) 35专项测试+落盘，11/06 15:23新[不可覆盖账户](../records/national_team_paper_accounts_v5/2026-11-06/42180430149-a1.json)中三组各2只持仓、0已平仓、每组2个待补行情交易日，`STALE_PRICE`而非伪装今天已经出场；未来股票日线补全后的真实迟到退出仍待当晚或以后运行检验。真实券商订单始终0。
 
 ## 2026-11-03：EXP-0016处理GitHub cron约10小时偏移，不倒签V5纸面订单
 
