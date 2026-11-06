@@ -115,11 +115,41 @@ def _close(account, pos, *, day, price, reason, etf_bar):
     account["cash_cny"] = _money(d(account["cash_cny"], "cash") + proceeds)
     account["realized_pnl_cny"] = _money(d(account["realized_pnl_cny"], "realized") + profit)
     s0_profit = None
+    gap_open = reason in ("GAP_STOP_AT_OPEN", "GAP_TARGET_AT_OPEN")
     if pos["s0_shares"] and etf_bar:
-        s0_profit = _sell(etf_bar["close"], pos["s0_shares"], etf=True) - d(
+        # The ETF opening print is the synchronized daily-bar proxy for a
+        # stock gap exit. An intraday touch has no synchronized ETF print.
+        s0_exit_price = etf_bar["open"] if gap_open else etf_bar["close"]
+        s0_profit = _sell(s0_exit_price, pos["s0_shares"], etf=True) - d(
             pos["s0_buy_total_cny"], "s0 cost")
         account["s0_realized_pnl_cny"] = _money(
             d(account["s0_realized_pnl_cny"], "s0 realized") + s0_profit)
+    # Daily bars cannot identify ETF prices at intraday stock exits.
+    intraday = not gap_open and reason != "T_PLUS_2_PLANNED_CLOSE_PROXY"
+    benchmark_method = ("ETF_SAME_SESSION_OPEN_PROXY" if gap_open else
+                        "ETF_DAILY_CLOSE_PROXY_NOT_SAME_TIME" if intraday else
+                        "ETF_SAME_SESSION_CLOSE_PROXY")
+    s0_envelope = None
+    if pos["s0_shares"] and etf_bar and intraday:
+        low_pnl = _sell(etf_bar["low"], pos["s0_shares"], etf=True) - d(
+            pos["s0_buy_total_cny"], "s0 cost")
+        high_pnl = _sell(etf_bar["high"], pos["s0_shares"], etf=True) - d(
+            pos["s0_buy_total_cny"], "s0 cost")
+        s0_envelope = {
+            "excess_if_etf_high_cny": _money(profit - high_pnl),
+            "excess_if_etf_low_cny": _money(profit - low_pnl),
+            "interpretation": "DAILY_BAR_BOUNDS_NOT_SYNCHRONIZED_EXECUTION",
+        }
+    execution_confidence = ("DAILY_OPEN_PROXY" if gap_open else
+                            "DAILY_CLOSE_PROXY" if not intraday else
+                            "DAILY_OHLC_STOP_FIRST_AMBIGUOUS"
+                            if reason == "STOP_TOUCH_OHLC_STOP_FIRST" else
+                            "DAILY_OHLC_INTRADAY_ORDER_UNKNOWN")
+    # Raw yuan P&L from different round-lot notionals is not equal-capital
+    # excess. Scale the net, fee-inclusive ETF return to the stock entry cost.
+    equal_capital_s0 = None
+    if s0_profit is not None:
+        equal_capital_s0 = s0_profit * cost / d(pos["s0_buy_total_cny"], "s0 cost")
     account["closed_trades"].append({
         "id": pos["id"], "stock": pos["stock"], "entry_session": pos["entry_session"],
         "exit_session": day, "shares": pos["shares"],
@@ -127,7 +157,15 @@ def _close(account, pos, *, day, price, reason, etf_bar):
         "exit_reason": reason, "net_pnl_cny": _money(profit),
         "s0_matched_net_pnl_cny": _money(s0_profit) if s0_profit is not None else None,
         "excess_s0_cny": _money(profit - s0_profit) if s0_profit is not None else None,
+        "s0_equal_capital_pnl_cny": _money(equal_capital_s0) if equal_capital_s0 is not None else None,
+        "excess_s0_equal_capital_cny": _money(profit - equal_capital_s0) if equal_capital_s0 is not None else None,
+        "equal_capital_method": "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE" if equal_capital_s0 is not None else None,
         "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
+        "execution_confidence": execution_confidence,
+        "benchmark_exit_method": benchmark_method if etf_bar else "BENCHMARK_MISSING",
+        "s0_intraday_excess_envelope_cny": s0_envelope,
+        "s0_notional_entry_cny": pos.get("s0_buy_total_cny"),
+        "stock_notional_entry_cny": pos["buy_total_cny"],
     })
 
 
@@ -198,9 +236,22 @@ def _summary(account, last_session):
         "open_positions": len(account["positions"]), "closed_trades": len(trades),
         "win_rate": format(Decimal(wins) / len(trades), "f") if trades else None,
         "paired_s0_trades": len(paired),
+        "paired_s0_close_proxy_trades": sum(
+            t.get("benchmark_exit_method") == "ETF_DAILY_CLOSE_PROXY_NOT_SAME_TIME"
+            for t in paired),
+        "paired_s0_open_proxy_trades": sum(
+            t.get("benchmark_exit_method") == "ETF_SAME_SESSION_OPEN_PROXY"
+            for t in paired),
+        "paired_s0_exact_intraday_trades": 0,
         "realized_excess_s0_cny": _money(sum(
             (d(x["excess_s0_cny"], "excess") for x in paired), Decimal(0)))
             if paired else None,
+        "realized_excess_s0_equal_capital_cny": _money(sum(
+            (d(x["excess_s0_equal_capital_cny"], "equal capital excess")
+             for x in paired if x.get("excess_s0_equal_capital_cny") is not None),
+            Decimal(0))) if paired and all(
+                x.get("excess_s0_equal_capital_cny") is not None for x in paired)
+            else None,
         "mark_status": "STALE_PRICE" if stale else ("CURRENT_CLOSE_PROXY" if account["positions"] else "CASH_ONLY"),
         "market_session": last_session,
     }
