@@ -156,3 +156,64 @@ def test_planned_close_has_same_session_close_proxy_not_intraday_claim():
     assert trade["benchmark_exit_method"] == "ETF_SAME_SESSION_CLOSE_PROXY"
     assert trade["execution_confidence"] == "DAILY_CLOSE_PROXY"
     assert trade["s0_intraday_excess_envelope_cny"] is None
+
+
+@pytest.mark.parametrize("stock_open,stock_low,stock_high,expected_reason", [
+    ("9.5", "9.3", "9.8", "GAP_STOP_AT_OPEN"),
+    ("10.5", "10.2", "10.8", "GAP_TARGET_AT_OPEN"),
+])
+def test_gap_exit_uses_etf_open_and_equal_capital_after_costs(
+    stock_open, stock_low, stock_high, expected_reason
+):
+    from decimal import Decimal
+
+    from national_team.left_entry_v4 import FEE_RATE, SLIPPAGE_RATE
+
+    f, source = event(days=("2026-11-03", "2026-11-04"))
+    first = copy.deepcopy(source)
+    for symbol in first["bars_by_symbol"]:
+        first["bars_by_symbol"][symbol] = first["bars_by_symbol"][symbol][:1]
+    first["first_observed_at"] = "2026-11-03T18:20:00+08:00"
+    p1 = advance_day(None, (f, first), "2026-11-03")
+    position = p1["accounts"]["SHALLOW_DIP"]["positions"][0]
+    source["bars_by_symbol"]["600001"][1] = market(
+        "2026-11-04", stock_open, stock_open, stock_low, stock_high)
+    # Large ETF intraday move makes an incorrect closing-price match obvious.
+    source["bars_by_symbol"]["510300"][1] = market(
+        "2026-11-04", "4.3", "4.9", "4.2", "5.0")
+    p2 = advance_day(p1, (f, source), "2026-11-04")
+    account = p2["accounts"]["SHALLOW_DIP"]
+    trade = account["closed_trades"][0]
+    assert trade["exit_reason"] == expected_reason
+    assert trade["benchmark_exit_method"] == "ETF_SAME_SESSION_OPEN_PROXY"
+    assert trade["execution_confidence"] == "DAILY_OPEN_PROXY"
+    assert trade["s0_intraday_excess_envelope_cny"] is None
+    shares = Decimal(position["s0_shares"])
+    net_exit = Decimal("4.3") * shares * (1 - SLIPPAGE_RATE)
+    net_exit -= max(Decimal("5"), net_exit * FEE_RATE)
+    expected_s0 = net_exit - Decimal(position["s0_buy_total_cny"])
+    assert Decimal(trade["s0_matched_net_pnl_cny"]) == expected_s0.quantize(Decimal("0.01"))
+    expected_normalized = expected_s0 * Decimal(position["buy_total_cny"]) / Decimal(
+        position["s0_buy_total_cny"])
+    assert abs(Decimal(trade["s0_equal_capital_pnl_cny"]) - expected_normalized) < Decimal("0.01")
+    assert Decimal(trade["excess_s0_equal_capital_cny"]) == (
+        Decimal(trade["net_pnl_cny"]) - Decimal(trade["s0_equal_capital_pnl_cny"])
+    )
+    assert account["summary"]["paired_s0_open_proxy_trades"] == 1
+    assert account["summary"]["paired_s0_close_proxy_trades"] == 0
+    assert account["summary"]["realized_excess_s0_equal_capital_cny"] == (
+        trade["excess_s0_equal_capital_cny"])
+
+
+def test_equal_capital_return_is_distinct_from_raw_round_lot_pnl():
+    f, source = event(days=("2026-11-03", "2026-11-04", "2026-11-05"))
+    source["bars_by_symbol"]["510300"] = [
+        market(day, "4.1", "4.12", "4.05", "4.15")
+        for day in ("2026-11-03", "2026-11-04", "2026-11-05")]
+    p = advance_day(None, (f, source), "2026-11-05")
+    trade = p["accounts"]["SHALLOW_DIP"]["closed_trades"][0]
+    assert trade["benchmark_exit_method"] == "ETF_SAME_SESSION_CLOSE_PROXY"
+    assert trade["s0_notional_entry_cny"] != trade["stock_notional_entry_cny"]
+    assert trade["equal_capital_method"] == (
+        "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE")
+    assert trade["excess_s0_equal_capital_cny"] != trade["excess_s0_cny"]
