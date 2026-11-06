@@ -30,3 +30,10 @@ updated: 2026-11-02
 
 - [V5生产#41421490570](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41421490570) SUCCESS：工作流执行了23项专项测试，实际写入[三账户唯一原始账本](../../records/national_team_paper_accounts_v5/2026-11-02/41421490570-a1.json)；SHALLOW_DIP、DEEP_DIP、R_BOUNCE分别30,000元现金、0持仓、0平仓，`source_event_count=0`。这是正确的现金初始化，不是三组已经赢利。
 - 源码`2fe04152383d2d488c66055b7f313a47775a315d`的[全库#41421490651](https://github.com/lican1213/a-share-momentum-runner/actions/runs/41421490651) **267 passed**、Wiki46页链接校验PASS；真实新事件入场/止盈止损与S0仍要等下一次不可覆盖前瞻数据验收。ChatGPT08:30/12:30/17:30报告已接入本账本并保持日程不变。
+
+
+## 2026-11-06：基准与成交情景审计（待CI核验）
+- 既有不可覆盖快照保持原值，不回写历史盈亏。此前日线盘中触发股票止损/止盈、510300按收盘退出，存在比较时点不一致；旧 `excess_s0_cny` 明确只是ETF收盘代理，不能称严格同刻超额。
+- 新平仓记录增 `benchmark_exit_method`、`execution_confidence`；盘中退出增 `s0_intraday_excess_envelope_cny`，使用510300同日高低价构造比较范围，**不是分钟成交证据**。T+2收盘退出继续使用同日收盘代理。
+- 增 `s0_notional_entry_cny` 与 `stock_notional_entry_cny`，供后续同资金基准核算。未取得同步分钟数据时 `paired_s0_exact_intraday_trades=0`，不得把代理结果报为精确超额。
+- 对抗测试：同日止盈止损双触发、ETF收盘与盘中极值不同、T+2收盘、重复执行不重复成交；验证后才允许合并主分支与更新MOC。
