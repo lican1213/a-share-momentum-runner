@@ -2,8 +2,12 @@
 id: MOC-WIKI
 type: moc
 status: maintained
-updated: 2026-11-03
+updated: 2026-11-06
 ---
+
+## 2026-11-06：EXP-0014 执行与迟到行情修复验收
+
+[新对抗审计](audits/AUD-2026-11-06-exp0014-paper-execution.md) · [连续模拟盘协议](experiments/EXP-0014-v5-paper-account.md) · [主分支289项全库门#42180430286](https://github.com/lican1213/a-share-momentum-runner/actions/runs/42180430286) · [真实三组落盘#42180430149](../records/national_team_paper_accounts_v5/2026-11-06/42180430149-a1.json)。跳空价配ETF开盘、同本金扣费超额、迟到股票OHLC按原日历补核算**退出**；不补买、不改历史冻结。11/06 15:23股票日线仍缺，三组是`STALE_PRICE`和0已平仓，18:45正常定时业务结果尚不能提前宣称。
 
 ## 2026-11-03：EXP-0016 盘后流水线时效修复
 
