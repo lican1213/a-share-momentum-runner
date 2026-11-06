@@ -120,6 +120,25 @@ def _close(account, pos, *, day, price, reason, etf_bar):
             pos["s0_buy_total_cny"], "s0 cost")
         account["s0_realized_pnl_cny"] = _money(
             d(account["s0_realized_pnl_cny"], "s0 realized") + s0_profit)
+    # Daily bars cannot identify ETF prices at intraday stock exits.
+    intraday = reason != "T_PLUS_2_PLANNED_CLOSE_PROXY"
+    benchmark_method = ("ETF_DAILY_CLOSE_PROXY_NOT_SAME_TIME" if intraday
+                        else "ETF_SAME_SESSION_CLOSE_PROXY")
+    s0_envelope = None
+    if pos["s0_shares"] and etf_bar and intraday:
+        low_pnl = _sell(etf_bar["low"], pos["s0_shares"], etf=True) - d(
+            pos["s0_buy_total_cny"], "s0 cost")
+        high_pnl = _sell(etf_bar["high"], pos["s0_shares"], etf=True) - d(
+            pos["s0_buy_total_cny"], "s0 cost")
+        s0_envelope = {
+            "excess_if_etf_high_cny": _money(profit - high_pnl),
+            "excess_if_etf_low_cny": _money(profit - low_pnl),
+            "interpretation": "DAILY_BAR_BOUNDS_NOT_SYNCHRONIZED_EXECUTION",
+        }
+    execution_confidence = ("DAILY_CLOSE_PROXY" if not intraday else
+                            "DAILY_OHLC_STOP_FIRST_AMBIGUOUS"
+                            if reason == "STOP_TOUCH_OHLC_STOP_FIRST" else
+                            "DAILY_OHLC_INTRADAY_ORDER_UNKNOWN")
     account["closed_trades"].append({
         "id": pos["id"], "stock": pos["stock"], "entry_session": pos["entry_session"],
         "exit_session": day, "shares": pos["shares"],
@@ -128,6 +147,11 @@ def _close(account, pos, *, day, price, reason, etf_bar):
         "s0_matched_net_pnl_cny": _money(s0_profit) if s0_profit is not None else None,
         "excess_s0_cny": _money(profit - s0_profit) if s0_profit is not None else None,
         "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
+        "execution_confidence": execution_confidence,
+        "benchmark_exit_method": benchmark_method if etf_bar else "BENCHMARK_MISSING",
+        "s0_intraday_excess_envelope_cny": s0_envelope,
+        "s0_notional_entry_cny": pos.get("s0_buy_total_cny"),
+        "stock_notional_entry_cny": pos["buy_total_cny"],
     })
 
 
@@ -198,6 +222,10 @@ def _summary(account, last_session):
         "open_positions": len(account["positions"]), "closed_trades": len(trades),
         "win_rate": format(Decimal(wins) / len(trades), "f") if trades else None,
         "paired_s0_trades": len(paired),
+        "paired_s0_close_proxy_trades": sum(
+            t.get("benchmark_exit_method") == "ETF_DAILY_CLOSE_PROXY_NOT_SAME_TIME"
+            for t in paired),
+        "paired_s0_exact_intraday_trades": 0,
         "realized_excess_s0_cny": _money(sum(
             (d(x["excess_s0_cny"], "excess") for x in paired), Decimal(0)))
             if paired else None,
