@@ -2,7 +2,7 @@
 id: GENERATED-COMMITS
 type: log
 status: maintained
-updated: 2026-11-06
+updated: 2026-11-07
 ---
 # 全部Git提交历史（自动索引）
 
@@ -12,6 +12,8 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-06 | [50ebcafd0c](https://github.com/lican1213/a-share-momentum-runner/commit/50ebcafd0cf9dd04bd2110dd4e830e39c4200ffd) | github-actions[bot] | data: archive actual ETF provider attempt 42248292372 [skip ci] |
+| 2026-11-06 | [e4a8c6ee93](https://github.com/lican1213/a-share-momentum-runner/commit/e4a8c6ee93c325c3d1d729a9db4d4855acdfeac7) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-06 | [2cfef018b6](https://github.com/lican1213/a-share-momentum-runner/commit/2cfef018b64dcd7803f19df11c3cf3f6b4ae798c) | github-actions[bot] | data: archive actual ETF provider attempt 42183791205 [skip ci] |
 | 2026-11-06 | [d3131ebb4c](https://github.com/lican1213/a-share-momentum-runner/commit/d3131ebb4c0c85b340497b6d6908419cc15900c1) | Can Li | docs(moc): close verified EXP-0014 paper execution adversarial audit |
 | 2026-11-06 | [e8a3f375ee](https://github.com/lican1213/a-share-momentum-runner/commit/e8a3f375eee8ace2873febdab257b7cd42a9ce49) | Can Li | docs(index): link EXP-0014 execution audit |
