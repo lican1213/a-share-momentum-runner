@@ -12,6 +12,25 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-06 | [2cfef018b6](https://github.com/lican1213/a-share-momentum-runner/commit/2cfef018b64dcd7803f19df11c3cf3f6b4ae798c) | github-actions[bot] | data: archive actual ETF provider attempt 42183791205 [skip ci] |
+| 2026-11-06 | [d3131ebb4c](https://github.com/lican1213/a-share-momentum-runner/commit/d3131ebb4c0c85b340497b6d6908419cc15900c1) | Can Li | docs(moc): close verified EXP-0014 paper execution adversarial audit |
+| 2026-11-06 | [e8a3f375ee](https://github.com/lican1213/a-share-momentum-runner/commit/e8a3f375eee8ace2873febdab257b7cd42a9ce49) | Can Li | docs(index): link EXP-0014 execution audit |
+| 2026-11-06 | [4c8ca9c6fd](https://github.com/lican1213/a-share-momentum-runner/commit/4c8ca9c6fdd87245867cf94bba8ada9b07069138) | Can Li | docs(log): record verified EXP-0014 source and adversarial gates |
+| 2026-11-06 | [fa66dece1f](https://github.com/lican1213/a-share-momentum-runner/commit/fa66dece1f79b30edba409a7f8f5df8783464ede) | Can Li | docs(audit): archive EXP-0014 adversarial exit and S0 evidence |
+| 2026-11-06 | [54b144c2a9](https://github.com/lican1213/a-share-momentum-runner/commit/54b144c2a9ba63a00cfe353a25a979d23c4136b8) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 42180430149 [skip ci] |
+| 2026-11-06 | [ce1fe4fa8b](https://github.com/lican1213/a-share-momentum-runner/commit/ce1fe4fa8bf206a730c35cc63f7dd3194c1e0c6d) | Can Li | fix(exp0014): reconcile delayed exit OHLC without changing historical orders |
+| 2026-11-06 | [1acff558fd](https://github.com/lican1213/a-share-momentum-runner/commit/1acff558fdf0fcf2bd32352ae747d734645d43c6) | Can Li | docs(exp0014): record live stale-quote failure and replay boundary |
+| 2026-11-06 | [42beca0b42](https://github.com/lican1213/a-share-momentum-runner/commit/42beca0b4297abcca3f97f4c643364967172a67f) | Can Li | test(exp0014): reproduce missing T+2 close and false next-session exit |
+| 2026-11-06 | [ea9f92e910](https://github.com/lican1213/a-share-momentum-runner/commit/ea9f92e910b5e6b8f05bd6e550dcbe66c982711d) | Can Li | fix(exp0014): reconcile late daily exit quotes without time-travel entries |
+| 2026-11-06 | [6b3da9bac3](https://github.com/lican1213/a-share-momentum-runner/commit/6b3da9bac3fcbac19c65de705913829c620ba8ce) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 42179483457 [skip ci] |
+| 2026-11-06 | [fea1a7f935](https://github.com/lican1213/a-share-momentum-runner/commit/fea1a7f9357b7a3271b76dfd5ea9b3ee8a8ff753) | Can Li | fix(exp0014): correct paper ETF benchmark pairing and equal-capital net excess |
+| 2026-11-06 | [fda261d65a](https://github.com/lican1213/a-share-momentum-runner/commit/fda261d65add97029e82c11bd4705534077353ad) | Can Li | docs(exp0014): state comparable S0 price and notional contract |
+| 2026-11-06 | [854f761ca0](https://github.com/lican1213/a-share-momentum-runner/commit/854f761ca01c4e11af13ab587578edf79b404358) | Can Li | test(exp0014): adversarial gap-open and equal-capital benchmark cases |
+| 2026-11-06 | [5475bb7a45](https://github.com/lican1213/a-share-momentum-runner/commit/5475bb7a4592c503b1fe8dfc383c630a1b6b1bbb) | Can Li | fix(exp0014): pair ETF opening gaps and normalize after-fee S0 returns |
+| 2026-11-06 | [65951d6518](https://github.com/lican1213/a-share-momentum-runner/commit/65951d65187082837a09eaf1baa3f1340cc25923) | Can Li | docs: document benchmark proxy limitations and adversarial acceptance gate |
+| 2026-11-06 | [1723f49c63](https://github.com/lican1213/a-share-momentum-runner/commit/1723f49c6305f24d51bd3d4a3e823ded9608135f) | Can Li | test: adversarial ETF timing, OHLC dual-touch and close-only labeling |
+| 2026-11-06 | [77eb93ab26](https://github.com/lican1213/a-share-momentum-runner/commit/77eb93ab265ec62f92300e3ea1d8b9c81d19c44b) | Can Li | fix: expose non-synchronous ETF benchmark and OHLC execution uncertainty |
+| 2026-11-05 | [6bb3899722](https://github.com/lican1213/a-share-momentum-runner/commit/6bb389972294328f71d258f642c811a74f1127ec) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-05 | [ea59fbf2d5](https://github.com/lican1213/a-share-momentum-runner/commit/ea59fbf2d53ddb2cdac0bc1dc6c31fb36bf4876a) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 42082550827 [skip ci] |
 | 2026-11-05 | [42ea6324df](https://github.com/lican1213/a-share-momentum-runner/commit/42ea6324df292705861c73ba986d6a906d74fce5) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 42079102678 [skip ci] |
 | 2026-11-05 | [764fcb828a](https://github.com/lican1213/a-share-momentum-runner/commit/764fcb828a73cac005b4c28369f33a23684d7a47) | github-actions[bot] | records(exp0012): route event and append paper evidence 42079013996 [skip ci] |
