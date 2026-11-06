@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "experiment_id": "EXP-0015",
+  "version": "NT_OFFICIAL_POLICY_OVERLAY",
+  "captured_at_bj": "2026-11-07T00:50:29.436724+08:00",
+  "sources": [
+    {
+      "source": "PBC_RSS",
+      "tier": "T1_OFFICIAL",
+      "status": "OK",
+      "fetched": 6,
+      "relevant": 1,
+      "error": null
+    },
+    {
+      "source": "CSRC_NEWS",
+      "tier": "T1_OFFICIAL",
+      "status": "FAILED",
+      "fetched": 0,
+      "relevant": 0,
+      "error": "URLError: <urlopen error timed out>"
+    },
+    {
+      "source": "GOV_POLICY",
+      "tier": "T1_OFFICIAL",
+      "status": "OK",
+      "fetched": 30,
+      "relevant": 0,
+      "error": null
+    }
+  ],
+  "source_health": "PARTIAL",
+  "events": [
+    {
+      "event_id": "POL_806f6ca20184c796",
+      "title": "中国人民银行加力实施股票回购...",
+      "published_date": "2026-11-04",
+      "published_at_bj": "2026-11-04T00:00:00+08:00",
+      "publication_precision": "TIMESTAMP",
+      "first_observed_at_bj": "2026-11-05T01:41:33.217138+08:00",
+      "policy_type": "CAPITAL_MARKET_SUPPORT",
+      "direction": "SUPPORT",
+      "strength": 2,
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2026110408502315269/index.html",
+      "sources": [
+        "PBC_RSS"
+      ],
+      "evidence_urls": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2026110408502315269/index.html"
+      ]
+    }
+  ],
+  "source_tier": "T1_OFFICIAL",
+  "no_broker_orders": true,
+  "snapshot_sha256": "b4c4469c8303fc05155fce862da5ebeb4a4f38aa0b13f567d3b0e33a831bdae9"
+}
