@@ -217,3 +217,36 @@ def test_equal_capital_return_is_distinct_from_raw_round_lot_pnl():
     assert trade["equal_capital_method"] == (
         "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE")
     assert trade["excess_s0_equal_capital_cny"] != trade["excess_s0_cny"]
+
+
+def test_late_t_plus_two_stock_close_is_processed_without_new_etf_session():
+    f, source = event(days=("2026-11-03", "2026-11-04", "2026-11-05"))
+    first = copy.deepcopy(source)
+    first["bars_by_symbol"]["600001"] = first["bars_by_symbol"]["600001"][:2]
+    p1 = advance_day(None, (f, first), "2026-11-05")
+    shallow = p1["accounts"]["SHALLOW_DIP"]
+    assert shallow["summary"]["mark_status"] == "STALE_PRICE"
+    assert shallow["summary"]["open_positions"] == 1
+    # A later 18:45 archive sees the missing daily close, on the SAME market day.
+    p2 = advance_day(p1, (f, source), "2026-11-05")
+    shallow = p2["accounts"]["SHALLOW_DIP"]
+    assert shallow["summary"]["open_positions"] == 0
+    assert shallow["closed_trades"][0]["exit_session"] == "2026-11-05"
+    assert shallow["closed_trades"][0]["exit_reason"] == "T_PLUS_2_PLANNED_CLOSE_PROXY"
+    assert shallow["closed_trades"][0]["late_ohlc_reconciliation"] is True
+    assert advance_day(p2, (f, source), "2026-11-05")["accounts"] == p2["accounts"]
+
+
+def test_missing_t_plus_two_bar_cannot_be_disguised_as_next_day_exit():
+    f, source = event(days=("2026-11-03", "2026-11-04", "2026-11-05", "2026-11-06"))
+    missing = copy.deepcopy(source)
+    missing["bars_by_symbol"]["600001"] = [
+        b for b in missing["bars_by_symbol"]["600001"] if b["date"] != "2026-11-05"]
+    p1 = advance_day(None, (f, missing), "2026-11-06")
+    arm = p1["accounts"]["SHALLOW_DIP"]
+    assert arm["closed_trades"] == []  # 11/06 quote cannot stand in for missing 11/05.
+    assert arm["summary"]["mark_status"] == "STALE_PRICE"
+    p2 = advance_day(p1, (f, source), "2026-11-06")
+    trade = p2["accounts"]["SHALLOW_DIP"]["closed_trades"][0]
+    assert trade["exit_session"] == "2026-11-05"
+    assert trade["late_ohlc_reconciliation"] is True
