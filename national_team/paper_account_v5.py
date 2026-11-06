@@ -108,7 +108,8 @@ def _exit_order(position, bar, holding_days):
     return None
 
 
-def _close(account, pos, *, day, price, reason, etf_bar):
+def _close(account, pos, *, day, price, reason, etf_bar,
+           late_ohlc_reconciliation=False):
     proceeds = _sell(price, pos["shares"])
     cost = d(pos["buy_total_cny"], "buy cost")
     profit = proceeds - cost
@@ -160,6 +161,7 @@ def _close(account, pos, *, day, price, reason, etf_bar):
         "s0_equal_capital_pnl_cny": _money(equal_capital_s0) if equal_capital_s0 is not None else None,
         "excess_s0_equal_capital_cny": _money(profit - equal_capital_s0) if equal_capital_s0 is not None else None,
         "equal_capital_method": "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE" if equal_capital_s0 is not None else None,
+        "late_ohlc_reconciliation": late_ohlc_reconciliation,
         "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
         "execution_confidence": execution_confidence,
         "benchmark_exit_method": benchmark_method if etf_bar else "BENCHMARK_MISSING",
@@ -243,6 +245,8 @@ def _summary(account, last_session):
             t.get("benchmark_exit_method") == "ETF_SAME_SESSION_OPEN_PROXY"
             for t in paired),
         "paired_s0_exact_intraday_trades": 0,
+        "pending_quote_sessions": sum(
+            len(p.get("pending_ohlc_sessions", [])) for p in account["positions"]),
         "realized_excess_s0_cny": _money(sum(
             (d(x["excess_s0_cny"], "excess") for x in paired), Decimal(0)))
             if paired else None,
@@ -257,6 +261,51 @@ def _summary(account, last_session):
     }
 
 
+def _reconcile_late_quotes(accounts, bars, last):
+    """Revisit missing EXIT quotes, never missed entries, in session order.
+
+    The ETF calendar can advance ahead of stock OHLC publication. Persisting
+    that calendar cursor must not permanently lose a precommitted T+2 close.
+    """
+    if last is None:
+        return
+    etf = bars.get("510300", {})
+    calendar = sorted(day for day in etf if day <= last)
+    for account in accounts.values():
+        still_open = []
+        for pos in account["positions"]:
+            pending = sorted(set(pos.get("pending_ohlc_sessions", [])) | {
+                day for day in calendar
+                if pos["last_mark_session"] < day <= last
+                and day > pos["entry_session"]
+            })
+            processed = 0
+            closed = False
+            for day in pending:
+                stock = bars.get(pos["stock"], {}).get(day)
+                if stock is None or day not in etf:
+                    break  # Never jump over an unpriced session.
+                future_sessions = sum(day < later <= last for later in calendar)
+                holding_days = pos["held_sessions"] - future_sessions
+                exit_candidate = _exit_order(pos, stock, holding_days)
+                if exit_candidate:
+                    _close(account, pos, day=day, price=exit_candidate[0],
+                           reason=exit_candidate[1], etf_bar=etf[day],
+                           late_ohlc_reconciliation=True)
+                    closed = True
+                    break
+                pos["last_mark_close"] = format(stock["close"], "f")
+                pos["last_mark_session"] = day
+                processed += 1
+            if not closed:
+                if pending[processed:]:
+                    pos["pending_ohlc_sessions"] = pending[processed:]
+                else:
+                    pos.pop("pending_ohlc_sessions", None)
+                still_open.append(pos)
+        account["positions"] = still_open
+
+
 def advance(previous, events, *, asof, captured_at):
     """Advance the independent accounts only on newly observed market sessions."""
     if previous and previous.get("version") != "NT_V5_PAPER_ACCOUNT_EXP0014":
@@ -266,6 +315,7 @@ def advance(previous, events, *, asof, captured_at):
     for account in accounts.values():
         account.pop("summary", None)
     bars, intents, errors = _quotes(events, asof, captured_at)
+    _reconcile_late_quotes(accounts, bars, last)
     sessions = sorted(day for day in bars.get("510300", {}) if day <= asof and
                       (last is None or day > last))
     existing_ids = {
@@ -289,13 +339,17 @@ def advance(previous, events, *, asof, captured_at):
                 stock = bars.get(pos["stock"], {}).get(day)
                 if day > pos["entry_session"]:
                     pos["held_sessions"] += 1
-                    if stock:
+                    if stock is None or pos.get("pending_ohlc_sessions"):
+                        pending = pos.setdefault("pending_ohlc_sessions", [])
+                        if day not in pending:
+                            pending.append(day)
+                    else:
                         candidate = _exit_order(pos, stock, pos["held_sessions"])
                         if candidate:
                             _close(a, pos, day=day, price=candidate[0],
                                    reason=candidate[1], etf_bar=etf)
                             continue
-                if stock:
+                if stock and not pos.get("pending_ohlc_sessions"):
                     pos["last_mark_close"] = format(stock["close"], "f")
                     pos["last_mark_session"] = day
                 still_open.append(pos)
