@@ -2,7 +2,7 @@
 id: GENERATED-COMMITS
 type: log
 status: maintained
-updated: 2026-11-10
+updated: 2026-11-11
 ---
 # 全部Git提交历史（自动索引）
 
@@ -12,6 +12,8 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-10 | [11e501a81c](https://github.com/lican1213/a-share-momentum-runner/commit/11e501a81cf3562736d5427c11c5ba66df354d9a) | github-actions[bot] | data: archive actual ETF provider attempt 42854870683 [skip ci] |
+| 2026-11-10 | [759abd2aea](https://github.com/lican1213/a-share-momentum-runner/commit/759abd2aeab1dc611e00ae577a0068e2738d0ad2) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-10 | [b8e6a17b6c](https://github.com/lican1213/a-share-momentum-runner/commit/b8e6a17b6c56df5b42307beca3d124691e401cbe) | github-actions[bot] | data: archive actual ETF provider attempt 42782198596 [skip ci] |
 | 2026-11-09 | [7dfa1abc2c](https://github.com/lican1213/a-share-momentum-runner/commit/7dfa1abc2ca01197f9cb63fe8ed5d968006f75c8) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-09 | [107aa357c7](https://github.com/lican1213/a-share-momentum-runner/commit/107aa357c7b5435919d71c66b183e825ade25d21) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 42698837185 [skip ci] |
