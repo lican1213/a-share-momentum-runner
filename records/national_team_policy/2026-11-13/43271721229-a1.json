@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "experiment_id": "EXP-0015",
+  "version": "NT_OFFICIAL_POLICY_OVERLAY",
+  "captured_at_bj": "2026-11-13T01:39:52.687103+08:00",
+  "sources": [
+    {
+      "source": "PBC_RSS",
+      "tier": "T1_OFFICIAL",
+      "status": "OK",
+      "fetched": 6,
+      "relevant": 0,
+      "error": null
+    },
+    {
+      "source": "CSRC_NEWS",
+      "tier": "T1_OFFICIAL",
+      "status": "OK",
+      "fetched": 20,
+      "relevant": 0,
+      "error": null
+    },
+    {
+      "source": "GOV_POLICY",
+      "tier": "T1_OFFICIAL",
+      "status": "OK",
+      "fetched": 30,
+      "relevant": 0,
+      "error": null
+    }
+  ],
+  "source_health": "OK",
+  "events": [],
+  "source_tier": "T1_OFFICIAL",
+  "no_broker_orders": true,
+  "snapshot_sha256": "eb97a2e6ec937cf88466699fff5c690f471391c5e298281227da8560837bbd52"
+}
