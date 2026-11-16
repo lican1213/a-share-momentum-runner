@@ -1,3 +1,8 @@
+## 2026-11-16：V5三轮修复已合并（304测试；真实分母与准点仍待证据）
+- [完整审计](wiki/audits/AUD-2026-11-16-v5-research-integrity.md)；PR12/13/14均合并，最新代码合并SHA `871eede3c412`；[304测试与50页Wiki通过](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850824729)。
+- [真实V3运行43850640883](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850640883) / [记录](records/national_team_v3/2026-11-16/43850640883-a1.json)：普通流通覆盖率历史有效日0→8；PIT核实日0，实时分母SOURCE_UNAVAILABLE（not completed close），自由流通无可靠口径。按原定义保留NA。
+- [真实账本43850315658](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850315658)推进11/16、历史余额无漂移；[真实路由43850455250](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850455250)识别11/16并等待最新资金证据。[第三轮Wiki生产运行43850945261](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850945261)成功；[第三轮账本43850945324](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850945324)尚未完成验收。上游根cron时效尚未证实。三时段检查频次、原cron与历史记录不动。
+
 ## 2026-11-16：OHLC批次复用与MOC实时账本（第三轮新SHA待验收）
 - [本轮完整审计](wiki/audits/AUD-2026-11-16-v5-research-integrity.md)：第一轮PR12已通过295测试和实际11/16账本/路由；第二轮PR13已通过303测试并合并5bde9a01，真实分母抓取待新run核实。
 - 第三轮只统一真实个股/510300日线批次、避免重复限流请求、独立Sina ETF OHLC备援、收盘前禁止未完成日线推进模拟账本；派生简报纳入V3/V5和三组账户。监测三次/日不变，历史交易不回写。
