@@ -217,7 +217,7 @@ def _ratio_and_flow(date, dates, pos, shares, nav, caps):
                 for row in rows_needed)
         )
         nav_stamps = (nav[dates[j]][c].get("published_at")
-                      for j in (pos, pos - 1, pos - 5) for c in CORE_FOUR
+                      for j in range(pos - 5, pos + 1) for c in CORE_FOUR
                       if dates[j] in nav and c in nav[dates[j]])
         state["nav_not_known_late_by_t_plus_1"] = all(
             not stamp or _timestamp(stamp, "NAV") <= disclosure_cutoff
@@ -289,8 +289,14 @@ def _rows(prices, shares, nav, caps):
                      "downturn_control_event": control_signal,
                      "share_proxy_event": share_signal,
                      "coverage_primary_event": ratio_signal, **detail})
-    for row in rows:
+    for i,row in enumerate(rows):
         basis, active = observed_funding_basis(row)
+        # Retrospective cap rows may never manufacture a past T+1 event.
+        # The last row is an observed decision-time candidate, not a
+        # historically available signal or a proven PIT backtest.
+        if i < len(rows)-1 and basis == "PRIMARY_COVERAGE_OBSERVED" and not (row["denominator_known_by_t_plus_1"] and row["nav_not_known_late_by_t_plus_1"]):
+            proxy = {**row, "ordinary_float_coverage_ratio": None}
+            basis,active = observed_funding_basis(proxy)
         row["observed_funding_basis"] = basis
         row["observed_funding_event"] = active
     return rows
