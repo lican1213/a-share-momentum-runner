@@ -12,6 +12,8 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-16 | [f702585885](https://github.com/lican1213/a-share-momentum-runner/commit/f7025858858d258ab9333f0993900358d106bc86) | github-actions[bot] | data: archive actual ETF provider attempt 43862139445 [skip ci] |
+| 2026-11-16 | [4b84bd8895](https://github.com/lican1213/a-share-momentum-runner/commit/4b84bd88953db02f214b27a1f9ac83563df64eb1) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-16 | [81363b979f](https://github.com/lican1213/a-share-momentum-runner/commit/81363b979f6f8e5bd6df866be913afe4c1ae6d33) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43862251899 [skip ci] |
 | 2026-11-16 | [01030c9eac](https://github.com/lican1213/a-share-momentum-runner/commit/01030c9eac474668ac97aff0bbb40dc18713c008) | github-actions[bot] | records(exp0012): route event and append paper evidence 43862139424 [skip ci] |
 | 2026-11-16 | [bcf33b513b](https://github.com/lican1213/a-share-momentum-runner/commit/bcf33b513bfac1d6ddf2923fa03623e88463b27b) | Can Li | Merge pull request #21 from lican1213/fix/v5-archived-weight-and-empty-freeze-20261116 |
