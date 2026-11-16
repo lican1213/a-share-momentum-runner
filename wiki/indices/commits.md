@@ -12,6 +12,21 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-16 | [871eede3c4](https://github.com/lican1213/a-share-momentum-runner/commit/871eede3c4124607f7e6500dc540cdf588bf465b) | Can Li | Merge pull request #14 from lican1213/fix/v5-quote-reuse-and-current-moc-20261116 |
+| 2026-11-16 | [5664ed3707](https://github.com/lican1213/a-share-momentum-runner/commit/5664ed37074f751890dc4a9e1c693b9647c8015a) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43850540287 [skip ci] |
+| 2026-11-16 | [6f64584b3a](https://github.com/lican1213/a-share-momentum-runner/commit/6f64584b3a25b753c72af336e7608f574f759344) | Can Li | fix: reuse V5 OHLC batch, exclude unfinished bars, compile current ledger in MOC |
+| 2026-11-16 | [f10138b7cd](https://github.com/lican1213/a-share-momentum-runner/commit/f10138b7cdb6a77c291a62032faf48a914d4003f) | github-actions[bot] | records(exp0012): route event and append paper evidence 43850723904 [skip ci] |
+| 2026-11-16 | [92234d6079](https://github.com/lican1213/a-share-momentum-runner/commit/92234d6079696eb136be1ed36f9a2b0498f1c9d7) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 43850640883-a1 |
+| 2026-11-16 | [33cd060d06](https://github.com/lican1213/a-share-momentum-runner/commit/33cd060d06ce94c48753c351f0cabac8e7ba74bf) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43850427187 [skip ci] |
+| 2026-11-16 | [5bde9a0153](https://github.com/lican1213/a-share-momentum-runner/commit/5bde9a01532edceaa47f977e0912d70881a695c7) | Can Li | Merge pull request #13 from lican1213/fix/csi300-cap-supply-20261116 |
+| 2026-11-16 | [9b801b50f3](https://github.com/lican1213/a-share-momentum-runner/commit/9b801b50f37e275cd09d4297de49cb068cf931ea) | github-actions[bot] | records(exp0012): route event and append paper evidence 43850455250 [skip ci] |
+| 2026-11-16 | [15412f940d](https://github.com/lican1213/a-share-momentum-runner/commit/15412f940dad6e1649a54f7decc8c99f345a13a0) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43850315658 [skip ci] |
+| 2026-11-16 | [685b7fffbc](https://github.com/lican1213/a-share-momentum-runner/commit/685b7fffbc009b7ce13525bef845a0382b2c8234) | Can Li | feat: dated ordinary CSI300 float cap source and evidence-driven V3 scheduling |
+| 2026-11-16 | [76a424f7f0](https://github.com/lican1213/a-share-momentum-runner/commit/76a424f7f0c8b4970b04d1963e602478ab85ae56) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 43850315456-a1 |
+| 2026-11-16 | [54fdb2348e](https://github.com/lican1213/a-share-momentum-runner/commit/54fdb2348e9a54871525b9542ca4d582e0dfcca7) | github-actions[bot] | records(exp0012): route event and append paper evidence 43850315482 [skip ci] |
+| 2026-11-16 | [e4a730dfb9](https://github.com/lican1213/a-share-momentum-runner/commit/e4a730dfb9aa23c094bd8ef06229d14061a2f348) | Can Li | Merge pull request #12 from lican1213/fix/v5-research-integrity-20261116 |
+| 2026-11-16 | [020d671da5](https://github.com/lican1213/a-share-momentum-runner/commit/020d671da5d4ce383d207a25f565c009ad1dfa9a) | Can Li | fix: V5 dated funding routing, independent comparisons and paper sizing |
+| 2026-11-16 | [95c7ae881b](https://github.com/lican1213/a-share-momentum-runner/commit/95c7ae881be55850cfae66edbeb17dde745d6e34) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-16 | [a74345e371](https://github.com/lican1213/a-share-momentum-runner/commit/a74345e371cd07637bfe745df3802c5bbc0b9412) | github-actions[bot] | data: archive actual ETF provider attempt 43827324850 [skip ci] |
 | 2026-11-13 | [6e6221dd73](https://github.com/lican1213/a-share-momentum-runner/commit/6e6221dd739d74a0d4b337ce6121203725e70a46) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-13 | [aaa4d30131](https://github.com/lican1213/a-share-momentum-runner/commit/aaa4d301316d45bb8fd9d810f5f94360808db713) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43478606014 [skip ci] |
