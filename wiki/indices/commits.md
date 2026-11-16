@@ -12,6 +12,10 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-16 | [294f50df91](https://github.com/lican1213/a-share-momentum-runner/commit/294f50df9142cc01a81d2d39f613a7496459ef13) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43861481050 [skip ci] |
+| 2026-11-16 | [b33ccc9723](https://github.com/lican1213/a-share-momentum-runner/commit/b33ccc97235bfb0ef9e2f1fd413b221d0cbb8cda) | github-actions[bot] | records(exp0012): route event and append paper evidence 43861173129 [skip ci] |
+| 2026-11-16 | [8e0a7c21ed](https://github.com/lican1213/a-share-momentum-runner/commit/8e0a7c21ed4ecb71b63aee8ba48eca41ddffd9c8) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 43861082339-a1 |
+| 2026-11-16 | [2391534e70](https://github.com/lican1213/a-share-momentum-runner/commit/2391534e702b3a89ee62da0b60284c37519dcd07) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-16 | [9b6c6604d2](https://github.com/lican1213/a-share-momentum-runner/commit/9b6c6604d2e129bf624471f037f38235858562fc) | Can Li | Merge pull request #20 from lican1213/fix/official-cap-intake-external-clock-20261116 |
 | 2026-11-16 | [5ae10d19ce](https://github.com/lican1213/a-share-momentum-runner/commit/5ae10d19cea9c67b1f1ec8d3383bff37c23bc6e9) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43860925481 [skip ci] |
 | 2026-11-16 | [fb61e6ba19](https://github.com/lican1213/a-share-momentum-runner/commit/fb61e6ba19955a2f9109358cd30550fd9b88f2e5) | github-actions[bot] | records(exp0012): route event and append paper evidence 43860834397 [skip ci] |
