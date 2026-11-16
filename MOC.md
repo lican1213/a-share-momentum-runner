@@ -1,3 +1,7 @@
+## 2026-11-16：真实分母补源与上游完成触发（待第二轮G0/G1）
+- 第一轮 [PR #12](https://github.com/lican1213/a-share-momentum-runner/pull/12) 全库 [43850165365](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850165365) **295 passed / 50页Wiki通过**，已合并 `e4a730df`。第二轮另行验证。
+- [本轮审计](wiki/audits/AUD-2026-11-16-v5-research-integrity.md)：上交所普通流通市值8个历史实数（仅回溯）、V3精确日期普通流通市值供应商适配器及原始证据归档、ETF采集完成→V3→V5→账本。原GitHub cron全部保留；根触发准点及自由流通口径仍未验收。三时段ChatGPT监测配置不改，旧账本不回写。
+
 ## 2026-11-16：V5研究完整性修复（G0/G1待对应新SHA验收）
 - [生产复核及回归门](wiki/audits/AUD-2026-11-16-v5-research-integrity.md)：修复最新实际指数日识别、主覆盖率优先与份额回退、同质对照计数、最低佣金缩量、备用OHLC漏日；保留四ETF、三组连续账户、不动历史。源采集完成链延迟与同日普通/自由流通分母连续供给仍未关闭，不能称实测达标。
 - **仅在匹配新SHA的全量CI及新实际归档通过后标记放行；不得把旧绿色记录当新验收。** ChatGPT三时段不减频，条件通知。

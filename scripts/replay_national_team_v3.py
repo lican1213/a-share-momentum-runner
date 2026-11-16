@@ -174,8 +174,15 @@ def main(argv=None):
     if args.fetch_live_index:
         index_prices, live_meta = fetch_live_csi300(index_prices)
         prov["index_live"] = live_meta
+    caps = read_denominators(args.denominators)
+    if args.fetch_live_index:
+        from national_team.csi300_cap_sources import final_index_sessions, collect, add_captures
+        index_prices = final_index_sessions(index_prices, datetime.now(timezone.utc))
+        prov["denominator_capture"] = collect(index_prices)
+        caps, prov["denominator_capture_history"] = add_captures(
+            caps, "records/national_team_v3", prov["denominator_capture"])
     result = replay(index_prices, read_shares(args.shares), nav=nav,
-                    denominators=read_denominators(args.denominators), source_provenance=prov)
+                    denominators=caps, source_provenance=prov)
     output = json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False) + "\n"
     if args.out:
         dst = Path(args.out)
