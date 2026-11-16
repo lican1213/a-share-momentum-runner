@@ -12,6 +12,11 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-16 | [81363b979f](https://github.com/lican1213/a-share-momentum-runner/commit/81363b979f6f8e5bd6df866be913afe4c1ae6d33) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43862251899 [skip ci] |
+| 2026-11-16 | [01030c9eac](https://github.com/lican1213/a-share-momentum-runner/commit/01030c9eac474668ac97aff0bbb40dc18713c008) | github-actions[bot] | records(exp0012): route event and append paper evidence 43862139424 [skip ci] |
+| 2026-11-16 | [bcf33b513b](https://github.com/lican1213/a-share-momentum-runner/commit/bcf33b513bfac1d6ddf2923fa03623e88463b27b) | Can Li | Merge pull request #21 from lican1213/fix/v5-archived-weight-and-empty-freeze-20261116 |
+| 2026-11-16 | [4e892eda98](https://github.com/lican1213/a-share-momentum-runner/commit/4e892eda9879172ddb0e07fae96b2762f565bb94) | Can Li | fix: reuse dated CSI weight evidence and avoid empty freeze on quote outage |
+| 2026-11-16 | [f0275e919e](https://github.com/lican1213/a-share-momentum-runner/commit/f0275e919e3a032ebd316e62b389873f227c8fd0) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-16 | [438ba266e1](https://github.com/lican1213/a-share-momentum-runner/commit/438ba266e1dc584e4d58b32db8f7b4f6e975c541) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-16 | [294f50df91](https://github.com/lican1213/a-share-momentum-runner/commit/294f50df9142cc01a81d2d39f613a7496459ef13) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43861481050 [skip ci] |
 | 2026-11-16 | [b33ccc9723](https://github.com/lican1213/a-share-momentum-runner/commit/b33ccc97235bfb0ef9e2f1fd413b221d0cbb8cda) | github-actions[bot] | records(exp0012): route event and append paper evidence 43861173129 [skip ci] |
