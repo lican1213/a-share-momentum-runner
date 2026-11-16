@@ -145,8 +145,8 @@ def freeze(v3, watch, prices, *, now, next_session, stock_limit=2, funding_basis
     signal = v3["daily"][-1]
     asof = signal["date"]
     if funding_basis is not None:
-        from national_team.coverage_v3 import latest_observed_session, observed_funding_basis
-        signal = latest_observed_session(v3)
+        from national_team.coverage_v3 import decision_funding_session, observed_funding_basis
+        signal = decision_funding_session(v3)
         asof = signal["date"]
         basis, active = observed_funding_basis(signal)
         valid = active and basis == funding_basis
@@ -221,9 +221,10 @@ def freeze(v3, watch, prices, *, now, next_session, stock_limit=2, funding_basis
                            "paper_position": 0})
     cluster_key = ("observed_funding" if funding_basis is not None
                    and v3["events"].get("observed_funding") else "share_proxy")
-    cluster = v3["events"][cluster_key][-1]
-    if cluster["signal_date"] > asof:
-        raise ValueError("cluster anchor cannot follow signal")
+    anchors = [e for e in v3["events"][cluster_key] if e["signal_date"] <= asof]
+    if not anchors:
+        raise ValueError("no observed funding cluster at or before signal")
+    cluster = anchors[-1]
     s0 = {"instrument": "510300", "budget_cny": format(used, "f"),
           "status": "AWAIT_BENCHMARK_OPEN_AND_SAME_ENTRY_TIME",
           "entry_session": next_session, "filled_shares": 0, "net_return": None}

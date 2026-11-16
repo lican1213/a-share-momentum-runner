@@ -221,3 +221,32 @@ def test_identical_left_stock_sets_do_not_count_as_learning(tmp_path):
     result = paper_feedback(tmp_path)
     assert result["paired_10d_events"] == 0
     assert result["indistinguishable_left_clusters"] == 1
+
+
+def test_delayed_complete_funding_can_route_without_reviving_older_events(tmp_path):
+    from national_team.coverage_v3 import decision_funding_session
+    roots = [tmp_path / k for k in ("v3", "watch", "freeze", "outcomes")]
+    old = {"date":"2026-11-13", "market_down":True, "share_proxy_event":True,
+           "net_creation_1d_cny":100, "net_creation_5d_cny":300}
+    latest = {"date":"2026-11-16", "net_creation_1d_cny":None, "net_creation_5d_cny":None}
+    payload = {"method":{"codes":["510300","510310","510330","159919"]},
+               "daily":[old,latest],"latest_session":latest,
+               "data_quality":{"last_index_day":"2026-11-16","last_full_four_share_day":"2026-11-13"}}
+    write(roots[0],"new.json",payload)
+    write(roots[1],"watch.json",{"funding_date":"2026-11-13",
+          "collector_capture_time":"2026-11-16T16:00:00+08:00","candidate_pool_pre_filter":["600001"]})
+    now="2026-11-16T18:00:00+08:00"
+    record=route(*roots,now=now)
+    assert decision_funding_session(payload)["date"] == record["signal_session"] == "2026-11-13"
+    assert record["latest_index_session"]=="2026-11-16" and record["funding_lags_index"]
+    assert record["status"]=="NEW_FUNDING_EVENT"
+    assert route(*roots,now="2026-11-17T18:00:00+08:00")["status"]=="WAIT_FRESH_FOUR_ETF_SESSION"
+    write(roots[2],"freeze.json",{"experiment_id":"EXP-0012","signal_session":"2026-11-13"})
+    assert route(*roots,now=now)["status"]=="ALREADY_FROZEN_FOR_SESSION"
+    # A newer complete negative day must supersede an older positive day.
+    latest.update(net_creation_1d_cny=-1, net_creation_5d_cny=-10)
+    write(roots[0],"new.json",payload)
+    assert route(*roots,now=now)["status"]=="NO_NEW_FUNDING_EVENT"
+    latest.update(net_creation_1d_cny=None, net_creation_5d_cny=None)
+    payload["daily"].insert(1,{**old,"date":"2026-11-15","net_creation_1d_cny":-1})
+    assert decision_funding_session(payload)["date"]=="2026-11-16"

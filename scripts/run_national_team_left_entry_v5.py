@@ -30,8 +30,11 @@ def main():
     args = parser.parse_args()
     v3 = json.loads(Path(args.v3).read_text(encoding="utf-8"))
     watch = json.loads(Path(args.watch).read_text(encoding="utf-8"))
-    from national_team.coverage_v3 import latest_observed_session
-    asof = latest_observed_session(v3)["date"]
+    from national_team.coverage_v3 import decision_funding_session
+    asof = decision_funding_session(v3)["date"]
+    router = json.loads(Path(args.router).read_text(encoding="utf-8")) if args.router else None
+    if router is not None and (router["signal_session"] != asof or router["status"] != "NEW_FUNDING_EVENT"):
+        raise ValueError("router decision does not authorize this signal session")
     if args.prices:
         prices = json.loads(Path(args.prices).read_text(encoding="utf-8"))
     else:
@@ -42,10 +45,7 @@ def main():
     result = freeze(v3, watch, prices, now=now.isoformat(),
                     next_session=next_weekday(now.date()),
                     selected_policy=args.policy)
-    if args.router:
-        router = json.loads(Path(args.router).read_text(encoding="utf-8"))
-        if router["signal_session"] != asof:
-            raise ValueError("router policy signal session does not match stock freeze")
+    if router is not None:
         result["policy_overlay"] = router.get("policy_overlay")
         result["source_router_snapshot_sha256"] = router.get("snapshot_sha256")
     result["collection_errors"] = prices.get("collection_errors", {})
@@ -55,7 +55,7 @@ def main():
         "baostock_recovered": len(prices.get("fallback_recovered_codes", [])),
         "github_run_id": os.environ.get("GITHUB_RUN_ID"),
         "github_run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT"),
-        "run_commit": os.environ.get("GITHUB_SHA"),
+        "run_commit": os.environ.get("NT_CHECKED_OUT_SHA") or os.environ.get("GITHUB_SHA"),
     }
     result.pop("freeze_payload_sha256", None)
     result["freeze_payload_sha256"] = digest(result)

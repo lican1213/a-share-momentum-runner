@@ -13,7 +13,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from national_team.core_flow_factors import CORE_FOUR
-from national_team.coverage_v3 import latest_observed_session, observed_funding_basis
+from national_team.coverage_v3 import latest_observed_session, decision_funding_session, observed_funding_basis
 from national_team.left_entry_v4 import digest
 from national_team.policy_overlay import summarize as summarize_policy
 
@@ -126,7 +126,7 @@ def paper_feedback(root):
             right_excess = [Decimal(str(h["excess_s0"])) for entry in right_entries
                             for h in [entry.get("horizons", {}).get("10", {})]
                             if h.get("status") == "PAIRED" and h.get("excess_s0") is not None]
-            if right_excess:
+            if right_excess and len(right_excess) == len(right_entries):
                 right_minus_left.append(sum(right_excess) / len(right_excess)
                                         - by_policy["SHALLOW_DIP"])
     count = len(paired)
@@ -161,7 +161,8 @@ def route(v3_root, watch_root, freeze_root, followup_root, *, now,
         raise ValueError("router requires timezone-aware observation")
     today = observed.astimezone(BJ).date()
     v3_path, v3 = latest_v3(v3_root)
-    signal = latest_observed_session(v3)
+    signal = decision_funding_session(v3)
+    index_session = latest_observed_session(v3)["date"]
     asof = signal["date"]
     age = (today - date.fromisoformat(asof)).days
     feedback = paper_feedback(followup_root)
@@ -189,6 +190,8 @@ def route(v3_root, watch_root, freeze_root, followup_root, *, now,
         "event_id": "ETF4_DOWNFLOW_" + asof,
         "signal_session": asof,
         "signal_age_calendar_days": age,
+        "latest_index_session": index_session,
+        "funding_lags_index": asof < index_session,
         "status": status,
         "four_etfs": list(CORE_FOUR),
         "v3_path": str(v3_path),

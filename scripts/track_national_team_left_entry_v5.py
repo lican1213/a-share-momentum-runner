@@ -193,7 +193,7 @@ def main():
     if account:
         account["github_run_id"] = os.environ.get("GITHUB_RUN_ID")
         account["github_run_attempt"] = os.environ.get("GITHUB_RUN_ATTEMPT")
-        account["github_source_commit"] = os.environ.get("GITHUB_SHA")
+        account["github_source_commit"] = os.environ.get("NT_CHECKED_OUT_SHA") or os.environ.get("GITHUB_SHA")
         account.pop("snapshot_sha256", None)
         account["snapshot_sha256"] = digest(account)
     batch = {
