@@ -12,6 +12,10 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-16 | [99da30dde9](https://github.com/lican1213/a-share-momentum-runner/commit/99da30dde9e0c0c0a060c37f5cc88f0622ede5fe) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43859295774 [skip ci] |
+| 2026-11-16 | [b8d43236a7](https://github.com/lican1213/a-share-momentum-runner/commit/b8d43236a70f5da0b27da0f52475643701d9c98c) | Can Li | test: supply actual same-session stock observations in policy overlay fixture |
+| 2026-11-16 | [cbb66f1dec](https://github.com/lican1213/a-share-momentum-runner/commit/cbb66f1dec05c91b581cdb4d34487bbf80523975) | Can Li | fix: restore upstream NAV and stock watch, reuse exchange calendar |
+| 2026-11-16 | [ca9a956eb5](https://github.com/lican1213/a-share-momentum-runner/commit/ca9a956eb5230ca46bb5798a6a7cc45ec9158005) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-16 | [ac160b0ae7](https://github.com/lican1213/a-share-momentum-runner/commit/ac160b0ae77421e0d4649922e1871900aba468f6) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43859217173 [skip ci] |
 | 2026-11-16 | [6e9b16e423](https://github.com/lican1213/a-share-momentum-runner/commit/6e9b16e4235a6dacecb73ee2cdc356f0aba5f044) | github-actions[bot] | records(exp0012): route event and append paper evidence 43858987161 [skip ci] |
 | 2026-11-16 | [5bc0a31779](https://github.com/lican1213/a-share-momentum-runner/commit/5bc0a31779e121eaf3e89360886e1e953b3695cd) | github-actions[bot] | records(exp0012): route event and append paper evidence 43858894635 [skip ci] |
