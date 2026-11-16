@@ -229,6 +229,33 @@ def _ratio_and_flow(date, dates, pos, shares, nav, caps):
     return state
 
 
+def observed_funding_basis(signal):
+    """Prefer the defined primary ratio when its dated arithmetic is available.
+    This is an observed research signal, not historical PIT certification.
+    """
+    primary = all(signal.get(k) is not None for k in (
+        "ordinary_float_coverage_ratio", "coverage_change_1d", "coverage_change_5d"))
+    basis = "PRIMARY_COVERAGE_OBSERVED" if primary else "SHARE_PROXY"
+    active = bool(signal.get("market_down")
+                  and (signal.get("net_creation_1d_cny") or 0) > 0
+                  and (signal.get("net_creation_5d_cny") or 0) > 0
+                  and ((signal["coverage_change_1d"] > 0 and signal["coverage_change_5d"] > 0)
+                       if primary else signal.get("share_proxy_event")))
+    return basis, active
+
+
+def latest_observed_session(v3):
+    """Old filtered snapshots may hide the newest actual index session."""
+    rows = v3.get("daily") or []
+    latest = v3.get("latest_session") or (rows[-1] if rows else None)
+    if latest is None:
+        raise ValueError("V3 has no observed session")
+    indexed = (v3.get("data_quality") or {}).get("last_index_day")
+    if indexed and indexed > latest["date"]:
+        return {"date": indexed, "latest_session_missing": True}
+    return latest
+
+
 def _rows(prices, shares, nav, caps):
     """Use the exact index trading calendar for both lookbacks and forward exits."""
     dates = sorted(prices)
@@ -242,7 +269,7 @@ def _rows(prices, shares, nav, caps):
         # an exchange holiday or missing daily ETF snapshot.
         share1 = share5 = None
         if i >= 5 and all(d in shares and all(c in shares[d] for c in CORE_FOUR)
-                          for d in (day, dates[i - 1], dates[i - 5])):
+                          for d in dates[i - 5:i + 1]):
             s0 = sum(shares[day].values())
             share1 = s0 / sum(shares[dates[i - 1]].values()) - 1
             share5 = s0 / sum(shares[dates[i - 5]].values()) - 1
@@ -262,6 +289,10 @@ def _rows(prices, shares, nav, caps):
                      "downturn_control_event": control_signal,
                      "share_proxy_event": share_signal,
                      "coverage_primary_event": ratio_signal, **detail})
+    for row in rows:
+        basis, active = observed_funding_basis(row)
+        row["observed_funding_basis"] = basis
+        row["observed_funding_event"] = active
     return rows
 
 
@@ -337,7 +368,8 @@ def replay(prices, shares, *, nav=None, denominators=None, source_provenance=Non
     groups = {kind: _events(rows, key)
               for kind, key in (("coverage_primary", "coverage_primary_event"),
                                 ("share_proxy", "share_proxy_event"),
-                                ("downturn_control", "downturn_control_event"))}
+                                ("downturn_control", "downturn_control_event"),
+                                ("observed_funding", "observed_funding_event"))}
     return {
         "version": VERSION,
         "experiment_id": "EXP-0010",
@@ -374,8 +406,8 @@ def replay(prices, shares, *, nav=None, denominators=None, source_provenance=Non
         },
         "summary": {name: _stats(bag) for name, bag in groups.items()},
         "events": {name: bag["events"] for name, bag in groups.items()},
-        "daily": [r for r in rows if r["date"] in shares and
-                  (r["market_down"] or r["ordinary_float_coverage_ratio"] is not None)],
+        "latest_session": rows[-1] if rows else None,
+        "daily": [r for r in rows if r["date"] in shares or r is rows[-1]],
     }
 
 

@@ -118,3 +118,18 @@ def test_forward_tracker_evaluates_after_source_capture(monkeypatch):
                                datetime.now(ZoneInfo("Asia/Shanghai")).date().isoformat())
     assert len(checked) == 2
     assert event["source_freeze_sha256"] == "sha"
+
+def test_fallback_fills_missing_session_without_overwriting_primary():
+    first = {"date":"2026-11-03","open":"10","close":"10","high":"10","low":"10"}
+    second = {**first,"date":"2026-11-04"}
+    data = {"bars_by_symbol":{"510300":[first,second],"600001":[first]},
+            "source_url":{"600001":"https://primary.example"},"source_sha256":{"600001":"primary"}}
+    def fetch(codes,start,end):
+        assert codes == ["600001"]
+        altered = {**first,"close":"11"}
+        return {"600001":{"bars":[altered,second],"source_url":"http://baostock.com",
+                           "source_sha256":"backup"}}, {}
+    out = backfill_future_bars(data,["510300","600001"],"2026-11-02","2026-11-04",fetcher=fetch)
+    assert out["bars_by_symbol"]["600001"] == [first,second]
+    assert out["source_sha256"]["600001"] == "primary"
+    assert out["fallback_segments"]["600001"]["dates"] == ["2026-11-04"]

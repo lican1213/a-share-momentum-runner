@@ -54,7 +54,10 @@ def _orders(ranked, next_session, *, admitted):
 def freeze(v3, watch, prices, *, now, next_session, selected_policy):
     if selected_policy not in POLICIES:
         raise ValueError("invalid selected policy")
-    result = baseline_freeze(v3, watch, prices, now=now, next_session=next_session)
+    from national_team.coverage_v3 import latest_observed_session, observed_funding_basis
+    basis = observed_funding_basis(latest_observed_session(v3))[0] if v3 else "SHARE_PROXY"
+    result = baseline_freeze(v3, watch, prices, now=now, next_session=next_session,
+                             funding_basis=basis)
     eligible = result["candidates_ranked"]
     admitted = result["admission"]["pilot_admitted"]
     shadow = {}
@@ -88,6 +91,14 @@ def freeze(v3, watch, prices, *, now, next_session, selected_policy):
     )
     result["candidates_ranked"] = rank(eligible, selected_policy)
     result["paper_policies"] = shadow
+    symbols = {p: {o["stock"] for o in arm["orders"]} for p, arm in shadow.items()}
+    result["arm_comparison"] = {
+        "funding_basis": basis,
+        "left_identical": bool(symbols["SHALLOW_DIP"]) and symbols["SHALLOW_DIP"] == symbols["DEEP_DIP"],
+        "shared_symbols": sorted(set.intersection(*symbols.values())),
+        "arm_sizes": {p: len(v) for p, v in symbols.items()},
+        "interpretation": "Overlap is reported, not forced apart or counted as independent evidence",
+    }
     result["accounts"]["F1_LEFT"]["orders"] = primary
     result["accounts"]["F1_LEFT"]["state"] = (
         "PAPER_NEXT_OPEN_PENDING" if primary else "NO_SIZED_CANDIDATE"

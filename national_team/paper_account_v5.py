@@ -188,10 +188,16 @@ def _enter(account, intent, stock_bar, etf_bar, day):
                           for p in account["positions"]), Decimal(0))
         sized = plan_lots(stock_bar["open"], gross_held)
         shares = sized["shares_indicative"]
-        cost = _buy(stock_bar["open"], shares) if shares else Decimal(0)
-        risk = (stock_bar["open"] * shares * STOP_DISTANCE + 2 * MIN_COMMISSION
-                + stock_bar["open"] * shares * (2 * SLIPPAGE_RATE + STAMP_SELL_RATE))
-        if not shares or cost > d(account["cash_cny"], "cash") or risk > MAX_LOSS_PER_STOCK:
+        # The indicative planner ignores minimum commission. Reduce whole lots
+        # under the existing cash/stop-loss cap instead of discarding the order.
+        cost = Decimal(0)
+        while shares:
+            cost = _buy(stock_bar["open"], shares)
+            stop_proceeds = _sell(stock_bar["open"] * (1 - STOP_DISTANCE), shares)
+            if cost <= d(account["cash_cny"], "cash") and cost - stop_proceeds <= MAX_LOSS_PER_STOCK:
+                break
+            shares -= 100
+        if not shares:
             reason = "LOT_CASH_OR_RISK_BUDGET"
         else:
             etf_shares = 0

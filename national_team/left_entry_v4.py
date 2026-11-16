@@ -131,18 +131,26 @@ def weak_confirmation(prev_low, current_low, prev_close, current_close):
             and d(current_close, "close") >= d(prev_close, "prev_close"))
 
 
-def freeze(v3, watch, prices, *, now, next_session, stock_limit=2):
+def freeze(v3, watch, prices, *, now, next_session, stock_limit=2, funding_basis=None):
     time = _when(now)
     if time > datetime.now(timezone.utc).astimezone(time.tzinfo):
         raise ValueError("freeze cannot be future-dated")
     if not 1 <= stock_limit <= 2:
         raise ValueError("initial pilot can hold at most two stocks")
     admit = admission(v3)
-    asof = v3["daily"][-1]["date"]
     signal = v3["daily"][-1]
-    if not all((signal.get("market_down"), signal.get("share_proxy_event"),
-                d(signal.get("net_creation_1d_cny"), "net creation") > 0,
-                d(signal.get("net_creation_5d_cny"), "5d net creation") > 0)):
+    asof = signal["date"]
+    if funding_basis is not None:
+        from national_team.coverage_v3 import latest_observed_session, observed_funding_basis
+        signal = latest_observed_session(v3)
+        asof = signal["date"]
+        basis, active = observed_funding_basis(signal)
+        valid = active and basis == funding_basis
+    else:
+        valid = all((signal.get("market_down"), signal.get("share_proxy_event"),
+                     d(signal.get("net_creation_1d_cny"), "net creation") > 0,
+                     d(signal.get("net_creation_5d_cny"), "5d net creation") > 0))
+    if not valid:
         raise ValueError("latest complete-four session has no down-market positive event")
     if watch.get("funding_date") != asof:
         raise ValueError("watch and four-ETF signal dates differ")
@@ -207,7 +215,9 @@ def freeze(v3, watch, prices, *, now, next_session, stock_limit=2):
             orders.append({"stock": item["stock"], **proposal,
                            "intended_session": next_session, "fill": None,
                            "paper_position": 0})
-    cluster = v3["events"]["share_proxy"][-1]
+    cluster_key = ("observed_funding" if funding_basis is not None
+                   and v3["events"].get("observed_funding") else "share_proxy")
+    cluster = v3["events"][cluster_key][-1]
     if cluster["signal_date"] > asof:
         raise ValueError("cluster anchor cannot follow signal")
     s0 = {"instrument": "510300", "budget_cny": format(used, "f"),

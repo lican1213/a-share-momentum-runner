@@ -250,3 +250,15 @@ def test_missing_t_plus_two_bar_cannot_be_disguised_as_next_day_exit():
     trade = p2["accounts"]["SHALLOW_DIP"]["closed_trades"][0]
     assert trade["exit_session"] == "2026-11-05"
     assert trade["late_ohlc_reconciliation"] is True
+
+def test_minimum_commission_resizes_whole_lot_instead_of_skipping(monkeypatch):
+    import national_team.paper_account_v5 as engine
+    from decimal import Decimal
+    monkeypatch.setattr(engine, "plan_lots", lambda *a: {"shares_indicative": 500})
+    acct = engine._blank()
+    intent = {"signal_session":"2026-11-02", "arm":"SHALLOW_DIP",
+              "stock":"600001", "freeze_sha256":"f"*64}
+    bar = {k:Decimal("10") for k in ("open","high","low","close")}
+    engine._enter(acct,intent,bar,None,"2026-11-03")
+    assert acct["decisions"][0]["status"] == "PAPER_OPEN_PROXY_FILLED"
+    assert acct["positions"][0]["shares"] == 400
