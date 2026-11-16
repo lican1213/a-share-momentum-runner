@@ -8,7 +8,7 @@ on:
       - 'scripts/national_team_wiki.py'
       - 'data/national_team_holders/**'
   workflow_run:
-    workflows: ["National-team four ETF actual exchange data collection", "National-team V5 future OHLC and three-arm paper accounts"]
+    workflows: ["National-team four ETF actual exchange data collection"]
     types: [completed]
     branches: [main]
   workflow_dispatch:

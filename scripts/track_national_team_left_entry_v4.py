@@ -13,6 +13,8 @@ from zoneinfo import ZoneInfo
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from national_team.left_entry_outcomes import track
 
+from national_team.akshare_compat import sina_stock_daily, eastmoney_stock_daily
+
 BJ = ZoneInfo("Asia/Shanghai")
 
 
@@ -44,7 +46,7 @@ def collect(ak, freeze, asof):
                 url = "https://quote.eastmoney.com/sh510300.html"
             else:
                 sym = ("sh" if code.startswith(("6", "9")) else "sz") + code
-                frame = ak.stock_zh_a_daily(symbol=sym, start_date=start_raw,
+                frame = sina_stock_daily(ak, symbol=sym, start_date=start_raw,
                                             end_date=end, adjust="")
                 url = "https://finance.sina.com.cn/realstock/company/"
             if frame is None or frame.empty:

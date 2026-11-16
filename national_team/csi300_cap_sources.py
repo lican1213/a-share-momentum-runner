@@ -62,6 +62,7 @@ def collect(prices, *, getter=None, observed_at=None):
         import requests
         getter = requests.get
     captured = observed_at or datetime.now(BJ)
+    payload = None
     try:
         response = getter(URL, params=PARAMS, headers={"User-Agent":"Mozilla/5.0",
                            "Referer":"https://quote.eastmoney.com/"}, timeout=12)
@@ -73,8 +74,12 @@ def collect(prices, *, getter=None, observed_at=None):
                 "raw_quote": payload, "sha256": hashlib.sha256(json.dumps(
                     payload, sort_keys=True, ensure_ascii=False).encode()).hexdigest()}
     except Exception as exc:
-        return {"status":"SOURCE_UNAVAILABLE", "observed_at":captured.isoformat(),
-                "error":f"{type(exc).__name__}:{str(exc)[:160]}"}
+        result = {"status":"SOURCE_UNAVAILABLE", "observed_at":captured.isoformat(),
+                  "error":f"{type(exc).__name__}:{str(exc)[:160]}"}
+        if isinstance(payload,dict):
+            result["rejected_raw_quote"] = payload
+            result["sha256"] = hashlib.sha256(json.dumps(payload,sort_keys=True,ensure_ascii=False).encode()).hexdigest()
+        return result
 
 
 def add_captures(official, history_root, current):

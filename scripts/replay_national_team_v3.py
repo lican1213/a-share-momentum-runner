@@ -166,7 +166,7 @@ def main(argv=None):
         "nav": nav_provenance,
         "denominators": {"path": args.denominators,
                          "sha256": sha256_file(args.denominators)} if args.denominators else None,
-        "repo_source_commit": os.environ.get("GITHUB_SHA", "LOCAL_UNVERIFIED"),
+        "repo_source_commit": os.environ.get("V3_CHECKED_OUT_SHA") or os.environ.get("GITHUB_SHA", "LOCAL_UNVERIFIED"),
         "github_run_id": os.environ.get("GITHUB_RUN_ID"),
         "github_run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT"),
     }
@@ -181,8 +181,24 @@ def main(argv=None):
         prov["denominator_capture"] = collect(index_prices)
         caps, prov["denominator_capture_history"] = add_captures(
             caps, "records/national_team_v3", prov["denominator_capture"])
-    result = replay(index_prices, read_shares(args.shares), nav=nav,
+    shares = read_shares(args.shares)
+    if args.fetch_live_index:
+        from national_team.v3_exchange_overlay import overlay
+        # Historical external cache replay remains separately inspectable.
+        independent = replay(index_prices, shares, nav=nav, denominators=caps)
+        shares, nav, exchange_meta = overlay(
+            shares, nav, "records/national_team_merged",
+            observed_at=datetime.now(timezone.utc).isoformat(), index_sessions=index_prices)
+        prov["exchange_overlay"] = exchange_meta
+    prov["as_of_utc"] = datetime.now(timezone.utc).isoformat()
+    result = replay(index_prices, shares, nav=nav,
                     denominators=caps, source_provenance=prov)
+    if args.fetch_live_index:
+        result["external_cache_baseline_summary"] = independent["summary"]
+        result["latest_session"]["exchange_shares_complete"] = (
+            result["latest_session"]["date"] in exchange_meta["share_dates"])
+        result["latest_session"]["exchange_nav_complete"] = (
+            result["latest_session"]["date"] in exchange_meta["nav_dates"])
     output = json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False) + "\n"
     if args.out:
         dst = Path(args.out)

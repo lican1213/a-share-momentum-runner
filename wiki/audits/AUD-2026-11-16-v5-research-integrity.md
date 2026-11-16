@@ -34,3 +34,10 @@ updated: 2026-11-16
 - 第二轮[PR #13](https://github.com/lican1213/a-share-momentum-runner/pull/13)源码685b7fff，[G0 43850469538](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850469538) **303 passed / 50页Wiki通过**，合并5bde9a01；生产供应商capture仍需核验。
 - V5跟踪原先每个冻结重复请求510300和重叠个股；本次统一为同一批次一次取数、日期范围裁切、独立Sina ETF OHLC备用及股票Baostock。收盘前只取上一已结束日线（特别是新增源完成触发后，禁止当日未完成日K推进T+2）。
 - 修复派生Wiki只枚举历史V2/A2的事实：最新V3、V5路由、冻结、前瞻和账本都列入编译简报及索引。原始账本、策略、通知配置均不重写。第三轮G0/G1未完成时不宣称通过。
+
+## 阶段二/三下游复核（用户要求；新PR待G0/G1）
+- [第三轮真实账本](../../records/national_team_paper_accounts_v5/2026-11-16/43850945324-a1.json) 与第一轮 43850315658 三组现金、权益、同额S0净超额、各8条决定和各3笔平仓完全相同，市场日均11/16；第三轮[前瞻归档](../../records/national_team_left_outcomes_v5/2026-11-16/43850945324-a1.json)显示新浪原个股接口全体触发AKShare更名错误，东方财富510300限流，Baostock与Sina ETF备用实际恢复；不能只看账本source_errors=[]。
+- 修复已确认API改名（新接口优先、旧版兼容；仍不复权）。原始月报8个普通流通市值复核一致。拒绝的实时分母响应后续记录原文hash，不放松日期/来源核验。
+- V3必须真实消费最新带时钟的合并交易所四只份额/NAV，按完整篮子覆盖精确日期，冲突/缺失不冒充官方值；外部缓存基准单独保留，11/13官方份额完整但NAV未齐的事实不可写成完整资金因子。历史迟报市值不作为当时可得的主信号；现时观测仍单独区分。此调整可能改变后续候选，不回写历史仓位/现金。
+- GitHub官方 [workflow_run三级限制](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#workflow_run)：ETF→V3→路由→账本为三次完成触发；账本归档后改用既有Wiki workflow_dispatch（显式actions:write权限），不新增第四层workflow_run；保留原全部cron与三时段监测。新调度未经多日实际时效验证。
+- 新PR需匹配SHA全库CI+新实际归档；独立8个成熟事件条件、资金门槛与原现金本金不变。实时分母接口、公允自由流通口径仍未关闭。

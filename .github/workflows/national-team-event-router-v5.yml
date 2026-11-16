@@ -9,6 +9,8 @@ on:
     branches: [main]
     paths:
       - 'national_team/event_router_v5.py'
+      - 'national_team/akshare_compat.py'
+      - 'scripts/run_national_team_left_entry_v4.py'
       - 'national_team/policy_overlay.py'
       - 'scripts/collect_national_team_policy.py'
       - 'tests/test_national_team_policy_overlay.py'

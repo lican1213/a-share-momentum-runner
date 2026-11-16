@@ -1,3 +1,6 @@
+## 2026-11-16：阶段二/三下游影响复核（新代码待验收）
+- [审计与实际归档](wiki/audits/AUD-2026-11-16-v5-research-integrity.md)：第三轮实际模拟盘43850945324成功，三组账本不漂移。但全部Sina主个股接口更名、510300限流，备用恢复成功。新增兼容适配；V3准确消费已归档的同日完整交易所份额/NAV，保留独立外部缓存基准；历史迟报市值不进入当时主信号。账本归档后显式触发已有Wiki，避免workflow_run超过三级。不改三时段监测、旧冻结、策略参数。实时分母和根cron仍待真实闭环；新PR不提前宣称通过。
+
 ## 2026-11-16：V5三轮修复已合并（304测试；真实分母与准点仍待证据）
 - [完整审计](wiki/audits/AUD-2026-11-16-v5-research-integrity.md)；PR12/13/14均合并，最新代码合并SHA `871eede3c412`；[304测试与50页Wiki通过](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850824729)。
 - [真实V3运行43850640883](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850640883) / [记录](records/national_team_v3/2026-11-16/43850640883-a1.json)：普通流通覆盖率历史有效日0→8；PIT核实日0，实时分母SOURCE_UNAVAILABLE（not completed close），自由流通无可靠口径。按原定义保留NA。

@@ -259,3 +259,13 @@ def test_latest_session_includes_non_down_and_unavailable_four():
     assert report["daily"][-1]["date"] == days[-1]
     assert report["latest_session"]["net_creation_1d_cny"] is None
     assert not report["latest_session"]["observed_funding_event"]
+
+def test_late_denominator_does_not_change_historical_observed_event():
+    days, prices, shares, nav, caps=data()
+    for row in caps.values():
+        row["published_at"]="2026-12-31T20:00:00+08:00"
+    report=replay(prices,shares,nav=nav,denominators=caps)
+    row=next(x for x in report["daily"] if x["date"]==days[30])
+    assert row["ordinary_float_coverage_ratio"] is not None
+    assert row["observed_funding_basis"]=="SHARE_PROXY"
+    assert row["observed_funding_event"]==row["share_proxy_event"]

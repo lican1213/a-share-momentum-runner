@@ -9,6 +9,8 @@ on:
     branches: [main]
     paths:
       - 'scripts/track_national_team_left_entry_v5.py'
+      - 'national_team/akshare_compat.py'
+      - 'scripts/track_national_team_left_entry_v4.py'
       - 'national_team/paper_account_v5.py'
       - 'tests/test_national_team_paper_account_v5.py'
       - 'scripts/check_national_team_schedule_latency.py'
@@ -18,6 +20,7 @@ on:
     - cron: '45 10 * * 1-5'
 permissions:
   contents: write
+  actions: write
 concurrency:
   group: national-team-exp0012-outcome
   cancel-in-progress: false
@@ -90,3 +93,9 @@ jobs:
             sleep 2
           done
           exit 2
+      - name: Request derived Wiki refresh after immutable ledger persistence
+        # workflow_run has a three-level chain limit; explicit dispatch does
+        # not append a fourth workflow_run dependency. No raw records rewritten.
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run national-team-wiki-sync.yml --ref main
