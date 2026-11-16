@@ -19,8 +19,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install pytest only
-        run: python -m pip install pytest==8.4.2 'pandas>=2.2,<3' 'lxml>=5,<7' 'beautifulsoup4>=4.12,<5'
+      - name: Install arithmetic test dependencies
+        run: python -m pip install pytest==8.4.2 'pandas>=2.2,<3' 'lxml>=5,<7' 'beautifulsoup4>=4.12,<5' 'exchange-calendars==4.13.1'
       - name: Original funds + beneficiary stock mapping tests (synthetic fixtures only)
         run: python -m pytest -q tests/test_national_team_*.py tests/test_szse_json.py
       - name: Evidence classification

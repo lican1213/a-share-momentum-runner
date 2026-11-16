@@ -144,10 +144,26 @@ def read_denominators(path):
     return result
 
 
+def cap_half_rounding(row):
+    # The published daily report is expressed in 0.01 trillion CNY.
+    return 5_000_000_000 if row.get("method","").startswith("CSDATA_DAILY_PDF_ROUNDED_0P01_TRILLION") else 0
+
+
+def ratio_change_bounds(current_aum, previous_aum, current_cap, previous_cap):
+    a, b = current_cap["value_cny"], previous_cap["value_cny"]
+    ra, rb = cap_half_rounding(current_cap), cap_half_rounding(previous_cap)
+    if a <= ra or b <= rb:
+        raise ValueError("rounded denominator smaller than reporting precision")
+    q = current_aum / previous_aum
+    return [q * (b-rb)/(a+ra)-1, q * (b+rb)/(a-ra)-1]
+
+
 def _ratio_and_flow(date, dates, pos, shares, nav, caps):
     state = {"ordinary_float_coverage_ratio": None,
              "free_float_coverage_ratio": None,
              "coverage_change_1d": None, "coverage_change_5d": None,
+             "coverage_change_1d_bounds": None, "coverage_change_5d_bounds": None,
+             "coverage_direction_ambiguous": False,
              "net_creation_1d_cny": None, "net_creation_5d_cny": None,
              "ratio_pit_verified": False,
              "denominator_known_by_t_plus_1": False,
@@ -191,6 +207,8 @@ def _ratio_and_flow(date, dates, pos, shares, nav, caps):
             if ord_row and den:
                 old = prev["aum"] / den["value_cny"]
                 state["coverage_change_1d"] = state["ordinary_float_coverage_ratio"] / old - 1
+                if cap_half_rounding(ord_row) or cap_half_rounding(den):
+                    state["coverage_change_1d_bounds"] = ratio_change_bounds(current["aum"],prev["aum"],ord_row,den)
     if pos >= 5:
         initial = per_day(pos - 5)
         if initial:
@@ -209,6 +227,10 @@ def _ratio_and_flow(date, dates, pos, shares, nav, caps):
             if ord_row and den:
                 old = initial["aum"] / den["value_cny"]
                 state["coverage_change_5d"] = state["ordinary_float_coverage_ratio"] / old - 1
+                if cap_half_rounding(ord_row) or cap_half_rounding(den):
+                    state["coverage_change_5d_bounds"] = ratio_change_bounds(current["aum"],initial["aum"],ord_row,den)
+    state["coverage_direction_ambiguous"] = any(bounds is not None and bounds[0] <= 0 <= bounds[1]
+        for bounds in (state["coverage_change_1d_bounds"],state["coverage_change_5d_bounds"]))
     if pos + 1 < len(dates) and pos >= 5:
         disclosure_cutoff = datetime.fromisoformat(dates[pos + 1] + "T15:00:00+08:00")
         rows_needed = [caps.get((dates[j], DENOM_KINDS[0])) for j in (pos, pos - 1, pos - 5)]
@@ -235,6 +257,7 @@ def observed_funding_basis(signal):
     """
     primary = all(signal.get(k) is not None for k in (
         "ordinary_float_coverage_ratio", "coverage_change_1d", "coverage_change_5d"))
+    primary = primary and not signal.get("coverage_direction_ambiguous",False)
     basis = "PRIMARY_COVERAGE_OBSERVED" if primary else "SHARE_PROXY"
     active = bool(signal.get("market_down")
                   and (signal.get("net_creation_1d_cny") or 0) > 0
@@ -297,6 +320,7 @@ def _rows(prices, shares, nav, caps):
         ratio_signal = bool(down and ratio1 is not None and ratio5 is not None
                             and flow1 is not None and flow5 is not None
                             and ratio1 > 0 and ratio5 > 0 and flow1 > 0 and flow5 > 0
+                            and not detail["coverage_direction_ambiguous"]
                             and detail["denominator_known_by_t_plus_1"]
                             and detail["nav_not_known_late_by_t_plus_1"])
         rows.append({"date": day, "index_close": p, "index_ret5": ret5,

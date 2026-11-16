@@ -269,3 +269,17 @@ def test_late_denominator_does_not_change_historical_observed_event():
     assert row["ordinary_float_coverage_ratio"] is not None
     assert row["observed_funding_basis"]=="SHARE_PROXY"
     assert row["observed_funding_event"]==row["share_proxy_event"]
+
+
+def test_rounded_daily_cap_near_zero_direction_keeps_share_proxy():
+    from national_team.coverage_v3 import ratio_change_bounds, observed_funding_basis
+    cap={"value_cny":48_210_000_000_000,
+         "method":"CSDATA_DAILY_PDF_ROUNDED_0P01_TRILLION_OBSERVED_UPPER_BOUND"}
+    low,high=ratio_change_bounds(400_000_000_001,400_000_000_000,cap,cap)
+    assert low<0<high
+    row={"ordinary_float_coverage_ratio":.008,"coverage_change_1d":1e-8,
+         "coverage_change_5d":.002,"coverage_direction_ambiguous":True,
+         "market_down":True,"share_proxy_event":True,"net_creation_1d_cny":10,"net_creation_5d_cny":20}
+    assert observed_funding_basis(row)==("SHARE_PROXY",True)
+    low,high=ratio_change_bounds(404_000_000_000,400_000_000_000,cap,cap)
+    assert low>0 and high>low
