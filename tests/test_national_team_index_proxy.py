@@ -56,3 +56,39 @@ def test_stock_history_requires_21_trading_days_through_exact_event_date():
     with pytest.raises(ValueError,match="differ"):
         summarize_stock_history(df,"600000",(dates[-1]+pd.Timedelta(days=1)).date().isoformat(),
                                 "EASTMONEY",CAP)
+
+
+def test_current_akshare_source_names_and_exact_day_stock_watch(monkeypatch,tmp_path):
+    import json
+    from types import SimpleNamespace
+    from national_team.live_stock_watch import collect
+    from national_team.akshare_compat import exchange_nav_history
+    from national_team.live_etf_sources import history_nav
+    day="2026-11-13"
+    days=pd.bdate_range(end=day,periods=21)
+    frame=pd.DataFrame({"date":days,"close":[10]*21,"amount":[20000000]*21})
+    weights=weights_frame()
+    weight_code=weights.iloc[0]["成分券代码"]
+    nav=pd.DataFrame({"净值日期":[day],"单位净值":[4.2]})
+    seen=[]
+    def stock(**kwargs):
+        seen.append(kwargs)
+        return frame
+    ak=SimpleNamespace(index_stock_cons_weight_csindex=lambda **kw:weights,
+                       index_zh_daily_sina=lambda **kw:frame,
+                       stock_zh_a_hist_sina=stock,
+                       fund_exchange_nav_hist_em=lambda **kw:nav)
+    assert history_nav(exchange_nav_history(ak,fund="510300",start_date="20261113",end_date="20261113"),
+                       "510300",{day})=={day:"4.2"}
+    raw={"capture_completed_beijing":"2026-11-16T16:00:00+08:00",
+         "funding_event":{"latest_available_trading_day":day,
+               "four_etf_factor":{"trade_date":"2026-11-12",
+                  "per_etf_daily_flow_proxy_cny":{"510300":"100"}}}}
+    path=tmp_path/"merged.json"
+    path.write_text(json.dumps(raw))
+    out=collect(ak,path,tmp_path,max_stocks=1)
+    assert len(seen)==1 and len(out["stock_snapshots"])==1
+    assert out["stock_snapshots"][weight_code]["data_date"]==day
+    assert out["status"]=="STOCK_LIQUIDITY_READY_V3_PROXY_ONLY"
+    assert out["research_ranking"]["source_flow_date"]=="2026-11-12"
+    assert not out["research_ranking"]["candidates"]

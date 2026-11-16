@@ -15,3 +15,11 @@ def sina_stock_daily(ak, **kwargs):
 
 def eastmoney_stock_daily(ak, **kwargs):
     return named_api(ak, "stock_zh_a_hist_em", "stock_zh_a_hist")(**kwargs)
+
+
+def sina_index_daily(ak, **kwargs):
+    return named_api(ak, "index_zh_daily_sina", "stock_zh_index_daily")(**kwargs)
+
+
+def exchange_nav_history(ak, **kwargs):
+    return named_api(ak, "fund_exchange_nav_hist_em", "fund_etf_fund_info_em")(**kwargs)

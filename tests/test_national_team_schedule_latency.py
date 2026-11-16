@@ -62,3 +62,12 @@ def test_old_nov3_intent_remains_nov4_and_is_not_rewritten():
         import json
         snapshot = json.loads(old_file.read_text(encoding="utf-8"))
         assert snapshot["paper_policies"]["SHALLOW_DIP"]["orders"][0]["intended_session"] == "2026-11-04"
+
+
+def test_root_preopen_cron_uses_previous_utc_day():
+    now=datetime.fromisoformat("2026-11-16T08:10:00+08:00")
+    assert latest_weekday_cron_before(now,"50 23 * * 0-4").isoformat()=="2026-11-16T07:50:00+08:00"
+    assert diagnose(now,"50 23 * * 0-4")["lag_minutes"]==20
+    live=(ROOT/".github/workflows/national-team-live.yml").read_text()
+    assert "cron: '15 1 * * 1-5'" in live and "cron: '20 8 * * 1-5'" in live
+    assert "cron: '50 23 * * 0-4'" in live

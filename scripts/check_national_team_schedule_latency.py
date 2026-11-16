@@ -14,17 +14,18 @@ WARN_AFTER_MINUTES = 60
 def latest_weekday_cron_before(now: datetime, cron: str) -> datetime:
     """Expected most recent weekday cron tick, expressed in Shanghai time."""
     fields = cron.split()
-    if len(fields) != 5 or fields[2:] != ["*", "*", "1-5"]:
-        raise ValueError("only the project's fixed Monday-Friday cron is supported")
+    if len(fields) != 5 or fields[2:4] != ["*", "*"] or fields[4] not in ("1-5", "0-4"):
+        raise ValueError("only the project's fixed UTC weekday schedules are supported")
     minute, hour = (int(fields[0]), int(fields[1]))
     if not 0 <= minute <= 59 or not 0 <= hour <= 23:
         raise ValueError("invalid UTC cron minute/hour")
     if now.tzinfo is None or now.utcoffset() is None:
         raise ValueError("scheduler observation requires a timezone")
-    local = now.astimezone(BJ)
+    utc_now = now.astimezone(timezone.utc)
+    allowed = range(0, 5) if fields[4] == "1-5" else (6, 0, 1, 2, 3)
     for delta in range(8):
-        day = local.date() - timedelta(days=delta)
-        if day.weekday() >= 5:
+        day = utc_now.date() - timedelta(days=delta)
+        if day.weekday() not in allowed:
             continue
         expected = datetime(day.year, day.month, day.day, hour, minute, tzinfo=timezone.utc)
         # UTC cron ticks, not Shanghai clock times.
