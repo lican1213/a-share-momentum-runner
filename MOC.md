@@ -1,29 +1,7 @@
-## 2026-11-16：二/三阶段下游复核（PR15、PR16均合并，310测试）
-- [PR15](https://github.com/lican1213/a-share-momentum-runner/pull/15) 308项全库测试通过，合并459670b78e41；真实[V3归档](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43851757502)覆盖交易所23个完整份额日、22个完整份额/NAV日，原独立外部5/10/20日方向统计32/60、28/60、24/59不变；11/13份额全四但官方NAV不全，净赎回代理仍-17.48亿元。原始响应f124=0，实时分母拒绝，不拿收盘点位相同替代有效日期。
-- [PR16](https://github.com/lican1213/a-share-momentum-runner/pull/16) [310项全库测试、50页Wiki通过](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43852031615)，合并4d680c8e7444；解决第三阶段48→42条配对回退的代码反例，实际新[生产回读](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43852184259)尚待完成时不得宣称恢复。三组资金历史不动；原50%入场许可固定使用独立外部回放基准。原cron及每日三次ChatGPT检查不减。Wiki原生显式触发已在[43851994486](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43851994486)成功。实时分母、根cron实际准点及迟报合法事件跨交易日识别仍未验收；详见[审计](wiki/audits/AUD-2026-11-16-v5-research-integrity.md)。
-
-## 2026-11-16：第二/三阶段影响复核及真实S0回退反例（新PR待生产验收）
-- PR15合并459670b78e41，[308项全库测试](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43851601619)通过；实际43851757253个股主接口错误消失。详细[审计](wiki/audits/AUD-2026-11-16-v5-research-integrity.md)。第三轮真实前瞻48→42配对，6条S0_MISSING（11/06两只股票×三组5日），因为Sina 510300缺11/16，现金账本未漂移。后续新增可追源的历史已观察完结日线补缺，不用猜造或补买，原独立外部基准仍用作50%研究许可。新SHA须证明配对恢复；不修改历史、参数、每日三次检查。
-
-## 2026-11-16：阶段二/三下游影响复核（新代码待验收）
-- [审计与实际归档](wiki/audits/AUD-2026-11-16-v5-research-integrity.md)：第三轮实际模拟盘43850945324成功，三组账本不漂移。但全部Sina主个股接口更名、510300限流，备用恢复成功。新增兼容适配；V3准确消费已归档的同日完整交易所份额/NAV，保留独立外部缓存基准；历史迟报市值不进入当时主信号。账本归档后显式触发已有Wiki，避免workflow_run超过三级。不改三时段监测、旧冻结、策略参数。实时分母和根cron仍待真实闭环；新PR不提前宣称通过。
-
-## 2026-11-16：V5三轮修复已合并（304测试；真实分母与准点仍待证据）
-- [完整审计](wiki/audits/AUD-2026-11-16-v5-research-integrity.md)；PR12/13/14均合并，最新代码合并SHA `871eede3c412`；[304测试与50页Wiki通过](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850824729)。
-- [真实V3运行43850640883](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850640883) / [记录](records/national_team_v3/2026-11-16/43850640883-a1.json)：普通流通覆盖率历史有效日0→8；PIT核实日0，实时分母SOURCE_UNAVAILABLE（not completed close），自由流通无可靠口径。按原定义保留NA。
-- [真实账本43850315658](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850315658)推进11/16、历史余额无漂移；[真实路由43850455250](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850455250)识别11/16并等待最新资金证据。[第三轮Wiki生产运行43850945261](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850945261)成功；[第三轮账本43850945324](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850945324)尚未完成验收。上游根cron时效尚未证实。三时段检查频次、原cron与历史记录不动。
-
-## 2026-11-16：OHLC批次复用与MOC实时账本（第三轮新SHA待验收）
-- [本轮完整审计](wiki/audits/AUD-2026-11-16-v5-research-integrity.md)：第一轮PR12已通过295测试和实际11/16账本/路由；第二轮PR13已通过303测试并合并5bde9a01，真实分母抓取待新run核实。
-- 第三轮只统一真实个股/510300日线批次、避免重复限流请求、独立Sina ETF OHLC备援、收盘前禁止未完成日线推进模拟账本；派生简报纳入V3/V5和三组账户。监测三次/日不变，历史交易不回写。
-
-## 2026-11-16：真实分母补源与上游完成触发（待第二轮G0/G1）
-- 第一轮 [PR #12](https://github.com/lican1213/a-share-momentum-runner/pull/12) 全库 [43850165365](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850165365) **295 passed / 50页Wiki通过**，已合并 `e4a730df`。第二轮另行验证。
-- [本轮审计](wiki/audits/AUD-2026-11-16-v5-research-integrity.md)：上交所普通流通市值8个历史实数（仅回溯）、V3精确日期普通流通市值供应商适配器及原始证据归档、ETF采集完成→V3→V5→账本。原GitHub cron全部保留；根触发准点及自由流通口径仍未验收。三时段ChatGPT监测配置不改，旧账本不回写。
-
-## 2026-11-16：V5研究完整性修复（G0/G1待对应新SHA验收）
-- [生产复核及回归门](wiki/audits/AUD-2026-11-16-v5-research-integrity.md)：修复最新实际指数日识别、主覆盖率优先与份额回退、同质对照计数、最低佣金缩量、备用OHLC漏日；保留四ETF、三组连续账户、不动历史。源采集完成链延迟与同日普通/自由流通分母连续供给仍未关闭，不能称实测达标。
-- **仅在匹配新SHA的全量CI及新实际归档通过后标记放行；不得把旧绿色记录当新验收。** ChatGPT三时段不减频，条件通知。
+## 2026-11-16：V5当前状态与Ponytail收敛
+- [本日全部开发过程、PR12—16及对抗式审计](wiki/audits/AUD-2026-11-16-v5-research-integrity.md)。PR16 [310测试/50页Wiki通过](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43852031615)，[真实运行43852184259](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43852184259)与[43852350573](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43852350573)两次恢复48条配对、48条未成熟、0条S0缺失。三组账本保持空仓，每组历史平仓3笔，现金29992.31/29935.99/30037.16元。源错误仍须看真实记录；已恢复证据不等于策略有效。
+- [真实V3归档](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43851757502)：交易所完整份额23日、完整份额/NAV22日；原历史方向基准32/60、28/60、24/59；普通覆盖率有效8日、PIT 0日；实时分母f124=0、自由流通仍缺可靠证据。11/13完整官方份额但NAV未齐；净赎回代理-17.48亿元。根cron准点与迟报合法事件跨日识别仍待实际验证。
+- Ponytail最小改动：复用统一行情采集、保留归档行情原始来源、删除生产push的测试文件触发及重复共享路径。原cron、完成触发、手动触发、PR全库测试与生产门均保留。每日08:30/12:30/17:30条件监测不减频；不改参数、不重写历史。新代码G0/G1待验收，详见上方审计。后续Agent先读现有实现、能复用即复用、未证明需要不扩建模块。
 
 ## 2026-11-06：EXP-0014 V5三组模拟盘执行口径与迟到行情修复——已过真实Gate
 

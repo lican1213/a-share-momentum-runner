@@ -58,10 +58,15 @@ def recover(seen, codes, root, *, start, cutoff, observed_at):
                     if key in proposed and value!=proposed[key][0]:
                         conflicts.add(key)
                     elif key not in proposed:
-                        proposed[key]=(value,row,{"date":day,"path":str(path),
+                        # Preserve the original bar source across repeated recovery.
+                        origin = next((r for r in source.get("archived_bar_recovery",{}).get(code,[])
+                                       if r["date"] == day), None)
+                        segment = source.get("fallback_segments",{}).get(code,{})
+                        vendor = segment if day in segment.get("dates",[]) else {
+                            k:source.get(k,{}).get(code) for k in ("source_url","source_sha256")}
+                        proposed[key]=(value,row,origin or {"date":day,"path":str(path),
                             "source_capture_time":stamp,"source_snapshot_sha256":sha,
-                            "source_url":source.get("source_url",{}).get(code),
-                            "source_sha256":source.get("source_sha256",{}).get(code)})
+                            "source_url":vendor.get("source_url"),"source_sha256":vendor.get("source_sha256")})
     for (code,day),(_,row,provenance) in proposed.items():
         if (code,day) in conflicts:
             continue

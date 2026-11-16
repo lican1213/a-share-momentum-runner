@@ -73,3 +73,15 @@ def test_v5_paper_account_is_continuous_and_persisted_without_new_runner():
     assert "records/national_team_paper_accounts_v5" in s
     assert 'git add -- "$dir" "$paper_dir"' in s
     assert "tests/test_national_team_paper_account_v5.py" in s
+
+
+def test_test_only_edits_do_not_launch_live_market_requests():
+    for name,cron in (("national-team-v3-replay.yml","25 9"),
+                      ("national-team-event-router-v5.yml","5 10"),
+                      ("national-team-left-outcomes-v5.yml","45 10")):
+        s=(ROOT/".github/workflows"/name).read_text()
+        push=s.split("  push:\n",1)[1].split("\n  schedule:",1)[0].split("\npermissions:",1)[0]
+        assert "'tests/" not in push
+        assert f"cron: '{cron} * * 1-5'" in s
+        assert "workflow_run:" in s and "workflow_dispatch:" in s
+        assert "python -m pytest" in s

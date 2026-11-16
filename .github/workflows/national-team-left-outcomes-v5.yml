@@ -9,14 +9,9 @@ on:
     branches: [main]
     paths:
       - 'scripts/track_national_team_left_entry_v5.py'
-      - 'national_team/akshare_compat.py'
       - 'national_team/archived_ohlc_v5.py'
-      - 'tests/test_v5_stage23_impacts.py'
       - 'scripts/track_national_team_left_entry_v4.py'
       - 'national_team/paper_account_v5.py'
-      - 'tests/test_national_team_paper_account_v5.py'
-      - 'scripts/check_national_team_schedule_latency.py'
-      - 'tests/test_national_team_schedule_latency.py'
       - '.github/workflows/national-team-left-outcomes-v5.yml'
   schedule:
     - cron: '45 10 * * 1-5'

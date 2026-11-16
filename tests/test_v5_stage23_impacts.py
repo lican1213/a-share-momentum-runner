@@ -91,3 +91,21 @@ def test_external_reference_remains_pilot_admission_baseline():
     result=admission(v3)
     assert result["pilot_admitted"] and result["five_day_wins"]==32
     assert result["admission_baseline"]=="INDEPENDENT_EXTERNAL_CACHE"
+
+
+def test_archive_recovery_preserves_original_source_when_reused(tmp_path):
+    from national_team.archived_ohlc_v5 import recover
+    from national_team.left_entry_v4 import digest
+    row={"date":"2026-11-16","open":"4.068","high":"4.075","low":"4.036","close":"4.054"}
+    original={"date":row["date"],"path":"original.json","source_capture_time":"2026-11-16T16:00:00+08:00",
+              "source_snapshot_sha256":"original-snapshot","source_url":"https://primary.example",
+              "source_sha256":"original-hash"}
+    source={"first_observed_at":"2026-11-16T18:30:00+08:00","bars_by_symbol":{"510300":[row]},
+            "source_url":{"510300":"https://fallback.example"},"source_sha256":{"510300":"fallback-hash"},
+            "archived_bar_recovery":{"510300":[original]}}
+    d=tmp_path/"2026-11-16";d.mkdir()
+    (d/"2-a1.json").write_text(json.dumps({"results":[{"source_new_ohlc":source,
+                                                "source_new_ohlc_sha256":digest(source)}]}))
+    out=recover({},["510300"],tmp_path,start="2026-11-06",cutoff="2026-11-16",
+                observed_at="2026-11-16T19:00:00+08:00")
+    assert out["archived_bar_recovery"]["510300"]==[original]
