@@ -51,14 +51,18 @@ def _when(value):
 def admission(v3, *, threshold=Decimal("0.50")):
     if tuple(v3.get("method", {}).get("codes", ())) != CORE_FOUR:
         raise ValueError("four fixed CSI300 ETFs are mandatory")
-    p = v3["summary"]["share_proxy"]["horizons"]["5"]
+    # Preserve the predeclared historical reference for the 50% pilot
+    # admission rule. Exchange corrections are a separately reported replay.
+    baseline = v3.get("external_cache_baseline_summary") or v3["summary"]
+    p = baseline["share_proxy"]["horizons"]["5"]
     n, wins = int(p["matured_events"]), int(p["wins"])
     if n <= 0 or not 0 <= wins <= n:
         raise ValueError("invalid matured event counts")
     observed = Decimal(wins) / Decimal(n)
-    other = {h: v3["summary"]["share_proxy"]["horizons"][h]["hit_rate"]
+    other = {h: baseline["share_proxy"]["horizons"][h]["hit_rate"]
              for h in ("10", "20")}
     return {"pilot_admitted": observed >= threshold, "threshold": str(threshold),
+            "admission_baseline": "INDEPENDENT_EXTERNAL_CACHE" if v3.get("external_cache_baseline_summary") else "LEGACY_SHARE_PROXY",
             "five_day_wins": wins, "five_day_matured": n,
             "five_day_historical_directional_hit_rate": format(observed, "f"),
             "other_horizons_directional_rates_not_gates": other,
