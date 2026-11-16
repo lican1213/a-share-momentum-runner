@@ -63,6 +63,52 @@ def index_20_return(ak,asof):
         raise ValueError("CSI300 invalid close")
     return close[-1]/close[0]-1
 
+def archived_weights(root, funding_day, now):
+    """Last genuine monthly CSI weight capture, not today's actual membership.
+
+    Allow a recent dated proxy (35 calendar days covers a monthly file cycle).
+    Never extend it by re-archiving the fallback under a new observation clock.
+    """
+    candidates=[]
+    for path in Path(root).glob("*/*.json"):
+        try:
+            raw=path.read_bytes()
+            row=json.loads(raw)
+            if row.get("index_weight_source_mode")=="ARCHIVED_MONTHLY_PROXY":
+                continue
+            w=row["index_weight"]
+            if w["kind"]!="CSI300_LATEST_INDEX_WEIGHT_PROXY_NOT_ETF_PCF" or w["source_url"]!=WEIGHTS_SOURCE:
+                continue
+            observed=datetime.fromisoformat(w["first_observed_at"].replace("Z","+00:00"))
+            if observed.utcoffset() is None or observed>now:
+                continue
+            age=(date.fromisoformat(funding_day)-date.fromisoformat(w["weight_asof"])).days
+            if not 0<=age<=35 or (now.date()-date.fromisoformat(w["weight_asof"])).days>35:
+                continue
+            weights=w["weights"]
+            if len(weights)!=300 or w["weight_count"]!=300 or any(len(c)!=6 or not c.isdigit() for c in weights):
+                continue
+            values=[Decimal(str(x)) for x in weights.values()]
+            if any(not x.is_finite() or x<0 for x in values):
+                continue
+            total=sum(values)
+            if not Decimal(".97")<=total<=Decimal("1.01") or abs(total-Decimal(w["total_weight"]))>Decimal("0.0000001"):
+                continue
+            raw_hash=row.get("raw_input_hashes",{}).get("CSINDEX_WEIGHTS","")
+            if len(raw_hash)!=64 or any(c not in "0123456789abcdef" for c in raw_hash):
+                continue
+            candidates.append((w["weight_asof"],observed,str(path),w,raw_hash,hashlib.sha256(raw).hexdigest()))
+        except (OSError,ValueError,KeyError,TypeError,ArithmeticError):
+            continue
+    if not candidates:
+        return None
+    _,_,path,w,raw_hash,archive_hash=max(candidates,key=lambda x:x[:3])
+    return w,raw_hash,{"path":path,"archive_sha256":archive_hash,
+                       "original_first_observed_at":w["first_observed_at"],
+                       "weight_asof":w["weight_asof"],"max_age_calendar_days":35,
+                       "not_current_exact_membership":True}
+
+
 def collect(ak,etf_record,out_root,max_stocks=150):
     if not 1<=max_stocks<=200:
         raise ValueError("max stocks must be 1..200")
@@ -89,11 +135,19 @@ def collect(ak,etf_record,out_root,max_stocks=150):
         stamp=datetime.now(BEIJING).isoformat()
         weights=validate_index_weights(df,stamp)
         out["index_weight"]=weights
+        out["index_weight_source_mode"]="LIVE_CSI_WEIGHT"
         out["raw_input_hashes"]["CSINDEX_WEIGHTS"]=hashlib.sha256(df.to_csv(index=False).encode()).hexdigest()
     except Exception as exc:
         out["errors"].append(f"CSI300_WEIGHT:{type(exc).__name__}:{str(exc)[:240]}")
-        out["status"]="NO_RELIABLE_INDEX_WEIGHTS"
-        return out
+        cached=archived_weights(out_root,source_session,datetime.now(BEIJING))
+        if cached is None:
+            out["status"]="NO_RELIABLE_INDEX_WEIGHTS"
+            return out
+        weights,raw_hash,origin=cached
+        out["index_weight"]=weights
+        out["index_weight_source_mode"]="ARCHIVED_MONTHLY_PROXY"
+        out["index_weight_archive"]=origin
+        out["raw_input_hashes"]["CSINDEX_WEIGHTS"]=raw_hash
 
     try:
         ret=index_20_return(ak,source_session)

@@ -46,6 +46,8 @@ def main():
     result = freeze(v3, watch, prices, now=now.isoformat(),
                     next_session=next_exchange_session(now.date()),
                     selected_policy=args.policy)
+    if result["universe"]["ohlc_verified"] == 0:
+        raise ValueError("NO_VALID_FREEZE_OHLC: keep funding event eligible for a later real observation")
     if router is not None:
         result["policy_overlay"] = router.get("policy_overlay")
         result["source_router_snapshot_sha256"] = router.get("snapshot_sha256")

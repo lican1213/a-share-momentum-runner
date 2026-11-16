@@ -23,8 +23,13 @@ def evaluate(now,runs):
     if not eligible or local-eligible[-1]>timedelta(minutes=55):
         return "OUTSIDE_WATCHDOG_WINDOW"
     start=eligible[-1]
-    if any(run.get("status") in ACTIVE for run in runs):
-        return "ACTIVE_ROOT_ALREADY_EXISTS"
+    active=[run for run in runs if run.get("status") in ACTIVE]
+    if active:
+        # A queued or running job may be stuck; don't silently call it healthy
+        # or dispatch another job behind it in the same concurrency group.
+        recent=[r for r in active if local-datetime.fromisoformat(
+            r["created_at"].replace("Z","+00:00"))<=timedelta(minutes=55)]
+        return "ACTIVE_ROOT_ALREADY_EXISTS" if recent else "ROOT_ACTIVE_STALLED"
     for run in runs:
         created=datetime.fromisoformat(run["created_at"].replace("Z","+00:00"))
         if start<=created<=local and run.get("conclusion")=="success":
@@ -50,6 +55,8 @@ def main():
     _,data=request("/runs?branch=main&per_page=50",token)
     decision=evaluate(now,data["workflow_runs"])
     print(now.astimezone(BJ).isoformat(),decision,flush=True)
+    if decision=="ROOT_ACTIVE_STALLED":
+        raise SystemExit(3)
     if decision=="DISPATCH_MISSING_ROOT_SLOT":
         status,_=request("/dispatches",token,{"ref":"main"})
         print("ROOT_DISPATCH_HTTP",status,flush=True)

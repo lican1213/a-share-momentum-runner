@@ -71,6 +71,7 @@ jobs:
             --out "$RUNNER_TEMP/router.json" \
             --github-output "$GITHUB_OUTPUT"
       - name: Collect true as-of OHLC and freeze a NEW paper-only session
+        id: freeze
         if: ${{ steps.route.outputs.dispatch == 'true' }}
         shell: bash
         run: |
@@ -95,6 +96,7 @@ jobs:
                 j["universe"],j["candidate_policy"])
           PY
       - name: Append decision and optional source-pinned paper intent
+        if: ${{ !cancelled() && steps.route.outcome == 'success' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -106,7 +108,9 @@ jobs:
           mkdir -p "records/national_team_router/$run_date"
           cp "$RUNNER_TEMP/router.json" "records/national_team_router/$run_date/$base_name"
           git add -- "records/national_team_router/$run_date/$base_name"
-          if test "${{ steps.route.outputs.dispatch }}" = "true"; then
+          # An attempted freeze may fail after routing. Preserve the router
+          # evidence but never fabricate a freeze file or consume its session.
+          if test -s "$RUNNER_TEMP/left-v5.json" && test "${{ steps.freeze.outcome }}" = "success"; then
             mkdir -p "records/national_team_left_entry_v5/$run_date"
             cp "$RUNNER_TEMP/left-v5.json" "records/national_team_left_entry_v5/$run_date/$base_name"
             git add -- "records/national_team_left_entry_v5/$run_date/$base_name"
