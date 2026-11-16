@@ -12,6 +12,9 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 
 | Source class | Trade/record date | Run ID | Recorded status | Evidence |
 | --- | --- | --- | --- | --- |
+| V3 dated market and four-ETF replay | 2026-11-16 | 43858894606-a1 | UNVERIFIED | [JSON](../../records/national_team_v3/2026-11-16/43858894606-a1.json) |
+| V5 independent horizon path | 2026-11-16 | 43858894563-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43858894563-a1.json) |
+| V5 continuous three-arm paper ledger | 2026-11-16 | 43858894563-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43858894563-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43858024010-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43858024010-a1.json) |
 | V5 continuous three-arm paper ledger | 2026-11-16 | 43858024010-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43858024010-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43857933970-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43857933970-a1.json) |
