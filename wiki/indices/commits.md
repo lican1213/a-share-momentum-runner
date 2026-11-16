@@ -12,6 +12,8 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-16 | [8032d61a9e](https://github.com/lican1213/a-share-momentum-runner/commit/8032d61a9ef9f8d72244c2948de6ce7c2a2c2d15) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43858024010 [skip ci] |
+| 2026-11-16 | [6e42d5ea99](https://github.com/lican1213/a-share-momentum-runner/commit/6e42d5ea9977793e1aff50ae4c27678c15d99edc) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-16 | [069255bdea](https://github.com/lican1213/a-share-momentum-runner/commit/069255bdead9999571d5460fc1a126a0bbc38737) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43857933970 [skip ci] |
 | 2026-11-16 | [ce3a908c11](https://github.com/lican1213/a-share-momentum-runner/commit/ce3a908c1185b3a98d05c7849d76da420d366d62) | github-actions[bot] | records(exp0012): route event and append paper evidence 43857840529 [skip ci] |
 | 2026-11-16 | [26bea8be30](https://github.com/lican1213/a-share-momentum-runner/commit/26bea8be300d98a2c32764ad53e985da5325036c) | github-actions[bot] | records(exp0012): route event and append paper evidence 43857607849 [skip ci] |
