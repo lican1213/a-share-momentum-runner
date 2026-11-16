@@ -2,7 +2,7 @@
 id: GENERATED-NATIONAL-TEAM
 type: log
 status: maintained
-updated: 2026-11-14
+updated: 2026-11-16
 ---
 # 国家队四ETF与股票追踪实际运行索引
 
@@ -12,6 +12,10 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 
 | Source class | Trade/record date | Run ID | Recorded status | Evidence |
 | --- | --- | --- | --- | --- |
+| ETF source attempts | 2026-11-16 | 43827324850 | SHARES_OBSERVED_NO_VERIFIED_TRADE_SIGNAL | [JSON](../../records/national_team_etf/2026-11-16/43827324850-a1.json) |
+| Four-fund merged funding | 2026-11-16 | 43827324850 | PARTIAL_LATEST_WITH_PRIOR_FULL_FOUR_FACTOR | [JSON](../../records/national_team_merged/2026-11-16/43827324850-a1.json) |
+| CSI300 stock research watches | 2026-11-13 | 43827324850 | NO_STOCK_LIQUIDITY_DATA | [JSON](../../records/national_team_watch/2026-11-16/43827324850-a1.json) |
+| Official exchange PCF attempts | 2026-11-16 | 43827324850 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-11-16/43827324850-a1.json) |
 | ETF source attempts | 2026-11-14 | 43463932968 | SHARES_OBSERVED_NO_VERIFIED_TRADE_SIGNAL | [JSON](../../records/national_team_etf/2026-11-14/43463932968-a1.json) |
 | Four-fund merged funding | 2026-11-14 | 43463932968 | PARTIAL_LATEST_WITH_PRIOR_FULL_FOUR_FACTOR | [JSON](../../records/national_team_merged/2026-11-14/43463932968-a1.json) |
 | CSI300 stock research watches | 2026-11-13 | 43463932968 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-11-14/43463932968-a1.json) |
