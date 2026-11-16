@@ -21,3 +21,10 @@ updated: 2026-11-16
 ## 未关闭的门
 - 代码与新测试需对应PR全量CI验证，合并后新真实归档验证；此文档不是通过证明。
 - 持续同日普通流通市值及自由流通市值需要真实数据供给。上交所统计月报证券指数表有普通流通市值（历史延后发布），中证指数每日报告另有自由流通市值列；两者不能互代。Tushare index_dailybasic可提供普通流通市值，接口权限/000300.SH实际返回须验证。不用指数点位反推或猜造。外部可靠调度需要授权调用workflow_dispatch；GitHub cron本身无法由串联修复。不得以新代码代替真实准点验收。
+
+## 第二阶段：真实分母接入和任务编排（等待生产Gate）
+- 已验证的PR #12：源码020d671da5d4、[G0真实运行43850165365](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850165365) **295 passed / Wiki50页PASS**，合并SHA e4a730dfb9aa。不能将这个CI证明当作第二阶段验收。
+- 官方[上证统计月报证券指数表](https://star.sse.com.cn/aboutus/publication/monthly/index/)公开的2026-09沪深300流通市值表，已按明确“亿”转为CNY录入8个可核验交易日；原始公布时刻未知，CSV published_at使用本次观察的保守上界，禁止计作历史点时可用。源网页为动态月报，月份和八个原数已在CSV固定，不推断未观察日期。
+- [中证指数2026-10-29报告](https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/researches/files/zh_CN/csiindexdailyreport20261029.pdf)列自由流通市值，但页内单位与是否经过靠档调整未充分核实，不把该值当普通流通或未经证实的真实自由流通市值。
+- [行情供应商适配器](../../national_team/csi300_cap_sources.py)核对000300沪深300身份、已完成收盘的源时间戳、与独立回放的同期收盘点位一致、f117/f116 CNY及合理量级；成功记录原始响应及哈希，错误显式记录。f117供应商口径不能标为交易所官方值。持续积累只取既有V3不可覆盖记录，不发明前值。
+- V3新增已有ETF实际采集成功的workflow_run路径，原cron17:25保留；V5已有完成触发继续用。新链不等于GitHub根cron可靠，需真实重复准点验收；不另起Runner、并保留原三时段ChatGPT检查。数据日期错误、未收盘和缺份额时不把旧事件再作新事件。
