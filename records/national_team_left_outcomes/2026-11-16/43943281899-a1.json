@@ -1,0 +1,223 @@
+{
+  "schema": 1,
+  "version": "NT_LEFT_ENTRY_FOLLOWUP_EXP0011",
+  "source_freeze_sha256": "a07684cea255393273c1a3b4065bb386ba21bb2aa6e755cbab9114d4028db9cf",
+  "first_observed_at": "2026-11-17T03:49:40.792862+08:00",
+  "asof": "2026-11-17",
+  "source_new_ohlc_sha256": "0b3a058806acedac6c442f0b66a6edee6d0a566081b905eb12a85746eef49f15",
+  "source_new_ohlc": {
+    "first_observed_at": "2026-11-17T03:49:40.792841+08:00",
+    "capture_time": "2026-11-17T03:49:40.792841+08:00",
+    "bars_by_symbol": {
+      "600016": [
+        {
+          "date": "2026-11-02",
+          "open": "3.48",
+          "high": "3.5",
+          "low": "3.42",
+          "close": "3.42"
+        },
+        {
+          "date": "2026-11-03",
+          "open": "3.42",
+          "high": "3.45",
+          "low": "3.36",
+          "close": "3.45"
+        },
+        {
+          "date": "2026-11-04",
+          "open": "3.43",
+          "high": "3.47",
+          "low": "3.42",
+          "close": "3.45"
+        },
+        {
+          "date": "2026-11-05",
+          "open": "3.45",
+          "high": "3.46",
+          "low": "3.41",
+          "close": "3.41"
+        },
+        {
+          "date": "2026-11-06",
+          "open": "3.4",
+          "high": "3.42",
+          "low": "3.38",
+          "close": "3.4"
+        },
+        {
+          "date": "2026-11-09",
+          "open": "3.4",
+          "high": "3.44",
+          "low": "3.39",
+          "close": "3.43"
+        },
+        {
+          "date": "2026-11-10",
+          "open": "3.42",
+          "high": "3.45",
+          "low": "3.41",
+          "close": "3.44"
+        },
+        {
+          "date": "2026-11-11",
+          "open": "3.44",
+          "high": "3.44",
+          "low": "3.4",
+          "close": "3.4"
+        },
+        {
+          "date": "2026-11-12",
+          "open": "3.4",
+          "high": "3.41",
+          "low": "3.38",
+          "close": "3.39"
+        },
+        {
+          "date": "2026-11-13",
+          "open": "3.39",
+          "high": "3.44",
+          "low": "3.37",
+          "close": "3.42"
+        },
+        {
+          "date": "2026-11-16",
+          "open": "3.41",
+          "high": "3.51",
+          "low": "3.4",
+          "close": "3.51"
+        }
+      ],
+      "600019": [
+        {
+          "date": "2026-11-02",
+          "open": "6.03",
+          "high": "6.14",
+          "low": "6.02",
+          "close": "6.13"
+        },
+        {
+          "date": "2026-11-03",
+          "open": "6.14",
+          "high": "6.25",
+          "low": "6.11",
+          "close": "6.24"
+        },
+        {
+          "date": "2026-11-04",
+          "open": "6.22",
+          "high": "6.3",
+          "low": "6.14",
+          "close": "6.18"
+        },
+        {
+          "date": "2026-11-05",
+          "open": "6.15",
+          "high": "6.17",
+          "low": "6.02",
+          "close": "6.08"
+        },
+        {
+          "date": "2026-11-06",
+          "open": "6.04",
+          "high": "6.15",
+          "low": "6.0",
+          "close": "6.11"
+        },
+        {
+          "date": "2026-11-09",
+          "open": "6.11",
+          "high": "6.19",
+          "low": "6.08",
+          "close": "6.15"
+        },
+        {
+          "date": "2026-11-10",
+          "open": "6.15",
+          "high": "6.2",
+          "low": "6.11",
+          "close": "6.18"
+        },
+        {
+          "date": "2026-11-11",
+          "open": "6.19",
+          "high": "6.2",
+          "low": "6.07",
+          "close": "6.08"
+        },
+        {
+          "date": "2026-11-12",
+          "open": "6.07",
+          "high": "6.08",
+          "low": "6.02",
+          "close": "6.05"
+        },
+        {
+          "date": "2026-11-13",
+          "open": "6.05",
+          "high": "6.19",
+          "low": "6.01",
+          "close": "6.18"
+        },
+        {
+          "date": "2026-11-16",
+          "open": "6.17",
+          "high": "6.25",
+          "low": "6.16",
+          "close": "6.25"
+        }
+      ]
+    },
+    "source_sha256": {
+      "600016": "15129147db56a39cef1c6e7b2427562252d84d9ad20476b3fbb3cad7cce7f581",
+      "600019": "bf82325b1b3c1de96808f0bf2f5b3bc2edd785b0ba1cf2b9cfd04879f2cc507f"
+    },
+    "source_url": {
+      "600016": "https://finance.sina.com.cn/realstock/company/",
+      "600019": "https://finance.sina.com.cn/realstock/company/"
+    },
+    "errors": {
+      "510300": "Push2RateLimitError:东方财富 push2 行情服务器断开了连接，通常是短时间内请求过多，当前 IP 被临时限流。首次限流一般约 5 分钟后恢复，反复触发后可能需要 40 分钟以上；等待期间不要重复调用东方财富的行情接口，否则会延长限流。"
+    }
+  },
+  "first_actual_benchmark_session": null,
+  "F1_LEFT": [
+    {
+      "stock": "600016",
+      "status": "NEXT_ACTUAL_SESSION_PENDING",
+      "horizons": {}
+    },
+    {
+      "stock": "600019",
+      "status": "NEXT_ACTUAL_SESSION_PENDING",
+      "horizons": {}
+    }
+  ],
+  "F2_WEAK": [
+    {
+      "stock": "600016",
+      "status": "WAIT_NEXT_OPEN_AFTER_CONFIRMATION",
+      "confirmation_day": "2026-11-04",
+      "horizons": {}
+    },
+    {
+      "stock": "600019",
+      "status": "WAIT_NEXT_OPEN_AFTER_CONFIRMATION",
+      "confirmation_day": "2026-11-02",
+      "horizons": {}
+    }
+  ],
+  "S0": "PER_LEG_SAME_ENTRY_TIME_AND_CASH_PAIRED_WHEN_MATURE",
+  "N_NON_FLOW": "NOT_YET_MATURED_MATCHED_CONTROL",
+  "errors": {
+    "510300": "Push2RateLimitError:东方财富 push2 行情服务器断开了连接，通常是短时间内请求过多，当前 IP 被临时限流。首次限流一般约 5 分钟后恢复，反复触发后可能需要 40 分钟以上；等待期间不要重复调用东方财富的行情接口，否则会延长限流。"
+  },
+  "trade_authorized": false,
+  "broker_orders": [],
+  "execution_assertion": "OHLC_OPEN_SCENARIO_NOT_AN_EXECUTED_TRADE",
+  "snapshot_sha256": "015c8dc937862a3b15e1e9b0b060b60f94d85856132cda02530067488edbbe53",
+  "freeze_path": "records/national_team_left_entry/2026-11-01/41283487731-a1.json",
+  "github_run_id": "43943281899",
+  "github_run_attempt": "1",
+  "github_source_commit": "e18a3de01dadb2c770500baa7690e2b0d189e114"
+}
