@@ -12,6 +12,10 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-16 | [0d87ab8747](https://github.com/lican1213/a-share-momentum-runner/commit/0d87ab8747aafc44b861ec7e18ae8e4efdc63275) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43851757253 [skip ci] |
+| 2026-11-16 | [fd4376f500](https://github.com/lican1213/a-share-momentum-runner/commit/fd4376f500db3b2e78db7e291d3f16680dca8c3e) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 43851757502-a1 |
+| 2026-11-16 | [36f47eea5e](https://github.com/lican1213/a-share-momentum-runner/commit/36f47eea5ed42a33ec05568baf4465620907cfa5) | github-actions[bot] | records(exp0012): route event and append paper evidence 43851757252 [skip ci] |
+| 2026-11-16 | [b14b751365](https://github.com/lican1213/a-share-momentum-runner/commit/b14b75136566108ef8a52ebb173c7587d1816c42) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-16 | [459670b78e](https://github.com/lican1213/a-share-momentum-runner/commit/459670b78e41e15914eac930e0fbcc62e1a636f3) | Can Li | Merge pull request #15 from lican1213/fix/v5-stage23-downstream-20261116 |
 | 2026-11-16 | [fd5f70de10](https://github.com/lican1213/a-share-momentum-runner/commit/fd5f70de10ac534ebb7b8fe737dca53f0357cf75) | Can Li | fix: validate stage 2/3 source lineage and downstream workflow compatibility |
 | 2026-11-16 | [b1cd4c1a0a](https://github.com/lican1213/a-share-momentum-runner/commit/b1cd4c1a0a7c3e7f90a2dcceac3f7dcb6be6d663) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
