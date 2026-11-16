@@ -13,6 +13,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from national_team.core_flow_factors import CORE_FOUR
+from national_team.coverage_v3 import latest_observed_session, observed_funding_basis
 from national_team.left_entry_v4 import digest
 from national_team.policy_overlay import summarize as summarize_policy
 
@@ -41,9 +42,8 @@ def latest_v3(root):
         if not daily:
             continue
         quality = item.get("data_quality") or {}
-        if quality.get("last_full_four_share_day", "") < daily[-1]["date"]:
-            continue
-        found.append(((daily[-1]["date"],
+        signal = latest_observed_session(item)
+        found.append(((signal["date"],
                        item.get("source_provenance", {}).get("as_of_utc", "")),
                       path, item))
     if not found:
@@ -88,7 +88,8 @@ def paper_feedback(root):
                 continue
             freeze_sha = item.get("source_freeze_sha256")
             if freeze_sha and (freeze_sha not in latest or
-                               item.get("asof", "") >= latest[freeze_sha].get("asof", "")):
+                               (item.get("asof", ""), item.get("first_observed_at", "")) >=
+                               (latest[freeze_sha].get("asof", ""), latest[freeze_sha].get("first_observed_at", ""))):
                 latest[freeze_sha] = item
     # Consecutive down-market funding days can belong to one event cluster.
     # Evaluate the earliest paper freeze per cluster to avoid fake independence.
@@ -102,8 +103,14 @@ def paper_feedback(root):
             clusters[anchor] = item
     paired = []
     right_minus_left = []
+    indistinguishable_clusters = 0
     for item in clusters.values():
         by_policy = {}
+        names = [set(e["stock"] for e in item.get("policy_results", {}).get(p, {}).get("F1_LEFT", [])
+                     if e.get("stock")) for p in POLICIES]
+        if names[0] and names[0] == names[1]:
+            indistinguishable_clusters += 1
+            continue
         for policy in POLICIES:
             entries = item.get("policy_results", {}).get(policy, {}).get("F1_LEFT", [])
             excess = []
@@ -111,7 +118,7 @@ def paper_feedback(root):
                 horizon = entry.get("horizons", {}).get("10", {})
                 if horizon.get("status") == "PAIRED" and horizon.get("excess_s0") is not None:
                     excess.append(Decimal(str(horizon["excess_s0"])))
-            if excess:
+            if excess and len(excess) == len(entries):
                 by_policy[policy] = sum(excess) / len(excess)
         if len(by_policy) == len(POLICIES):
             paired.append(by_policy)
@@ -131,6 +138,7 @@ def paper_feedback(root):
         best = "DEEP_DIP"
     return {
         "paired_10d_events": count,
+        "indistinguishable_left_clusters": indistinguishable_clusters,
         "mean_10d_excess_s0": {k: (format(v, "f") if v is not None else None)
                                for k, v in means.items()},
         "selected_policy": best,
@@ -153,20 +161,21 @@ def route(v3_root, watch_root, freeze_root, followup_root, *, now,
         raise ValueError("router requires timezone-aware observation")
     today = observed.astimezone(BJ).date()
     v3_path, v3 = latest_v3(v3_root)
-    signal = v3["daily"][-1]
+    signal = latest_observed_session(v3)
     asof = signal["date"]
     age = (today - date.fromisoformat(asof)).days
     feedback = paper_feedback(followup_root)
     status = "NO_NEW_FUNDING_EVENT"
     watch_path = None
-    flow_active = bool(signal.get("market_down") and signal.get("share_proxy_event")
-                       and Decimal(str(signal.get("net_creation_1d_cny") or 0)) > 0
-                       and Decimal(str(signal.get("net_creation_5d_cny") or 0)) > 0
-                       and 0 <= age <= MAX_SOURCE_LAG_CALENDAR_DAYS)
+    funding_basis, active = observed_funding_basis(signal)
+    flow_active = active and 0 <= age <= MAX_SOURCE_LAG_CALENDAR_DAYS
     if age < 0:
         status = "FUTURE_SOURCE_SESSION"
     elif age > MAX_SOURCE_LAG_CALENDAR_DAYS:
         status = "WAIT_FRESH_FOUR_ETF_SESSION"
+    elif signal.get("latest_session_missing") or (
+            signal.get("net_creation_1d_cny") is None or signal.get("net_creation_5d_cny") is None):
+        status = "WAIT_LATEST_SESSION_EVIDENCE"
     elif (asof in frozen_sessions(freeze_root) or
           asof in frozen_sessions(legacy_freeze_root, "EXP-0011")):
         status = "ALREADY_FROZEN_FOR_SESSION"
@@ -192,6 +201,8 @@ def route(v3_root, watch_root, freeze_root, followup_root, *, now,
             "ordinary_float_coverage_ratio": signal.get("ordinary_float_coverage_ratio"),
             "ratio_status": signal.get("ratio_status"),
             "index_ret5": signal.get("index_ret5"),
+            "funding_basis": funding_basis,
+            "latest_session_evidence_missing": bool(signal.get("latest_session_missing")),
             "share_proxy_not_state_account_trade": True,
         },
         "policy_overlay": summarize_policy(policy_snapshot, now=now, funding_day=asof,

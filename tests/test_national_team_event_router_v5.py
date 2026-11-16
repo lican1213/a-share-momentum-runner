@@ -180,3 +180,44 @@ def test_independent_right_reference_does_not_change_left_policy(tmp_path):
     assert fb["selected_policy"] == "SHALLOW_DIP"  # only one left mature cluster
     assert fb["right_side_reference"]["paired_10d_clusters"] == 1
     assert fb["right_side_reference"]["mean_R_minus_SHALLOW_excess_s0"] == "0.02"
+
+def test_newest_non_signal_or_missing_session_never_replays_old_signal(tmp_path):
+    roots = [tmp_path / k for k in ("v3", "watch", "freeze", "outcomes")]
+    older = {"date": "2026-11-02", "market_down": True, "share_proxy_event": True,
+             "net_creation_1d_cny": 100, "net_creation_5d_cny": 300}
+    payload = {"method": {"codes": ["510300","510310","510330","159919"]},
+               "daily": [older], "data_quality": {"last_index_day": "2026-11-03",
+               "last_full_four_share_day": "2026-11-03"}}
+    write(roots[0], "legacy.json", payload)
+    result = route(*roots, now="2026-11-03T18:00:00+08:00")
+    assert result["signal_session"] == "2026-11-03"
+    assert result["status"] == "WAIT_LATEST_SESSION_EVIDENCE"
+    payload["latest_session"] = {**older, "date": "2026-11-03", "market_down": False}
+    write(roots[0], "new.json", payload)
+    result = route(*roots, now="2026-11-03T18:00:00+08:00")
+    assert result["status"] == "NO_NEW_FUNDING_EVENT"
+
+
+def test_primary_ratio_precedes_proxy_when_complete():
+    from national_team.coverage_v3 import observed_funding_basis
+    sig = {"market_down": True, "share_proxy_event": True,
+           "net_creation_1d_cny": 10, "net_creation_5d_cny": 20,
+           "ordinary_float_coverage_ratio": .05,
+           "coverage_change_1d": -.01, "coverage_change_5d": .02}
+    assert observed_funding_basis(sig) == ("PRIMARY_COVERAGE_OBSERVED", False)
+    sig.update(coverage_change_1d=.01, share_proxy_event=False)
+    assert observed_funding_basis(sig) == ("PRIMARY_COVERAGE_OBSERVED", True)
+    sig["coverage_change_1d"] = None
+    sig["share_proxy_event"] = True
+    assert observed_funding_basis(sig) == ("SHARE_PROXY", True)
+
+
+def test_identical_left_stock_sets_do_not_count_as_learning(tmp_path):
+    entry = {"stock":"600001", "horizons":{"10":{"status":"PAIRED","excess_s0":".01"}}}
+    write(tmp_path, "same.json", {"results":[{"experiment_id":"EXP-0012",
+        "source_freeze_sha256":"same", "cluster_anchor":"2026-11-02",
+        "signal_session":"2026-11-02","asof":"2026-11-30",
+        "policy_results":{p:{"F1_LEFT":[entry]} for p in ("SHALLOW_DIP","DEEP_DIP")}}]})
+    result = paper_feedback(tmp_path)
+    assert result["paired_10d_events"] == 0
+    assert result["indistinguishable_left_clusters"] == 1

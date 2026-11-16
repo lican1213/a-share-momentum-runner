@@ -99,8 +99,13 @@ def backfill_asof_prices(prices, asof, *, fetcher=fetch_baostock):
 def backfill_future_bars(observations, codes, signal_date, asof, *,
                          fetcher=fetch_baostock):
     """Replace absent later OHLC only, retaining the failed primary-source errors."""
+    by_symbol = observations.setdefault("bars_by_symbol", {})
+    # Only real observed sessions are expected; never synthesize a holiday bar.
+    expected = {row["date"] for rows in by_symbol.values() for row in rows
+                if signal_date < row["date"] <= asof}
     missing = [code for code in dict.fromkeys(codes)
-               if not observations.get("bars_by_symbol", {}).get(code)]
+               if not by_symbol.get(code) or expected.difference(
+                   row["date"] for row in by_symbol.get(code, []))]
     if not missing:
         return observations
     start = (date.fromisoformat(signal_date) + timedelta(days=1)).isoformat()
@@ -112,9 +117,18 @@ def backfill_future_bars(observations, codes, signal_date, asof, *,
         bars = [row for row in item["bars"] if signal_date < row["date"] <= asof]
         if not bars:
             continue
-        observations["bars_by_symbol"][code] = bars
-        observations.setdefault("source_url", {})[code] = item["source_url"]
-        observations.setdefault("source_sha256", {})[code] = item["source_sha256"]
+        original = {row["date"]: row for row in by_symbol.get(code, [])}
+        additions = {row["date"]: row for row in bars if row["date"] not in original}
+        if not additions:
+            continue
+        by_symbol[code] = [row for _, row in sorted({**original, **additions}.items())]
+        if original:
+            observations.setdefault("fallback_segments", {})[code] = {
+                "dates": sorted(additions), "source_url": item["source_url"],
+                "source_sha256": item["source_sha256"]}
+        else:
+            observations.setdefault("source_url", {})[code] = item["source_url"]
+            observations.setdefault("source_sha256", {})[code] = item["source_sha256"]
         recovered.append(code)
     observations["fallback_recovered_codes"] = recovered
     return observations

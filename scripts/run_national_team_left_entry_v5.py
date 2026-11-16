@@ -30,7 +30,8 @@ def main():
     args = parser.parse_args()
     v3 = json.loads(Path(args.v3).read_text(encoding="utf-8"))
     watch = json.loads(Path(args.watch).read_text(encoding="utf-8"))
-    asof = v3["daily"][-1]["date"]
+    from national_team.coverage_v3 import latest_observed_session
+    asof = latest_observed_session(v3)["date"]
     if args.prices:
         prices = json.loads(Path(args.prices).read_text(encoding="utf-8"))
     else:

@@ -249,3 +249,13 @@ def test_wrong_fund_counts_not_renamed_as_account_trades():
     assert report["method"]["codes"] == list(CORE_FOUR)
     assert report["summary"]["share_proxy"]["horizons"]["5"]["wilson95"] is not None
     assert HORIZONS == (5, 10, 20)
+
+def test_latest_session_includes_non_down_and_unavailable_four():
+    days, prices, shares, nav, caps = data()
+    prices[days[-1]] = 8000
+    shares.pop(days[-1])
+    report = replay(prices, shares, nav=nav, denominators=caps)
+    assert report["latest_session"]["date"] == days[-1]
+    assert report["daily"][-1]["date"] == days[-1]
+    assert report["latest_session"]["net_creation_1d_cny"] is None
+    assert not report["latest_session"]["observed_funding_event"]
