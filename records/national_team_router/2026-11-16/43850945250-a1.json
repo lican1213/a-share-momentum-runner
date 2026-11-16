@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "version": "NT_EVENT_ROUTER_V5",
+  "experiment_id": "EXP-0012",
+  "observed_at": "2026-11-16T18:42:28.445666+08:00",
+  "event_id": "ETF4_DOWNFLOW_2026-11-16",
+  "signal_session": "2026-11-16",
+  "signal_age_calendar_days": 0,
+  "status": "WAIT_LATEST_SESSION_EVIDENCE",
+  "four_etfs": [
+    "510300",
+    "510310",
+    "510330",
+    "159919"
+  ],
+  "v3_path": "records/national_team_v3/2026-11-16/43850640883-a1.json",
+  "watch_path": null,
+  "selected_policy": "SHALLOW_DIP",
+  "feedback": {
+    "paired_10d_events": 0,
+    "indistinguishable_left_clusters": 0,
+    "mean_10d_excess_s0": {
+      "SHALLOW_DIP": null,
+      "DEEP_DIP": null
+    },
+    "selected_policy": "SHALLOW_DIP",
+    "right_side_reference": {
+      "paired_10d_clusters": 0,
+      "mean_R_minus_SHALLOW_excess_s0": null,
+      "not_used_to_gate_left_side_research": true
+    },
+    "policy_rule": "8 distinct event clusters with paired 10d outcomes; DEEP_DIP +0.2pct",
+    "not_a_calibrated_profit_probability": true
+  },
+  "funding": {
+    "net_creation_1d_cny_proxy": null,
+    "net_creation_5d_cny_proxy": null,
+    "ordinary_float_coverage_ratio": null,
+    "ratio_status": "NAV_MISSING",
+    "index_ret5": -0.018813592333541185,
+    "funding_basis": "SHARE_PROXY",
+    "latest_session_evidence_missing": false,
+    "share_proxy_not_state_account_trade": true
+  },
+  "policy_overlay": {
+    "experiment_id": "EXP-0015",
+    "status": "NO_RECENT_SUPPORT_POLICY",
+    "source_health": "PARTIAL",
+    "snapshot_sha256": "ede7e8b3ebbdc9d0da79cd4a76d53949e9d6fb769985caeece495940a26dee12",
+    "support_count": 0,
+    "matched_funding_event_ids": [],
+    "recent_event_ids": [],
+    "top_events": [],
+    "changes_admission": false,
+    "trade_authorized": false,
+    "not_a_policy_implied_etf_purchase": true
+  },
+  "dispatcher": "NO_NEW_PAPER_FREEZE",
+  "trade_authorized": false,
+  "broker_orders": [],
+  "github_run_id": "43850945250",
+  "github_source_commit": "871eede3c4124607f7e6500dc540cdf588bf465b",
+  "snapshot_sha256": "953318dfbdae24cbbeb42722d69f2ed5b7a9113d7d00d0a71b821a340e85de90"
+}
