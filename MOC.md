@@ -1,3 +1,7 @@
+## 2026-11-16：OHLC批次复用与MOC实时账本（第三轮新SHA待验收）
+- [本轮完整审计](wiki/audits/AUD-2026-11-16-v5-research-integrity.md)：第一轮PR12已通过295测试和实际11/16账本/路由；第二轮PR13已通过303测试并合并5bde9a01，真实分母抓取待新run核实。
+- 第三轮只统一真实个股/510300日线批次、避免重复限流请求、独立Sina ETF OHLC备援、收盘前禁止未完成日线推进模拟账本；派生简报纳入V3/V5和三组账户。监测三次/日不变，历史交易不回写。
+
 ## 2026-11-16：真实分母补源与上游完成触发（待第二轮G0/G1）
 - 第一轮 [PR #12](https://github.com/lican1213/a-share-momentum-runner/pull/12) 全库 [43850165365](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850165365) **295 passed / 50页Wiki通过**，已合并 `e4a730df`。第二轮另行验证。
 - [本轮审计](wiki/audits/AUD-2026-11-16-v5-research-integrity.md)：上交所普通流通市值8个历史实数（仅回溯）、V3精确日期普通流通市值供应商适配器及原始证据归档、ETF采集完成→V3→V5→账本。原GitHub cron全部保留；根触发准点及自由流通口径仍未验收。三时段ChatGPT监测配置不改，旧账本不回写。

@@ -28,3 +28,9 @@ updated: 2026-11-16
 - [中证指数2026-10-29报告](https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/researches/files/zh_CN/csiindexdailyreport20261029.pdf)列自由流通市值，但页内单位与是否经过靠档调整未充分核实，不把该值当普通流通或未经证实的真实自由流通市值。
 - [行情供应商适配器](../../national_team/csi300_cap_sources.py)核对000300沪深300身份、已完成收盘的源时间戳、与独立回放的同期收盘点位一致、f117/f116 CNY及合理量级；成功记录原始响应及哈希，错误显式记录。f117供应商口径不能标为交易所官方值。持续积累只取既有V3不可覆盖记录，不发明前值。
 - V3新增已有ETF实际采集成功的workflow_run路径，原cron17:25保留；V5已有完成触发继续用。新链不等于GitHub根cron可靠，需真实重复准点验收；不另起Runner、并保留原三时段ChatGPT检查。数据日期错误、未收盘和缺份额时不把旧事件再作新事件。
+
+## 第三阶段：避免重复OHLC访问与摘要过时
+- 第一轮在合并SHA e4a730df真实[账户运行43850315658](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850315658)完成11/16市场日期推进，三组历史账户余额未漂移、source_errors=[]；新[路由43850455250](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850455250)返回11/16 WAIT_LATEST_SESSION_EVIDENCE（数据提交SHA 76a424f7），不把11/13旧日冒充新信号。
+- 第二轮[PR #13](https://github.com/lican1213/a-share-momentum-runner/pull/13)源码685b7fff，[G0 43850469538](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43850469538) **303 passed / 50页Wiki通过**，合并5bde9a01；生产供应商capture仍需核验。
+- V5跟踪原先每个冻结重复请求510300和重叠个股；本次统一为同一批次一次取数、日期范围裁切、独立Sina ETF OHLC备用及股票Baostock。收盘前只取上一已结束日线（特别是新增源完成触发后，禁止当日未完成日K推进T+2）。
+- 修复派生Wiki只枚举历史V2/A2的事实：最新V3、V5路由、冻结、前瞻和账本都列入编译简报及索引。原始账本、策略、通知配置均不重写。第三轮G0/G1未完成时不宣称通过。
