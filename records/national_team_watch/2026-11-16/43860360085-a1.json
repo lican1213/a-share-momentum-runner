@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "run_id": "43860360085",
+  "run_attempt": "1",
+  "collector_capture_time": "2026-11-16T19:45:36.618379+08:00",
+  "etf_evidence_path": "records/national_team_merged/2026-11-16/43860360085-a1.json",
+  "etf_run_status": "FULL_FOUR_ETF_SHARES_NAV_OBSERVED_RESEARCH",
+  "funding_date": "2026-11-13",
+  "event_first_public_no_earlier_than": null,
+  "index_source": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/closeweight/000300closeweight.xls",
+  "kind": "CSI300_INDEX_PROXY_NOT_ETF_PCF",
+  "errors": [
+    "CSI300_WEIGHT:ReadTimeout:HTTPSConnectionPool(host='oss-ch.csindex.com.cn', port=443): Read timed out. (read timeout=60)"
+  ],
+  "stock_errors": {},
+  "raw_input_hashes": {},
+  "no_broker_orders": true,
+  "no_assertion_about_huijin_stock_buying": true,
+  "status": "NO_RELIABLE_INDEX_WEIGHTS"
+}
