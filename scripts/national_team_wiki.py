@@ -17,7 +17,13 @@ CATEGORIES={
     "national_team_events":"Frozen paper-event cohorts",
     "national_team_paper":"Matured paper outcomes",
     "national_team_audits":"Independent research integrity audit",
-    "national_team_strategy":"Prospective four-ETF V2 stock cohorts",
+    "national_team_strategy":"Archived four-ETF V2 stock cohorts",
+    "national_team_v3":"V3 dated market and four-ETF replay",
+    "national_team_router":"V5 dated event router",
+    "national_team_left_entry_v5":"V5 prospective frozen intents",
+    "national_team_left_outcomes_v5":"V5 independent horizon path",
+    "national_team_paper_accounts_v5":"V5 continuous three-arm paper ledger",
+    "national_team_policy":"Official policy source observations",
 }
 
 def enumerate_records(root:Path)->list[tuple[str,Path,dict]]:
@@ -31,7 +37,8 @@ def enumerate_records(root:Path)->list[tuple[str,Path,dict]]:
             if not isinstance(r,dict):
                 raise ValueError(f"record is not a dict: {path}")
             found.append((folder,path,r))
-    found.sort(key=lambda x:(x[1].parent.name,str(x[2].get("run_id") or ""),
+    found.sort(key=lambda x:(x[1].parent.name,
+                             int(x[1].stem.split("-")[0]) if x[1].stem.split("-")[0].isdigit() else 0,
                              x[1].name),reverse=True)
     return found
 
@@ -119,6 +126,40 @@ def generate(root:Path,*,now:str, records:list[tuple[str,Path,dict]]|None=None)-
         info.append(f"- 最新实测股票样本数：**{ranking.get('ranked_from_n_stocks','未知')}**；"
                     f"指数权重覆盖约 **{r.get('pool_weight_coverage','未知')}**；"
                     "指数权重非ETF真实PCF，且未证明个股跟随收益。")
+    v3 = last_for(records,"national_team_v3")
+    router = last_for(records,"national_team_router")
+    ledger = last_for(records,"national_team_paper_accounts_v5")
+    outcomes = last_for(records,"national_team_left_outcomes_v5")
+    intent = last_for(records,"national_team_left_entry_v5")
+    info.extend(["", "**当前研究执行主线：V3资金 → V5路由 → 三组连续模拟盘；旧V2/A2/B仅历史归档。**",
+                 bullet("V3最新回放",v3),bullet("V5最新事件路由",router),bullet("V5最近不可回写冻结",intent),
+                 bullet("V5最新独立前瞻路径",outcomes),bullet("V5最新三组模拟账本",ledger)])
+    if v3:
+        _,_,r=v3
+        quality=r.get("data_quality",{})
+        latest=r.get("latest_session") or ((r.get("daily") or [{}])[-1])
+        capture=(r.get("source_provenance") or {}).get("denominator_capture") or {}
+        info.append(f"- 指数交易日 {quality.get('last_index_day')}；最新完整四份额日 {quality.get('last_full_four_share_day')}；"
+                    f"普通覆盖率有效日 {quality.get('ratio_days')}，历史PIT核验日 {quality.get('ratio_pit_verified_days')}；"
+                    f"最新分母采集 {capture.get('status','NOT_CAPTURED')}；当前ratio={latest.get('ordinary_float_coverage_ratio')}。")
+    if router:
+        _,_,r=router
+        f=r.get("funding") or {};fb=r.get("feedback") or {}
+        info.append(f"- 资金观察交易日 {r.get('signal_session')}；路由 {r.get('status')}；"
+                    f"资金模式 {f.get('funding_basis','SHARE_PROXY_LEGACY')}；"
+                    f"同额成熟10日独立簇 {fb.get('paired_10d_events')}/8；默认组 {r.get('selected_policy')}。")
+    if ledger:
+        _,_,r=ledger
+        info.extend([f"- 三组账户市场日期 **{r.get('last_market_session')}**；捕获 {r.get('capture_time')}；纸面非券商成交。",
+                 "", "| 组 | 现金 | 权益 | 持仓数 | 平仓数 | 扣费净盈亏 | 同额S0已实现超额 | mark_status |",
+                 "| --- | --- | --- | --- | --- | --- | --- | --- |"])
+        for arm,account in r.get("accounts",{}).items():
+            summary=account.get("summary") or {}
+            values=[arm,summary.get("cash_cny"),summary.get("equity_after_estimated_exit_cost_cny"),
+                    summary.get("open_positions"),summary.get("closed_trades"),summary.get("net_pnl_cny"),
+                    summary.get("realized_excess_s0_equal_capital_cny"),summary.get("mark_status")]
+            info.append("| "+" | ".join(str(v) for v in values)+" |")
+    info.extend(["","**历史归档（不作为当前新信号）：**"])
     info.append(bullet("最近四ETF独立V2前瞻选股",v2))
     if v2 is not None:
         _,v2_path,v2_record=v2

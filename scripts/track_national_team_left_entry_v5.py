@@ -3,10 +3,11 @@ from __future__ import annotations
 
 import argparse
 import copy
+import hashlib
 import json
 import os
 import sys
-from datetime import date, datetime
+from datetime import date, datetime, time, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -14,9 +15,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from national_team.left_entry_outcomes import track
 from national_team.left_entry_v4 import digest
 from national_team.left_entry_v5 import POLICIES, RIGHT_POLICY
-from national_team.ohlc_fallback_v5 import backfill_future_bars
+from national_team.ohlc_fallback_v5 import backfill_future_bars, fetch_baostock
 from national_team.paper_account_v5 import advance
-from scripts.track_national_team_left_entry_v4 import collect
+from scripts.track_national_team_left_entry_v4 import collect, rows
 
 BJ = ZoneInfo("Asia/Shanghai")
 
@@ -35,7 +36,83 @@ def recent_freezes(root, *, today, max_events=24):
     return [latest[key] for key in sorted(latest)[-max_events:]]
 
 
-def follow_one(ak, frozen, source_path, asof):
+def finalized_cutoff(now):
+    """An early source-completion trigger must not settle an intraday daily bar."""
+    local = now.astimezone(BJ)
+    return (local.date() if local.time() >= time(15, 5)
+            else local.date() - timedelta(days=1)).isoformat()
+
+
+def backup_quotes(ak, codes, start, end):
+    # Baostock is only the individual-stock source. The ETF benchmark uses
+    # its own independent Sina daily-price feed, not an ETF-share substitute.
+    stocks = [code for code in codes if code != "510300"]
+    if stocks:
+        try:
+            source, errors = fetch_baostock(stocks, start, end)
+        except Exception as exc:
+            source, errors = {}, {c: "BAOSTOCK:" + type(exc).__name__ for c in stocks}
+    else:
+        source, errors = {}, {}
+    if "510300" in codes:
+        try:
+            frame = ak.fund_etf_hist_sina(symbol="sh510300")
+            if frame is None or frame.empty:
+                raise ValueError("empty independent benchmark")
+            bars = sorted((row for row in rows(frame) if start <= row["date"] <= end),
+                          key=lambda row: row["date"])
+            if not bars or len({row["date"] for row in bars}) != len(bars):
+                raise ValueError("missing or duplicate ETF daily bars")
+            source["510300"] = {"bars": bars, "source_url": "https://finance.sina.com.cn/",
+                                "source_sha256": hashlib.sha256(frame.to_csv(index=False).encode()).hexdigest()}
+        except Exception as exc:
+            errors["510300"] = "SINA_ETF:" + type(exc).__name__ + ":" + str(exc)[:120]
+    return source, errors
+
+
+def order_union(freezes):
+    orders = {}
+    for frozen in freezes:
+        for arm in frozen["paper_policies"].values():
+            for order in arm["orders"]:
+                orders.setdefault(order["stock"], order)
+    return list(orders.values())
+
+
+def capture_batch(ak, freezes, cutoff):
+    """Fetch each unique stock and 510300 only once for all active events."""
+    oldest = min(freezes, key=lambda f: f["signal_session"])
+    shared = copy.deepcopy(oldest)
+    orders = order_union(freezes)
+    shared["accounts"]["F1_LEFT"]["orders"] = orders
+    seen = collect(ak, shared, cutoff)
+    seen = backfill_future_bars(seen, ["510300", *sorted(o["stock"] for o in orders)],
+                                oldest["signal_session"], cutoff,
+                                fetcher=lambda codes,start,end: backup_quotes(ak,codes,start,end))
+    seen["capture_time"] = datetime.now(BJ).isoformat()
+    seen["first_observed_at"] = seen["capture_time"]
+    seen["finalized_cutoff"] = cutoff
+    return seen
+
+
+def scope_event(seen, frozen):
+    result = copy.deepcopy(seen)
+    codes = {"510300", *(o["stock"] for o in order_union([frozen]))}
+    signal = frozen["signal_session"]
+    result["bars_by_symbol"] = {code:[row for row in bars
+                                       if signal < row["date"] <= seen["finalized_cutoff"]]
+                                for code,bars in seen.get("bars_by_symbol",{}).items()
+                                if code in codes}
+    for key in ("source_url","source_sha256","fallback_segments","errors"):
+        if key in result:
+            result[key] = {k:v for k,v in result[key].items() if k in codes or k.split(":")[-1] in codes}
+    if "fallback_recovered_codes" in result:
+        result["fallback_recovered_codes"] = [c for c in result["fallback_recovered_codes"] if c in codes]
+    result["source_range_shared_across_events"] = True
+    return result
+
+
+def follow_one(ak, frozen, source_path, asof, *, shared_observations=None):
     # A common OHLC snapshot for both models: no one gets more recent prices.
     group_orders = []
     stock_codes = set()
@@ -48,12 +125,15 @@ def follow_one(ak, frozen, source_path, asof):
                 stock_codes.add(order["stock"])
     shared = copy.deepcopy(frozen)
     shared["accounts"]["F1_LEFT"]["orders"] = group_orders
-    seen = collect(ak, shared, asof)
-    seen = backfill_future_bars(seen, ["510300", *sorted(stock_codes)],
-                                frozen["signal_session"], asof)
-    # All market-source retrieval must predate the actual evaluation clock.
-    seen["capture_time"] = datetime.now(BJ).isoformat()
-    seen["first_observed_at"] = seen["capture_time"]
+    if shared_observations is not None:
+        seen = scope_event(shared_observations, frozen)
+    else:
+        seen = collect(ak, shared, asof)
+        seen = backfill_future_bars(seen, ["510300", *sorted(stock_codes)],
+                                    frozen["signal_session"], asof,
+                                    fetcher=lambda codes,start,end: backup_quotes(ak,codes,start,end))
+        seen["capture_time"] = datetime.now(BJ).isoformat()
+        seen["first_observed_at"] = seen["capture_time"]
     observed_at = datetime.now(BJ).isoformat()
     policy_results = {}
     for policy in active_policies:
@@ -106,8 +186,10 @@ def main():
     import akshare as ak
     freezes = recent_freezes(args.freeze_root, today=asof, max_events=args.max_events)
     results = []
+    cutoff = finalized_cutoff(now)
+    batch_source = capture_batch(ak, [f for _,f in freezes], cutoff) if freezes else None
     for path, frozen in freezes:
-        results.append(follow_one(ak, frozen, path, asof))
+        results.append(follow_one(ak, frozen, path, asof, shared_observations=batch_source))
     previous = latest_paper_snapshot(args.paper_root, asof) if args.paper_out else None
     account = advance(previous, [(frozen, result["source_new_ohlc"])
                                  for (_, frozen), result in zip(freezes, results)],

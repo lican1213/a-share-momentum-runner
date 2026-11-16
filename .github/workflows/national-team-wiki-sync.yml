@@ -8,8 +8,9 @@ on:
       - 'scripts/national_team_wiki.py'
       - 'data/national_team_holders/**'
   workflow_run:
-    workflows: ["National-team four ETF actual exchange data collection"]
+    workflows: ["National-team four ETF actual exchange data collection", "National-team V5 future OHLC and three-arm paper accounts"]
     types: [completed]
+    branches: [main]
   workflow_dispatch:
   schedule:
     - cron: '20 15 * * 1-5'
@@ -20,6 +21,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   regenerate:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:

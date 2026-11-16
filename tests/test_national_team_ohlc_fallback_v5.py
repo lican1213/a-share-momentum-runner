@@ -133,3 +133,28 @@ def test_fallback_fills_missing_session_without_overwriting_primary():
     assert out["bars_by_symbol"]["600001"] == [first,second]
     assert out["source_sha256"]["600001"] == "primary"
     assert out["fallback_segments"]["600001"]["dates"] == ["2026-11-04"]
+
+
+def test_batch_uses_one_primary_request_per_symbol_and_finalized_session(monkeypatch):
+    from datetime import datetime
+    from scripts import track_national_team_left_entry_v5 as tracker
+    def f(day, stocks):
+        return {"signal_session":day,"accounts":{"F1_LEFT":{"orders":[]}},
+                "paper_policies":{"SHALLOW_DIP":{"orders":[{"stock":c} for c in stocks]}}}
+    freezes=[f("2026-11-02",["600001","600002"]), f("2026-11-03",["600002","600003"])]
+    calls=[]
+    def collect(ak,frozen,cutoff):
+        calls.append((frozen["signal_session"],[o["stock"] for o in frozen["accounts"]["F1_LEFT"]["orders"]],cutoff))
+        return {"bars_by_symbol":{c:[{"date":"2026-11-03"},{"date":"2026-11-04"}] for c in ("510300","600001","600002","600003")}}
+    monkeypatch.setattr(tracker,"collect",collect)
+    monkeypatch.setattr(tracker,"backfill_future_bars",lambda seen,*args,**kwargs:seen)
+    now=datetime.fromisoformat("2026-11-05T10:30:00+08:00")
+    cutoff=tracker.finalized_cutoff(now)
+    assert cutoff=="2026-11-04"
+    assert tracker.finalized_cutoff(now.replace(hour=16))=="2026-11-05"
+    shared=tracker.capture_batch(object(),freezes,cutoff)
+    assert calls==[("2026-11-02",["600001","600002","600003"],"2026-11-04")]
+    view=tracker.scope_event(shared,freezes[1])
+    assert set(view["bars_by_symbol"])=={"510300","600002","600003"}
+    assert view["bars_by_symbol"]["510300"]==[{"date":"2026-11-04"}]
+    assert view["capture_time"]==shared["capture_time"]
