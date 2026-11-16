@@ -12,6 +12,12 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-16 | [9b6c6604d2](https://github.com/lican1213/a-share-momentum-runner/commit/9b6c6604d2e129bf624471f037f38235858562fc) | Can Li | Merge pull request #20 from lican1213/fix/official-cap-intake-external-clock-20261116 |
+| 2026-11-16 | [5ae10d19ce](https://github.com/lican1213/a-share-momentum-runner/commit/5ae10d19cea9c67b1f1ec8d3383bff37c23bc6e9) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43860925481 [skip ci] |
+| 2026-11-16 | [fb61e6ba19](https://github.com/lican1213/a-share-momentum-runner/commit/fb61e6ba19955a2f9109358cd30550fd9b88f2e5) | github-actions[bot] | records(exp0012): route event and append paper evidence 43860834397 [skip ci] |
+| 2026-11-16 | [33889e78b7](https://github.com/lican1213/a-share-momentum-runner/commit/33889e78b748cd8ef51195f87d213548874f6237) | Can Li | fix: source exact dated ordinary caps and independent root watchdog |
+| 2026-11-16 | [2621b567a8](https://github.com/lican1213/a-share-momentum-runner/commit/2621b567a8cfc7acc3113909407326871d93a00c) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 43860741317-a1 |
+| 2026-11-16 | [dec15608c6](https://github.com/lican1213/a-share-momentum-runner/commit/dec15608c65e9f076d0f894c740fe80b2c1e9da7) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-16 | [8d2ba704c8](https://github.com/lican1213/a-share-momentum-runner/commit/8d2ba704c84508fefd60c4b9cbf0c085a53e12c6) | github-actions[bot] | data: archive actual ETF provider attempt 43860360085 [skip ci] |
 | 2026-11-16 | [b29d671332](https://github.com/lican1213/a-share-momentum-runner/commit/b29d671332289858dd02ac8b4a25e4dcc070c8db) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43860437905 [skip ci] |
 | 2026-11-16 | [3aad577bd5](https://github.com/lican1213/a-share-momentum-runner/commit/3aad577bd5cc698cfc9bb70993268175e307e24d) | github-actions[bot] | records(exp0012): route event and append paper evidence 43860359984 [skip ci] |
