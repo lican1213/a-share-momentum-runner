@@ -13,10 +13,7 @@ on:
       - 'national_team/coverage_v3.py'
       - 'national_team/csi300_cap_sources.py'
       - 'national_team/v3_exchange_overlay.py'
-      - 'tests/test_v5_stage23_impacts.py'
-      - 'tests/test_national_team_csi300_cap_sources.py'
       - 'scripts/replay_national_team_v3.py'
-      - 'tests/test_national_team_coverage_v3.py'
       - 'data/national_team/csi300_float_mv.csv'
       - '.github/workflows/national-team-v3-replay.yml'
 permissions:

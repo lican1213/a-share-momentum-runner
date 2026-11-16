@@ -47,3 +47,9 @@ updated: 2026-11-16
 - 逐项对比[第一轮前瞻](../../records/national_team_left_outcomes_v5/2026-11-16/43850315658-a1.json)与[第三轮前瞻](../../records/national_team_left_outcomes_v5/2026-11-16/43850945324-a1.json)全部96条组-股票-期限：PAIRED 48→42，UNMATURED均48，6条变S0_MISSING。均为11/06冻结、600050与601818各三组的5日同日比较。原已归档11/16 510300真实日线 O/H/L/C 4.068/4.075/4.036/4.054；第三轮Sina备援缺该日，不能把配对回退当亏损或重新入场。之前6条同额相对净收益为0.084384293及0.7969725567个百分点，各三组。
 - 修复：备援后用已留档、哈希一致、观察时点与实际收盘校验过的精确日期原始OHLC仅补缺口；不覆盖当前已取行情、拒绝档案冲突，追溯源路径与hash；不回填模拟买入。历史独立外部回放仍作为原50%入场研究门槛的基准，交易所补源回放单独观察，不让换数据口径直接切换研究许可。
 - 新代码不等于实际恢复，必须验证匹配新SHA的归档重新出现48条配对且6条数值可复核、三组现金/成交不变。实时市值缺口与root cron仍未关闭。最新指数日和最新完整资金日错位时，仍需后续验证新到达合法迟报信号不被过期信号保护误伤；此前真实11/13为净赎回，未证明漏买。 
+
+## Ponytail Full 收敛（2026-11-16）
+- PR12/13/14/15/16生产证据均保留；[PR16全库310通过](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43852031615)，合并4d680c8e7444。[真实运行43852184259](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43852184259)及[43852350573](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43852350573)两次恢复48/48 PAIRED/UNMATURED，S0_MISSING=0；600050/601818五日超额恢复为0.084384293/0.7969725567个百分点，三组现金、权益及3笔平仓均未漂移。
+- [真实V3](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43851757502)：23日完整交易所份额/22日完整份额及NAV；独立基线32/60、28/60、24/59不变；8日普通覆盖率、0日PIT。f124=0，实时分母仍拒绝。Wiki显式触发43851994486成功。
+- 按[原版Ponytail](https://github.com/DietrichGebert/ponytail/blob/main/skills/ponytail/SKILL.md)最小改动：统一单次/多事件行情采集，删除重复分支；保留归档补缺原始供应商与hash，避免反复复用后被当前源误标。三套生产工作流push不再因纯测试文件修改触发行情请求；共享模块已有上游路由触发，不再重复触发账本。全部原cron、workflow_run、手动触发、运行中pytest与全库PR Gate保留。MOC只保留一处当前状态并链接本审计，旧版本可从Git历史查阅。
+- 不新建Runner、框架、依赖，不调整资金或选股阈值、不删除历史账本。实时分母、根cron准点及合法迟报事件跨日识别仍为已知待验收项。新变更需匹配SHA的CI和生产证据，不把以前的成功作为本轮成功。

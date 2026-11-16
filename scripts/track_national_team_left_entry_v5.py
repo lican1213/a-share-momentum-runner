@@ -7,7 +7,7 @@ import hashlib
 import json
 import os
 import sys
-from datetime import date, datetime, time, timedelta
+from datetime import datetime, time, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -87,13 +87,14 @@ def capture_batch(ak, freezes, cutoff, *, history_root=None):
     orders = order_union(freezes)
     shared["accounts"]["F1_LEFT"]["orders"] = orders
     seen = collect(ak, shared, cutoff)
-    seen = backfill_future_bars(seen, ["510300", *sorted(o["stock"] for o in orders)],
+    codes = ["510300", *sorted(o["stock"] for o in orders)]
+    seen = backfill_future_bars(seen, codes,
                                 oldest["signal_session"], cutoff,
                                 fetcher=lambda codes,start,end: backup_quotes(ak,codes,start,end))
     seen["capture_time"] = datetime.now(BJ).isoformat()
     seen["first_observed_at"] = seen["capture_time"]
     if history_root is not None:
-        seen= recover_archived_ohlc(seen, ["510300", *sorted(o["stock"] for o in orders)],
+        seen = recover_archived_ohlc(seen, codes,
                     history_root,start=oldest["signal_session"],cutoff=cutoff,
                     observed_at=seen["capture_time"])
     seen["finalized_cutoff"] = cutoff
@@ -122,26 +123,12 @@ def scope_event(seen, frozen):
 
 def follow_one(ak, frozen, source_path, asof, *, shared_observations=None):
     # A common OHLC snapshot for both models: no one gets more recent prices.
-    group_orders = []
-    stock_codes = set()
     active_policies = [p for p in (*POLICIES, RIGHT_POLICY)
                        if p in frozen["paper_policies"]]
-    for policy in active_policies:
-        for order in frozen["paper_policies"][policy]["orders"]:
-            if order["stock"] not in stock_codes:
-                group_orders.append(order)
-                stock_codes.add(order["stock"])
-    shared = copy.deepcopy(frozen)
-    shared["accounts"]["F1_LEFT"]["orders"] = group_orders
-    if shared_observations is not None:
-        seen = scope_event(shared_observations, frozen)
-    else:
-        seen = collect(ak, shared, asof)
-        seen = backfill_future_bars(seen, ["510300", *sorted(stock_codes)],
-                                    frozen["signal_session"], asof,
-                                    fetcher=lambda codes,start,end: backup_quotes(ak,codes,start,end))
-        seen["capture_time"] = datetime.now(BJ).isoformat()
-        seen["first_observed_at"] = seen["capture_time"]
+    if shared_observations is None:
+        cutoff = min(asof, finalized_cutoff(datetime.now(BJ)))
+        shared_observations = capture_batch(ak, [frozen], cutoff)
+    seen = scope_event(shared_observations, frozen)
     observed_at = datetime.now(BJ).isoformat()
     policy_results = {}
     for policy in active_policies:
