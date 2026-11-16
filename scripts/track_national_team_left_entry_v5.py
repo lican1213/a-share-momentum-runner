@@ -17,6 +17,7 @@ from national_team.left_entry_v4 import digest
 from national_team.left_entry_v5 import POLICIES, RIGHT_POLICY
 from national_team.ohlc_fallback_v5 import backfill_future_bars, fetch_baostock
 from national_team.paper_account_v5 import advance
+from national_team.archived_ohlc_v5 import recover as recover_archived_ohlc
 from scripts.track_national_team_left_entry_v4 import collect, rows
 
 BJ = ZoneInfo("Asia/Shanghai")
@@ -79,7 +80,7 @@ def order_union(freezes):
     return list(orders.values())
 
 
-def capture_batch(ak, freezes, cutoff):
+def capture_batch(ak, freezes, cutoff, *, history_root=None):
     """Fetch each unique stock and 510300 only once for all active events."""
     oldest = min(freezes, key=lambda f: f["signal_session"])
     shared = copy.deepcopy(oldest)
@@ -91,6 +92,10 @@ def capture_batch(ak, freezes, cutoff):
                                 fetcher=lambda codes,start,end: backup_quotes(ak,codes,start,end))
     seen["capture_time"] = datetime.now(BJ).isoformat()
     seen["first_observed_at"] = seen["capture_time"]
+    if history_root is not None:
+        seen= recover_archived_ohlc(seen, ["510300", *sorted(o["stock"] for o in orders)],
+                    history_root,start=oldest["signal_session"],cutoff=cutoff,
+                    observed_at=seen["capture_time"])
     seen["finalized_cutoff"] = cutoff
     return seen
 
@@ -103,11 +108,14 @@ def scope_event(seen, frozen):
                                        if signal < row["date"] <= seen["finalized_cutoff"]]
                                 for code,bars in seen.get("bars_by_symbol",{}).items()
                                 if code in codes}
-    for key in ("source_url","source_sha256","fallback_segments","errors"):
+    for key in ("source_url","source_sha256","fallback_segments","errors","archived_bar_recovery"):
         if key in result:
             result[key] = {k:v for k,v in result[key].items() if k in codes or k.split(":")[-1] in codes}
     if "fallback_recovered_codes" in result:
         result["fallback_recovered_codes"] = [c for c in result["fallback_recovered_codes"] if c in codes]
+    if "archived_bar_recovery" in result:
+        result["archived_bar_recovery"]={c:[r for r in rows if signal<r["date"]<=seen["finalized_cutoff"]]
+                                        for c,rows in result["archived_bar_recovery"].items()}
     result["source_range_shared_across_events"] = True
     return result
 
@@ -180,6 +188,7 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--paper-out", help="append-only shared three-arm cash and trade snapshot")
     ap.add_argument("--paper-root", default="records/national_team_paper_accounts_v5")
+    ap.add_argument("--outcomes-root", default="records/national_team_left_outcomes_v5")
     args = ap.parse_args()
     now = datetime.now(BJ)
     asof = now.date().isoformat()
@@ -187,7 +196,7 @@ def main():
     freezes = recent_freezes(args.freeze_root, today=asof, max_events=args.max_events)
     results = []
     cutoff = finalized_cutoff(now)
-    batch_source = capture_batch(ak, [f for _,f in freezes], cutoff) if freezes else None
+    batch_source = capture_batch(ak, [f for _,f in freezes], cutoff, history_root=args.outcomes_root) if freezes else None
     for path, frozen in freezes:
         results.append(follow_one(ak, frozen, path, asof, shared_observations=batch_source))
     previous = latest_paper_snapshot(args.paper_root, asof) if args.paper_out else None

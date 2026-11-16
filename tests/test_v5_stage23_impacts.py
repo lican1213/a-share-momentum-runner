@@ -52,3 +52,42 @@ def test_workflow_chain_dispatch_does_not_add_fourth_workflow_run():
     assert "actions: write" in ledger
     assert "National-team V5 future OHLC and three-arm paper accounts" not in wiki
     assert "workflow_dispatch:" in wiki and "schedule:" in wiki
+
+
+def test_archived_finalized_benchmark_restores_missing_date_without_filling_holiday(tmp_path):
+    from national_team.archived_ohlc_v5 import recover
+    from national_team.left_entry_v4 import digest
+    row={"date":"2026-11-16","open":"4.068","high":"4.075","low":"4.036","close":"4.054"}
+    prior={**row,"date":"2026-11-13"}
+    source={"first_observed_at":"2026-11-16T18:36:00+08:00",
+            "bars_by_symbol":{"510300":[prior,row]},
+            "source_url":{"510300":"https://actual.example/"},"source_sha256":{"510300":"original"}}
+    d=tmp_path/"2026-11-16";d.mkdir()
+    path=d/"43850315658-a1.json"
+    def write(source):
+        path.write_text(json.dumps({"results":[{"source_new_ohlc":source,
+                                                "source_new_ohlc_sha256":digest(source)}]}))
+    write(source)
+    params={"start":"2026-11-06","cutoff":"2026-11-16","observed_at":"2026-11-16T18:46:00+08:00"}
+    out=recover({"bars_by_symbol":{"510300":[prior]}},["510300"],tmp_path,**params)
+    assert out["bars_by_symbol"]["510300"]==[prior,row]
+    assert out["archived_bar_recovery"]["510300"][0]["source_sha256"]=="original"
+    assert "2026-11-14" not in [r["date"] for r in out["bars_by_symbol"]["510300"]]
+    write({**source,"first_observed_at":"2026-11-16T14:30:00+08:00"})
+    out=recover({"bars_by_symbol":{"510300":[prior]}},["510300"],tmp_path,**params)
+    assert out["bars_by_symbol"]["510300"]==[prior]
+    write({**source,"first_observed_at":"2026-11-16T19:30:00+08:00"})
+    out=recover({"bars_by_symbol":{"510300":[prior]}},["510300"],tmp_path,**params)
+    assert out["bars_by_symbol"]["510300"]==[prior]
+
+def test_external_reference_remains_pilot_admission_baseline():
+    from national_team.left_entry_v4 import admission
+    def summary(wins):
+        return {"share_proxy":{"horizons":{"5":{"matured_events":60,"wins":wins},
+                "10":{"hit_rate":.46},"20":{"hit_rate":.40}}},
+                "coverage_primary":{"raw_signal_days":0}}
+    v3={"method":{"codes":list(CORE_FOUR)},"summary":summary(29),
+        "external_cache_baseline_summary":summary(32)}
+    result=admission(v3)
+    assert result["pilot_admitted"] and result["five_day_wins"]==32
+    assert result["admission_baseline"]=="INDEPENDENT_EXTERNAL_CACHE"
