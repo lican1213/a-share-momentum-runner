@@ -265,3 +265,21 @@ def test_watch_requires_actual_matching_liquidity_not_empty_candidate_pool(tmp_p
     row["stock_snapshots"]["600001"]["data_date"]="2026-11-16"
     write(tmp_path,"ready.json",row)
     assert matching_watch(tmp_path,"2026-11-16")[0].name=="ready.json"
+
+
+def test_failed_second_price_collection_never_archives_a_freeze(monkeypatch,tmp_path):
+    import sys
+    from scripts import run_national_team_left_entry_v5 as runner
+    v=tmp_path/"v3.json";w=tmp_path/"watch.json";prices=tmp_path/"prices.json";out=tmp_path/"freeze.json"
+    v.write_text(json.dumps({"daily":[{"date":"2026-11-13"}]}))
+    w.write_text("{}");prices.write_text("{}")
+    monkeypatch.setattr(runner,"freeze",lambda *a,**kw:{"universe":{"ohlc_verified":0}})
+    monkeypatch.setattr(runner,"next_exchange_session",lambda day:"2099-01-01")
+    monkeypatch.setattr(sys,"argv",["run", "--v3",str(v),"--watch",str(w),"--policy","SHALLOW_DIP",
+                    "--prices",str(prices),"--out",str(out)])
+    with pytest.raises(ValueError,match="NO_VALID_FREEZE_OHLC"):
+        runner.main()
+    assert not out.exists()
+    workflow=(Path(__file__).resolve().parents[1]/".github/workflows/national-team-event-router-v5.yml").read_text()
+    assert "steps.route.outcome == 'success'" in workflow
+    assert "steps.freeze.outcome" in workflow

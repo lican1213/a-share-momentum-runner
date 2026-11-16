@@ -92,3 +92,42 @@ def test_current_akshare_source_names_and_exact_day_stock_watch(monkeypatch,tmp_
     assert out["status"]=="STOCK_LIQUIDITY_READY_V3_PROXY_ONLY"
     assert out["research_ranking"]["source_flow_date"]=="2026-11-12"
     assert not out["research_ranking"]["candidates"]
+
+
+def test_official_weight_timeout_reuses_only_bounded_original_archive(tmp_path):
+    import json
+    from datetime import datetime
+    from types import SimpleNamespace
+    from national_team.live_stock_watch import archived_weights,collect
+    day="2026-11-13"
+    now=datetime.fromisoformat("2026-11-16T20:00:00+08:00")
+    weights=validate_index_weights(weights_frame().assign(日期="2026-10-30"),"2026-11-13T16:00:00+08:00")
+    root=tmp_path/"watch"; archive=root/"2026-11-13";archive.mkdir(parents=True)
+    path=archive/"1-a1.json"
+    record={"index_weight":weights,"raw_input_hashes":{"CSINDEX_WEIGHTS":"a"*64}}
+    path.write_text(json.dumps(record))
+    found=archived_weights(root,day,now)
+    assert found[0]==weights and found[1]=="a"*64
+    assert found[2]["original_first_observed_at"]==weights["first_observed_at"]
+    assert archived_weights(root,"2026-12-15",datetime.fromisoformat("2026-12-15T20:00:00+08:00")) is None
+    record["index_weight_source_mode"]="ARCHIVED_MONTHLY_PROXY";path.write_text(json.dumps(record))
+    assert archived_weights(root,day,now) is None
+    record.pop("index_weight_source_mode");path.write_text(json.dumps(record))
+    def fail(**kw):
+        raise TimeoutError("simulated CSI timeout")
+    frame=pd.DataFrame({"date":pd.bdate_range(end=day,periods=21),"close":[10]*21,"amount":[20000000]*21})
+    ak=SimpleNamespace(index_stock_cons_weight_csindex=fail,index_zh_daily_sina=lambda **kw:frame,
+                       stock_zh_a_hist_sina=lambda **kw:frame)
+    src=tmp_path/"merged.json"
+    src.write_text(json.dumps({"capture_completed_beijing":"2026-11-16T16:00:00+08:00",
+        "funding_event":{"latest_available_trading_day":day,"four_etf_factor":{"trade_date":day,
+                         "per_etf_daily_flow_proxy_cny":{"510300":"100"}}}}))
+    # Freeze the clock only for the synthetic archived weight age check.
+    import national_team.live_stock_watch as watch
+    from unittest.mock import patch
+    with patch.object(watch,"archived_weights",return_value=found):
+        out=collect(ak,src,root,max_stocks=1)
+    assert out["index_weight_source_mode"]=="ARCHIVED_MONTHLY_PROXY"
+    assert len(out["stock_snapshots"])==1
+    assert out["index_weight"]["first_observed_at"]==weights["first_observed_at"]
+    assert out["errors"][0].startswith("CSI300_WEIGHT:TimeoutError")
