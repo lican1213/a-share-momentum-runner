@@ -12,6 +12,12 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-16 | [a9336099f1](https://github.com/lican1213/a-share-momentum-runner/commit/a9336099f122e6d3c94299d6e2924521358e4535) | github-actions[bot] | records(exp0012): route event and append paper evidence 43852267284 [skip ci] |
+| 2026-11-16 | [f30613865b](https://github.com/lican1213/a-share-momentum-runner/commit/f30613865bec1616642d754361ac2ba4ec72d4b6) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43852184259 [skip ci] |
+| 2026-11-16 | [00b2d8c03e](https://github.com/lican1213/a-share-momentum-runner/commit/00b2d8c03e4469e9407e63ea7566863388fd5e8e) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 43852184307-a1 |
+| 2026-11-16 | [a818cec1de](https://github.com/lican1213/a-share-momentum-runner/commit/a818cec1de9dee896dc76115a0469804205e706b) | Can Li | docs: mark stage 2/3 gates and production limits after PR16 merge |
+| 2026-11-16 | [4d680c8e74](https://github.com/lican1213/a-share-momentum-runner/commit/4d680c8e7444a2b89cfaa02f559baef9c88469b7) | Can Li | Merge pull request #16 from lican1213/fix/v5-preserve-observed-benchmark-20261116 |
+| 2026-11-16 | [8b98578b17](https://github.com/lican1213/a-share-momentum-runner/commit/8b98578b177f0175cea206837694d6c0462bd4e9) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-16 | [402bbf0e70](https://github.com/lican1213/a-share-momentum-runner/commit/402bbf0e70d1137277d5595f43d9162765baa2f5) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43851944900 [skip ci] |
 | 2026-11-16 | [2662aaa0cc](https://github.com/lican1213/a-share-momentum-runner/commit/2662aaa0ccf86e07c0968e0a3c8fe98218549b13) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-16 | [5a53ab7f40](https://github.com/lican1213/a-share-momentum-runner/commit/5a53ab7f403a868309615a705c5154207911022a) | Can Li | fix: preserve finalized observed S0 quotes across vendor outages |
