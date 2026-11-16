@@ -151,6 +151,7 @@ def test_original_etf_dispatch_unchanged_when_policy_is_present(tmp_path):
     write(watch, "watch.json", {
         "funding_date": "2026-11-02", "collector_capture_time": AT,
         "candidate_pool_pre_filter": ["600002"],
+        "stock_snapshots": {"600002": {"data_date": "2026-11-02", "adv20_cny": "20000000", "first_observed_at": AT}},
     })
     snap = collect_snapshot(now=AT, fetcher=sources())
     before = route(v3, watch, freeze, outcomes, now="2026-11-02T18:05:00+08:00")
