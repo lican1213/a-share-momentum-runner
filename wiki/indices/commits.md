@@ -12,6 +12,7 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-16 | [e7eaf61047](https://github.com/lican1213/a-share-momentum-runner/commit/e7eaf610475bb893fa7e923fd256d1b574314cfd) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-16 | [055125e35b](https://github.com/lican1213/a-share-momentum-runner/commit/055125e35b84bb7ec88fb6ea4c33e9426e859790) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43952133039 [skip ci] |
 | 2026-11-16 | [16d9b9b3c1](https://github.com/lican1213/a-share-momentum-runner/commit/16d9b9b3c16fa6a0b058055b2fe7957c6dbe2a3f) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-16 | [625ae2ef7c](https://github.com/lican1213/a-share-momentum-runner/commit/625ae2ef7c7f3a00fc20e59c3490f0bfefcd2ea1) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43946164536 [skip ci] |
