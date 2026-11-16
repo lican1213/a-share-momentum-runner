@@ -1,3 +1,7 @@
+## 2026-11-16：二/三阶段下游复核（PR15、PR16均合并，310测试）
+- [PR15](https://github.com/lican1213/a-share-momentum-runner/pull/15) 308项全库测试通过，合并459670b78e41；真实[V3归档](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43851757502)覆盖交易所23个完整份额日、22个完整份额/NAV日，原独立外部5/10/20日方向统计32/60、28/60、24/59不变；11/13份额全四但官方NAV不全，净赎回代理仍-17.48亿元。原始响应f124=0，实时分母拒绝，不拿收盘点位相同替代有效日期。
+- [PR16](https://github.com/lican1213/a-share-momentum-runner/pull/16) [310项全库测试、50页Wiki通过](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43852031615)，合并4d680c8e7444；解决第三阶段48→42条配对回退的代码反例，实际新[生产回读](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43852184259)尚待完成时不得宣称恢复。三组资金历史不动；原50%入场许可固定使用独立外部回放基准。原cron及每日三次ChatGPT检查不减。Wiki原生显式触发已在[43851994486](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43851994486)成功。实时分母、根cron实际准点及迟报合法事件跨交易日识别仍未验收；详见[审计](wiki/audits/AUD-2026-11-16-v5-research-integrity.md)。
+
 ## 2026-11-16：第二/三阶段影响复核及真实S0回退反例（新PR待生产验收）
 - PR15合并459670b78e41，[308项全库测试](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43851601619)通过；实际43851757253个股主接口错误消失。详细[审计](wiki/audits/AUD-2026-11-16-v5-research-integrity.md)。第三轮真实前瞻48→42配对，6条S0_MISSING（11/06两只股票×三组5日），因为Sina 510300缺11/16，现金账本未漂移。后续新增可追源的历史已观察完结日线补缺，不用猜造或补买，原独立外部基准仍用作50%研究许可。新SHA须证明配对恢复；不修改历史、参数、每日三次检查。
 
