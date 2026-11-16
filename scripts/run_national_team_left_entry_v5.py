@@ -13,7 +13,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from national_team.left_entry_v5 import freeze
 from national_team.left_entry_v4 import digest
 from national_team.ohlc_fallback_v5 import backfill_asof_prices
-from scripts.run_national_team_left_entry_v4 import collect, next_weekday
+from scripts.run_national_team_left_entry_v4 import collect
+from national_team.event_pipeline import next_exchange_session
 
 BJ = ZoneInfo("Asia/Shanghai")
 
@@ -43,7 +44,7 @@ def main():
         prices = backfill_asof_prices(prices, asof)
     now = datetime.now(BJ)
     result = freeze(v3, watch, prices, now=now.isoformat(),
-                    next_session=next_weekday(now.date()),
+                    next_session=next_exchange_session(now.date()),
                     selected_policy=args.policy)
     if router is not None:
         result["policy_overlay"] = router.get("policy_overlay")

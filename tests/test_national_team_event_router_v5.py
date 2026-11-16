@@ -85,7 +85,7 @@ def test_router_routes_real_session_once_and_never_old_weekend(tmp_path):
     })
     write(watch_root, "watch.json", {
         "funding_date": "2026-11-02", "collector_capture_time": "2026-11-02T17:00:00+08:00",
-        "candidate_pool_pre_filter": ["600002"]})
+        "candidate_pool_pre_filter": ["600002"],"stock_snapshots":{"600002":{"data_date":"2026-11-02"}}})
     args = (v3_root, watch_root, freeze_root, result_root)
     fresh = route(*args, now="2026-11-02T18:10:00+08:00")
     assert fresh["status"] == "NEW_FUNDING_EVENT"
@@ -234,7 +234,8 @@ def test_delayed_complete_funding_can_route_without_reviving_older_events(tmp_pa
                "data_quality":{"last_index_day":"2026-11-16","last_full_four_share_day":"2026-11-13"}}
     write(roots[0],"new.json",payload)
     write(roots[1],"watch.json",{"funding_date":"2026-11-13",
-          "collector_capture_time":"2026-11-16T16:00:00+08:00","candidate_pool_pre_filter":["600001"]})
+          "collector_capture_time":"2026-11-16T16:00:00+08:00","candidate_pool_pre_filter":["600001"],
+          "stock_snapshots":{"600001":{"data_date":"2026-11-13"}}})
     now="2026-11-16T18:00:00+08:00"
     record=route(*roots,now=now)
     assert decision_funding_session(payload)["date"] == record["signal_session"] == "2026-11-13"
@@ -250,3 +251,17 @@ def test_delayed_complete_funding_can_route_without_reviving_older_events(tmp_pa
     latest.update(net_creation_1d_cny=None, net_creation_5d_cny=None)
     payload["daily"].insert(1,{**old,"date":"2026-11-15","net_creation_1d_cny":-1})
     assert decision_funding_session(payload)["date"]=="2026-11-16"
+
+
+def test_watch_requires_actual_matching_liquidity_not_empty_candidate_pool(tmp_path):
+    from national_team.event_router_v5 import matching_watch
+    row={"funding_date":"2026-11-16","candidate_pool_pre_filter":["600001"],
+         "collector_capture_time":"2026-11-16T17:00:00+08:00","stock_snapshots":{}}
+    write(tmp_path,"empty.json",row)
+    assert matching_watch(tmp_path,"2026-11-16")== (None,None)
+    row["stock_snapshots"]={"600001":{"data_date":"2026-11-13"}}
+    write(tmp_path,"wrong.json",row)
+    assert matching_watch(tmp_path,"2026-11-16")== (None,None)
+    row["stock_snapshots"]["600001"]["data_date"]="2026-11-16"
+    write(tmp_path,"ready.json",row)
+    assert matching_watch(tmp_path,"2026-11-16")[0].name=="ready.json"

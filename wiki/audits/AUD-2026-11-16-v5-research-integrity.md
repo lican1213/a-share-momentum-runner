@@ -60,3 +60,11 @@ updated: 2026-11-16
 - 实际遗漏：PR12最新指数日保护误伤EXP-0012允许的合法迟报（当前日只有指数、前一完整资金日新可得）。统一V3行选择、V5路由、冻结和取价；只在新格式明确最新指数日且当前资金缺失时选择最近完整正向日；最新完整负向日不回搜更老正向日，超过3自然日、已有冻结仍拒绝。独立原归档不改。当前11/13实际净赎回，未证实实际漏买，本次为代码可复现反例。
 - 实际遗漏：R_BOUNCE仅部分候选成熟时不应把它当完整组对照；同左侧需要组内全部配对，不改8簇门槛。checkout main的真实源码SHA与触发SHA可能不同，使用现有git获取实际工作树SHA写入V5路由、冻结、账本。新增回归测试和生产读回待本PR验收。
 - 已知未关闭：实时普通/自由流通市值来源；根cron准点；连续未来事件验证。本轮不引入新数据商、新Runner、依赖或策略，不动历史账本与每日三次任务。
+
+## 同类开源项目取经及上游生产漏洞（2026-11-16）
+- PR18已合并9c0f592ae8，[313项全库测试](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43857810166)通过。历史资产不变。
+- 读取 [national-team-etf-flow 的实际刷新工作流](https://github.com/wwww1998/national-team-etf-flow/blob/main/.github/workflows/daily-refresh.yml) 与 [refresh.py](https://github.com/wwww1998/national-team-etf-flow/blob/main/refresh.py)：按交易日缓存与次日发布窗口补采。其早间15分钟轮询不整套复制，仅给现有根工作流新增北京时间07:50工作日补采（UTC前日23:50），保留09:15/16:20及下游原cron、完成触发、ChatGPT三时段。根任务实际延迟单独打印证据，GitHub平台延迟仍不保证消失。
+- [Qlib数据采集](https://github.com/microsoft/qlib/blob/main/scripts/data_collector/README.md)分离市场日历与行情。本仓库已有XSHG exchange-calendars，直接复用，使新冻结拟入场为严格晚于真实冻结日的下一交易所交易日。按[上交所2026休市公告](https://www.sse.com.cn/disclosure/dealinstruc/closed/)验证国庆与周末，不回写旧意图，不放开当日开仓。
+- [实际股票观察43827324850](../../records/national_team_watch/2026-11-16/43827324850-a1.json)：150只候选、0条有效股票快照，新浪与东财300次旧接口错误；指数亦改名。[同run ETF源](../../records/national_team_etf/2026-11-16/43827324850-a1.json)四只NAV全因旧接口更名失败。复用现有AKShare兼容层，按[实际新NAV源码](https://github.com/akfamily/akshare/blob/main/akshare/fund/fund_em.py)保留日期/单位/参数，不改成功的V3历史NAV接口。真实V3原本NAV四只均成功，不重复重构。无有效同日股观察不允许一次性冻结消耗事件；旧官方资金因子不再映射到较新股行情。
+- [DR-EUPHORIA/quant](https://github.com/DR-EUPHORIA/quant)采用动态成分历史与daily_basic；[Tushare index_dailybasic](https://tushare.pro/document/2?doc_id=128)当前明确支持名单未写沪深300；直接盲接000300.SH不是解决办法。更可靠的口径是精确生效日的完整300只成分+同日daily_basic的circ_mv（万元）及free_share（万股）×未复权收盘价；[官方字段](https://tushare.pro/document/2?doc_id=32)须权限。当前同类仓库原始面板目录不可取得，本仓库无法核验授权token，且实际10/30成分权重快照不等于11/16有效成分。先保留已核实的上交所月报历史值及真实NA，不加无法验收的供应商；中证10/29日报自由流通列未见明确非靠档口径，不能拿权重调整市值代替。实时分母仍待具名授权及生产证据。
+- 本轮新代码需独立CI、真实ETF/NAV和股票观察归档、下游账本比对、后续自然时段检验。无新增Runner/框架，三账户与历史记录、资金阈值、独立成熟条件不变。 

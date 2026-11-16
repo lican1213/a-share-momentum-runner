@@ -11,6 +11,7 @@ on:
       - 'national_team/event_router_v5.py'
       - 'national_team/akshare_compat.py'
       - 'scripts/run_national_team_left_entry_v4.py'
+      - 'national_team/event_pipeline.py'
       - 'national_team/policy_overlay.py'
       - 'scripts/collect_national_team_policy.py'
       - 'national_team/left_entry_v5.py'
@@ -49,7 +50,7 @@ jobs:
             --cron '5 10 * * 1-5' \
             --upstream-completed-at "$UPSTREAM_COMPLETED_AT"
       - name: Install public OHLC source and tests
-        run: python -m pip install 'pytest>=8,<10' 'akshare>=1.17,<2' 'baostock>=0.8,<1'
+        run: python -m pip install 'pytest>=8,<10' 'akshare>=1.17,<2' 'baostock>=0.8,<1' 'exchange-calendars==4.13.1'
       - name: Check deterministic routing, rankings and legacy freezing
         run: python -m pytest -q tests/test_national_team_policy_overlay.py tests/test_national_team_event_router_v5.py tests/test_national_team_schedule_latency.py tests/test_national_team_ohlc_fallback_v5.py tests/test_national_team_left_entry_v4.py tests/test_national_team_left_entry_outcomes.py
       - name: Capture official policy announcements (independent sources)

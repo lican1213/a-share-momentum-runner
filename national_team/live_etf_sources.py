@@ -17,6 +17,7 @@ from datetime import datetime, timedelta, date
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from zoneinfo import ZoneInfo
+from national_team.akshare_compat import exchange_nav_history
 
 CORE_FOUR = ("510300", "510310", "510330", "159919")
 SSE_CODES = set(CORE_FOUR[:3])
@@ -218,13 +219,13 @@ def collect(ak, asof: date, run_id: str, attempt: str, out_root: Path):
     candidates = {day for day in result["observations_by_date"] if day <= asof.isoformat()}
     for code in CORE_FOUR:
         try:
-            frame = ak.fund_etf_fund_info_em(fund=code, start_date=start, end_date=end)
+            frame = exchange_nav_history(ak, fund=code, start_date=start, end_date=end)
             result["raw_input_hashes"][f"NAV:{code}"] = hashlib.sha256(frame.to_csv(index=False).encode()).hexdigest()
             nav_rows = history_nav(frame, code, candidates)
             for day, nav in nav_rows.items():
                 if code in result["observations_by_date"][day]:
                     result["observations_by_date"][day][code]["nav"] = nav
-                    result["observations_by_date"][day][code]["nav_source"] = "fund_etf_fund_info_em: Eastmoney"
+                    result["observations_by_date"][day][code]["nav_source"] = "Eastmoney exchange fund NAV history"
         except Exception as exc:
             result["errors"].append(f"NAV:{code}:{type(exc).__name__}:{str(exc)[:200]}")
 

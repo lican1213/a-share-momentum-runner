@@ -47,3 +47,11 @@ def test_true_calendar_gap_cannot_be_misread_as_consecutive():
     r=reconcile_funding_snapshot(raw,sess)
     assert r["four_etf_factor"] is None
     assert r["partial_funding"] is None
+
+
+def test_next_exchange_session_skips_official_holiday_and_weekend():
+    from national_team.event_pipeline import next_exchange_session
+    # SSE notice 2026-09-17: Oct 1-7 closed, Oct 8 reopened.
+    assert next_exchange_session(date(2026,9,30))=="2026-10-08"
+    assert next_exchange_session(date(2026,11,13))=="2026-11-16"
+    assert next_exchange_session(date(2026,11,16))=="2026-11-17"

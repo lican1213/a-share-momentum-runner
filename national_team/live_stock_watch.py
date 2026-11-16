@@ -11,6 +11,7 @@ from datetime import datetime,date,timedelta
 from decimal import Decimal
 from zoneinfo import ZoneInfo
 from national_team.index_proxy import validate_index_weights,partial_flow_to_stocks
+from national_team.akshare_compat import sina_stock_daily, eastmoney_stock_daily, sina_index_daily
 
 BEIJING=ZoneInfo("Asia/Shanghai")
 WEIGHTS_SOURCE="https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/closeweight/000300closeweight.xls"
@@ -49,7 +50,7 @@ def summarize_stock_history(frame,code,event_date,source,first_observed_at,index
             "source":source}
 
 def index_20_return(ak,asof):
-    df=ak.stock_zh_index_daily(symbol="sh000300")
+    df=sina_index_daily(ak, symbol="sh000300")
     if "date" not in df.columns or "close" not in df.columns:
         raise ValueError("index quote schema invalid")
     rows=df.copy()
@@ -113,10 +114,10 @@ def collect(ak,etf_record,out_root,max_stocks=150):
         for label in ("SINA","EASTMONEY"):
             try:
                 if label=="EASTMONEY":
-                    data=ak.stock_zh_a_hist(symbol=code,period="daily",start_date=start,end_date=end,adjust="")
+                    data=eastmoney_stock_daily(ak, symbol=code,period="daily",start_date=start,end_date=end,adjust="")
                 else:
                     prefix="sh" if code.startswith(("6","9")) else "sz"
-                    data=ak.stock_zh_a_daily(symbol=prefix+code,start_date=start,end_date=end,adjust="")
+                    data=sina_stock_daily(ak, symbol=prefix+code,start_date=start,end_date=end,adjust="")
                 if data is None or len(data)==0:raise ValueError("empty daily OHLC")
                 stock_time=datetime.now(BEIJING).isoformat()
                 sample=summarize_stock_history(data,code,source_session,label,stock_time,ret)
@@ -129,10 +130,21 @@ def collect(ak,etf_record,out_root,max_stocks=150):
     out["stock_snapshots"]=sampled
     latest=datetime.now(BEIJING).isoformat()
     out["event_first_public_no_earlier_than"]=latest
-    ranking=partial_flow_to_stocks(raw,weights,sampled,top_n=10)
+    part=fund.get("partial_funding") or raw.get("partial_SSE_three_only") or {}
+    factor=fund.get("four_etf_factor") or {}
+    mapped_day=max((part.get("period") or [""])[-1],factor.get("trade_date",""))
+    if mapped_day == source_session:
+        ranking=partial_flow_to_stocks(raw,weights,sampled,top_n=10)
+        ranking["funding_date"]=mapped_day
+        out["status"]=ranking["status"]
+    else:
+        # The newer stock observations are useful for V3's dated proxy, but
+        # the old official factor must not be mapped to a newer trading day.
+        ranking={"status":"NO_SAME_DATE_OFFICIAL_FLOW_TO_MAP","candidates":[],
+                 "funding_date":source_session,"source_flow_date":mapped_day or None}
+        out["status"]="STOCK_LIQUIDITY_READY_V3_PROXY_ONLY" if sampled else "NO_STOCK_LIQUIDITY_DATA"
     ranking["first_possible_ranking_time"]=latest
     out["research_ranking"]=ranking
-    out["status"]=ranking["status"]
     return out
 
 def main():

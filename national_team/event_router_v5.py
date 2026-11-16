@@ -59,8 +59,10 @@ def matching_watch(root, asof):
         item = _read(path)
         if item.get("funding_date") != asof:
             continue
-        if not item.get("candidate_pool_pre_filter"):
-            continue
+        pool = item.get("candidate_pool_pre_filter") or []
+        snapshots = item.get("stock_snapshots") or {}
+        if not any(snapshots.get(code, {}).get("data_date") == asof for code in pool):
+            continue  # Empty watch must not consume the only freeze for this day.
         found.append((item.get("collector_capture_time", ""), path, item))
     if not found:
         return None, None

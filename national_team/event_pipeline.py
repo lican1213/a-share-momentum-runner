@@ -104,3 +104,12 @@ def exchange_sessions(last:str,lookback_days:int=24)->list[str]:
     d=pd.Timestamp(last)
     first=d-pd.Timedelta(days=lookback_days)
     return [x.date().isoformat() for x in cal.sessions_in_range(first,d)]
+
+
+def next_exchange_session(day):
+    """Next actual XSHG session strictly after the freeze date."""
+    import pandas as pd
+    import exchange_calendars as xcals
+    cal=xcals.get_calendar("XSHG")
+    next_day=pd.Timestamp(day)+pd.Timedelta(days=1)
+    return cal.date_to_session(next_day,direction="next").date().isoformat()
