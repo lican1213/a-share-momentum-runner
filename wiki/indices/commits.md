@@ -12,6 +12,11 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-16 | [8d2ba704c8](https://github.com/lican1213/a-share-momentum-runner/commit/8d2ba704c84508fefd60c4b9cbf0c085a53e12c6) | github-actions[bot] | data: archive actual ETF provider attempt 43860360085 [skip ci] |
+| 2026-11-16 | [b29d671332](https://github.com/lican1213/a-share-momentum-runner/commit/b29d671332289858dd02ac8b4a25e4dcc070c8db) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43860437905 [skip ci] |
+| 2026-11-16 | [3aad577bd5](https://github.com/lican1213/a-share-momentum-runner/commit/3aad577bd5cc698cfc9bb70993268175e307e24d) | github-actions[bot] | records(exp0012): route event and append paper evidence 43860359984 [skip ci] |
+| 2026-11-16 | [6d45aabbea](https://github.com/lican1213/a-share-momentum-runner/commit/6d45aabbead9b06dfadeac9650aaa3aed7095bba) | Can Li | Merge pull request #19 from lican1213/fix/production-source-calendar-20261116 |
+| 2026-11-16 | [86899c9aaa](https://github.com/lican1213/a-share-momentum-runner/commit/86899c9aaafb8135a466741bfac1a551e6ce4ad2) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-16 | [99da30dde9](https://github.com/lican1213/a-share-momentum-runner/commit/99da30dde9e0c0c0a060c37f5cc88f0622ede5fe) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43859295774 [skip ci] |
 | 2026-11-16 | [b8d43236a7](https://github.com/lican1213/a-share-momentum-runner/commit/b8d43236a70f5da0b27da0f52475643701d9c98c) | Can Li | test: supply actual same-session stock observations in policy overlay fixture |
 | 2026-11-16 | [cbb66f1dec](https://github.com/lican1213/a-share-momentum-runner/commit/cbb66f1dec05c91b581cdb4d34487bbf80523975) | Can Li | fix: restore upstream NAV and stock watch, reuse exchange calendar |
