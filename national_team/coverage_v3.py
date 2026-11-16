@@ -256,6 +256,22 @@ def latest_observed_session(v3):
     return latest
 
 
+def decision_funding_session(v3):
+    """A newer index close is not proof that its ETF funding is published."""
+    latest = latest_observed_session(v3)
+    def complete(row):
+        return all(row.get(k) is not None for k in ("net_creation_1d_cny", "net_creation_5d_cny"))
+    if complete(latest) or latest.get("latest_session_missing") or not v3.get("latest_session"):
+        return latest
+    # Only new unfiltered snapshots can distinguish a missing current funding
+    # row from a historical filter. Never search past a complete negative day.
+    previous = next((r for r in reversed(v3["daily"])
+                     if r["date"] < latest["date"] and complete(r)), None)
+    if previous and observed_funding_basis(previous)[1]:
+        return previous
+    return latest
+
+
 def _rows(prices, shares, nav, caps):
     """Use the exact index trading calendar for both lookbacks and forward exits."""
     dates = sorted(prices)

@@ -54,8 +54,8 @@ def _orders(ranked, next_session, *, admitted):
 def freeze(v3, watch, prices, *, now, next_session, selected_policy):
     if selected_policy not in POLICIES:
         raise ValueError("invalid selected policy")
-    from national_team.coverage_v3 import latest_observed_session, observed_funding_basis
-    basis = observed_funding_basis(latest_observed_session(v3))[0] if v3 else "SHARE_PROXY"
+    from national_team.coverage_v3 import decision_funding_session, observed_funding_basis
+    basis = observed_funding_basis(decision_funding_session(v3))[0] if v3 else "SHARE_PROXY"
     result = baseline_freeze(v3, watch, prices, now=now, next_session=next_session,
                              funding_basis=basis)
     eligible = result["candidates_ranked"]

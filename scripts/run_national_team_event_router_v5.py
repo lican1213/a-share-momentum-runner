@@ -33,7 +33,7 @@ def main():
                      args.freeze_root, args.followup_root, now=stamp,
                      policy_snapshot=policy_snapshot)
     decision["github_run_id"] = os.environ.get("GITHUB_RUN_ID")
-    decision["github_source_commit"] = os.environ.get("GITHUB_SHA")
+    decision["github_source_commit"] = os.environ.get("NT_CHECKED_OUT_SHA") or os.environ.get("GITHUB_SHA")
     decision = with_digest(decision)
     destination = Path(args.out)
     if destination.exists():
