@@ -1,3 +1,7 @@
+## 2026-11-17：EXP-0017 合并后生产验收及缺依赖整改
+- [PR #22](https://github.com/lican1213/a-share-momentum-runner/pull/22) 合并SHA `6ac75a7699d284101db7023d338af4c0414161a5`；[PR全库CI #44061134907](https://github.com/lican1213/a-share-momentum-runner/actions/runs/44061134907) 实际328项测试与51页Wiki校验通过。原11/16资金事件冻结（11/17 13:30，计划11/18开盘6笔）哈希 `a0c84975bfb0f1c64de9cea49029ecdd0d4ec3d7`，没有更写旧订单。
+- 合并后[真实纸面生产run #44061324220](https://github.com/lican1213/a-share-momentum-runner/actions/runs/44061324220) **失败**：outcomes测试调用盘前实际交易所日历，但其独立pip步骤漏装 `exchange-calendars==4.13.1`，导致 `ModuleNotFoundError`；本轮未进入账户追踪与归档，不能以绿色PR CI冒充生产通过。复用原V5路由既有版本的calendar依赖，补outcomes工作流及防回归测试，不新增工作流，不改交易规则、历史记录和任何cron。新run成功、四账户落盘以及前三组账本连续性均需匹配实际源SHA复验，未完成前状态为 **PRODUCTION_FIX_PENDING_VERIFY**。
+
 ## 2026-11-17：EXP-0017 早期试仓与主动追涨（候选实现，待CI/生产验证）
 - 参见 [EXP-0017](wiki/experiments/EXP-0017-early-flow-momentum.md)。早期50亿元单日四ETF代理独立纸面试仓；R_BOUNCE主动追涨不设3%上限；新增EARLY_ENTRY账本保留前三组历史。09:15前合法冻结可研究当日开盘。原四ETF、cron、三时段、T+1/T+2及历史不改。新旧R收益分版本，阶段二/三依据新成熟样本，不把代码合入当作验收。
 

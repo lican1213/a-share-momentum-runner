@@ -109,3 +109,14 @@ def test_archive_recovery_preserves_original_source_when_reused(tmp_path):
     out=recover({},["510300"],tmp_path,start="2026-11-06",cutoff="2026-11-16",
                 observed_at="2026-11-16T19:00:00+08:00")
     assert out["archived_bar_recovery"]["510300"]==[original]
+
+
+def test_exp0017_outcomes_installs_preauction_calendar_dependency():
+    """Regression: deployment run 44061324220 failed before ledger processing."""
+    root = Path(__file__).resolve().parents[1]
+    router = (root / ".github/workflows/national-team-event-router-v5.yml").read_text()
+    outcomes = (root / ".github/workflows/national-team-left-outcomes-v5.yml").read_text()
+    dependency = "'exchange-calendars==4.13.1'"
+    assert dependency in router
+    assert dependency in outcomes
+    assert "tests/test_national_team_event_router_v5.py" in outcomes
