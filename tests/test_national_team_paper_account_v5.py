@@ -262,3 +262,19 @@ def test_minimum_commission_resizes_whole_lot_instead_of_skipping(monkeypatch):
     engine._enter(acct,intent,bar,None,"2026-11-03")
     assert acct["decisions"][0]["status"] == "PAPER_OPEN_PROXY_FILLED"
     assert acct["positions"][0]["shares"] == 400
+
+def test_exp0017_migration_does_not_reset_or_backfill_old_account():
+    f, s = event()
+    prior = advance_day(None, (f, s), "2026-11-03")
+    prior["accounts"].pop("EARLY_ENTRY")
+    baseline = copy.deepcopy(prior["accounts"])
+    f["paper_policies"]["EARLY_ENTRY"] = {"orders": [
+        {"stock": "600001", "intended_session": "2026-11-03"}]}
+    f["strategy_experiment_id"] = "EXP-0017"
+    new = advance_day(prior, (f, s), "2026-11-03")
+    for arm in baseline:
+        assert new["accounts"][arm] == baseline[arm]
+    early = new["accounts"]["EARLY_ENTRY"]
+    assert early["cash_cny"] == "30000.00"
+    assert early["positions"] == []
+    assert early["decisions"][0]["status"] == "LATE_INTENT_NO_BACKFILL"

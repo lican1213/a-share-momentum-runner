@@ -295,6 +295,22 @@ def decision_funding_session(v3):
     return latest
 
 
+# EXP-0017 prospective early trigger; V3 history and main ratio unchanged.
+EARLY_FLOW_CNY = 5_000_000_000
+
+
+def early_funding_signal(signal):
+    amount = signal.get("net_creation_1d_cny")
+    return bool(signal.get("market_down") and not signal.get("latest_session_missing")
+                and isinstance(amount, (int, float)) and not isinstance(amount, bool)
+                and math.isfinite(amount) and amount >= EARLY_FLOW_CNY)
+
+
+def v5_decision_session(v3):
+    latest = latest_observed_session(v3)
+    return latest if early_funding_signal(latest) else decision_funding_session(v3)
+
+
 def _rows(prices, shares, nav, caps):
     """Use the exact index trading calendar for both lookbacks and forward exits."""
     dates = sorted(prices)

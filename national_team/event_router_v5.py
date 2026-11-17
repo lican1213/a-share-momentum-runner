@@ -13,7 +13,8 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from national_team.core_flow_factors import CORE_FOUR
-from national_team.coverage_v3 import latest_observed_session, decision_funding_session, observed_funding_basis
+from national_team.coverage_v3 import (latest_observed_session, v5_decision_session,
+                                      observed_funding_basis, early_funding_signal)
 from national_team.left_entry_v4 import digest
 from national_team.policy_overlay import summarize as summarize_policy
 
@@ -97,6 +98,8 @@ def paper_feedback(root):
     # Evaluate the earliest paper freeze per cluster to avoid fake independence.
     clusters = {}
     for item in latest.values():
+        if item.get("funding_stage") == "EARLY_ONLY":
+            continue
         anchor = (item.get("cluster_anchor") or item.get("signal_session")
                   or item["source_freeze_sha256"])
         existing = clusters.get(anchor)
@@ -128,9 +131,31 @@ def paper_feedback(root):
             right_excess = [Decimal(str(h["excess_s0"])) for entry in right_entries
                             for h in [entry.get("horizons", {}).get("10", {})]
                             if h.get("status") == "PAIRED" and h.get("excess_s0") is not None]
-            if right_excess and len(right_excess) == len(right_entries):
+            if (item.get("strategy_experiment_id") != "EXP-0017"
+                    and right_excess and len(right_excess) == len(right_entries)):
                 right_minus_left.append(sum(right_excess) / len(right_excess)
                                         - by_policy["SHALLOW_DIP"])
+    # Versioned new-arm results; never pool with the historical mild rebound.
+    cohort = {}
+    for policy in ("EARLY_ENTRY", "R_BOUNCE"):
+        per_horizon = {}
+        for h in ("3", "10"):
+            by_cluster = {}
+            for item in sorted(latest.values(), key=lambda x: x.get("signal_session", "")):
+                if item.get("strategy_experiment_id") != "EXP-0017":
+                    continue
+                anchor = item.get("cluster_anchor") or item.get("signal_session")
+                if not anchor or anchor in by_cluster:
+                    continue
+                entries = item.get("policy_results", {}).get(policy, {}).get("F1_LEFT", [])
+                horizons = [entry.get("horizons", {}).get(h, {}) for entry in entries]
+                if horizons and all(v.get("status") == "PAIRED" and v.get("excess_s0") is not None for v in horizons):
+                    by_cluster[anchor] = sum(Decimal(str(v["excess_s0"])) for v in horizons) / len(horizons)
+            values = list(by_cluster.values())
+            per_horizon[h] = {"matured_clusters": len(values),
+                              "mean_excess_s0": format(sum(values)/len(values), "f") if values else None,
+                              "positive_clusters": sum(v > 0 for v in values)}
+        cohort[policy] = per_horizon
     count = len(paired)
     means = {policy: (sum(x[policy] for x in paired) / count if count else None)
              for policy in POLICIES}
@@ -140,6 +165,7 @@ def paper_feedback(root):
         best = "DEEP_DIP"
     return {
         "paired_10d_events": count,
+        "exp0017_cohort": cohort,
         "indistinguishable_left_clusters": indistinguishable_clusters,
         "mean_10d_excess_s0": {k: (format(v, "f") if v is not None else None)
                                for k, v in means.items()},
@@ -163,7 +189,7 @@ def route(v3_root, watch_root, freeze_root, followup_root, *, now,
         raise ValueError("router requires timezone-aware observation")
     today = observed.astimezone(BJ).date()
     v3_path, v3 = latest_v3(v3_root)
-    signal = decision_funding_session(v3)
+    signal = v5_decision_session(v3)
     index_session = latest_observed_session(v3)["date"]
     asof = signal["date"]
     age = (today - date.fromisoformat(asof)).days
@@ -171,13 +197,15 @@ def route(v3_root, watch_root, freeze_root, followup_root, *, now,
     status = "NO_NEW_FUNDING_EVENT"
     watch_path = None
     funding_basis, active = observed_funding_basis(signal)
-    flow_active = active and 0 <= age <= MAX_SOURCE_LAG_CALENDAR_DAYS
+    early = early_funding_signal(signal)
+    flow_active = (active or early) and 0 <= age <= MAX_SOURCE_LAG_CALENDAR_DAYS
+    stage = "STANDARD_AND_EARLY" if active and early else "STANDARD" if active else "EARLY_ONLY" if early else "NO_ACTIVE_FLOW"
     if age < 0:
         status = "FUTURE_SOURCE_SESSION"
     elif age > MAX_SOURCE_LAG_CALENDAR_DAYS:
         status = "WAIT_FRESH_FOUR_ETF_SESSION"
     elif signal.get("latest_session_missing") or (
-            signal.get("net_creation_1d_cny") is None or signal.get("net_creation_5d_cny") is None):
+            not early and (signal.get("net_creation_1d_cny") is None or signal.get("net_creation_5d_cny") is None)):
         status = "WAIT_LATEST_SESSION_EVIDENCE"
     elif (asof in frozen_sessions(freeze_root) or
           asof in frozen_sessions(legacy_freeze_root, "EXP-0011")):
@@ -199,6 +227,8 @@ def route(v3_root, watch_root, freeze_root, followup_root, *, now,
         "v3_path": str(v3_path),
         "watch_path": str(watch_path) if watch_path else None,
         "selected_policy": feedback["selected_policy"],
+        "strategy_experiment_id": "EXP-0017",
+        "funding_stage": stage,
         "feedback": feedback,
         "funding": {
             "net_creation_1d_cny_proxy": signal.get("net_creation_1d_cny"),
@@ -207,6 +237,7 @@ def route(v3_root, watch_root, freeze_root, followup_root, *, now,
             "ratio_status": signal.get("ratio_status"),
             "index_ret5": signal.get("index_ret5"),
             "funding_basis": funding_basis,
+            "early_proxy_trigger": early,
             "exchange_shares_complete": signal.get("exchange_shares_complete"),
             "exchange_nav_complete": signal.get("exchange_nav_complete"),
             "latest_session_evidence_missing": bool(signal.get("latest_session_missing")),

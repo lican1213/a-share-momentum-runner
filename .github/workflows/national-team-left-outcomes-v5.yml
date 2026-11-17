@@ -66,7 +66,7 @@ jobs:
               assert event["source_new_ohlc_sha256"]
           a=json.load(open(sys.argv[2],encoding="utf-8"))
           assert a["trade_authorized"] is False and a["broker_orders"]==[]
-          assert set(a["accounts"]) == {"SHALLOW_DIP","DEEP_DIP","R_BOUNCE"}
+          assert set(a["accounts"]) == {"SHALLOW_DIP","DEEP_DIP","R_BOUNCE","EARLY_ENTRY"}
           assert j["paper_account_snapshot_sha256"] == a["snapshot_sha256"]
           print("V5_PAPER_ACCOUNTS", {k:v["summary"]["equity_after_estimated_exit_cost_cny"] for k,v in a["accounts"].items()})
           PY

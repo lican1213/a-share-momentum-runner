@@ -283,3 +283,27 @@ def test_failed_second_price_collection_never_archives_a_freeze(monkeypatch,tmp_
     workflow=(Path(__file__).resolve().parents[1]/".github/workflows/national-team-event-router-v5.yml").read_text()
     assert "steps.route.outcome == 'success'" in workflow
     assert "steps.freeze.outcome" in workflow
+
+def test_exp0017_early_flow_without_five_day_confirmation_and_no_revival():
+    from national_team.coverage_v3 import early_funding_signal, v5_decision_session
+    row = {"date": "2026-11-16", "market_down": True, "net_creation_1d_cny": 5e9}
+    assert early_funding_signal(row)
+    assert not early_funding_signal({**row, "net_creation_1d_cny": 4999999999})
+    assert not early_funding_signal({**row, "market_down": False})
+    assert not early_funding_signal({**row, "net_creation_1d_cny": float("inf")})
+    assert v5_decision_session({"daily": [row], "latest_session": row}) == row
+
+
+def test_exp0017_momentum_not_capped_or_restricted_to_left_candidates():
+    candidates = [item("600001", ".029", relative=".03"),
+                  item("600002", ".08", relative=".09"),
+                  item("600003", ".12", relative="-.01")]
+    assert [x["stock"] for x in left_v5.momentum_rank(candidates)] == ["600002", "600001"]
+
+
+def test_exp0017_preauction_boundary(monkeypatch):
+    from datetime import datetime
+    from scripts import run_national_team_left_entry_v5 as runner
+    monkeypatch.setattr(runner, "next_exchange_session", lambda day: day.isoformat())
+    assert runner.planned_entry_session(datetime.fromisoformat("2026-11-17T09:14:59+08:00")) == "2026-11-16"
+    assert runner.planned_entry_session(datetime.fromisoformat("2026-11-17T09:15:00+08:00")) == "2026-11-17"

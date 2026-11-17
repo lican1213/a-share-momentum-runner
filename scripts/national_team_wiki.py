@@ -22,7 +22,7 @@ CATEGORIES={
     "national_team_router":"V5 dated event router",
     "national_team_left_entry_v5":"V5 prospective frozen intents",
     "national_team_left_outcomes_v5":"V5 independent horizon path",
-    "national_team_paper_accounts_v5":"V5 continuous three-arm paper ledger",
+    "national_team_paper_accounts_v5":"V5 continuous paper ledger",
     "national_team_policy":"Official policy source observations",
 }
 
@@ -131,9 +131,9 @@ def generate(root:Path,*,now:str, records:list[tuple[str,Path,dict]]|None=None)-
     ledger = last_for(records,"national_team_paper_accounts_v5")
     outcomes = last_for(records,"national_team_left_outcomes_v5")
     intent = last_for(records,"national_team_left_entry_v5")
-    info.extend(["", "**当前研究执行主线：V3资金 → V5路由 → 三组连续模拟盘；旧V2/A2/B仅历史归档。**",
+    info.extend(["", "**当前研究执行主线：V3资金 → V5路由 → 连续模拟盘；旧V2/A2/B仅历史归档。**",
                  bullet("V3最新回放",v3),bullet("V5最新事件路由",router),bullet("V5最近不可回写冻结",intent),
-                 bullet("V5最新独立前瞻路径",outcomes),bullet("V5最新三组模拟账本",ledger)])
+                 bullet("V5最新独立前瞻路径",outcomes),bullet("V5最新模拟账本",ledger)])
     if v3:
         _,_,r=v3
         quality=r.get("data_quality",{})
@@ -150,7 +150,7 @@ def generate(root:Path,*,now:str, records:list[tuple[str,Path,dict]]|None=None)-
                     f"同额成熟10日独立簇 {fb.get('paired_10d_events')}/8；默认组 {r.get('selected_policy')}。")
     if ledger:
         _,_,r=ledger
-        info.extend([f"- 三组账户市场日期 **{r.get('last_market_session')}**；捕获 {r.get('capture_time')}；纸面非券商成交。",
+        info.extend([f"- 账户市场日期 **{r.get('last_market_session')}**；捕获 {r.get('capture_time')}；纸面非券商成交。",
                  "", "| 组 | 现金 | 权益 | 持仓数 | 平仓数 | 扣费净盈亏 | 同额S0已实现超额 | mark_status |",
                  "| --- | --- | --- | --- | --- | --- | --- | --- |"])
         for arm,account in r.get("accounts",{}).items():
