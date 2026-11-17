@@ -12,6 +12,13 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-17 | [3dff6c0118](https://github.com/lican1213/a-share-momentum-runner/commit/3dff6c011884f6a3605cc35863b532d2ce42785b) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 44061817000 [skip ci] |
+| 2026-11-17 | [1825f6a829](https://github.com/lican1213/a-share-momentum-runner/commit/1825f6a829ae2bb5d7ac70b965044db0f6e3ef84) | Can Li | fix(v5): calendar dependency for EXP-0017 outcomes production |
+| 2026-11-17 | [1928b60699](https://github.com/lican1213/a-share-momentum-runner/commit/1928b606998974edd39b7e2ae15e5652a7c38cd8) | github-actions[bot] | records(exp0012): route event and append paper evidence 44061416386 [skip ci] |
+| 2026-11-17 | [82dca9f1cc](https://github.com/lican1213/a-share-momentum-runner/commit/82dca9f1cc1482badb55fd1f60c33d8368ea04eb) | Can Li | fix(v5): restore calendar dependency in production paper workflow and document live failure |
+| 2026-11-17 | [38405d8bb1](https://github.com/lican1213/a-share-momentum-runner/commit/38405d8bb1435c2f33ad17f3dba63effb29c6c21) | github-actions[bot] | records(exp0012): route event and append paper evidence 44061324146 [skip ci] |
+| 2026-11-17 | [3cc28288f4](https://github.com/lican1213/a-share-momentum-runner/commit/3cc28288f4b2d3f3f9561976caf06c4b5011caf8) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 44061324205-a1 |
+| 2026-11-17 | [36fb867c8f](https://github.com/lican1213/a-share-momentum-runner/commit/36fb867c8f8dd94343d2e23a73c6028bc6424201) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-17 | [6ac75a7699](https://github.com/lican1213/a-share-momentum-runner/commit/6ac75a7699d284101db7023d338af4c0414161a5) | Can Li | feat(v5): EXP-0017 early ETF flow and active-momentum paper strategies |
 | 2026-11-17 | [03904640b8](https://github.com/lican1213/a-share-momentum-runner/commit/03904640b89c675cc0c1659bd809580d409ebd60) | Can Li | test(exp0017): isolate legacy freeze root in synthetic early-flow routing |
 | 2026-11-17 | [8d8beb6217](https://github.com/lican1213/a-share-momentum-runner/commit/8d8beb6217f82f7e88355de32c0bfddcda753396) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
