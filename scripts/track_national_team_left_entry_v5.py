@@ -14,7 +14,7 @@ from zoneinfo import ZoneInfo
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from national_team.left_entry_outcomes import track
 from national_team.left_entry_v4 import digest
-from national_team.left_entry_v5 import POLICIES, RIGHT_POLICY
+from national_team.left_entry_v5 import ARMS
 from national_team.ohlc_fallback_v5 import backfill_future_bars, fetch_baostock
 from national_team.paper_account_v5 import advance
 from national_team.archived_ohlc_v5 import recover as recover_archived_ohlc
@@ -123,7 +123,7 @@ def scope_event(seen, frozen):
 
 def follow_one(ak, frozen, source_path, asof, *, shared_observations=None):
     # A common OHLC snapshot for both models: no one gets more recent prices.
-    active_policies = [p for p in (*POLICIES, RIGHT_POLICY)
+    active_policies = [p for p in ARMS
                        if p in frozen["paper_policies"]]
     if shared_observations is None:
         cutoff = min(asof, finalized_cutoff(datetime.now(BJ)))
@@ -148,6 +148,8 @@ def follow_one(ak, frozen, source_path, asof, *, shared_observations=None):
         "signal_session": frozen["signal_session"],
         "cluster_anchor": frozen["cluster_anchor"],
         "extension_experiment_id": frozen.get("extension_experiment_id"),
+        "strategy_experiment_id": frozen.get("strategy_experiment_id"),
+        "funding_stage": frozen.get("funding_stage"),
         "asof": asof,
         "first_observed_at": observed_at,
         "policy_results": policy_results,
@@ -224,7 +226,7 @@ def main():
         paper_path.write_text(json.dumps(account, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(json.dumps({
         "asof": asof, "tracked_events": len(results),
-        "policies": list((*POLICIES, RIGHT_POLICY)),
+        "policies": list(ARMS),
         "paper_accounts": {k: v["summary"] for k, v in account["accounts"].items()} if account else None,
         "paired_10d": sum(any(
             h.get("status") == "PAIRED"

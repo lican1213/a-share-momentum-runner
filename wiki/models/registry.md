@@ -5,6 +5,10 @@ status: maintained
 updated: 2026-11-03
 ---
 
+## 2026-11-17：EXP-0017 早期试仓与主动追涨（候选实现，待CI/生产验证）
+- 参见 [EXP-0017](../experiments/EXP-0017-early-flow-momentum.md)。早期50亿元单日四ETF代理独立纸面试仓；R_BOUNCE主动追涨不设3%上限；新增EARLY_ENTRY账本保留前三组历史。09:15前合法冻结可研究当日开盘。原四ETF、cron、三时段、T+1/T+2及历史不改。新旧R收益分版本，阶段二/三依据新成熟样本，不把代码合入当作验收。
+
+
 ## 2026-11-03 EXP-0016：时效修复（不变更任何交易策略）
 
 - 基线主SHA `f684891dde19672e2cff27b18a76ce0efb4a696c`；只改V3→V5路由→V5三模拟账户的工作流依赖和实际启动延迟日志。[协议](../experiments/EXP-0016-scheduling-timeliness.md)，核心四ETF因子、EXP-0012选股、EXP-0014真实现金三臂模拟、EXP-0015政策解释层和历史`records/`全不变。目标是减少上游完成到下一步的等待，不将GitHub schedule 10小时错峰包装成准时。生产触发/新实跑后需填Actions run ID和时差。

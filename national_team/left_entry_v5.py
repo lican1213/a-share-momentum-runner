@@ -12,6 +12,29 @@ from national_team.left_entry_v4 import d, digest, freeze as baseline_freeze, pl
 
 POLICIES = ("SHALLOW_DIP", "DEEP_DIP")
 RIGHT_POLICY = "R_BOUNCE"
+EARLY_POLICY = "EARLY_ENTRY"
+ARMS = (*POLICIES, RIGHT_POLICY, EARLY_POLICY)
+STRATEGY_EXPERIMENT = "EXP-0017"
+
+
+def momentum_rank(candidates):
+    """Positive absolute and relative momentum, no arbitrary +3% ceiling."""
+    return sorted((x for x in candidates if d(x["r5"], "r5") > 0
+                   and d(x["relative_r5"], "relative") > 0),
+                  key=lambda x: (-d(x["relative_r5"], "relative"),
+                                 -d(x["r5"], "r5"), x["stock"]))
+
+
+def early_rank(candidates):
+    """Rank available signals; missing optional inputs are not vetoes."""
+    def key(x):
+        near_low = x.get("distance_low20")
+        votes = (int(near_low is not None and d(near_low, "low distance") <= Decimal(".03"))
+                 + int(d(x["relative_r5"], "relative") > 0)
+                 + int(d(x["r5"], "r5") > 0))
+        return (-votes, -d(x["relative_r5"], "relative"),
+                -d(x["r5"], "r5"), x["stock"])
+    return sorted(candidates, key=key)
 
 
 def rank(candidates, policy):
@@ -54,12 +77,16 @@ def _orders(ranked, next_session, *, admitted):
 def freeze(v3, watch, prices, *, now, next_session, selected_policy):
     if selected_policy not in POLICIES:
         raise ValueError("invalid selected policy")
-    from national_team.coverage_v3 import decision_funding_session, observed_funding_basis
-    basis = observed_funding_basis(decision_funding_session(v3))[0] if v3 else "SHARE_PROXY"
+    from national_team.coverage_v3 import v5_decision_session, observed_funding_basis, early_funding_signal
+    signal = v5_decision_session(v3) if v3 else {}
+    basis, standard = observed_funding_basis(signal) if v3 else ("SHARE_PROXY", True)
+    early = early_funding_signal(signal)
     result = baseline_freeze(v3, watch, prices, now=now, next_session=next_session,
-                             funding_basis=basis)
+                             funding_basis=basis, v5_experiment=True)
     eligible = result["candidates_ranked"]
-    admitted = result["admission"]["pilot_admitted"]
+    verified = result.pop("verified_candidates", eligible)
+    admitted = result["admission"]["pilot_admitted"] and standard
+    stage = "STANDARD_AND_EARLY" if standard and early else "STANDARD" if standard else "EARLY_ONLY"
     shadow = {}
     for policy in POLICIES:
         ordered = rank(eligible, policy)
@@ -68,23 +95,27 @@ def freeze(v3, watch, prices, *, now, next_session, selected_policy):
             "ranked_stocks": [x["stock"] for x in ordered],
             "up_five_day_in_top_two": sum(d(x["r5"], "r5") > 0 for x in ordered[:2]),
         }
-    # The independent right-side arm observes mild rebounds, never replaces
-    # the two left-side policies or their automatic feedback threshold.
-    right = sorted((x for x in eligible if Decimal(0) < d(x["r5"], "r5")
-                    <= Decimal(".03")),
-                   key=lambda x: (d(x["r5"], "r5"),
-                                  -d(x["relative_r5"], "relative"),
-                                  x["stock"]))
+    right = momentum_rank(verified)
     shadow[RIGHT_POLICY] = {
-        "orders": _orders(right, next_session, admitted=admitted),
+        "orders": _orders(right, next_session, admitted=admitted or early),
         "ranked_stocks": [x["stock"] for x in right],
         "up_five_day_in_top_two": min(2, len(right)),
-        "arm_role": "INDEPENDENT_RIGHT_SIDE_REFERENCE_NOT_LEFT_POLICY_GATE",
+        "arm_role": "ACTIVE_MOMENTUM_PAPER_COMPARATOR",
     }
+    early_candidates = early_rank(verified) if early else []
+    shadow[EARLY_POLICY] = {
+        "orders": _orders(early_candidates, next_session, admitted=early),
+        "ranked_stocks": [x["stock"] for x in early_candidates],
+        "arm_role": "LARGE_ONE_DAY_FLOW_PAPER_TRIAL",
+    }
+    result["strategy_experiment_id"] = STRATEGY_EXPERIMENT
+    result["funding_stage"] = stage
+    result.setdefault("funding", {})["early_proxy_trigger"] = early
+    result["momentum_candidates_ranked"] = right
     primary = shadow[selected_policy]["orders"]
     result["experiment_id"] = "EXP-0012"
     result["extension_experiment_id"] = "EXP-0013"
-    result["version"] = "NT_LEFT_ENTRY_V5_EXP0013_PATH_OBSERVATION"
+    result["version"] = "NT_LEFT_ENTRY_V5_EXP0017_EARLY_MOMENTUM"
     result["candidate_policy"] = selected_policy
     result["candidate_rank_reason"] = (
         "STILL_DOWN_FIRST_THEN_" + selected_policy + "_PAPER_SHADOW"
@@ -95,7 +126,7 @@ def freeze(v3, watch, prices, *, now, next_session, selected_policy):
     result["arm_comparison"] = {
         "funding_basis": basis,
         "left_identical": bool(symbols["SHALLOW_DIP"]) and symbols["SHALLOW_DIP"] == symbols["DEEP_DIP"],
-        "shared_symbols": sorted(set.intersection(*symbols.values())),
+        "shared_symbols": sorted(set.intersection(*(v for v in symbols.values() if v))) if any(symbols.values()) else [],
         "arm_sizes": {p: len(v) for p, v in symbols.items()},
         "interpretation": "Overlap is reported, not forced apart or counted as independent evidence",
     }
@@ -109,8 +140,7 @@ def freeze(v3, watch, prices, *, now, next_session, selected_policy):
     result["accounts"]["S0_ETF"]["budget_cny"] = format(
         sum((d(x["gross_indicative_cny"], "gross") for x in primary), Decimal(0)), "f")
     result["measurement"]["paper_shadow_comparison"] = (
-        "SHALLOW_DIP_vs_DEEP_DIP paired 10d S0; R_BOUNCE independent "
-        "same-event reference; rank promotion remains left-side only"
+        "Legacy paired-left selection; EXP-0017 early/momentum separately evaluated"
     )
     result.pop("freeze_payload_sha256", None)
     result["freeze_payload_sha256"] = digest(result)

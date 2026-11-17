@@ -1,3 +1,6 @@
+## 2026-11-17：EXP-0017 早期试仓与主动追涨（候选实现，待CI/生产验证）
+- 参见 [EXP-0017](wiki/experiments/EXP-0017-early-flow-momentum.md)。早期50亿元单日四ETF代理独立纸面试仓；R_BOUNCE主动追涨不设3%上限；新增EARLY_ENTRY账本保留前三组历史。09:15前合法冻结可研究当日开盘。原四ETF、cron、三时段、T+1/T+2及历史不改。新旧R收益分版本，阶段二/三依据新成熟样本，不把代码合入当作验收。
+
 ## 2026-11-16：V5当前状态与Ponytail收敛
 - [本日全部开发过程、PR12—16及对抗式审计](wiki/audits/AUD-2026-11-16-v5-research-integrity.md)。PR16 [310测试/50页Wiki通过](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43852031615)，[真实运行43852184259](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43852184259)与[43852350573](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43852350573)两次恢复48条配对、48条未成熟、0条S0缺失。三组账本保持空仓，每组历史平仓3笔，现金29992.31/29935.99/30037.16元。源错误仍须看真实记录；已恢复证据不等于策略有效。
 - [真实V3归档](https://github.com/lican1213/a-share-momentum-runner/actions/runs/43851757502)：交易所完整份额23日、完整份额/NAV22日；原历史方向基准32/60、28/60、24/59；普通覆盖率有效8日、PIT 0日；实时分母f124=0、自由流通仍缺可靠证据。11/13完整官方份额但NAV未齐；净赎回代理-17.48亿元。根cron准点与迟报合法事件跨日识别仍待实际验证。

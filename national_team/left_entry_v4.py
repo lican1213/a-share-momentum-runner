@@ -135,7 +135,7 @@ def weak_confirmation(prev_low, current_low, prev_close, current_close):
             and d(current_close, "close") >= d(prev_close, "prev_close"))
 
 
-def freeze(v3, watch, prices, *, now, next_session, stock_limit=2, funding_basis=None):
+def freeze(v3, watch, prices, *, now, next_session, stock_limit=2, funding_basis=None, v5_experiment=False):
     time = _when(now)
     if time > datetime.now(timezone.utc).astimezone(time.tzinfo):
         raise ValueError("freeze cannot be future-dated")
@@ -146,10 +146,12 @@ def freeze(v3, watch, prices, *, now, next_session, stock_limit=2, funding_basis
     asof = signal["date"]
     if funding_basis is not None:
         from national_team.coverage_v3 import decision_funding_session, observed_funding_basis
-        signal = decision_funding_session(v3)
+        from national_team.coverage_v3 import v5_decision_session, early_funding_signal
+        signal = v5_decision_session(v3) if v5_experiment else decision_funding_session(v3)
         asof = signal["date"]
         basis, active = observed_funding_basis(signal)
-        valid = active and basis == funding_basis
+        early = v5_experiment and early_funding_signal(signal)
+        valid = (active or early) and basis == funding_basis
     else:
         valid = all((signal.get("market_down"), signal.get("share_proxy_event"),
                      d(signal.get("net_creation_1d_cny"), "net creation") > 0,
@@ -161,7 +163,11 @@ def freeze(v3, watch, prices, *, now, next_session, stock_limit=2, funding_basis
     if watch.get("index_weight", {}).get("kind") not in (
         "CSI300_LATEST_INDEX_WEIGHT_PROXY_NOT_ETF_PCF", "CSI300_INDEX_PROXY_NOT_ETF_PCF"):
         raise ValueError("index weight provenance missing")
-    if date.fromisoformat(next_session) <= time.astimezone(BJ).date():
+    local = time.astimezone(BJ)
+    planned = date.fromisoformat(next_session)
+    if (planned < local.date() or (planned == local.date() and not (
+            v5_experiment and (local.hour, local.minute) < (9, 15)
+            and date.fromisoformat(asof) < planned))):
         raise ValueError("no backdated/instant entry; future session required")
     src_times = [v3["source_provenance"]["as_of_utc"],
                  watch["event_first_public_no_earlier_than"],
@@ -222,9 +228,17 @@ def freeze(v3, watch, prices, *, now, next_session, stock_limit=2, funding_basis
     cluster_key = ("observed_funding" if funding_basis is not None
                    and v3["events"].get("observed_funding") else "share_proxy")
     anchors = [e for e in v3["events"][cluster_key] if e["signal_date"] <= asof]
-    if not anchors:
-        raise ValueError("no observed funding cluster at or before signal")
-    cluster = anchors[-1]
+    if v5_experiment and early and not active:
+        anchor = asof
+        for row in reversed([r for r in v3["daily"] if r["date"] < asof]):
+            if not (early_funding_signal(row) or observed_funding_basis(row)[1]):
+                break
+            anchor = row["date"]
+        cluster = {"signal_date": anchor}
+    else:
+        if not anchors:
+            raise ValueError("no observed funding cluster at or before signal")
+        cluster = anchors[-1]
     s0 = {"instrument": "510300", "budget_cny": format(used, "f"),
           "status": "AWAIT_BENCHMARK_OPEN_AND_SAME_ENTRY_TIME",
           "entry_session": next_session, "filled_shares": 0, "net_return": None}
@@ -275,5 +289,7 @@ def freeze(v3, watch, prices, *, now, next_session, stock_limit=2, funding_basis
         "trade_authorized": False, "broker_orders": [],
         "no_claim_of_50pct_stock_profit_probability": True
     }
+    if v5_experiment:
+        result["verified_candidates"] = candidates
     result["freeze_payload_sha256"] = digest(result)
     return result

@@ -5,6 +5,10 @@ status: maintained
 updated: 2026-11-06
 ---
 
+## 2026-11-17：EXP-0017 早期试仓与主动追涨（候选实现，待CI/生产验证）
+- 参见 [EXP-0017](experiments/EXP-0017-early-flow-momentum.md)。早期50亿元单日四ETF代理独立纸面试仓；R_BOUNCE主动追涨不设3%上限；新增EARLY_ENTRY账本保留前三组历史。09:15前合法冻结可研究当日开盘。原四ETF、cron、三时段、T+1/T+2及历史不改。新旧R收益分版本，阶段二/三依据新成熟样本，不把代码合入当作验收。
+
+
 ## 2026-11-06：EXP-0014 执行与迟到行情修复验收
 
 [新对抗审计](audits/AUD-2026-11-06-exp0014-paper-execution.md) · [连续模拟盘协议](experiments/EXP-0014-v5-paper-account.md) · [主分支289项全库门#42180430286](https://github.com/lican1213/a-share-momentum-runner/actions/runs/42180430286) · [真实三组落盘#42180430149](../records/national_team_paper_accounts_v5/2026-11-06/42180430149-a1.json)。跳空价配ETF开盘、同本金扣费超额、迟到股票OHLC按原日历补核算**退出**；不补买、不改历史冻结。11/06 15:23股票日线仍缺，三组是`STALE_PRICE`和0已平仓，18:45正常定时业务结果尚不能提前宣称。

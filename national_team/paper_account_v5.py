@@ -13,9 +13,7 @@ from national_team.left_entry_v4 import (
     CAPITAL, FEE_RATE, MAX_LOSS_PER_STOCK, SLIPPAGE_RATE,
     STAMP_SELL_RATE, STOP_DISTANCE, d, digest, plan_lots,
 )
-from national_team.left_entry_v5 import POLICIES, RIGHT_POLICY
-
-ARMS = (*POLICIES, RIGHT_POLICY)
+from national_team.left_entry_v5 import ARMS
 TARGET = Decimal("0.03")
 MAX_POSITIONS = 2
 MIN_COMMISSION = Decimal("5")
@@ -84,6 +82,7 @@ def _quotes(events, asof, captured_at):
                     "signal_session": freeze["signal_session"],
                     "intended_session": order["intended_session"],
                     "freeze_sha256": freeze["freeze_payload_sha256"],
+                    "strategy_experiment_id": freeze.get("strategy_experiment_id", "LEGACY_V5"),
                 })
     intents.sort(key=lambda x: (x["intended_session"], x["signal_session"], x["arm"], x["stock"]))
     return bars, intents, errors
@@ -153,6 +152,7 @@ def _close(account, pos, *, day, price, reason, etf_bar,
         equal_capital_s0 = s0_profit * cost / d(pos["s0_buy_total_cny"], "s0 cost")
     account["closed_trades"].append({
         "id": pos["id"], "stock": pos["stock"], "entry_session": pos["entry_session"],
+        "strategy_experiment_id": pos.get("strategy_experiment_id", "LEGACY_V5"),
         "exit_session": day, "shares": pos["shares"],
         "entry_open_raw": pos["entry_open_raw"], "exit_price_raw": format(price, "f"),
         "exit_reason": reason, "net_pnl_cny": _money(profit),
@@ -212,6 +212,7 @@ def _enter(account, intent, stock_bar, etf_bar, day):
             account["cash_cny"] = _money(d(account["cash_cny"], "cash") - cost)
             account["positions"].append({
                 "id": key, "stock": intent["stock"], "freeze_sha256": intent["freeze_sha256"],
+                "strategy_experiment_id": intent.get("strategy_experiment_id", "LEGACY_V5"),
                 "entry_session": day, "entry_open_raw": format(stock_bar["open"], "f"),
                 "shares": shares, "buy_total_cny": _money(cost),
                 "held_sessions": 0, "last_mark_close": format(stock_bar["close"], "f"),
@@ -318,6 +319,9 @@ def advance(previous, events, *, asof, captured_at):
         raise ValueError("incompatible previous paper ledger")
     last = previous.get("last_market_session") if previous else None
     accounts = deepcopy(previous["accounts"]) if previous else {a: _blank() for a in ARMS}
+    # Migrate without changing prior cash, positions, or historical trades.
+    for arm in ARMS:
+        accounts.setdefault(arm, _blank())
     for account in accounts.values():
         account.pop("summary", None)
     bars, intents, errors = _quotes(events, asof, captured_at)

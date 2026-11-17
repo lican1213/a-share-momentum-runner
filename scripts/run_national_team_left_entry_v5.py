@@ -5,7 +5,7 @@ import argparse
 import json
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, time, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -17,6 +17,12 @@ from scripts.run_national_team_left_entry_v4 import collect
 from national_team.event_pipeline import next_exchange_session
 
 BJ = ZoneInfo("Asia/Shanghai")
+
+
+def planned_entry_session(now):
+    local = now.astimezone(BJ)
+    day = local.date() - timedelta(days=1) if local.time() < time(9, 15) else local.date()
+    return next_exchange_session(day)
 
 
 def main():
@@ -31,8 +37,8 @@ def main():
     args = parser.parse_args()
     v3 = json.loads(Path(args.v3).read_text(encoding="utf-8"))
     watch = json.loads(Path(args.watch).read_text(encoding="utf-8"))
-    from national_team.coverage_v3 import decision_funding_session
-    asof = decision_funding_session(v3)["date"]
+    from national_team.coverage_v3 import v5_decision_session
+    asof = v5_decision_session(v3)["date"]
     router = json.loads(Path(args.router).read_text(encoding="utf-8")) if args.router else None
     if router is not None and (router["signal_session"] != asof or router["status"] != "NEW_FUNDING_EVENT"):
         raise ValueError("router decision does not authorize this signal session")
@@ -44,7 +50,7 @@ def main():
         prices = backfill_asof_prices(prices, asof)
     now = datetime.now(BJ)
     result = freeze(v3, watch, prices, now=now.isoformat(),
-                    next_session=next_exchange_session(now.date()),
+                    next_session=planned_entry_session(now),
                     selected_policy=args.policy)
     if result["universe"]["ohlc_verified"] == 0:
         raise ValueError("NO_VALID_FREEZE_OHLC: keep funding event eligible for a later real observation")
