@@ -12,6 +12,9 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-17 | [6ac75a7699](https://github.com/lican1213/a-share-momentum-runner/commit/6ac75a7699d284101db7023d338af4c0414161a5) | Can Li | feat(v5): EXP-0017 early ETF flow and active-momentum paper strategies |
+| 2026-11-17 | [03904640b8](https://github.com/lican1213/a-share-momentum-runner/commit/03904640b89c675cc0c1659bd809580d409ebd60) | Can Li | test(exp0017): isolate legacy freeze root in synthetic early-flow routing |
+| 2026-11-17 | [8d8beb6217](https://github.com/lican1213/a-share-momentum-runner/commit/8d8beb6217f82f7e88355de32c0bfddcda753396) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-17 | [7786af1e47](https://github.com/lican1213/a-share-momentum-runner/commit/7786af1e471c86363231d434f0d25b8959dfdd0b) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 44054114642 [skip ci] |
 | 2026-11-17 | [a11684e9b6](https://github.com/lican1213/a-share-momentum-runner/commit/a11684e9b6b244d46e2443ef3071fc9a57e234c8) | github-actions[bot] | records(exp0012): route event and append paper evidence 44054033681 [skip ci] |
 | 2026-11-17 | [6ddf8f0222](https://github.com/lican1213/a-share-momentum-runner/commit/6ddf8f0222477c1edac66f290c4b6c406c8fa00d) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 44053947500-a1 |

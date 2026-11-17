@@ -13,7 +13,7 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | Source class | Trade/record date | Run ID | Recorded status | Evidence |
 | --- | --- | --- | --- | --- |
 | V5 independent horizon path | 2026-11-17 | 44054114642-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-17/44054114642-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-17 | 44054114642-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-17/44054114642-a1.json) |
+| V5 continuous paper ledger | 2026-11-17 | 44054114642-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-17/44054114642-a1.json) |
 | V5 dated event router | 2026-11-17 | 44054033681-a1 | ALREADY_FROZEN_FOR_SESSION | [JSON](../../records/national_team_router/2026-11-17/44054033681-a1.json) |
 | Official policy source observations | 2026-11-17 | 44054033681-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-17/44054033681-a1.json) |
 | V3 dated market and four-ETF replay | 2026-11-17 | 44053947500-a1 | UNVERIFIED | [JSON](../../records/national_team_v3/2026-11-17/44053947500-a1.json) |
@@ -22,7 +22,7 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | CSI300 stock research watches | 2026-11-16 | 44053065529 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-11-17/44053065529-a1.json) |
 | Official exchange PCF attempts | 2026-11-17 | 44053065529 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-11-17/44053065529-a1.json) |
 | V5 independent horizon path | 2026-11-17 | 44024639453-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-17/44024639453-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-17 | 44024639453-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-17/44024639453-a1.json) |
+| V5 continuous paper ledger | 2026-11-17 | 44024639453-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-17/44024639453-a1.json) |
 | V5 dated event router | 2026-11-17 | 44023760407-a1 | NEW_FUNDING_EVENT | [JSON](../../records/national_team_router/2026-11-17/44023760407-a1.json) |
 | V5 prospective frozen intents | 2026-11-17 | 44023760407-a1 | UNVERIFIED | [JSON](../../records/national_team_left_entry_v5/2026-11-17/44023760407-a1.json) |
 | Official policy source observations | 2026-11-17 | 44023760407-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-17/44023760407-a1.json) |
@@ -32,17 +32,17 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | CSI300 stock research watches | 2026-11-16 | 44022983690 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-11-17/44022983690-a1.json) |
 | Official exchange PCF attempts | 2026-11-17 | 44022983690 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-11-17/44022983690-a1.json) |
 | V5 independent horizon path | 2026-11-17 | 43952133039-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-17/43952133039-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-17 | 43952133039-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-17/43952133039-a1.json) |
+| V5 continuous paper ledger | 2026-11-17 | 43952133039-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-17/43952133039-a1.json) |
 | V5 independent horizon path | 2026-11-17 | 43946164536-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-17/43946164536-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-17 | 43946164536-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-17/43946164536-a1.json) |
+| V5 continuous paper ledger | 2026-11-17 | 43946164536-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-17/43946164536-a1.json) |
 | V5 dated event router | 2026-11-17 | 43945744231-a1 | WAIT_MATCHING_STOCK_WATCH | [JSON](../../records/national_team_router/2026-11-17/43945744231-a1.json) |
 | Official policy source observations | 2026-11-17 | 43945744231-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-17/43945744231-a1.json) |
 | V5 independent horizon path | 2026-11-17 | 43942484064-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-17/43942484064-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-17 | 43942484064-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-17/43942484064-a1.json) |
+| V5 continuous paper ledger | 2026-11-17 | 43942484064-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-17/43942484064-a1.json) |
 | V5 dated event router | 2026-11-17 | 43942115292-a1 | WAIT_MATCHING_STOCK_WATCH | [JSON](../../records/national_team_router/2026-11-17/43942115292-a1.json) |
 | Official policy source observations | 2026-11-17 | 43942115292-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-17/43942115292-a1.json) |
 | V5 independent horizon path | 2026-11-17 | 43932382347-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-17/43932382347-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-17 | 43932382347-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-17/43932382347-a1.json) |
+| V5 continuous paper ledger | 2026-11-17 | 43932382347-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-17/43932382347-a1.json) |
 | V5 dated event router | 2026-11-17 | 43932274930-a1 | WAIT_MATCHING_STOCK_WATCH | [JSON](../../records/national_team_router/2026-11-17/43932274930-a1.json) |
 | Official policy source observations | 2026-11-17 | 43932274930-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-17/43932274930-a1.json) |
 | ETF source attempts | 2026-11-17 | 43931347882 | ATTEMPTED_NO_COMPLETE_FACTOR | [JSON](../../records/national_team_etf/2026-11-17/43931347882-a1.json) |
@@ -52,12 +52,12 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | V3 dated market and four-ETF replay | 2026-11-16 | 43942004763-a1 | UNVERIFIED | [JSON](../../records/national_team_v3/2026-11-16/43942004763-a1.json) |
 | V3 dated market and four-ETF replay | 2026-11-16 | 43932138456-a1 | UNVERIFIED | [JSON](../../records/national_team_v3/2026-11-16/43932138456-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43863350774-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43863350774-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43863350774-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43863350774-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43863350774-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43863350774-a1.json) |
 | V5 dated event router | 2026-11-16 | 43863030787-a1 | WAIT_LATEST_SESSION_EVIDENCE | [JSON](../../records/national_team_router/2026-11-16/43863030787-a1.json) |
 | Official policy source observations | 2026-11-16 | 43863030787-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-16/43863030787-a1.json) |
 | V3 dated market and four-ETF replay | 2026-11-16 | 43862935107-a1 | UNVERIFIED | [JSON](../../records/national_team_v3/2026-11-16/43862935107-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43862251899-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43862251899-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43862251899-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43862251899-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43862251899-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43862251899-a1.json) |
 | ETF source attempts | 2026-11-16 | 43862139445 | FOUR_ETF_FACTOR_OBSERVED_AFTER_CAPTURE_NOT_HISTORICAL_PIT | [JSON](../../records/national_team_etf/2026-11-16/43862139445-a1.json) |
 | Four-fund merged funding | 2026-11-16 | 43862139445 | FULL_FOUR_ETF_SHARES_NAV_OBSERVED_RESEARCH | [JSON](../../records/national_team_merged/2026-11-16/43862139445-a1.json) |
 | CSI300 stock research watches | 2026-11-13 | 43862139445 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-11-16/43862139445-a1.json) |
@@ -65,17 +65,17 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | V5 dated event router | 2026-11-16 | 43862139424-a1 | WAIT_LATEST_SESSION_EVIDENCE | [JSON](../../records/national_team_router/2026-11-16/43862139424-a1.json) |
 | Official policy source observations | 2026-11-16 | 43862139424-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-16/43862139424-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43861481050-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43861481050-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43861481050-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43861481050-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43861481050-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43861481050-a1.json) |
 | V5 dated event router | 2026-11-16 | 43861173129-a1 | WAIT_LATEST_SESSION_EVIDENCE | [JSON](../../records/national_team_router/2026-11-16/43861173129-a1.json) |
 | Official policy source observations | 2026-11-16 | 43861173129-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-16/43861173129-a1.json) |
 | V3 dated market and four-ETF replay | 2026-11-16 | 43861082339-a1 | UNVERIFIED | [JSON](../../records/national_team_v3/2026-11-16/43861082339-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43860925481-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43860925481-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43860925481-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43860925481-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43860925481-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43860925481-a1.json) |
 | V5 dated event router | 2026-11-16 | 43860834397-a1 | WAIT_LATEST_SESSION_EVIDENCE | [JSON](../../records/national_team_router/2026-11-16/43860834397-a1.json) |
 | Official policy source observations | 2026-11-16 | 43860834397-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-16/43860834397-a1.json) |
 | V3 dated market and four-ETF replay | 2026-11-16 | 43860741317-a1 | UNVERIFIED | [JSON](../../records/national_team_v3/2026-11-16/43860741317-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43860437905-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43860437905-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43860437905-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43860437905-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43860437905-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43860437905-a1.json) |
 | ETF source attempts | 2026-11-16 | 43860360085 | FOUR_ETF_FACTOR_OBSERVED_AFTER_CAPTURE_NOT_HISTORICAL_PIT | [JSON](../../records/national_team_etf/2026-11-16/43860360085-a1.json) |
 | Four-fund merged funding | 2026-11-16 | 43860360085 | FULL_FOUR_ETF_SHARES_NAV_OBSERVED_RESEARCH | [JSON](../../records/national_team_merged/2026-11-16/43860360085-a1.json) |
 | CSI300 stock research watches | 2026-11-13 | 43860360085 | NO_RELIABLE_INDEX_WEIGHTS | [JSON](../../records/national_team_watch/2026-11-16/43860360085-a1.json) |
@@ -83,64 +83,64 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | V5 dated event router | 2026-11-16 | 43860359984-a1 | WAIT_LATEST_SESSION_EVIDENCE | [JSON](../../records/national_team_router/2026-11-16/43860359984-a1.json) |
 | Official policy source observations | 2026-11-16 | 43860359984-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-16/43860359984-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43859295774-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43859295774-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43859295774-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43859295774-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43859295774-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43859295774-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43859217173-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43859217173-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43859217173-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43859217173-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43859217173-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43859217173-a1.json) |
 | V5 dated event router | 2026-11-16 | 43858987161-a1 | WAIT_LATEST_SESSION_EVIDENCE | [JSON](../../records/national_team_router/2026-11-16/43858987161-a1.json) |
 | Official policy source observations | 2026-11-16 | 43858987161-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-16/43858987161-a1.json) |
 | V5 dated event router | 2026-11-16 | 43858894635-a1 | WAIT_LATEST_SESSION_EVIDENCE | [JSON](../../records/national_team_router/2026-11-16/43858894635-a1.json) |
 | Official policy source observations | 2026-11-16 | 43858894635-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-16/43858894635-a1.json) |
 | V3 dated market and four-ETF replay | 2026-11-16 | 43858894606-a1 | UNVERIFIED | [JSON](../../records/national_team_v3/2026-11-16/43858894606-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43858894563-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43858894563-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43858894563-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43858894563-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43858894563-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43858894563-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43858024010-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43858024010-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43858024010-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43858024010-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43858024010-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43858024010-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43857933970-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43857933970-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43857933970-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43857933970-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43857933970-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43857933970-a1.json) |
 | V5 dated event router | 2026-11-16 | 43857840529-a1 | WAIT_LATEST_SESSION_EVIDENCE | [JSON](../../records/national_team_router/2026-11-16/43857840529-a1.json) |
 | Official policy source observations | 2026-11-16 | 43857840529-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-16/43857840529-a1.json) |
 | V3 dated market and four-ETF replay | 2026-11-16 | 43857607859-a1 | UNVERIFIED | [JSON](../../records/national_team_v3/2026-11-16/43857607859-a1.json) |
 | V5 dated event router | 2026-11-16 | 43857607849-a1 | WAIT_LATEST_SESSION_EVIDENCE | [JSON](../../records/national_team_router/2026-11-16/43857607849-a1.json) |
 | Official policy source observations | 2026-11-16 | 43857607849-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-16/43857607849-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43857607845-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43857607845-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43857607845-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43857607845-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43857607845-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43857607845-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43852350573-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43852350573-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43852350573-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43852350573-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43852350573-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43852350573-a1.json) |
 | V5 dated event router | 2026-11-16 | 43852267284-a1 | WAIT_LATEST_SESSION_EVIDENCE | [JSON](../../records/national_team_router/2026-11-16/43852267284-a1.json) |
 | Official policy source observations | 2026-11-16 | 43852267284-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-16/43852267284-a1.json) |
 | V3 dated market and four-ETF replay | 2026-11-16 | 43852184307-a1 | UNVERIFIED | [JSON](../../records/national_team_v3/2026-11-16/43852184307-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43852184259-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43852184259-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43852184259-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43852184259-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43852184259-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43852184259-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43851944900-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43851944900-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43851944900-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43851944900-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43851944900-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43851944900-a1.json) |
 | V5 dated event router | 2026-11-16 | 43851857591-a1 | WAIT_LATEST_SESSION_EVIDENCE | [JSON](../../records/national_team_router/2026-11-16/43851857591-a1.json) |
 | Official policy source observations | 2026-11-16 | 43851857591-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-16/43851857591-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43851845751-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43851845751-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43851845751-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43851845751-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43851845751-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43851845751-a1.json) |
 | V3 dated market and four-ETF replay | 2026-11-16 | 43851757502-a1 | UNVERIFIED | [JSON](../../records/national_team_v3/2026-11-16/43851757502-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43851757253-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43851757253-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43851757253-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43851757253-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43851757253-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43851757253-a1.json) |
 | V5 dated event router | 2026-11-16 | 43851757252-a1 | WAIT_LATEST_SESSION_EVIDENCE | [JSON](../../records/national_team_router/2026-11-16/43851757252-a1.json) |
 | Official policy source observations | 2026-11-16 | 43851757252-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-16/43851757252-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43851267117-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43851267117-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43851267117-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43851267117-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43851267117-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43851267117-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43850945324-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43850945324-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43850945324-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43850945324-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43850945324-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43850945324-a1.json) |
 | V5 dated event router | 2026-11-16 | 43850945250-a1 | WAIT_LATEST_SESSION_EVIDENCE | [JSON](../../records/national_team_router/2026-11-16/43850945250-a1.json) |
 | Official policy source observations | 2026-11-16 | 43850945250-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-16/43850945250-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43850822820-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43850822820-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43850822820-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43850822820-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43850822820-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43850822820-a1.json) |
 | V5 dated event router | 2026-11-16 | 43850723904-a1 | WAIT_LATEST_SESSION_EVIDENCE | [JSON](../../records/national_team_router/2026-11-16/43850723904-a1.json) |
 | Official policy source observations | 2026-11-16 | 43850723904-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-16/43850723904-a1.json) |
 | V3 dated market and four-ETF replay | 2026-11-16 | 43850640883-a1 | UNVERIFIED | [JSON](../../records/national_team_v3/2026-11-16/43850640883-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43850540287-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43850540287-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43850540287-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43850540287-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43850540287-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43850540287-a1.json) |
 | V5 dated event router | 2026-11-16 | 43850455250-a1 | WAIT_LATEST_SESSION_EVIDENCE | [JSON](../../records/national_team_router/2026-11-16/43850455250-a1.json) |
 | Official policy source observations | 2026-11-16 | 43850455250-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-16/43850455250-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43850427187-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43850427187-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43850427187-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43850427187-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43850427187-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43850427187-a1.json) |
 | V5 independent horizon path | 2026-11-16 | 43850315658-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-16/43850315658-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-16 | 43850315658-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43850315658-a1.json) |
+| V5 continuous paper ledger | 2026-11-16 | 43850315658-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-16/43850315658-a1.json) |
 | V5 dated event router | 2026-11-16 | 43850315482-a1 | NO_NEW_FUNDING_EVENT | [JSON](../../records/national_team_router/2026-11-16/43850315482-a1.json) |
 | Official policy source observations | 2026-11-16 | 43850315482-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-16/43850315482-a1.json) |
 | V3 dated market and four-ETF replay | 2026-11-16 | 43850315456-a1 | UNVERIFIED | [JSON](../../records/national_team_v3/2026-11-16/43850315456-a1.json) |
@@ -149,13 +149,13 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | CSI300 stock research watches | 2026-11-13 | 43827324850 | NO_STOCK_LIQUIDITY_DATA | [JSON](../../records/national_team_watch/2026-11-16/43827324850-a1.json) |
 | Official exchange PCF attempts | 2026-11-16 | 43827324850 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-11-16/43827324850-a1.json) |
 | V5 independent horizon path | 2026-11-14 | 43478606014-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-14/43478606014-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-14 | 43478606014-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-14/43478606014-a1.json) |
+| V5 continuous paper ledger | 2026-11-14 | 43478606014-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-14/43478606014-a1.json) |
 | V5 independent horizon path | 2026-11-14 | 43474081813-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-14/43474081813-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-14 | 43474081813-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-14/43474081813-a1.json) |
+| V5 continuous paper ledger | 2026-11-14 | 43474081813-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-14/43474081813-a1.json) |
 | V5 dated event router | 2026-11-14 | 43473980831-a1 | NO_NEW_FUNDING_EVENT | [JSON](../../records/national_team_router/2026-11-14/43473980831-a1.json) |
 | Official policy source observations | 2026-11-14 | 43473980831-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-14/43473980831-a1.json) |
 | V5 independent horizon path | 2026-11-14 | 43471340024-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-14/43471340024-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-14 | 43471340024-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-14/43471340024-a1.json) |
+| V5 continuous paper ledger | 2026-11-14 | 43471340024-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-14/43471340024-a1.json) |
 | V5 dated event router | 2026-11-14 | 43471238140-a1 | NO_NEW_FUNDING_EVENT | [JSON](../../records/national_team_router/2026-11-14/43471238140-a1.json) |
 | Official policy source observations | 2026-11-14 | 43471238140-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-14/43471238140-a1.json) |
 | ETF source attempts | 2026-11-14 | 43463932968 | SHARES_OBSERVED_NO_VERIFIED_TRADE_SIGNAL | [JSON](../../records/national_team_etf/2026-11-14/43463932968-a1.json) |
@@ -168,13 +168,13 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | CSI300 stock research watches | 2026-11-12 | 43388944885 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-11-13/43388944885-a1.json) |
 | Official exchange PCF attempts | 2026-11-13 | 43388944885 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-11-13/43388944885-a1.json) |
 | V5 independent horizon path | 2026-11-13 | 43281316971-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-13/43281316971-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-13 | 43281316971-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-13/43281316971-a1.json) |
+| V5 continuous paper ledger | 2026-11-13 | 43281316971-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-13/43281316971-a1.json) |
 | V5 independent horizon path | 2026-11-13 | 43275149663-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-13/43275149663-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-13 | 43275149663-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-13/43275149663-a1.json) |
+| V5 continuous paper ledger | 2026-11-13 | 43275149663-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-13/43275149663-a1.json) |
 | V5 dated event router | 2026-11-13 | 43274805068-a1 | NO_NEW_FUNDING_EVENT | [JSON](../../records/national_team_router/2026-11-13/43274805068-a1.json) |
 | Official policy source observations | 2026-11-13 | 43274805068-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-13/43274805068-a1.json) |
 | V5 independent horizon path | 2026-11-13 | 43271852724-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-13/43271852724-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-13 | 43271852724-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-13/43271852724-a1.json) |
+| V5 continuous paper ledger | 2026-11-13 | 43271852724-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-13/43271852724-a1.json) |
 | V5 dated event router | 2026-11-13 | 43271721229-a1 | NO_NEW_FUNDING_EVENT | [JSON](../../records/national_team_router/2026-11-13/43271721229-a1.json) |
 | Official policy source observations | 2026-11-13 | 43271721229-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-13/43271721229-a1.json) |
 | ETF source attempts | 2026-11-13 | 43263686012 | PRIOR_FULL_FOUR_AND_LATEST_PARTIAL_OBSERVED | [JSON](../../records/national_team_etf/2026-11-13/43263686012-a1.json) |
@@ -187,13 +187,13 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | CSI300 stock research watches | 2026-11-11 | 43181379513 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-11-12/43181379513-a1.json) |
 | Official exchange PCF attempts | 2026-11-12 | 43181379513 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-11-12/43181379513-a1.json) |
 | V5 independent horizon path | 2026-11-12 | 43073872521-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-12/43073872521-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-12 | 43073872521-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-12/43073872521-a1.json) |
+| V5 continuous paper ledger | 2026-11-12 | 43073872521-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-12/43073872521-a1.json) |
 | V5 independent horizon path | 2026-11-12 | 43071196190-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-12/43071196190-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-12 | 43071196190-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-12/43071196190-a1.json) |
+| V5 continuous paper ledger | 2026-11-12 | 43071196190-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-12/43071196190-a1.json) |
 | V5 dated event router | 2026-11-12 | 43071102376-a1 | NO_NEW_FUNDING_EVENT | [JSON](../../records/national_team_router/2026-11-12/43071102376-a1.json) |
 | Official policy source observations | 2026-11-12 | 43071102376-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-12/43071102376-a1.json) |
 | V5 independent horizon path | 2026-11-12 | 43066593983-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-12/43066593983-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-12 | 43066593983-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-12/43066593983-a1.json) |
+| V5 continuous paper ledger | 2026-11-12 | 43066593983-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-12/43066593983-a1.json) |
 | V5 dated event router | 2026-11-12 | 43066496765-a1 | NO_NEW_FUNDING_EVENT | [JSON](../../records/national_team_router/2026-11-12/43066496765-a1.json) |
 | Official policy source observations | 2026-11-12 | 43066496765-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-12/43066496765-a1.json) |
 | ETF source attempts | 2026-11-12 | 43057264931 | PRIOR_FULL_FOUR_AND_LATEST_PARTIAL_OBSERVED | [JSON](../../records/national_team_etf/2026-11-12/43057264931-a1.json) |
@@ -206,13 +206,13 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | CSI300 stock research watches | 2026-11-10 | 42981553735 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-11-11/42981553735-a1.json) |
 | Official exchange PCF attempts | 2026-11-11 | 42981553735 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-11-11/42981553735-a1.json) |
 | V5 independent horizon path | 2026-11-11 | 42873128577-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-11/42873128577-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-11 | 42873128577-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-11/42873128577-a1.json) |
+| V5 continuous paper ledger | 2026-11-11 | 42873128577-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-11/42873128577-a1.json) |
 | V5 independent horizon path | 2026-11-11 | 42865934150-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-11/42865934150-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-11 | 42865934150-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-11/42865934150-a1.json) |
+| V5 continuous paper ledger | 2026-11-11 | 42865934150-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-11/42865934150-a1.json) |
 | V5 dated event router | 2026-11-11 | 42865827372-a1 | NO_NEW_FUNDING_EVENT | [JSON](../../records/national_team_router/2026-11-11/42865827372-a1.json) |
 | Official policy source observations | 2026-11-11 | 42865827372-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-11/42865827372-a1.json) |
 | V5 independent horizon path | 2026-11-11 | 42862060472-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-11/42862060472-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-11 | 42862060472-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-11/42862060472-a1.json) |
+| V5 continuous paper ledger | 2026-11-11 | 42862060472-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-11/42862060472-a1.json) |
 | V5 dated event router | 2026-11-11 | 42861968499-a1 | NO_NEW_FUNDING_EVENT | [JSON](../../records/national_team_router/2026-11-11/42861968499-a1.json) |
 | Official policy source observations | 2026-11-11 | 42861968499-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-11/42861968499-a1.json) |
 | ETF source attempts | 2026-11-11 | 42854870683 | PRIOR_FULL_FOUR_AND_LATEST_PARTIAL_OBSERVED | [JSON](../../records/national_team_etf/2026-11-11/42854870683-a1.json) |
@@ -225,13 +225,13 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | CSI300 stock research watches | 2026-11-09 | 42782198596 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-11-10/42782198596-a1.json) |
 | Official exchange PCF attempts | 2026-11-10 | 42782198596 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-11-10/42782198596-a1.json) |
 | V5 independent horizon path | 2026-11-10 | 42698837185-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-10/42698837185-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-10 | 42698837185-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-10/42698837185-a1.json) |
+| V5 continuous paper ledger | 2026-11-10 | 42698837185-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-10/42698837185-a1.json) |
 | V5 independent horizon path | 2026-11-10 | 42693678712-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-10/42693678712-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-10 | 42693678712-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-10/42693678712-a1.json) |
+| V5 continuous paper ledger | 2026-11-10 | 42693678712-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-10/42693678712-a1.json) |
 | V5 dated event router | 2026-11-10 | 42693573818-a1 | NO_NEW_FUNDING_EVENT | [JSON](../../records/national_team_router/2026-11-10/42693573818-a1.json) |
 | Official policy source observations | 2026-11-10 | 42693573818-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-10/42693573818-a1.json) |
 | V5 independent horizon path | 2026-11-10 | 42688050481-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-10/42688050481-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-10 | 42688050481-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-10/42688050481-a1.json) |
+| V5 continuous paper ledger | 2026-11-10 | 42688050481-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-10/42688050481-a1.json) |
 | V5 dated event router | 2026-11-10 | 42687963742-a1 | NO_NEW_FUNDING_EVENT | [JSON](../../records/national_team_router/2026-11-10/42687963742-a1.json) |
 | Official policy source observations | 2026-11-10 | 42687963742-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-10/42687963742-a1.json) |
 | ETF source attempts | 2026-11-10 | 42678449044 | PRIOR_FULL_FOUR_AND_LATEST_PARTIAL_OBSERVED | [JSON](../../records/national_team_etf/2026-11-10/42678449044-a1.json) |
@@ -244,13 +244,13 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | CSI300 stock research watches | 2026-11-06 | 42582211255 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-11-09/42582211255-a1.json) |
 | Official exchange PCF attempts | 2026-11-09 | 42582211255 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-11-09/42582211255-a1.json) |
 | V5 independent horizon path | 2026-11-07 | 42263721653-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-07/42263721653-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-07 | 42263721653-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-07/42263721653-a1.json) |
+| V5 continuous paper ledger | 2026-11-07 | 42263721653-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-07/42263721653-a1.json) |
 | V5 independent horizon path | 2026-11-07 | 42259916209-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-07/42259916209-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-07 | 42259916209-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-07/42259916209-a1.json) |
+| V5 continuous paper ledger | 2026-11-07 | 42259916209-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-07/42259916209-a1.json) |
 | V5 dated event router | 2026-11-07 | 42259816797-a1 | ALREADY_FROZEN_FOR_SESSION | [JSON](../../records/national_team_router/2026-11-07/42259816797-a1.json) |
 | Official policy source observations | 2026-11-07 | 42259816797-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-07/42259816797-a1.json) |
 | V5 independent horizon path | 2026-11-07 | 42256879724-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-07/42256879724-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-07 | 42256879724-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-07/42256879724-a1.json) |
+| V5 continuous paper ledger | 2026-11-07 | 42256879724-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-07/42256879724-a1.json) |
 | V5 dated event router | 2026-11-07 | 42256046998-a1 | NEW_FUNDING_EVENT | [JSON](../../records/national_team_router/2026-11-07/42256046998-a1.json) |
 | V5 prospective frozen intents | 2026-11-07 | 42256046998-a1 | UNVERIFIED | [JSON](../../records/national_team_left_entry_v5/2026-11-07/42256046998-a1.json) |
 | Official policy source observations | 2026-11-07 | 42256046998-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-07/42256046998-a1.json) |
@@ -264,17 +264,17 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | CSI300 stock research watches | 2026-11-05 | 42183791205 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-11-06/42183791205-a1.json) |
 | Official exchange PCF attempts | 2026-11-06 | 42183791205 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-11-06/42183791205-a1.json) |
 | V5 independent horizon path | 2026-11-06 | 42180430149-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-06/42180430149-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-06 | 42180430149-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-06/42180430149-a1.json) |
+| V5 continuous paper ledger | 2026-11-06 | 42180430149-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-06/42180430149-a1.json) |
 | V5 independent horizon path | 2026-11-06 | 42179483457-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-06/42179483457-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-06 | 42179483457-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-06/42179483457-a1.json) |
+| V5 continuous paper ledger | 2026-11-06 | 42179483457-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-06/42179483457-a1.json) |
 | V5 independent horizon path | 2026-11-06 | 42082550827-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-06/42082550827-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-06 | 42082550827-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-06/42082550827-a1.json) |
+| V5 continuous paper ledger | 2026-11-06 | 42082550827-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-06/42082550827-a1.json) |
 | V5 independent horizon path | 2026-11-06 | 42079102678-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-06/42079102678-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-06 | 42079102678-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-06/42079102678-a1.json) |
+| V5 continuous paper ledger | 2026-11-06 | 42079102678-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-06/42079102678-a1.json) |
 | V5 dated event router | 2026-11-06 | 42079013996-a1 | ALREADY_FROZEN_FOR_SESSION | [JSON](../../records/national_team_router/2026-11-06/42079013996-a1.json) |
 | Official policy source observations | 2026-11-06 | 42079013996-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-06/42079013996-a1.json) |
 | V5 independent horizon path | 2026-11-06 | 42075179383-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-06/42075179383-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-06 | 42075179383-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-06/42075179383-a1.json) |
+| V5 continuous paper ledger | 2026-11-06 | 42075179383-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-06/42075179383-a1.json) |
 | V5 dated event router | 2026-11-06 | 42075089407-a1 | ALREADY_FROZEN_FOR_SESSION | [JSON](../../records/national_team_router/2026-11-06/42075089407-a1.json) |
 | Official policy source observations | 2026-11-06 | 42075089407-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-06/42075089407-a1.json) |
 | ETF source attempts | 2026-11-06 | 42065683890 | PRIOR_FULL_FOUR_AND_LATEST_PARTIAL_OBSERVED | [JSON](../../records/national_team_etf/2026-11-06/42065683890-a1.json) |
@@ -287,11 +287,11 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | CSI300 stock research watches | 2026-11-04 | 41990336989 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-11-05/41990336989-a1.json) |
 | Official exchange PCF attempts | 2026-11-05 | 41990336989 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-11-05/41990336989-a1.json) |
 | V5 independent horizon path | 2026-11-05 | 41884983676-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-05/41884983676-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-05 | 41884983676-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-05/41884983676-a1.json) |
+| V5 continuous paper ledger | 2026-11-05 | 41884983676-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-05/41884983676-a1.json) |
 | V5 independent horizon path | 2026-11-05 | 41881316689-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-05/41881316689-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-05 | 41881316689-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-05/41881316689-a1.json) |
+| V5 continuous paper ledger | 2026-11-05 | 41881316689-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-05/41881316689-a1.json) |
 | V5 independent horizon path | 2026-11-05 | 41881242097-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-05/41881242097-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-05 | 41881242097-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-05/41881242097-a1.json) |
+| V5 continuous paper ledger | 2026-11-05 | 41881242097-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-05/41881242097-a1.json) |
 | V5 dated event router | 2026-11-05 | 41880935646-a1 | ALREADY_FROZEN_FOR_SESSION | [JSON](../../records/national_team_router/2026-11-05/41880935646-a1.json) |
 | Official policy source observations | 2026-11-05 | 41880935646-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-05/41880935646-a1.json) |
 | V5 dated event router | 2026-11-05 | 41879519729-a1 | NEW_FUNDING_EVENT | [JSON](../../records/national_team_router/2026-11-05/41879519729-a1.json) |
@@ -307,13 +307,13 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | CSI300 stock research watches | 2026-11-03 | 41792446499 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-11-04/41792446499-a1.json) |
 | Official exchange PCF attempts | 2026-11-04 | 41792446499 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-11-04/41792446499-a1.json) |
 | V5 independent horizon path | 2026-11-04 | 41689871593-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-04/41689871593-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-04 | 41689871593-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-04/41689871593-a1.json) |
+| V5 continuous paper ledger | 2026-11-04 | 41689871593-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-04/41689871593-a1.json) |
 | V5 independent horizon path | 2026-11-04 | 41686108442-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-04/41686108442-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-04 | 41686108442-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-04/41686108442-a1.json) |
+| V5 continuous paper ledger | 2026-11-04 | 41686108442-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-04/41686108442-a1.json) |
 | V5 dated event router | 2026-11-04 | 41685945490-a1 | ALREADY_FROZEN_FOR_SESSION | [JSON](../../records/national_team_router/2026-11-04/41685945490-a1.json) |
 | Official policy source observations | 2026-11-04 | 41685945490-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-04/41685945490-a1.json) |
 | V5 independent horizon path | 2026-11-04 | 41682255673-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-04/41682255673-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-04 | 41682255673-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-04/41682255673-a1.json) |
+| V5 continuous paper ledger | 2026-11-04 | 41682255673-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-04/41682255673-a1.json) |
 | V5 dated event router | 2026-11-04 | 41681594455-a1 | NEW_FUNDING_EVENT | [JSON](../../records/national_team_router/2026-11-04/41681594455-a1.json) |
 | V5 prospective frozen intents | 2026-11-04 | 41681594455-a1 | UNVERIFIED | [JSON](../../records/national_team_left_entry_v5/2026-11-04/41681594455-a1.json) |
 | Official policy source observations | 2026-11-04 | 41681594455-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-04/41681594455-a1.json) |
@@ -327,18 +327,18 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | CSI300 stock research watches | 2026-11-02 | 41599228861 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-11-03/41599228861-a1.json) |
 | Official exchange PCF attempts | 2026-11-03 | 41599228861 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-11-03/41599228861-a1.json) |
 | V5 independent horizon path | 2026-11-03 | 41559316107-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-03/41559316107-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-03 | 41559316107-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-03/41559316107-a1.json) |
+| V5 continuous paper ledger | 2026-11-03 | 41559316107-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-03/41559316107-a1.json) |
 | V5 dated event router | 2026-11-03 | 41559251512-a1 | ALREADY_FROZEN_FOR_SESSION | [JSON](../../records/national_team_router/2026-11-03/41559251512-a1.json) |
 | Official policy source observations | 2026-11-03 | 41559251512-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-03/41559251512-a1.json) |
 | V5 independent horizon path | 2026-11-03 | 41559216403-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-03/41559216403-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-03 | 41559216403-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-03/41559216403-a1.json) |
+| V5 continuous paper ledger | 2026-11-03 | 41559216403-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-03/41559216403-a1.json) |
 | V5 dated event router | 2026-11-03 | 41559157002-a1 | ALREADY_FROZEN_FOR_SESSION | [JSON](../../records/national_team_router/2026-11-03/41559157002-a1.json) |
 | Official policy source observations | 2026-11-03 | 41559157002-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-03/41559157002-a1.json) |
 | V5 independent horizon path | 2026-11-03 | 41559156976-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-03/41559156976-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-03 | 41559156976-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-03/41559156976-a1.json) |
+| V5 continuous paper ledger | 2026-11-03 | 41559156976-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-03/41559156976-a1.json) |
 | V3 dated market and four-ETF replay | 2026-11-03 | 41559156926-a1 | UNVERIFIED | [JSON](../../records/national_team_v3/2026-11-03/41559156926-a1.json) |
 | V5 independent horizon path | 2026-11-03 | 41519712835-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-03/41519712835-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-03 | 41519712835-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-03/41519712835-a1.json) |
+| V5 continuous paper ledger | 2026-11-03 | 41519712835-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-03/41519712835-a1.json) |
 | V5 dated event router | 2026-11-03 | 41515451702-a1 | NEW_FUNDING_EVENT | [JSON](../../records/national_team_router/2026-11-03/41515451702-a1.json) |
 | V5 prospective frozen intents | 2026-11-03 | 41515451702-a1 | UNVERIFIED | [JSON](../../records/national_team_left_entry_v5/2026-11-03/41515451702-a1.json) |
 | Official policy source observations | 2026-11-03 | 41515451702-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-03/41515451702-a1.json) |
@@ -356,7 +356,7 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | V5 dated event router | 2026-11-02 | 41460990262-a1 | ALREADY_FROZEN_FOR_SESSION | [JSON](../../records/national_team_router/2026-11-02/41460990262-a1.json) |
 | Official policy source observations | 2026-11-02 | 41460990262-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-02/41460990262-a1.json) |
 | V5 independent horizon path | 2026-11-02 | 41421490570-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-02/41421490570-a1.json) |
-| V5 continuous three-arm paper ledger | 2026-11-02 | 41421490570-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-02/41421490570-a1.json) |
+| V5 continuous paper ledger | 2026-11-02 | 41421490570-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-02/41421490570-a1.json) |
 | ETF source attempts | 2026-11-02 | 41407601458 | FOUR_ETF_FACTOR_OBSERVED_AFTER_CAPTURE_NOT_HISTORICAL_PIT | [JSON](../../records/national_team_etf/2026-11-02/41407601458-a1.json) |
 | Four-fund merged funding | 2026-11-02 | 41407601458 | FULL_FOUR_ETF_SHARES_NAV_OBSERVED_RESEARCH | [JSON](../../records/national_team_merged/2026-11-02/41407601458-a1.json) |
 | CSI300 stock research watches | 2026-10-30 | 41407601458 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-11-02/41407601458-a1.json) |
