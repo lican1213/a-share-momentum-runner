@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "version": "NT_EVENT_ROUTER_V5",
+  "experiment_id": "EXP-0012",
+  "observed_at": "2026-11-17T13:25:28.951891+08:00",
+  "event_id": "ETF4_DOWNFLOW_2026-11-16",
+  "signal_session": "2026-11-16",
+  "signal_age_calendar_days": 1,
+  "latest_index_session": "2026-11-16",
+  "funding_lags_index": false,
+  "status": "NEW_FUNDING_EVENT",
+  "four_etfs": [
+    "510300",
+    "510310",
+    "510330",
+    "159919"
+  ],
+  "v3_path": "records/national_team_v3/2026-11-17/44023662330-a1.json",
+  "watch_path": "records/national_team_watch/2026-11-17/44022983690-a1.json",
+  "selected_policy": "SHALLOW_DIP",
+  "feedback": {
+    "paired_10d_events": 0,
+    "indistinguishable_left_clusters": 0,
+    "mean_10d_excess_s0": {
+      "SHALLOW_DIP": null,
+      "DEEP_DIP": null
+    },
+    "selected_policy": "SHALLOW_DIP",
+    "right_side_reference": {
+      "paired_10d_clusters": 0,
+      "mean_R_minus_SHALLOW_excess_s0": null,
+      "not_used_to_gate_left_side_research": true
+    },
+    "policy_rule": "8 distinct event clusters with paired 10d outcomes; DEEP_DIP +0.2pct",
+    "not_a_calibrated_profit_probability": true
+  },
+  "funding": {
+    "net_creation_1d_cny_proxy": 10341436140.0,
+    "net_creation_5d_cny_proxy": 1674274680.0,
+    "ordinary_float_coverage_ratio": null,
+    "ratio_status": "DENOMINATOR_MISSING",
+    "index_ret5": -0.018813592333541185,
+    "funding_basis": "SHARE_PROXY",
+    "exchange_shares_complete": true,
+    "exchange_nav_complete": true,
+    "latest_session_evidence_missing": false,
+    "share_proxy_not_state_account_trade": true
+  },
+  "policy_overlay": {
+    "experiment_id": "EXP-0015",
+    "status": "ETF_FLOW_WITHOUT_POLICY_MATCH",
+    "source_health": "PARTIAL",
+    "snapshot_sha256": "f88d847d62e7444ad2f9be13f366547f06b87694860043222d779e9def882950",
+    "support_count": 0,
+    "matched_funding_event_ids": [],
+    "recent_event_ids": [],
+    "top_events": [],
+    "changes_admission": false,
+    "trade_authorized": false,
+    "not_a_policy_implied_etf_purchase": true
+  },
+  "dispatcher": "FREEZE_LEFT_SIDE_RESEARCH",
+  "trade_authorized": false,
+  "broker_orders": [],
+  "github_run_id": "44023760407",
+  "github_source_commit": "c59267a06a8f96277df2e86e765c51de457adc86",
+  "snapshot_sha256": "03a147e9e5a5f1e2b29b3ead528ea1b84116a2e9bed51191409762a9e0e161ff"
+}
