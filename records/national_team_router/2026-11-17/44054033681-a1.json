@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "version": "NT_EVENT_ROUTER_V5",
+  "experiment_id": "EXP-0012",
+  "observed_at": "2026-11-17T17:16:38.582046+08:00",
+  "event_id": "ETF4_DOWNFLOW_2026-11-16",
+  "signal_session": "2026-11-16",
+  "signal_age_calendar_days": 1,
+  "latest_index_session": "2026-11-17",
+  "funding_lags_index": true,
+  "status": "ALREADY_FROZEN_FOR_SESSION",
+  "four_etfs": [
+    "510300",
+    "510310",
+    "510330",
+    "159919"
+  ],
+  "v3_path": "records/national_team_v3/2026-11-17/44053947500-a1.json",
+  "watch_path": null,
+  "selected_policy": "SHALLOW_DIP",
+  "feedback": {
+    "paired_10d_events": 0,
+    "indistinguishable_left_clusters": 0,
+    "mean_10d_excess_s0": {
+      "SHALLOW_DIP": null,
+      "DEEP_DIP": null
+    },
+    "selected_policy": "SHALLOW_DIP",
+    "right_side_reference": {
+      "paired_10d_clusters": 0,
+      "mean_R_minus_SHALLOW_excess_s0": null,
+      "not_used_to_gate_left_side_research": true
+    },
+    "policy_rule": "8 distinct event clusters with paired 10d outcomes; DEEP_DIP +0.2pct",
+    "not_a_calibrated_profit_probability": true
+  },
+  "funding": {
+    "net_creation_1d_cny_proxy": 10341436140.0,
+    "net_creation_5d_cny_proxy": 1674274680.0,
+    "ordinary_float_coverage_ratio": null,
+    "ratio_status": "DENOMINATOR_MISSING",
+    "index_ret5": -0.018813592333541185,
+    "funding_basis": "SHARE_PROXY",
+    "exchange_shares_complete": null,
+    "exchange_nav_complete": null,
+    "latest_session_evidence_missing": false,
+    "share_proxy_not_state_account_trade": true
+  },
+  "policy_overlay": {
+    "experiment_id": "EXP-0015",
+    "status": "ETF_FLOW_WITHOUT_POLICY_MATCH",
+    "source_health": "OK",
+    "snapshot_sha256": "618f4f68f545856d37364131f6e9c1ad996c539d33da1acc83ae356f6392099e",
+    "support_count": 0,
+    "matched_funding_event_ids": [],
+    "recent_event_ids": [],
+    "top_events": [],
+    "changes_admission": false,
+    "trade_authorized": false,
+    "not_a_policy_implied_etf_purchase": true
+  },
+  "dispatcher": "NO_NEW_PAPER_FREEZE",
+  "trade_authorized": false,
+  "broker_orders": [],
+  "github_run_id": "44054033681",
+  "github_source_commit": "6ddf8f0222477c1edac66f290c4b6c406c8fa00d",
+  "snapshot_sha256": "3238f990b80c9518dcf1ab73cc1c9686516e6b82f72a092e4d63501d45857c2e"
+}
