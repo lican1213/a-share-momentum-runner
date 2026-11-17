@@ -327,7 +327,10 @@ def test_exp0017_early_only_routes_and_freezes_full_momentum_pool(tmp_path):
     roots = [tmp_path / k for k in ("v3", "watch", "freeze", "follow")]
     write(roots[0], "v3.json", v3)
     write(roots[1], "watch.json", watch)
-    result = route(*roots, now="2026-10-31T08:30:00+08:00")
+    # This fixture must not read real, archived 2026-10-30 V4 freezes.
+    # Production must still check the legacy root; only this test isolates it.
+    result = route(*roots, now="2026-10-31T08:30:00+08:00",
+                   legacy_freeze_root=tmp_path / "isolated_legacy")
     assert result["status"] == "NEW_FUNDING_EVENT"
     assert result["funding_stage"] == "EARLY_ONLY"
 
