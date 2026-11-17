@@ -2,7 +2,7 @@
 id: GENERATED-COMMITS
 type: log
 status: maintained
-updated: 2026-11-17
+updated: 2026-11-18
 ---
 # 全部Git提交历史（自动索引）
 
@@ -12,6 +12,9 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-17 | [449d2b7e69](https://github.com/lican1213/a-share-momentum-runner/commit/449d2b7e6960fb7c5d6f504ccaadf86118d6b20b) | github-actions[bot] | data: archive actual ETF provider attempt 44139697850 [skip ci] |
+| 2026-11-17 | [8a19cd6d2e](https://github.com/lican1213/a-share-momentum-runner/commit/8a19cd6d2ebbc20bf71e429125d33489451b22fa) | Can Li | docs(moc): close EXP-0017 production ledger gate with same-SHA evidence; leave entry alpha gates open |
+| 2026-11-17 | [2d1bf78053](https://github.com/lican1213/a-share-momentum-runner/commit/2d1bf78053b58e8807347b4a35b9e1018a766d0e) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-17 | [3dff6c0118](https://github.com/lican1213/a-share-momentum-runner/commit/3dff6c011884f6a3605cc35863b532d2ce42785b) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 44061817000 [skip ci] |
 | 2026-11-17 | [1825f6a829](https://github.com/lican1213/a-share-momentum-runner/commit/1825f6a829ae2bb5d7ac70b965044db0f6e3ef84) | Can Li | fix(v5): calendar dependency for EXP-0017 outcomes production |
 | 2026-11-17 | [1928b60699](https://github.com/lican1213/a-share-momentum-runner/commit/1928b606998974edd39b7e2ae15e5652a7c38cd8) | github-actions[bot] | records(exp0012): route event and append paper evidence 44061416386 [skip ci] |
