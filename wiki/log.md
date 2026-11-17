@@ -2,8 +2,12 @@
 id: WIKI-LOG
 type: log
 status: maintained
-updated: 2026-11-06
+updated: 2026-11-17
 ---
+
+## 2026-11-17：EXP-0017 已合并及合并后红队生产修复
+- [PR #22](https://github.com/lican1213/a-share-momentum-runner/pull/22)提交主体并在328项全库测试后合并；但真实生产账本[run#44061324220](https://github.com/lican1213/a-share-momentum-runner/actions/runs/44061324220)发现 `ModuleNotFoundError: exchange_calendars` 阻断跟踪。对抗式路径落在生产独立pip依赖而非策略模型。仅[PR #23](https://github.com/lican1213/a-share-momentum-runner/pull/23)给原outcomes工作流补与router相同的日历依赖、防回归合同测试和MOC，不扩展Runner/历史数据/cron。
+- [main同SHA全库#44061816987](https://github.com/lican1213/a-share-momentum-runner/actions/runs/44061816987)329通过+51页Wiki；[真实outcomes#44061817000](https://github.com/lican1213/a-share-momentum-runner/actions/runs/44061817000)成功写入[四账户原件](../records/national_team_paper_accounts_v5/2026-11-17/44061817000-a1.json)。旧三组现金、持仓、平仓及决策与11/17 17:18同日快照一致；EARLY_ENTRY新账户现金30000、0持仓。新策略追涨盈亏未成熟，原11/18六笔计划没有倒填。
 
 ## 2026-11-17：EXP-0017 早期试仓与主动追涨（候选实现，待CI/生产验证）
 - 参见 [EXP-0017](experiments/EXP-0017-early-flow-momentum.md)。早期50亿元单日四ETF代理独立纸面试仓；R_BOUNCE主动追涨不设3%上限；新增EARLY_ENTRY账本保留前三组历史。09:15前合法冻结可研究当日开盘。原四ETF、cron、三时段、T+1/T+2及历史不改。新旧R收益分版本，阶段二/三依据新成熟样本，不把代码合入当作验收。

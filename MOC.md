@@ -1,8 +1,8 @@
-## 2026-11-17：EXP-0017 合并后生产验收及缺依赖整改
+## 2026-11-17：EXP-0017 生产修复及四账户连续性验收
 - [PR #22](https://github.com/lican1213/a-share-momentum-runner/pull/22) 合并SHA `6ac75a7699d284101db7023d338af4c0414161a5`；[PR全库CI #44061134907](https://github.com/lican1213/a-share-momentum-runner/actions/runs/44061134907) 实际328项测试与51页Wiki校验通过。原11/16资金事件冻结（11/17 13:30，计划11/18开盘6笔）哈希 `a0c84975bfb0f1c64de9cea49029ecdd0d4ec3d7`，没有更写旧订单。
-- 合并后[真实纸面生产run #44061324220](https://github.com/lican1213/a-share-momentum-runner/actions/runs/44061324220) **失败**：outcomes测试调用盘前实际交易所日历，但其独立pip步骤漏装 `exchange-calendars==4.13.1`，导致 `ModuleNotFoundError`；本轮未进入账户追踪与归档，不能以绿色PR CI冒充生产通过。复用原V5路由既有版本的calendar依赖，补outcomes工作流及防回归测试，不新增工作流，不改交易规则、历史记录和任何cron。新run成功、四账户落盘以及前三组账本连续性均需匹配实际源SHA复验，未完成前状态为 **PRODUCTION_FIX_PENDING_VERIFY**。
+- 合并后[真实纸面生产run #44061324220](https://github.com/lican1213/a-share-momentum-runner/actions/runs/44061324220) **失败**：outcomes测试调用盘前实际交易所日历，但其独立pip步骤漏装 `exchange-calendars==4.13.1`，导致 `ModuleNotFoundError`；本轮未进入账户追踪与归档，不能以绿色PR CI冒充生产通过。复用原V5路由既有版本的calendar依赖，补outcomes工作流及防回归测试，不新增工作流，不改交易规则、历史记录和任何cron。[PR #23](https://github.com/lican1213/a-share-momentum-runner/pull/23) 修复并合并SHA `1825f6a829ae2bb5d7ac70b965044db0f6e3ef84`；[PR门#44061621890](https://github.com/lican1213/a-share-momentum-runner/actions/runs/44061621890)与[main全库门#44061816987](https://github.com/lican1213/a-share-momentum-runner/actions/runs/44061816987)均 **329项全库测试、51页Wiki校验通过**。[新真实账本运行#44061817000](https://github.com/lican1213/a-share-momentum-runner/actions/runs/44061817000)匹配SHA并实际完成追踪、不可覆盖归档及Wiki派发；[原始四账户快照](records/national_team_paper_accounts_v5/2026-11-17/44061817000-a1.json)确认原三组现金29992.31/29935.99/30037.16元、各历史平仓3笔、各决策8条、0持仓，与17:18旧快照逐字段相同；EARLY_ENTRY新账户现金30000、0交易、0持仓，旧事件不补单。**G0生产软件门与G2账本迁移/归档通过；G1早期新事件首单及11/18既有六笔开盘情景、G3 3/10日新策略收益仍待以后首次真实交易日验证**。所有定时/三时段次数不减，仍0券商单。
 
-## 2026-11-17：EXP-0017 早期试仓与主动追涨（候选实现，待CI/生产验证）
+## 2026-11-17：EXP-0017 早期试仓与主动追涨（主链上线，前瞻效果待样本）
 - 参见 [EXP-0017](wiki/experiments/EXP-0017-early-flow-momentum.md)。早期50亿元单日四ETF代理独立纸面试仓；R_BOUNCE主动追涨不设3%上限；新增EARLY_ENTRY账本保留前三组历史。09:15前合法冻结可研究当日开盘。原四ETF、cron、三时段、T+1/T+2及历史不改。新旧R收益分版本，阶段二/三依据新成熟样本，不把代码合入当作验收。
 
 ## 2026-11-16：V5当前状态与Ponytail收敛
