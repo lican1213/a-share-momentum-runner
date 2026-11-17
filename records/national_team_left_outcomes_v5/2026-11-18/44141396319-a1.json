@@ -1,0 +1,4715 @@
+{
+  "schema": 1,
+  "version": "NT_EVENT_FOLLOWUP_V5",
+  "experiment_id": "EXP-0012",
+  "asof": "2026-11-18",
+  "capture_time": "2026-11-18T01:51:30.423738+08:00",
+  "akshare_version": "1.20.65",
+  "github_run_id": "44141396319",
+  "github_run_attempt": "1",
+  "results": [
+    {
+      "experiment_id": "EXP-0012",
+      "source_freeze_sha256": "7c57ff7f74bc3232fabeea01a06dc66723aed510793b903d1f15de51c8616ca2",
+      "freeze_path": "records/national_team_left_entry_v5/2026-11-03/41515451702-a1.json",
+      "signal_session": "2026-11-02",
+      "cluster_anchor": "2026-10-26",
+      "extension_experiment_id": "EXP-0013",
+      "strategy_experiment_id": null,
+      "funding_stage": null,
+      "asof": "2026-11-18",
+      "first_observed_at": "2026-11-18T01:51:30.096815+08:00",
+      "policy_results": {
+        "SHALLOW_DIP": {
+          "F1_LEFT": [
+            {
+              "stock": "002648",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-04",
+              "entry_open_raw": "25.26",
+              "shares_scenario": 100,
+              "gross_cny": "2526.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.018606492478226444972288203",
+                    "mae_from_entry_open": "-0.0332541567695961995249406176",
+                    "mfe_session": "2026-11-05",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-09",
+                  "after_cost_return": "-0.002806710003333333333333333333",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 600,
+                    "net_return": "0.000707264782",
+                    "exit_session": "2026-11-09"
+                  },
+                  "excess_s0": "-0.003513974785333333333333333333"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.018606492478226444972288203",
+                    "mae_from_entry_open": "-0.0760095011876484560570071259",
+                    "mfe_session": "2026-11-05",
+                    "mae_session": "2026-11-11",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-11",
+                  "after_cost_return": "-0.004804110803333333333333333333",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 600,
+                    "net_return": "0.001106744942",
+                    "exit_session": "2026-11-11"
+                  },
+                  "excess_s0": "-0.005910855745333333333333333333"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            },
+            {
+              "stock": "002714",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-04",
+              "entry_open_raw": "43.0",
+              "shares_scenario": 100,
+              "gross_cny": "4300.0",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.047674418604651162790697674",
+                    "mae_from_entry_open": "-0.0074418604651162790697674419",
+                    "mfe_session": "2026-11-09",
+                    "mae_session": "2026-11-04",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-09",
+                  "after_cost_return": "0.0048589879",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "0.001178774636666666666666666667",
+                    "exit_session": "2026-11-09"
+                  },
+                  "excess_s0": "0.003680213263333333333333333333"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.047674418604651162790697674",
+                    "mae_from_entry_open": "-0.0074418604651162790697674419",
+                    "mfe_session": "2026-11-09",
+                    "mae_session": "2026-11-04",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-11",
+                  "after_cost_return": "0.003394227313333333333333333333",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "0.001844574903333333333333333333",
+                    "exit_session": "2026-11-11"
+                  },
+                  "excess_s0": "0.001549652410000000000000000000"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "002648",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-04",
+              "entry_open_raw": "25.26",
+              "shares_scenario": 100,
+              "gross_cny": "2526.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.018606492478226444972288203",
+                    "mae_from_entry_open": "-0.0332541567695961995249406176",
+                    "mfe_session": "2026-11-05",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-09",
+                  "after_cost_return": "-0.002806710003333333333333333333",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 600,
+                    "net_return": "0.000707264782",
+                    "exit_session": "2026-11-09"
+                  },
+                  "excess_s0": "-0.003513974785333333333333333333"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.018606492478226444972288203",
+                    "mae_from_entry_open": "-0.0760095011876484560570071259",
+                    "mfe_session": "2026-11-05",
+                    "mae_session": "2026-11-11",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-11",
+                  "after_cost_return": "-0.004804110803333333333333333333",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 600,
+                    "net_return": "0.001106744942",
+                    "exit_session": "2026-11-11"
+                  },
+                  "excess_s0": "-0.005910855745333333333333333333"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              },
+              "confirmation_day": "2026-11-03"
+            },
+            {
+              "stock": "002714",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-04",
+              "entry_open_raw": "43.0",
+              "shares_scenario": 100,
+              "gross_cny": "4300.0",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.047674418604651162790697674",
+                    "mae_from_entry_open": "-0.0074418604651162790697674419",
+                    "mfe_session": "2026-11-09",
+                    "mae_session": "2026-11-04",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-09",
+                  "after_cost_return": "0.0048589879",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "0.001178774636666666666666666667",
+                    "exit_session": "2026-11-09"
+                  },
+                  "excess_s0": "0.003680213263333333333333333333"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.047674418604651162790697674",
+                    "mae_from_entry_open": "-0.0074418604651162790697674419",
+                    "mfe_session": "2026-11-09",
+                    "mae_session": "2026-11-04",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-11",
+                  "after_cost_return": "0.003394227313333333333333333333",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "0.001844574903333333333333333333",
+                    "exit_session": "2026-11-11"
+                  },
+                  "excess_s0": "0.001549652410000000000000000000"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              },
+              "confirmation_day": "2026-11-03"
+            }
+          ],
+          "errors": {},
+          "source_new_ohlc_sha256": "21ac3fc8920837c57f1f05601e8270ab456e99f4034ba8c4bc1a2a43f7d104da"
+        },
+        "DEEP_DIP": {
+          "F1_LEFT": [
+            {
+              "stock": "000100",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-04",
+              "entry_open_raw": "4.54",
+              "shares_scenario": 1000,
+              "gross_cny": "4540.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.039647577092511013215859031",
+                    "mae_from_entry_open": "-0.0110132158590308370044052863",
+                    "mfe_session": "2026-11-05",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-09",
+                  "after_cost_return": "0.001013838366666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1100,
+                    "net_return": "0.001296652100333333333333333333",
+                    "exit_session": "2026-11-09"
+                  },
+                  "excess_s0": "-0.000282813733666666666666666666"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.039647577092511013215859031",
+                    "mae_from_entry_open": "-0.0110132158590308370044052863",
+                    "mfe_session": "2026-11-05",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-11",
+                  "after_cost_return": "0.0006809382333333333333333333333",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1100,
+                    "net_return": "0.002029032393666666666666666667",
+                    "exit_session": "2026-11-11"
+                  },
+                  "excess_s0": "-0.001348094160333333333333333334"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            },
+            {
+              "stock": "601211",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-04",
+              "entry_open_raw": "16.75",
+              "shares_scenario": 200,
+              "gross_cny": "3350.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.000597014925373134328358209",
+                    "mae_from_entry_open": "-0.0262686567164179104477611940",
+                    "mfe_session": "2026-11-04",
+                    "mae_session": "2026-11-09",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-09",
+                  "after_cost_return": "-0.00309741323",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 800,
+                    "net_return": "0.0009430197093333333333333333333",
+                    "exit_session": "2026-11-09"
+                  },
+                  "excess_s0": "-0.004040432939333333333333333333"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.000597014925373134328358209",
+                    "mae_from_entry_open": "-0.0435820895522388059701492537",
+                    "mfe_session": "2026-11-04",
+                    "mae_session": "2026-11-11",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-11",
+                  "after_cost_return": "-0.004961653976666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 800,
+                    "net_return": "0.001475659922666666666666666667",
+                    "exit_session": "2026-11-11"
+                  },
+                  "excess_s0": "-0.006437313899333333333333333334"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "000100",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-04",
+              "entry_open_raw": "4.54",
+              "shares_scenario": 1000,
+              "gross_cny": "4540.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.039647577092511013215859031",
+                    "mae_from_entry_open": "-0.0110132158590308370044052863",
+                    "mfe_session": "2026-11-05",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-09",
+                  "after_cost_return": "0.001013838366666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1100,
+                    "net_return": "0.001296652100333333333333333333",
+                    "exit_session": "2026-11-09"
+                  },
+                  "excess_s0": "-0.000282813733666666666666666666"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.039647577092511013215859031",
+                    "mae_from_entry_open": "-0.0110132158590308370044052863",
+                    "mfe_session": "2026-11-05",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-11",
+                  "after_cost_return": "0.0006809382333333333333333333333",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1100,
+                    "net_return": "0.002029032393666666666666666667",
+                    "exit_session": "2026-11-11"
+                  },
+                  "excess_s0": "-0.001348094160333333333333333334"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              },
+              "confirmation_day": "2026-11-03"
+            },
+            {
+              "stock": "601211",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-04",
+              "entry_open_raw": "16.75",
+              "shares_scenario": 200,
+              "gross_cny": "3350.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.000597014925373134328358209",
+                    "mae_from_entry_open": "-0.0262686567164179104477611940",
+                    "mfe_session": "2026-11-04",
+                    "mae_session": "2026-11-09",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-09",
+                  "after_cost_return": "-0.00309741323",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 800,
+                    "net_return": "0.0009430197093333333333333333333",
+                    "exit_session": "2026-11-09"
+                  },
+                  "excess_s0": "-0.004040432939333333333333333333"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.000597014925373134328358209",
+                    "mae_from_entry_open": "-0.0435820895522388059701492537",
+                    "mfe_session": "2026-11-04",
+                    "mae_session": "2026-11-11",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-11",
+                  "after_cost_return": "-0.004961653976666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 800,
+                    "net_return": "0.001475659922666666666666666667",
+                    "exit_session": "2026-11-11"
+                  },
+                  "excess_s0": "-0.006437313899333333333333333334"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              },
+              "confirmation_day": "2026-11-03"
+            }
+          ],
+          "errors": {},
+          "source_new_ohlc_sha256": "21ac3fc8920837c57f1f05601e8270ab456e99f4034ba8c4bc1a2a43f7d104da"
+        },
+        "R_BOUNCE": {
+          "F1_LEFT": [
+            {
+              "stock": "002142",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-04",
+              "entry_open_raw": "34.0",
+              "shares_scenario": 100,
+              "gross_cny": "3400.0",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.014705882352941176470588235",
+                    "mae_from_entry_open": "-0.0202941176470588235294117647",
+                    "mfe_session": "2026-11-09",
+                    "mae_session": "2026-11-05",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-09",
+                  "after_cost_return": "0.0009937588266666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 800,
+                    "net_return": "0.0009430197093333333333333333333",
+                    "exit_session": "2026-11-09"
+                  },
+                  "excess_s0": "0.0000507391173333333333333333334"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.014705882352941176470588235",
+                    "mae_from_entry_open": "-0.0202941176470588235294117647",
+                    "mfe_session": "2026-11-09",
+                    "mae_session": "2026-11-05",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-11",
+                  "after_cost_return": "-0.0003378417066666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 800,
+                    "net_return": "0.001475659922666666666666666667",
+                    "exit_session": "2026-11-11"
+                  },
+                  "excess_s0": "-0.001813501629333333333333333334"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            },
+            {
+              "stock": "600926",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-04",
+              "entry_open_raw": "16.74",
+              "shares_scenario": 200,
+              "gross_cny": "3348.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.034647550776583034647550777",
+                    "mae_from_entry_open": "-0.0089605734767025089605734767",
+                    "mfe_session": "2026-11-09",
+                    "mae_session": "2026-11-05",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-09",
+                  "after_cost_return": "0.00316124926",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 800,
+                    "net_return": "0.0009430197093333333333333333333",
+                    "exit_session": "2026-11-09"
+                  },
+                  "excess_s0": "0.002218229550666666666666666667"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.043010752688172043010752688",
+                    "mae_from_entry_open": "-0.0089605734767025089605734767",
+                    "mfe_session": "2026-11-11",
+                    "mae_session": "2026-11-05",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-11",
+                  "after_cost_return": "0.002828349126666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 800,
+                    "net_return": "0.001475659922666666666666666667",
+                    "exit_session": "2026-11-11"
+                  },
+                  "excess_s0": "0.001352689204000000000000000000"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "002142",
+              "status": "WAIT_CONFIRMATION",
+              "confirmation_day": null,
+              "horizons": {}
+            },
+            {
+              "stock": "600926",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-05",
+              "entry_open_raw": "16.8",
+              "shares_scenario": 200,
+              "gross_cny": "3360.0",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.035119047619047619047619048",
+                    "mae_from_entry_open": "-0.0125",
+                    "mfe_session": "2026-11-10",
+                    "mae_session": "2026-11-05",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-10",
+                  "after_cost_return": "0.003293569413333333333333333333",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 800,
+                    "net_return": "-0.0006051644893333333333333333333",
+                    "exit_session": "2026-11-10"
+                  },
+                  "excess_s0": "0.003898733902666666666666666666"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.039285714285714285714285714",
+                    "mae_from_entry_open": "-0.0125",
+                    "mfe_session": "2026-11-11",
+                    "mae_session": "2026-11-05",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "0.002827509226666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 800,
+                    "net_return": "-0.001164436713333333333333333333",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "0.003991945940000000000000000000"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              },
+              "confirmation_day": "2026-11-04"
+            }
+          ],
+          "errors": {},
+          "source_new_ohlc_sha256": "21ac3fc8920837c57f1f05601e8270ab456e99f4034ba8c4bc1a2a43f7d104da"
+        }
+      },
+      "source_new_ohlc": {
+        "first_observed_at": "2026-11-18T01:51:30.075876+08:00",
+        "capture_time": "2026-11-18T01:51:30.075876+08:00",
+        "bars_by_symbol": {
+          "510300": [
+            {
+              "date": "2026-11-03",
+              "open": "4.076",
+              "high": "4.106",
+              "low": "4.041",
+              "close": "4.092"
+            },
+            {
+              "date": "2026-11-04",
+              "open": "4.086",
+              "high": "4.191",
+              "low": "4.062",
+              "close": "4.175"
+            },
+            {
+              "date": "2026-11-05",
+              "open": "4.149",
+              "high": "4.216",
+              "low": "4.145",
+              "close": "4.195"
+            },
+            {
+              "date": "2026-11-06",
+              "open": "4.113",
+              "high": "4.169",
+              "low": "4.095",
+              "close": "4.124"
+            },
+            {
+              "date": "2026-11-09",
+              "open": "4.14",
+              "high": "4.16",
+              "low": "4.13",
+              "close": "4.13"
+            },
+            {
+              "date": "2026-11-10",
+              "open": "4.159",
+              "high": "4.168",
+              "low": "4.128",
+              "close": "4.135"
+            },
+            {
+              "date": "2026-11-11",
+              "open": "4.125",
+              "high": "4.162",
+              "low": "4.109",
+              "close": "4.15"
+            },
+            {
+              "date": "2026-11-12",
+              "open": "4.145",
+              "high": "4.177",
+              "low": "4.108",
+              "close": "4.114"
+            },
+            {
+              "date": "2026-11-13",
+              "open": "4.124",
+              "high": "4.127",
+              "low": "4.076",
+              "close": "4.083"
+            },
+            {
+              "date": "2026-11-16",
+              "open": "4.068",
+              "high": "4.075",
+              "low": "4.036",
+              "close": "4.054"
+            },
+            {
+              "date": "2026-11-17",
+              "open": "4.039",
+              "high": "4.061",
+              "low": "4.018",
+              "close": "4.042"
+            }
+          ],
+          "002648": [
+            {
+              "date": "2026-11-03",
+              "open": "24.95",
+              "high": "25.65",
+              "low": "24.59",
+              "close": "25.28"
+            },
+            {
+              "date": "2026-11-04",
+              "open": "25.26",
+              "high": "25.5",
+              "low": "24.61",
+              "close": "25.41"
+            },
+            {
+              "date": "2026-11-05",
+              "open": "25.01",
+              "high": "25.73",
+              "low": "24.76",
+              "close": "24.97"
+            },
+            {
+              "date": "2026-11-06",
+              "open": "24.51",
+              "high": "24.89",
+              "low": "24.42",
+              "close": "24.47"
+            },
+            {
+              "date": "2026-11-09",
+              "open": "24.66",
+              "high": "24.92",
+              "low": "24.44",
+              "close": "24.47"
+            },
+            {
+              "date": "2026-11-10",
+              "open": "24.51",
+              "high": "24.62",
+              "low": "23.63",
+              "close": "23.79"
+            },
+            {
+              "date": "2026-11-11",
+              "open": "23.66",
+              "high": "23.88",
+              "low": "23.34",
+              "close": "23.87"
+            },
+            {
+              "date": "2026-11-12",
+              "open": "24.1",
+              "high": "24.12",
+              "low": "22.81",
+              "close": "23.2"
+            },
+            {
+              "date": "2026-11-13",
+              "open": "23.35",
+              "high": "23.69",
+              "low": "23.13",
+              "close": "23.35"
+            },
+            {
+              "date": "2026-11-16",
+              "open": "23.05",
+              "high": "23.68",
+              "low": "22.86",
+              "close": "23.6"
+            },
+            {
+              "date": "2026-11-17",
+              "open": "23.5",
+              "high": "23.85",
+              "low": "23.32",
+              "close": "23.71"
+            }
+          ],
+          "002714": [
+            {
+              "date": "2026-11-03",
+              "open": "41.41",
+              "high": "43.16",
+              "low": "41.0",
+              "close": "43.01"
+            },
+            {
+              "date": "2026-11-04",
+              "open": "43.0",
+              "high": "43.5",
+              "low": "42.68",
+              "close": "43.13"
+            },
+            {
+              "date": "2026-11-05",
+              "open": "43.1",
+              "high": "43.85",
+              "low": "42.78",
+              "close": "43.75"
+            },
+            {
+              "date": "2026-11-06",
+              "open": "43.43",
+              "high": "44.98",
+              "low": "43.4",
+              "close": "44.4"
+            },
+            {
+              "date": "2026-11-09",
+              "open": "44.41",
+              "high": "45.05",
+              "low": "44.12",
+              "close": "44.55"
+            },
+            {
+              "date": "2026-11-10",
+              "open": "44.29",
+              "high": "44.69",
+              "low": "44.1",
+              "close": "44.57"
+            },
+            {
+              "date": "2026-11-11",
+              "open": "44.5",
+              "high": "44.78",
+              "low": "44.02",
+              "close": "44.11"
+            },
+            {
+              "date": "2026-11-12",
+              "open": "43.91",
+              "high": "44.78",
+              "low": "43.71",
+              "close": "44.61"
+            },
+            {
+              "date": "2026-11-13",
+              "open": "44.6",
+              "high": "46.0",
+              "low": "44.23",
+              "close": "45.84"
+            },
+            {
+              "date": "2026-11-16",
+              "open": "45.9",
+              "high": "46.59",
+              "low": "45.62",
+              "close": "46.3"
+            },
+            {
+              "date": "2026-11-17",
+              "open": "45.99",
+              "high": "46.18",
+              "low": "45.41",
+              "close": "45.82"
+            }
+          ],
+          "000100": [
+            {
+              "date": "2026-11-03",
+              "open": "4.36",
+              "high": "4.57",
+              "low": "4.36",
+              "close": "4.55"
+            },
+            {
+              "date": "2026-11-04",
+              "open": "4.54",
+              "high": "4.68",
+              "low": "4.52",
+              "close": "4.68"
+            },
+            {
+              "date": "2026-11-05",
+              "open": "4.66",
+              "high": "4.72",
+              "low": "4.6",
+              "close": "4.63"
+            },
+            {
+              "date": "2026-11-06",
+              "open": "4.51",
+              "high": "4.61",
+              "low": "4.49",
+              "close": "4.57"
+            },
+            {
+              "date": "2026-11-09",
+              "open": "4.59",
+              "high": "4.62",
+              "low": "4.55",
+              "close": "4.58"
+            },
+            {
+              "date": "2026-11-10",
+              "open": "4.62",
+              "high": "4.65",
+              "low": "4.58",
+              "close": "4.6"
+            },
+            {
+              "date": "2026-11-11",
+              "open": "4.59",
+              "high": "4.61",
+              "low": "4.53",
+              "close": "4.57"
+            },
+            {
+              "date": "2026-11-12",
+              "open": "4.57",
+              "high": "4.58",
+              "low": "4.46",
+              "close": "4.46"
+            },
+            {
+              "date": "2026-11-13",
+              "open": "4.47",
+              "high": "4.58",
+              "low": "4.44",
+              "close": "4.56"
+            },
+            {
+              "date": "2026-11-16",
+              "open": "4.52",
+              "high": "4.62",
+              "low": "4.47",
+              "close": "4.59"
+            },
+            {
+              "date": "2026-11-17",
+              "open": "4.56",
+              "high": "4.78",
+              "low": "4.54",
+              "close": "4.75"
+            }
+          ],
+          "601211": [
+            {
+              "date": "2026-11-03",
+              "open": "16.28",
+              "high": "16.75",
+              "low": "16.03",
+              "close": "16.75"
+            },
+            {
+              "date": "2026-11-04",
+              "open": "16.75",
+              "high": "16.76",
+              "low": "16.4",
+              "close": "16.74"
+            },
+            {
+              "date": "2026-11-05",
+              "open": "16.6",
+              "high": "16.7",
+              "low": "16.55",
+              "close": "16.67"
+            },
+            {
+              "date": "2026-11-06",
+              "open": "16.6",
+              "high": "16.6",
+              "low": "16.34",
+              "close": "16.46"
+            },
+            {
+              "date": "2026-11-09",
+              "open": "16.41",
+              "high": "16.46",
+              "low": "16.31",
+              "close": "16.32"
+            },
+            {
+              "date": "2026-11-10",
+              "open": "16.38",
+              "high": "16.41",
+              "low": "16.15",
+              "close": "16.21"
+            },
+            {
+              "date": "2026-11-11",
+              "open": "16.18",
+              "high": "16.2",
+              "low": "16.02",
+              "close": "16.04"
+            },
+            {
+              "date": "2026-11-12",
+              "open": "16.01",
+              "high": "16.04",
+              "low": "15.89",
+              "close": "16.0"
+            },
+            {
+              "date": "2026-11-13",
+              "open": "15.94",
+              "high": "16.13",
+              "low": "15.88",
+              "close": "16.08"
+            },
+            {
+              "date": "2026-11-16",
+              "open": "15.95",
+              "high": "16.25",
+              "low": "15.86",
+              "close": "16.19"
+            },
+            {
+              "date": "2026-11-17",
+              "open": "16.15",
+              "high": "16.35",
+              "low": "16.01",
+              "close": "16.35"
+            }
+          ],
+          "002142": [
+            {
+              "date": "2026-11-03",
+              "open": "34.0",
+              "high": "34.44",
+              "low": "33.1",
+              "close": "34.06"
+            },
+            {
+              "date": "2026-11-04",
+              "open": "34.0",
+              "high": "34.06",
+              "low": "33.66",
+              "close": "33.88"
+            },
+            {
+              "date": "2026-11-05",
+              "open": "33.62",
+              "high": "34.04",
+              "low": "33.31",
+              "close": "34.01"
+            },
+            {
+              "date": "2026-11-06",
+              "open": "33.72",
+              "high": "34.36",
+              "low": "33.51",
+              "close": "34.28"
+            },
+            {
+              "date": "2026-11-09",
+              "open": "34.16",
+              "high": "34.5",
+              "low": "34.0",
+              "close": "34.37"
+            },
+            {
+              "date": "2026-11-10",
+              "open": "34.16",
+              "high": "34.45",
+              "low": "34.0",
+              "close": "34.26"
+            },
+            {
+              "date": "2026-11-11",
+              "open": "34.25",
+              "high": "34.3",
+              "low": "33.92",
+              "close": "33.97"
+            },
+            {
+              "date": "2026-11-12",
+              "open": "33.78",
+              "high": "33.85",
+              "low": "33.28",
+              "close": "33.6"
+            },
+            {
+              "date": "2026-11-13",
+              "open": "33.43",
+              "high": "34.3",
+              "low": "33.16",
+              "close": "34.15"
+            },
+            {
+              "date": "2026-11-16",
+              "open": "34.15",
+              "high": "35.28",
+              "low": "34.12",
+              "close": "35.23"
+            },
+            {
+              "date": "2026-11-17",
+              "open": "35.14",
+              "high": "35.63",
+              "low": "34.74",
+              "close": "35.53"
+            }
+          ],
+          "600926": [
+            {
+              "date": "2026-11-03",
+              "open": "16.78",
+              "high": "16.92",
+              "low": "16.43",
+              "close": "16.81"
+            },
+            {
+              "date": "2026-11-04",
+              "open": "16.74",
+              "high": "16.93",
+              "low": "16.66",
+              "close": "16.85"
+            },
+            {
+              "date": "2026-11-05",
+              "open": "16.8",
+              "high": "16.93",
+              "low": "16.59",
+              "close": "16.92"
+            },
+            {
+              "date": "2026-11-06",
+              "open": "16.81",
+              "high": "17.12",
+              "low": "16.81",
+              "close": "17.09"
+            },
+            {
+              "date": "2026-11-09",
+              "open": "17.06",
+              "high": "17.32",
+              "low": "16.94",
+              "close": "17.25"
+            },
+            {
+              "date": "2026-11-10",
+              "open": "17.13",
+              "high": "17.39",
+              "low": "17.03",
+              "close": "17.33"
+            },
+            {
+              "date": "2026-11-11",
+              "open": "17.31",
+              "high": "17.46",
+              "low": "17.19",
+              "close": "17.2"
+            },
+            {
+              "date": "2026-11-12",
+              "open": "17.15",
+              "high": "17.29",
+              "low": "17.0",
+              "close": "17.26"
+            },
+            {
+              "date": "2026-11-13",
+              "open": "17.19",
+              "high": "17.6",
+              "low": "17.11",
+              "close": "17.52"
+            },
+            {
+              "date": "2026-11-16",
+              "open": "17.53",
+              "high": "17.77",
+              "low": "17.5",
+              "close": "17.77"
+            },
+            {
+              "date": "2026-11-17",
+              "open": "17.77",
+              "high": "17.9",
+              "low": "17.69",
+              "close": "17.9"
+            }
+          ]
+        },
+        "source_sha256": {
+          "510300": "65f5b4b2f9c0bdf848d2420b19663ec42ca64d3b1bbf8d88fe9f9c8503b882d7",
+          "002648": "52b0931402aa4438a2ce309a9e25f8a15afde830590bbe64d0681aa93d6f94ec",
+          "002714": "6fe38fbb459a527b9444909547b898d21418ab1834bdeda5b992964ffcd8fe3d",
+          "000100": "60c2dae6a8a89fe9df849a47ee1ed0dfaba71bf6e2b1108790a77e4c5b1ffde8",
+          "601211": "ef15a237889ffdc748f6bd240550baf652e34e738e8849cc63337eee4a17233d",
+          "002142": "cdfe6484f810cf1b18eec65b9cdbe461f3aeab3fe0ce595b90b9ed71c90b6f42",
+          "600926": "9fa26145f9a26486ec49605fef3eb8267657fc5da8c047f145ced365217feb08"
+        },
+        "source_url": {
+          "510300": "https://quote.eastmoney.com/sh510300.html",
+          "002648": "https://finance.sina.com.cn/realstock/company/",
+          "002714": "https://finance.sina.com.cn/realstock/company/",
+          "000100": "https://finance.sina.com.cn/realstock/company/",
+          "601211": "https://finance.sina.com.cn/realstock/company/",
+          "002142": "https://finance.sina.com.cn/realstock/company/",
+          "600926": "https://finance.sina.com.cn/realstock/company/"
+        },
+        "errors": {},
+        "finalized_cutoff": "2026-11-17",
+        "source_range_shared_across_events": true
+      },
+      "source_new_ohlc_sha256": "21ac3fc8920837c57f1f05601e8270ab456e99f4034ba8c4bc1a2a43f7d104da",
+      "trade_authorized": false,
+      "broker_orders": [],
+      "execution": "OHLC_OPEN_SCENARIO_NOT_BROKER_FILL"
+    },
+    {
+      "experiment_id": "EXP-0012",
+      "source_freeze_sha256": "d132fc09230b810c6e879b6ec2299b02dcbae22a2ba921a136e7c28ad3f57cf5",
+      "freeze_path": "records/national_team_left_entry_v5/2026-11-04/41681594455-a1.json",
+      "signal_session": "2026-11-03",
+      "cluster_anchor": "2026-10-26",
+      "extension_experiment_id": "EXP-0013",
+      "strategy_experiment_id": null,
+      "funding_stage": null,
+      "asof": "2026-11-18",
+      "first_observed_at": "2026-11-18T01:51:30.148966+08:00",
+      "policy_results": {
+        "SHALLOW_DIP": {
+          "F1_LEFT": [
+            {
+              "stock": "600104",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-05",
+              "entry_open_raw": "10.73",
+              "shares_scenario": 400,
+              "gross_cny": "4292.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.006523765144454799627213420",
+                    "mae_from_entry_open": "-0.0382106244175209692451071761",
+                    "mfe_session": "2026-11-05",
+                    "mae_session": "2026-11-09",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-10",
+                  "after_cost_return": "-0.004428365886666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.0007564556116666666666666666667",
+                    "exit_session": "2026-11-10"
+                  },
+                  "excess_s0": "-0.003671910275000000000000000000"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.006523765144454799627213420",
+                    "mae_from_entry_open": "-0.0689655172413793103448275862",
+                    "mfe_session": "2026-11-05",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "-0.01002108812666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.001455545891666666666666666667",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "-0.008565542235000000000000000003"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            },
+            {
+              "stock": "601916",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-05",
+              "entry_open_raw": "2.96",
+              "shares_scenario": 1500,
+              "gross_cny": "4440.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.006756756756756756756756757",
+                    "mae_from_entry_open": "-0.0236486486486486486486486486",
+                    "mfe_session": "2026-11-10",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-10",
+                  "after_cost_return": "0.0001885872",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.0007564556116666666666666666667",
+                    "exit_session": "2026-11-10"
+                  },
+                  "excess_s0": "0.0009450428116666666666666666667"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.016891891891891891891891892",
+                    "mae_from_entry_open": "-0.0236486486486486486486486486",
+                    "mfe_session": "2026-11-11",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "-0.0018088136",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.001455545891666666666666666667",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "-0.000353267708333333333333333333"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "600104",
+              "status": "WAIT_CONFIRMATION",
+              "confirmation_day": null,
+              "horizons": {}
+            },
+            {
+              "stock": "601916",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-05",
+              "entry_open_raw": "2.96",
+              "shares_scenario": 1500,
+              "gross_cny": "4440.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.006756756756756756756756757",
+                    "mae_from_entry_open": "-0.0236486486486486486486486486",
+                    "mfe_session": "2026-11-10",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-10",
+                  "after_cost_return": "0.0001885872",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.0007564556116666666666666666667",
+                    "exit_session": "2026-11-10"
+                  },
+                  "excess_s0": "0.0009450428116666666666666666667"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.016891891891891891891891892",
+                    "mae_from_entry_open": "-0.0236486486486486486486486486",
+                    "mfe_session": "2026-11-11",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "-0.0018088136",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.001455545891666666666666666667",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "-0.000353267708333333333333333333"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              },
+              "confirmation_day": "2026-11-04"
+            }
+          ],
+          "errors": {},
+          "source_new_ohlc_sha256": "504cb7a58e749476aa7628d6689e98d4067bc9370f8936f5d1bf69e253b57d2e"
+        },
+        "DEEP_DIP": {
+          "F1_LEFT": [
+            {
+              "stock": "600010",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-05",
+              "entry_open_raw": "2.02",
+              "shares_scenario": 2300,
+              "gross_cny": "4646.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.014851485148514851485148515",
+                    "mae_from_entry_open": "-0.0148514851485148514851485149",
+                    "mfe_session": "2026-11-05",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-10",
+                  "after_cost_return": "-0.001856521896666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1100,
+                    "net_return": "-0.0008321011728333333333333333333",
+                    "exit_session": "2026-11-10"
+                  },
+                  "excess_s0": "-0.001024420723833333333333333334"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.014851485148514851485148515",
+                    "mae_from_entry_open": "-0.0198019801980198019801980198",
+                    "mfe_session": "2026-11-05",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "-0.002622192203333333333333333333",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1100,
+                    "net_return": "-0.001601100480833333333333333333",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "-0.001021091722500000000000000000"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            },
+            {
+              "stock": "600036",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-05",
+              "entry_open_raw": "42.45",
+              "shares_scenario": 100,
+              "gross_cny": "4245.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.016489988221436984687868080",
+                    "mae_from_entry_open": "-0.0148409893992932862190812721",
+                    "mfe_session": "2026-11-10",
+                    "mae_session": "2026-11-05",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-10",
+                  "after_cost_return": "0.001567126121666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.0007564556116666666666666666667",
+                    "exit_session": "2026-11-10"
+                  },
+                  "excess_s0": "0.002323581733333333333333333334"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.018374558303886925795053004",
+                    "mae_from_entry_open": "-0.0148409893992932862190812721",
+                    "mfe_session": "2026-11-11",
+                    "mae_session": "2026-11-05",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "0.000302105615",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.001455545891666666666666666667",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "0.001757651506666666666666666667"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "600010",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-05",
+              "entry_open_raw": "2.02",
+              "shares_scenario": 2300,
+              "gross_cny": "4646.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.014851485148514851485148515",
+                    "mae_from_entry_open": "-0.0148514851485148514851485149",
+                    "mfe_session": "2026-11-05",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-10",
+                  "after_cost_return": "-0.001856521896666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1100,
+                    "net_return": "-0.0008321011728333333333333333333",
+                    "exit_session": "2026-11-10"
+                  },
+                  "excess_s0": "-0.001024420723833333333333333334"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.014851485148514851485148515",
+                    "mae_from_entry_open": "-0.0198019801980198019801980198",
+                    "mfe_session": "2026-11-05",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "-0.002622192203333333333333333333",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1100,
+                    "net_return": "-0.001601100480833333333333333333",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "-0.001021091722500000000000000000"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              },
+              "confirmation_day": "2026-11-04"
+            },
+            {
+              "stock": "600036",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-09",
+              "entry_open_raw": "42.55",
+              "shares_scenario": 100,
+              "gross_cny": "4255.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.015981198589894242068155112",
+                    "mae_from_entry_open": "-0.0094007050528789659224441833",
+                    "mfe_session": "2026-11-11",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "-0.000031494435",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.001155305846666666666666666667",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "0.001123811411666666666666666667"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.021856639247943595769682726",
+                    "mae_from_entry_open": "-0.0094007050528789659224441833",
+                    "mfe_session": "2026-11-16",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-16",
+                  "after_cost_return": "0.002531836591666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.003152706646666666666666666667",
+                    "exit_session": "2026-11-16"
+                  },
+                  "excess_s0": "0.005684543238333333333333333334"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              },
+              "confirmation_day": "2026-11-06"
+            }
+          ],
+          "errors": {},
+          "source_new_ohlc_sha256": "504cb7a58e749476aa7628d6689e98d4067bc9370f8936f5d1bf69e253b57d2e"
+        },
+        "R_BOUNCE": {
+          "F1_LEFT": [
+            {
+              "stock": "600900",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-05",
+              "entry_open_raw": "29.55",
+              "shares_scenario": 100,
+              "gross_cny": "2955.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.012182741116751269035532995",
+                    "mae_from_entry_open": "-0.0270727580372250423011844332",
+                    "mfe_session": "2026-11-06",
+                    "mae_session": "2026-11-05",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-10",
+                  "after_cost_return": "0.000192654785",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 700,
+                    "net_return": "-0.0005295189281666666666666666667",
+                    "exit_session": "2026-11-10"
+                  },
+                  "excess_s0": "0.0007221737131666666666666666667"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.012182741116751269035532995",
+                    "mae_from_entry_open": "-0.0270727580372250423011844332",
+                    "mfe_session": "2026-11-06",
+                    "mae_session": "2026-11-05",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "-0.000007085295",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 700,
+                    "net_return": "-0.001018882124166666666666666667",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "0.001011796829166666666666666667"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            },
+            {
+              "stock": "600926",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-05",
+              "entry_open_raw": "16.8",
+              "shares_scenario": 200,
+              "gross_cny": "3360.0",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.035119047619047619047619048",
+                    "mae_from_entry_open": "-0.0125",
+                    "mfe_session": "2026-11-10",
+                    "mae_session": "2026-11-05",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-10",
+                  "after_cost_return": "0.003293569413333333333333333333",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 800,
+                    "net_return": "-0.0006051644893333333333333333333",
+                    "exit_session": "2026-11-10"
+                  },
+                  "excess_s0": "0.003898733902666666666666666666"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.039285714285714285714285714",
+                    "mae_from_entry_open": "-0.0125",
+                    "mfe_session": "2026-11-11",
+                    "mae_session": "2026-11-05",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "0.002827509226666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 800,
+                    "net_return": "-0.001164436713333333333333333333",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "0.003991945940000000000000000000"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "600900",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-09",
+              "entry_open_raw": "29.7",
+              "shares_scenario": 100,
+              "gross_cny": "2970.0",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.005050505050505050505050505",
+                    "mae_from_entry_open": "-0.0148148148148148148148148148",
+                    "mfe_session": "2026-11-11",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "-0.00050748537",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 700,
+                    "net_return": "-0.0008087140926666666666666666667",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "0.0003012287226666666666666666667"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.026936026936026936026936027",
+                    "mae_from_entry_open": "-0.0148148148148148148148148148",
+                    "mfe_session": "2026-11-16",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-16",
+                  "after_cost_return": "0.002422035803333333333333333333",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 700,
+                    "net_return": "-0.002206894652666666666666666667",
+                    "exit_session": "2026-11-16"
+                  },
+                  "excess_s0": "0.004628930456000000000000000000"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              },
+              "confirmation_day": "2026-11-06"
+            },
+            {
+              "stock": "600926",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-05",
+              "entry_open_raw": "16.8",
+              "shares_scenario": 200,
+              "gross_cny": "3360.0",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.035119047619047619047619048",
+                    "mae_from_entry_open": "-0.0125",
+                    "mfe_session": "2026-11-10",
+                    "mae_session": "2026-11-05",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-10",
+                  "after_cost_return": "0.003293569413333333333333333333",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 800,
+                    "net_return": "-0.0006051644893333333333333333333",
+                    "exit_session": "2026-11-10"
+                  },
+                  "excess_s0": "0.003898733902666666666666666666"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.039285714285714285714285714",
+                    "mae_from_entry_open": "-0.0125",
+                    "mfe_session": "2026-11-11",
+                    "mae_session": "2026-11-05",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "0.002827509226666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 800,
+                    "net_return": "-0.001164436713333333333333333333",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "0.003991945940000000000000000000"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              },
+              "confirmation_day": "2026-11-04"
+            }
+          ],
+          "errors": {},
+          "source_new_ohlc_sha256": "504cb7a58e749476aa7628d6689e98d4067bc9370f8936f5d1bf69e253b57d2e"
+        }
+      },
+      "source_new_ohlc": {
+        "first_observed_at": "2026-11-18T01:51:30.075876+08:00",
+        "capture_time": "2026-11-18T01:51:30.075876+08:00",
+        "bars_by_symbol": {
+          "510300": [
+            {
+              "date": "2026-11-04",
+              "open": "4.086",
+              "high": "4.191",
+              "low": "4.062",
+              "close": "4.175"
+            },
+            {
+              "date": "2026-11-05",
+              "open": "4.149",
+              "high": "4.216",
+              "low": "4.145",
+              "close": "4.195"
+            },
+            {
+              "date": "2026-11-06",
+              "open": "4.113",
+              "high": "4.169",
+              "low": "4.095",
+              "close": "4.124"
+            },
+            {
+              "date": "2026-11-09",
+              "open": "4.14",
+              "high": "4.16",
+              "low": "4.13",
+              "close": "4.13"
+            },
+            {
+              "date": "2026-11-10",
+              "open": "4.159",
+              "high": "4.168",
+              "low": "4.128",
+              "close": "4.135"
+            },
+            {
+              "date": "2026-11-11",
+              "open": "4.125",
+              "high": "4.162",
+              "low": "4.109",
+              "close": "4.15"
+            },
+            {
+              "date": "2026-11-12",
+              "open": "4.145",
+              "high": "4.177",
+              "low": "4.108",
+              "close": "4.114"
+            },
+            {
+              "date": "2026-11-13",
+              "open": "4.124",
+              "high": "4.127",
+              "low": "4.076",
+              "close": "4.083"
+            },
+            {
+              "date": "2026-11-16",
+              "open": "4.068",
+              "high": "4.075",
+              "low": "4.036",
+              "close": "4.054"
+            },
+            {
+              "date": "2026-11-17",
+              "open": "4.039",
+              "high": "4.061",
+              "low": "4.018",
+              "close": "4.042"
+            }
+          ],
+          "600926": [
+            {
+              "date": "2026-11-04",
+              "open": "16.74",
+              "high": "16.93",
+              "low": "16.66",
+              "close": "16.85"
+            },
+            {
+              "date": "2026-11-05",
+              "open": "16.8",
+              "high": "16.93",
+              "low": "16.59",
+              "close": "16.92"
+            },
+            {
+              "date": "2026-11-06",
+              "open": "16.81",
+              "high": "17.12",
+              "low": "16.81",
+              "close": "17.09"
+            },
+            {
+              "date": "2026-11-09",
+              "open": "17.06",
+              "high": "17.32",
+              "low": "16.94",
+              "close": "17.25"
+            },
+            {
+              "date": "2026-11-10",
+              "open": "17.13",
+              "high": "17.39",
+              "low": "17.03",
+              "close": "17.33"
+            },
+            {
+              "date": "2026-11-11",
+              "open": "17.31",
+              "high": "17.46",
+              "low": "17.19",
+              "close": "17.2"
+            },
+            {
+              "date": "2026-11-12",
+              "open": "17.15",
+              "high": "17.29",
+              "low": "17.0",
+              "close": "17.26"
+            },
+            {
+              "date": "2026-11-13",
+              "open": "17.19",
+              "high": "17.6",
+              "low": "17.11",
+              "close": "17.52"
+            },
+            {
+              "date": "2026-11-16",
+              "open": "17.53",
+              "high": "17.77",
+              "low": "17.5",
+              "close": "17.77"
+            },
+            {
+              "date": "2026-11-17",
+              "open": "17.77",
+              "high": "17.9",
+              "low": "17.69",
+              "close": "17.9"
+            }
+          ],
+          "600104": [
+            {
+              "date": "2026-11-04",
+              "open": "10.81",
+              "high": "10.89",
+              "low": "10.62",
+              "close": "10.71"
+            },
+            {
+              "date": "2026-11-05",
+              "open": "10.73",
+              "high": "10.8",
+              "low": "10.64",
+              "close": "10.68"
+            },
+            {
+              "date": "2026-11-06",
+              "open": "10.53",
+              "high": "10.6",
+              "low": "10.46",
+              "close": "10.46"
+            },
+            {
+              "date": "2026-11-09",
+              "open": "10.5",
+              "high": "10.53",
+              "low": "10.32",
+              "close": "10.37"
+            },
+            {
+              "date": "2026-11-10",
+              "open": "10.4",
+              "high": "10.44",
+              "low": "10.32",
+              "close": "10.42"
+            },
+            {
+              "date": "2026-11-11",
+              "open": "10.38",
+              "high": "10.42",
+              "low": "10.28",
+              "close": "10.29"
+            },
+            {
+              "date": "2026-11-12",
+              "open": "10.28",
+              "high": "10.3",
+              "low": "9.99",
+              "close": "10.0"
+            },
+            {
+              "date": "2026-11-13",
+              "open": "9.99",
+              "high": "10.09",
+              "low": "9.91",
+              "close": "10.0"
+            },
+            {
+              "date": "2026-11-16",
+              "open": "10.0",
+              "high": "10.1",
+              "low": "9.93",
+              "close": "10.1"
+            },
+            {
+              "date": "2026-11-17",
+              "open": "10.09",
+              "high": "10.18",
+              "low": "9.99",
+              "close": "10.16"
+            }
+          ],
+          "601916": [
+            {
+              "date": "2026-11-04",
+              "open": "2.94",
+              "high": "2.98",
+              "low": "2.93",
+              "close": "2.96"
+            },
+            {
+              "date": "2026-11-05",
+              "open": "2.96",
+              "high": "2.97",
+              "low": "2.92",
+              "close": "2.93"
+            },
+            {
+              "date": "2026-11-06",
+              "open": "2.92",
+              "high": "2.93",
+              "low": "2.89",
+              "close": "2.92"
+            },
+            {
+              "date": "2026-11-09",
+              "open": "2.92",
+              "high": "2.95",
+              "low": "2.9",
+              "close": "2.94"
+            },
+            {
+              "date": "2026-11-10",
+              "open": "2.94",
+              "high": "2.98",
+              "low": "2.93",
+              "close": "2.97"
+            },
+            {
+              "date": "2026-11-11",
+              "open": "2.98",
+              "high": "3.01",
+              "low": "2.96",
+              "close": "2.98"
+            },
+            {
+              "date": "2026-11-12",
+              "open": "2.98",
+              "high": "2.99",
+              "low": "2.92",
+              "close": "2.93"
+            },
+            {
+              "date": "2026-11-13",
+              "open": "2.92",
+              "high": "2.98",
+              "low": "2.91",
+              "close": "2.96"
+            },
+            {
+              "date": "2026-11-16",
+              "open": "2.95",
+              "high": "3.0",
+              "low": "2.95",
+              "close": "3.0"
+            },
+            {
+              "date": "2026-11-17",
+              "open": "3.0",
+              "high": "3.03",
+              "low": "2.98",
+              "close": "3.02"
+            }
+          ],
+          "600010": [
+            {
+              "date": "2026-11-04",
+              "open": "2.01",
+              "high": "2.04",
+              "low": "1.99",
+              "close": "2.03"
+            },
+            {
+              "date": "2026-11-05",
+              "open": "2.02",
+              "high": "2.05",
+              "low": "2.02",
+              "close": "2.03"
+            },
+            {
+              "date": "2026-11-06",
+              "open": "2.0",
+              "high": "2.01",
+              "low": "1.99",
+              "close": "1.99"
+            },
+            {
+              "date": "2026-11-09",
+              "open": "2.0",
+              "high": "2.01",
+              "low": "1.99",
+              "close": "1.99"
+            },
+            {
+              "date": "2026-11-10",
+              "open": "2.0",
+              "high": "2.01",
+              "low": "1.99",
+              "close": "2.0"
+            },
+            {
+              "date": "2026-11-11",
+              "open": "2.0",
+              "high": "2.01",
+              "low": "1.99",
+              "close": "1.99"
+            },
+            {
+              "date": "2026-11-12",
+              "open": "1.99",
+              "high": "2.01",
+              "low": "1.98",
+              "close": "1.99"
+            },
+            {
+              "date": "2026-11-13",
+              "open": "1.99",
+              "high": "1.99",
+              "low": "1.96",
+              "close": "1.97"
+            },
+            {
+              "date": "2026-11-16",
+              "open": "1.96",
+              "high": "1.97",
+              "low": "1.9",
+              "close": "1.92"
+            },
+            {
+              "date": "2026-11-17",
+              "open": "1.91",
+              "high": "1.91",
+              "low": "1.85",
+              "close": "1.9"
+            }
+          ],
+          "600036": [
+            {
+              "date": "2026-11-04",
+              "open": "42.67",
+              "high": "43.09",
+              "low": "42.2",
+              "close": "42.54"
+            },
+            {
+              "date": "2026-11-05",
+              "open": "42.45",
+              "high": "42.55",
+              "low": "41.82",
+              "close": "42.54"
+            },
+            {
+              "date": "2026-11-06",
+              "open": "42.88",
+              "high": "42.92",
+              "low": "42.46",
+              "close": "42.88"
+            },
+            {
+              "date": "2026-11-09",
+              "open": "42.55",
+              "high": "43.05",
+              "low": "42.46",
+              "close": "43.01"
+            },
+            {
+              "date": "2026-11-10",
+              "open": "42.77",
+              "high": "43.15",
+              "low": "42.54",
+              "close": "43.01"
+            },
+            {
+              "date": "2026-11-11",
+              "open": "43.15",
+              "high": "43.23",
+              "low": "42.54",
+              "close": "42.56"
+            },
+            {
+              "date": "2026-11-12",
+              "open": "42.45",
+              "high": "42.74",
+              "low": "42.15",
+              "close": "42.63"
+            },
+            {
+              "date": "2026-11-13",
+              "open": "42.38",
+              "high": "43.0",
+              "low": "42.2",
+              "close": "42.93"
+            },
+            {
+              "date": "2026-11-16",
+              "open": "42.9",
+              "high": "43.48",
+              "low": "42.85",
+              "close": "43.4"
+            },
+            {
+              "date": "2026-11-17",
+              "open": "43.49",
+              "high": "43.58",
+              "low": "42.91",
+              "close": "43.45"
+            }
+          ],
+          "600900": [
+            {
+              "date": "2026-11-04",
+              "open": "29.87",
+              "high": "30.1",
+              "low": "29.51",
+              "close": "29.67"
+            },
+            {
+              "date": "2026-11-05",
+              "open": "29.55",
+              "high": "29.68",
+              "low": "28.75",
+              "close": "29.28"
+            },
+            {
+              "date": "2026-11-06",
+              "open": "29.35",
+              "high": "29.91",
+              "low": "29.25",
+              "close": "29.91"
+            },
+            {
+              "date": "2026-11-09",
+              "open": "29.7",
+              "high": "29.84",
+              "low": "29.53",
+              "close": "29.83"
+            },
+            {
+              "date": "2026-11-10",
+              "open": "29.63",
+              "high": "29.8",
+              "low": "29.47",
+              "close": "29.67"
+            },
+            {
+              "date": "2026-11-11",
+              "open": "29.74",
+              "high": "29.85",
+              "low": "29.46",
+              "close": "29.48"
+            },
+            {
+              "date": "2026-11-12",
+              "open": "29.4",
+              "high": "29.65",
+              "low": "29.26",
+              "close": "29.61"
+            },
+            {
+              "date": "2026-11-13",
+              "open": "29.51",
+              "high": "29.97",
+              "low": "29.45",
+              "close": "29.91"
+            },
+            {
+              "date": "2026-11-16",
+              "open": "29.86",
+              "high": "30.5",
+              "low": "29.82",
+              "close": "30.49"
+            },
+            {
+              "date": "2026-11-17",
+              "open": "30.59",
+              "high": "30.64",
+              "low": "30.18",
+              "close": "30.6"
+            }
+          ]
+        },
+        "source_sha256": {
+          "510300": "65f5b4b2f9c0bdf848d2420b19663ec42ca64d3b1bbf8d88fe9f9c8503b882d7",
+          "600926": "9fa26145f9a26486ec49605fef3eb8267657fc5da8c047f145ced365217feb08",
+          "600104": "17259010ae58d3ae1e643c544a901639a2dc269ccd42c0c9802f742e7bf8d641",
+          "601916": "585f13a645678a9f0bba53d2a1ace5a94c536a9fe7411c5de2457f548b40d5c6",
+          "600010": "7b2767c3237999fee8eeff5419dbf8e41e9c7533223b8192054acdf0d65848fe",
+          "600036": "2c887934b379b003c2a4e31a55f2d0d41e08aa06bcf3f236e97a93176538cfa2",
+          "600900": "c6ed7e07c48332be447be8cd788976a6a5714744c8844096f0c2756eda038f22"
+        },
+        "source_url": {
+          "510300": "https://quote.eastmoney.com/sh510300.html",
+          "600926": "https://finance.sina.com.cn/realstock/company/",
+          "600104": "https://finance.sina.com.cn/realstock/company/",
+          "601916": "https://finance.sina.com.cn/realstock/company/",
+          "600010": "https://finance.sina.com.cn/realstock/company/",
+          "600036": "https://finance.sina.com.cn/realstock/company/",
+          "600900": "https://finance.sina.com.cn/realstock/company/"
+        },
+        "errors": {},
+        "finalized_cutoff": "2026-11-17",
+        "source_range_shared_across_events": true
+      },
+      "source_new_ohlc_sha256": "504cb7a58e749476aa7628d6689e98d4067bc9370f8936f5d1bf69e253b57d2e",
+      "trade_authorized": false,
+      "broker_orders": [],
+      "execution": "OHLC_OPEN_SCENARIO_NOT_BROKER_FILL"
+    },
+    {
+      "experiment_id": "EXP-0012",
+      "source_freeze_sha256": "0ea51989a1b560f4fb70feb5cf28bf72c8fa765e0f9ba65ba161b58ea48fd08b",
+      "freeze_path": "records/national_team_left_entry_v5/2026-11-05/41879519729-a1.json",
+      "signal_session": "2026-11-04",
+      "cluster_anchor": "2026-10-26",
+      "extension_experiment_id": "EXP-0013",
+      "strategy_experiment_id": null,
+      "funding_stage": null,
+      "asof": "2026-11-18",
+      "first_observed_at": "2026-11-18T01:51:30.200430+08:00",
+      "policy_results": {
+        "SHALLOW_DIP": {
+          "F1_LEFT": [
+            {
+              "stock": "002230",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-06",
+              "entry_open_raw": "37.95",
+              "shares_scenario": 100,
+              "gross_cny": "3795.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.027140974967061923583662714",
+                    "mae_from_entry_open": "-0.0039525691699604743083003953",
+                    "mfe_session": "2026-11-06",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-11",
+                  "after_cost_return": "0.000333601865",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 900,
+                    "net_return": "0.0008494692915",
+                    "exit_session": "2026-11-11"
+                  },
+                  "excess_s0": "-0.0005158674265"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.027140974967061923583662714",
+                    "mae_from_entry_open": "-0.0229249011857707509881422925",
+                    "mfe_session": "2026-11-06",
+                    "mae_session": "2026-11-13",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-13",
+                  "after_cost_return": "-0.003028689481666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 900,
+                    "net_return": "-0.0011579185125",
+                    "exit_session": "2026-11-13"
+                  },
+                  "excess_s0": "-0.001870770969166666666666666667"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            },
+            {
+              "stock": "601766",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-06",
+              "entry_open_raw": "6.35",
+              "shares_scenario": 700,
+              "gross_cny": "4445.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.036220472440944881889763780",
+                    "mae_from_entry_open": "-0.0047244094488188976377952756",
+                    "mfe_session": "2026-11-06",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-11",
+                  "after_cost_return": "-0.0005441430516666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "0.0009438547683333333333333333333",
+                    "exit_session": "2026-11-11"
+                  },
+                  "excess_s0": "-0.001487997820000000000000000000"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.036220472440944881889763780",
+                    "mae_from_entry_open": "-0.0188976377952755905511811024",
+                    "mfe_session": "2026-11-06",
+                    "mae_session": "2026-11-13",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-13",
+                  "after_cost_return": "0.001553127788333333333333333333",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.001286576125",
+                    "exit_session": "2026-11-13"
+                  },
+                  "excess_s0": "0.002839703913333333333333333333"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "002230",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-06",
+              "entry_open_raw": "37.95",
+              "shares_scenario": 100,
+              "gross_cny": "3795.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.027140974967061923583662714",
+                    "mae_from_entry_open": "-0.0039525691699604743083003953",
+                    "mfe_session": "2026-11-06",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-11",
+                  "after_cost_return": "0.000333601865",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 900,
+                    "net_return": "0.0008494692915",
+                    "exit_session": "2026-11-11"
+                  },
+                  "excess_s0": "-0.0005158674265"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.027140974967061923583662714",
+                    "mae_from_entry_open": "-0.0229249011857707509881422925",
+                    "mfe_session": "2026-11-06",
+                    "mae_session": "2026-11-13",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-13",
+                  "after_cost_return": "-0.003028689481666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 900,
+                    "net_return": "-0.0011579185125",
+                    "exit_session": "2026-11-13"
+                  },
+                  "excess_s0": "-0.001870770969166666666666666667"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              },
+              "confirmation_day": "2026-11-05"
+            },
+            {
+              "stock": "601766",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-09",
+              "entry_open_raw": "6.51",
+              "shares_scenario": 700,
+              "gross_cny": "4557.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.004608294930875576036866359",
+                    "mae_from_entry_open": "-0.0414746543778801843317972350",
+                    "mfe_session": "2026-11-09",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "-0.005911674265",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1100,
+                    "net_return": "-0.001270836431333333333333333333",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "-0.004640837833666666666666666667"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.016897081413210445468509985",
+                    "mae_from_entry_open": "-0.0430107526881720430107526882",
+                    "mfe_session": "2026-11-16",
+                    "mae_session": "2026-11-13",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-16",
+                  "after_cost_return": "0.001778318815",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1100,
+                    "net_return": "-0.003467977311333333333333333333",
+                    "exit_session": "2026-11-16"
+                  },
+                  "excess_s0": "0.005246296126333333333333333333"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              },
+              "confirmation_day": "2026-11-06"
+            }
+          ],
+          "errors": {},
+          "source_new_ohlc_sha256": "df238cf12e14b87783ed8c09ebd51cd4c25471241a09d2fa566184b4c4836406"
+        },
+        "DEEP_DIP": {
+          "F1_LEFT": [
+            {
+              "stock": "002230",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-06",
+              "entry_open_raw": "37.95",
+              "shares_scenario": 100,
+              "gross_cny": "3795.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.027140974967061923583662714",
+                    "mae_from_entry_open": "-0.0039525691699604743083003953",
+                    "mfe_session": "2026-11-06",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-11",
+                  "after_cost_return": "0.000333601865",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 900,
+                    "net_return": "0.0008494692915",
+                    "exit_session": "2026-11-11"
+                  },
+                  "excess_s0": "-0.0005158674265"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.027140974967061923583662714",
+                    "mae_from_entry_open": "-0.0229249011857707509881422925",
+                    "mfe_session": "2026-11-06",
+                    "mae_session": "2026-11-13",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-13",
+                  "after_cost_return": "-0.003028689481666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 900,
+                    "net_return": "-0.0011579185125",
+                    "exit_session": "2026-11-13"
+                  },
+                  "excess_s0": "-0.001870770969166666666666666667"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            },
+            {
+              "stock": "601766",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-06",
+              "entry_open_raw": "6.35",
+              "shares_scenario": 700,
+              "gross_cny": "4445.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.036220472440944881889763780",
+                    "mae_from_entry_open": "-0.0047244094488188976377952756",
+                    "mfe_session": "2026-11-06",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-11",
+                  "after_cost_return": "-0.0005441430516666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "0.0009438547683333333333333333333",
+                    "exit_session": "2026-11-11"
+                  },
+                  "excess_s0": "-0.001487997820000000000000000000"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.036220472440944881889763780",
+                    "mae_from_entry_open": "-0.0188976377952755905511811024",
+                    "mfe_session": "2026-11-06",
+                    "mae_session": "2026-11-13",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-13",
+                  "after_cost_return": "0.001553127788333333333333333333",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.001286576125",
+                    "exit_session": "2026-11-13"
+                  },
+                  "excess_s0": "0.002839703913333333333333333333"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "002230",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-06",
+              "entry_open_raw": "37.95",
+              "shares_scenario": 100,
+              "gross_cny": "3795.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.027140974967061923583662714",
+                    "mae_from_entry_open": "-0.0039525691699604743083003953",
+                    "mfe_session": "2026-11-06",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-11",
+                  "after_cost_return": "0.000333601865",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 900,
+                    "net_return": "0.0008494692915",
+                    "exit_session": "2026-11-11"
+                  },
+                  "excess_s0": "-0.0005158674265"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.027140974967061923583662714",
+                    "mae_from_entry_open": "-0.0229249011857707509881422925",
+                    "mfe_session": "2026-11-06",
+                    "mae_session": "2026-11-13",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-13",
+                  "after_cost_return": "-0.003028689481666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 900,
+                    "net_return": "-0.0011579185125",
+                    "exit_session": "2026-11-13"
+                  },
+                  "excess_s0": "-0.001870770969166666666666666667"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              },
+              "confirmation_day": "2026-11-05"
+            },
+            {
+              "stock": "601766",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-09",
+              "entry_open_raw": "6.51",
+              "shares_scenario": 700,
+              "gross_cny": "4557.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.004608294930875576036866359",
+                    "mae_from_entry_open": "-0.0414746543778801843317972350",
+                    "mfe_session": "2026-11-09",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "-0.005911674265",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1100,
+                    "net_return": "-0.001270836431333333333333333333",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "-0.004640837833666666666666666667"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.016897081413210445468509985",
+                    "mae_from_entry_open": "-0.0430107526881720430107526882",
+                    "mfe_session": "2026-11-16",
+                    "mae_session": "2026-11-13",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-16",
+                  "after_cost_return": "0.001778318815",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1100,
+                    "net_return": "-0.003467977311333333333333333333",
+                    "exit_session": "2026-11-16"
+                  },
+                  "excess_s0": "0.005246296126333333333333333333"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              },
+              "confirmation_day": "2026-11-06"
+            }
+          ],
+          "errors": {},
+          "source_new_ohlc_sha256": "df238cf12e14b87783ed8c09ebd51cd4c25471241a09d2fa566184b4c4836406"
+        },
+        "R_BOUNCE": {
+          "F1_LEFT": [
+            {
+              "stock": "002230",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-06",
+              "entry_open_raw": "37.95",
+              "shares_scenario": 100,
+              "gross_cny": "3795.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.027140974967061923583662714",
+                    "mae_from_entry_open": "-0.0039525691699604743083003953",
+                    "mfe_session": "2026-11-06",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-11",
+                  "after_cost_return": "0.000333601865",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 900,
+                    "net_return": "0.0008494692915",
+                    "exit_session": "2026-11-11"
+                  },
+                  "excess_s0": "-0.0005158674265"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.027140974967061923583662714",
+                    "mae_from_entry_open": "-0.0229249011857707509881422925",
+                    "mfe_session": "2026-11-06",
+                    "mae_session": "2026-11-13",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-13",
+                  "after_cost_return": "-0.003028689481666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 900,
+                    "net_return": "-0.0011579185125",
+                    "exit_session": "2026-11-13"
+                  },
+                  "excess_s0": "-0.001870770969166666666666666667"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            },
+            {
+              "stock": "601766",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-06",
+              "entry_open_raw": "6.35",
+              "shares_scenario": 700,
+              "gross_cny": "4445.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.036220472440944881889763780",
+                    "mae_from_entry_open": "-0.0047244094488188976377952756",
+                    "mfe_session": "2026-11-06",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-11",
+                  "after_cost_return": "-0.0005441430516666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "0.0009438547683333333333333333333",
+                    "exit_session": "2026-11-11"
+                  },
+                  "excess_s0": "-0.001487997820000000000000000000"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.036220472440944881889763780",
+                    "mae_from_entry_open": "-0.0188976377952755905511811024",
+                    "mfe_session": "2026-11-06",
+                    "mae_session": "2026-11-13",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-13",
+                  "after_cost_return": "0.001553127788333333333333333333",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.001286576125",
+                    "exit_session": "2026-11-13"
+                  },
+                  "excess_s0": "0.002839703913333333333333333333"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "002230",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-06",
+              "entry_open_raw": "37.95",
+              "shares_scenario": 100,
+              "gross_cny": "3795.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.027140974967061923583662714",
+                    "mae_from_entry_open": "-0.0039525691699604743083003953",
+                    "mfe_session": "2026-11-06",
+                    "mae_session": "2026-11-06",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-11",
+                  "after_cost_return": "0.000333601865",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 900,
+                    "net_return": "0.0008494692915",
+                    "exit_session": "2026-11-11"
+                  },
+                  "excess_s0": "-0.0005158674265"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.027140974967061923583662714",
+                    "mae_from_entry_open": "-0.0229249011857707509881422925",
+                    "mfe_session": "2026-11-06",
+                    "mae_session": "2026-11-13",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-13",
+                  "after_cost_return": "-0.003028689481666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 900,
+                    "net_return": "-0.0011579185125",
+                    "exit_session": "2026-11-13"
+                  },
+                  "excess_s0": "-0.001870770969166666666666666667"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              },
+              "confirmation_day": "2026-11-05"
+            },
+            {
+              "stock": "601766",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-09",
+              "entry_open_raw": "6.51",
+              "shares_scenario": 700,
+              "gross_cny": "4557.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.004608294930875576036866359",
+                    "mae_from_entry_open": "-0.0414746543778801843317972350",
+                    "mfe_session": "2026-11-09",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "-0.005911674265",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1100,
+                    "net_return": "-0.001270836431333333333333333333",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "-0.004640837833666666666666666667"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.016897081413210445468509985",
+                    "mae_from_entry_open": "-0.0430107526881720430107526882",
+                    "mfe_session": "2026-11-16",
+                    "mae_session": "2026-11-13",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-16",
+                  "after_cost_return": "0.001778318815",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1100,
+                    "net_return": "-0.003467977311333333333333333333",
+                    "exit_session": "2026-11-16"
+                  },
+                  "excess_s0": "0.005246296126333333333333333333"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              },
+              "confirmation_day": "2026-11-06"
+            }
+          ],
+          "errors": {},
+          "source_new_ohlc_sha256": "df238cf12e14b87783ed8c09ebd51cd4c25471241a09d2fa566184b4c4836406"
+        }
+      },
+      "source_new_ohlc": {
+        "first_observed_at": "2026-11-18T01:51:30.075876+08:00",
+        "capture_time": "2026-11-18T01:51:30.075876+08:00",
+        "bars_by_symbol": {
+          "510300": [
+            {
+              "date": "2026-11-05",
+              "open": "4.149",
+              "high": "4.216",
+              "low": "4.145",
+              "close": "4.195"
+            },
+            {
+              "date": "2026-11-06",
+              "open": "4.113",
+              "high": "4.169",
+              "low": "4.095",
+              "close": "4.124"
+            },
+            {
+              "date": "2026-11-09",
+              "open": "4.14",
+              "high": "4.16",
+              "low": "4.13",
+              "close": "4.13"
+            },
+            {
+              "date": "2026-11-10",
+              "open": "4.159",
+              "high": "4.168",
+              "low": "4.128",
+              "close": "4.135"
+            },
+            {
+              "date": "2026-11-11",
+              "open": "4.125",
+              "high": "4.162",
+              "low": "4.109",
+              "close": "4.15"
+            },
+            {
+              "date": "2026-11-12",
+              "open": "4.145",
+              "high": "4.177",
+              "low": "4.108",
+              "close": "4.114"
+            },
+            {
+              "date": "2026-11-13",
+              "open": "4.124",
+              "high": "4.127",
+              "low": "4.076",
+              "close": "4.083"
+            },
+            {
+              "date": "2026-11-16",
+              "open": "4.068",
+              "high": "4.075",
+              "low": "4.036",
+              "close": "4.054"
+            },
+            {
+              "date": "2026-11-17",
+              "open": "4.039",
+              "high": "4.061",
+              "low": "4.018",
+              "close": "4.042"
+            }
+          ],
+          "002230": [
+            {
+              "date": "2026-11-05",
+              "open": "38.3",
+              "high": "39.5",
+              "low": "38.25",
+              "close": "39.15"
+            },
+            {
+              "date": "2026-11-06",
+              "open": "37.95",
+              "high": "38.98",
+              "low": "37.8",
+              "close": "38.25"
+            },
+            {
+              "date": "2026-11-09",
+              "open": "38.58",
+              "high": "38.87",
+              "low": "37.95",
+              "close": "37.96"
+            },
+            {
+              "date": "2026-11-10",
+              "open": "38.28",
+              "high": "38.75",
+              "low": "38.06",
+              "close": "38.53"
+            },
+            {
+              "date": "2026-11-11",
+              "open": "38.31",
+              "high": "38.42",
+              "low": "37.9",
+              "close": "38.13"
+            },
+            {
+              "date": "2026-11-12",
+              "open": "38.1",
+              "high": "38.27",
+              "low": "37.29",
+              "close": "37.29"
+            },
+            {
+              "date": "2026-11-13",
+              "open": "37.32",
+              "high": "37.74",
+              "low": "37.08",
+              "close": "37.12"
+            },
+            {
+              "date": "2026-11-16",
+              "open": "37.13",
+              "high": "37.28",
+              "low": "36.48",
+              "close": "36.74"
+            },
+            {
+              "date": "2026-11-17",
+              "open": "36.5",
+              "high": "36.95",
+              "low": "36.22",
+              "close": "36.52"
+            }
+          ],
+          "601766": [
+            {
+              "date": "2026-11-05",
+              "open": "6.44",
+              "high": "6.46",
+              "low": "6.28",
+              "close": "6.38"
+            },
+            {
+              "date": "2026-11-06",
+              "open": "6.35",
+              "high": "6.58",
+              "low": "6.32",
+              "close": "6.55"
+            },
+            {
+              "date": "2026-11-09",
+              "open": "6.51",
+              "high": "6.54",
+              "low": "6.43",
+              "close": "6.47"
+            },
+            {
+              "date": "2026-11-10",
+              "open": "6.43",
+              "high": "6.44",
+              "low": "6.36",
+              "close": "6.42"
+            },
+            {
+              "date": "2026-11-11",
+              "open": "6.42",
+              "high": "6.43",
+              "low": "6.33",
+              "close": "6.34"
+            },
+            {
+              "date": "2026-11-12",
+              "open": "6.32",
+              "high": "6.34",
+              "low": "6.24",
+              "close": "6.27"
+            },
+            {
+              "date": "2026-11-13",
+              "open": "6.25",
+              "high": "6.47",
+              "low": "6.23",
+              "close": "6.43"
+            },
+            {
+              "date": "2026-11-16",
+              "open": "6.41",
+              "high": "6.62",
+              "low": "6.4",
+              "close": "6.6"
+            },
+            {
+              "date": "2026-11-17",
+              "open": "6.6",
+              "high": "6.74",
+              "low": "6.59",
+              "close": "6.73"
+            }
+          ]
+        },
+        "source_sha256": {
+          "510300": "65f5b4b2f9c0bdf848d2420b19663ec42ca64d3b1bbf8d88fe9f9c8503b882d7",
+          "002230": "b5d9a332f84e65874b9bf3a60aabf2e3388f1a2a2c8050407d268b1d0e659e80",
+          "601766": "249c690f953ecfd1add9cd2dee11143ad968d389e105c28507e4f5295e3c35fe"
+        },
+        "source_url": {
+          "510300": "https://quote.eastmoney.com/sh510300.html",
+          "002230": "https://finance.sina.com.cn/realstock/company/",
+          "601766": "https://finance.sina.com.cn/realstock/company/"
+        },
+        "errors": {},
+        "finalized_cutoff": "2026-11-17",
+        "source_range_shared_across_events": true
+      },
+      "source_new_ohlc_sha256": "df238cf12e14b87783ed8c09ebd51cd4c25471241a09d2fa566184b4c4836406",
+      "trade_authorized": false,
+      "broker_orders": [],
+      "execution": "OHLC_OPEN_SCENARIO_NOT_BROKER_FILL"
+    },
+    {
+      "experiment_id": "EXP-0012",
+      "source_freeze_sha256": "aef9abc53db76cdfc42dacb7562166de72fc939c30ebe2c1fedc36efd9348014",
+      "freeze_path": "records/national_team_left_entry_v5/2026-11-07/42256046998-a1.json",
+      "signal_session": "2026-11-06",
+      "cluster_anchor": "2026-10-26",
+      "extension_experiment_id": "EXP-0013",
+      "strategy_experiment_id": null,
+      "funding_stage": null,
+      "asof": "2026-11-18",
+      "first_observed_at": "2026-11-18T01:51:30.251792+08:00",
+      "policy_results": {
+        "SHALLOW_DIP": {
+          "F1_LEFT": [
+            {
+              "stock": "600050",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-09",
+              "entry_open_raw": "4.45",
+              "shares_scenario": 1000,
+              "gross_cny": "4450.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0",
+                    "mae_from_entry_open": "-0.0539325842696629213483146067",
+                    "mfe_session": "2026-11-09",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "-0.00763526585",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.001155305846666666666666666667",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "-0.006479960003333333333333333333"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0",
+                    "mae_from_entry_open": "-0.0561797752808988764044943820",
+                    "mfe_session": "2026-11-09",
+                    "mae_session": "2026-11-13",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-16",
+                  "after_cost_return": "-0.002308863716666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.003152706646666666666666666667",
+                    "exit_session": "2026-11-16"
+                  },
+                  "excess_s0": "0.000843842930000000000000000000"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            },
+            {
+              "stock": "601818",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-09",
+              "entry_open_raw": "3.16",
+              "shares_scenario": 1400,
+              "gross_cny": "4424.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.012658227848101265822784810",
+                    "mae_from_entry_open": "-0.0094936708860759493670886076",
+                    "mfe_session": "2026-11-10",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "-0.0003096431333333333333333333333",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.001155305846666666666666666667",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "0.0008456627133333333333333333337"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.037974683544303797468354430",
+                    "mae_from_entry_open": "-0.0094936708860759493670886076",
+                    "mfe_session": "2026-11-16",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-16",
+                  "after_cost_return": "0.00481701892",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.003152706646666666666666666667",
+                    "exit_session": "2026-11-16"
+                  },
+                  "excess_s0": "0.007969725566666666666666666667"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "600050",
+              "status": "WAIT_CONFIRMATION",
+              "confirmation_day": null,
+              "horizons": {}
+            },
+            {
+              "stock": "601818",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-10",
+              "entry_open_raw": "3.17",
+              "shares_scenario": 1400,
+              "gross_cny": "4438.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.015772870662460567823343849",
+                    "mae_from_entry_open": "-0.0126182965299684542586750789",
+                    "mfe_session": "2026-11-13",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-13",
+                  "after_cost_return": "0.002019677916666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.002821136355",
+                    "exit_session": "2026-11-13"
+                  },
+                  "excess_s0": "0.004840814271666666666666666667"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.037854889589905362776025237",
+                    "mae_from_entry_open": "-0.0126182965299684542586750789",
+                    "mfe_session": "2026-11-17",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-17",
+                  "after_cost_return": "0.00434997885",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.004186026901666666666666666667",
+                    "exit_session": "2026-11-17"
+                  },
+                  "excess_s0": "0.008536005751666666666666666667"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              },
+              "confirmation_day": "2026-11-09"
+            }
+          ],
+          "errors": {},
+          "source_new_ohlc_sha256": "023ca64bdfa69d4c28cfca35dc18165cecd9e796bdf0afbb473c517cc91ee8f0"
+        },
+        "DEEP_DIP": {
+          "F1_LEFT": [
+            {
+              "stock": "600050",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-09",
+              "entry_open_raw": "4.45",
+              "shares_scenario": 1000,
+              "gross_cny": "4450.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0",
+                    "mae_from_entry_open": "-0.0539325842696629213483146067",
+                    "mfe_session": "2026-11-09",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "-0.00763526585",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.001155305846666666666666666667",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "-0.006479960003333333333333333333"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0",
+                    "mae_from_entry_open": "-0.0561797752808988764044943820",
+                    "mfe_session": "2026-11-09",
+                    "mae_session": "2026-11-13",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-16",
+                  "after_cost_return": "-0.002308863716666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.003152706646666666666666666667",
+                    "exit_session": "2026-11-16"
+                  },
+                  "excess_s0": "0.000843842930000000000000000000"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            },
+            {
+              "stock": "601818",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-09",
+              "entry_open_raw": "3.16",
+              "shares_scenario": 1400,
+              "gross_cny": "4424.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.012658227848101265822784810",
+                    "mae_from_entry_open": "-0.0094936708860759493670886076",
+                    "mfe_session": "2026-11-10",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "-0.0003096431333333333333333333333",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.001155305846666666666666666667",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "0.0008456627133333333333333333337"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.037974683544303797468354430",
+                    "mae_from_entry_open": "-0.0094936708860759493670886076",
+                    "mfe_session": "2026-11-16",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-16",
+                  "after_cost_return": "0.00481701892",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.003152706646666666666666666667",
+                    "exit_session": "2026-11-16"
+                  },
+                  "excess_s0": "0.007969725566666666666666666667"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "600050",
+              "status": "WAIT_CONFIRMATION",
+              "confirmation_day": null,
+              "horizons": {}
+            },
+            {
+              "stock": "601818",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-10",
+              "entry_open_raw": "3.17",
+              "shares_scenario": 1400,
+              "gross_cny": "4438.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.015772870662460567823343849",
+                    "mae_from_entry_open": "-0.0126182965299684542586750789",
+                    "mfe_session": "2026-11-13",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-13",
+                  "after_cost_return": "0.002019677916666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.002821136355",
+                    "exit_session": "2026-11-13"
+                  },
+                  "excess_s0": "0.004840814271666666666666666667"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.037854889589905362776025237",
+                    "mae_from_entry_open": "-0.0126182965299684542586750789",
+                    "mfe_session": "2026-11-17",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-17",
+                  "after_cost_return": "0.00434997885",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.004186026901666666666666666667",
+                    "exit_session": "2026-11-17"
+                  },
+                  "excess_s0": "0.008536005751666666666666666667"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              },
+              "confirmation_day": "2026-11-09"
+            }
+          ],
+          "errors": {},
+          "source_new_ohlc_sha256": "023ca64bdfa69d4c28cfca35dc18165cecd9e796bdf0afbb473c517cc91ee8f0"
+        },
+        "R_BOUNCE": {
+          "F1_LEFT": [
+            {
+              "stock": "600050",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-09",
+              "entry_open_raw": "4.45",
+              "shares_scenario": 1000,
+              "gross_cny": "4450.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0",
+                    "mae_from_entry_open": "-0.0539325842696629213483146067",
+                    "mfe_session": "2026-11-09",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "-0.00763526585",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.001155305846666666666666666667",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "-0.006479960003333333333333333333"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0",
+                    "mae_from_entry_open": "-0.0561797752808988764044943820",
+                    "mfe_session": "2026-11-09",
+                    "mae_session": "2026-11-13",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-16",
+                  "after_cost_return": "-0.002308863716666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.003152706646666666666666666667",
+                    "exit_session": "2026-11-16"
+                  },
+                  "excess_s0": "0.000843842930000000000000000000"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            },
+            {
+              "stock": "601818",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-09",
+              "entry_open_raw": "3.16",
+              "shares_scenario": 1400,
+              "gross_cny": "4424.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.012658227848101265822784810",
+                    "mae_from_entry_open": "-0.0094936708860759493670886076",
+                    "mfe_session": "2026-11-10",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-12",
+                  "after_cost_return": "-0.0003096431333333333333333333333",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.001155305846666666666666666667",
+                    "exit_session": "2026-11-12"
+                  },
+                  "excess_s0": "0.0008456627133333333333333333337"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.037974683544303797468354430",
+                    "mae_from_entry_open": "-0.0094936708860759493670886076",
+                    "mfe_session": "2026-11-16",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-16",
+                  "after_cost_return": "0.00481701892",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.003152706646666666666666666667",
+                    "exit_session": "2026-11-16"
+                  },
+                  "excess_s0": "0.007969725566666666666666666667"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              }
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "600050",
+              "status": "WAIT_CONFIRMATION",
+              "confirmation_day": null,
+              "horizons": {}
+            },
+            {
+              "stock": "601818",
+              "status": "OHLC_OPEN_PAPER_SCENARIO",
+              "entry_session": "2026-11-10",
+              "entry_open_raw": "3.17",
+              "shares_scenario": 1400,
+              "gross_cny": "4438.00",
+              "execution_proof": "NONE_NO_MINUTE_ORDERBOOK",
+              "horizons": {
+                "3": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.015772870662460567823343849",
+                    "mae_from_entry_open": "-0.0126182965299684542586750789",
+                    "mfe_session": "2026-11-13",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-13",
+                  "after_cost_return": "0.002019677916666666666666666667",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.002821136355",
+                    "exit_session": "2026-11-13"
+                  },
+                  "excess_s0": "0.004840814271666666666666666667"
+                },
+                "5": {
+                  "path_excursions": {
+                    "mfe_from_entry_open": "0.037854889589905362776025237",
+                    "mae_from_entry_open": "-0.0126182965299684542586750789",
+                    "mfe_session": "2026-11-17",
+                    "mae_session": "2026-11-12",
+                    "high_low_are_daily_bounds_not_fills": true
+                  },
+                  "status": "PAIRED",
+                  "exit_session": "2026-11-17",
+                  "after_cost_return": "0.00434997885",
+                  "s0": {
+                    "status": "MATURED",
+                    "shares": 1000,
+                    "net_return": "-0.004186026901666666666666666667",
+                    "exit_session": "2026-11-17"
+                  },
+                  "excess_s0": "0.008536005751666666666666666667"
+                },
+                "10": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                },
+                "20": {
+                  "status": "UNMATURED",
+                  "after_cost_return": null,
+                  "excess_s0": null
+                }
+              },
+              "confirmation_day": "2026-11-09"
+            }
+          ],
+          "errors": {},
+          "source_new_ohlc_sha256": "023ca64bdfa69d4c28cfca35dc18165cecd9e796bdf0afbb473c517cc91ee8f0"
+        }
+      },
+      "source_new_ohlc": {
+        "first_observed_at": "2026-11-18T01:51:30.075876+08:00",
+        "capture_time": "2026-11-18T01:51:30.075876+08:00",
+        "bars_by_symbol": {
+          "510300": [
+            {
+              "date": "2026-11-09",
+              "open": "4.14",
+              "high": "4.16",
+              "low": "4.13",
+              "close": "4.13"
+            },
+            {
+              "date": "2026-11-10",
+              "open": "4.159",
+              "high": "4.168",
+              "low": "4.128",
+              "close": "4.135"
+            },
+            {
+              "date": "2026-11-11",
+              "open": "4.125",
+              "high": "4.162",
+              "low": "4.109",
+              "close": "4.15"
+            },
+            {
+              "date": "2026-11-12",
+              "open": "4.145",
+              "high": "4.177",
+              "low": "4.108",
+              "close": "4.114"
+            },
+            {
+              "date": "2026-11-13",
+              "open": "4.124",
+              "high": "4.127",
+              "low": "4.076",
+              "close": "4.083"
+            },
+            {
+              "date": "2026-11-16",
+              "open": "4.068",
+              "high": "4.075",
+              "low": "4.036",
+              "close": "4.054"
+            },
+            {
+              "date": "2026-11-17",
+              "open": "4.039",
+              "high": "4.061",
+              "low": "4.018",
+              "close": "4.042"
+            }
+          ],
+          "600050": [
+            {
+              "date": "2026-11-09",
+              "open": "4.45",
+              "high": "4.45",
+              "low": "4.37",
+              "close": "4.39"
+            },
+            {
+              "date": "2026-11-10",
+              "open": "4.38",
+              "high": "4.38",
+              "low": "4.31",
+              "close": "4.33"
+            },
+            {
+              "date": "2026-11-11",
+              "open": "4.33",
+              "high": "4.35",
+              "low": "4.29",
+              "close": "4.29"
+            },
+            {
+              "date": "2026-11-12",
+              "open": "4.29",
+              "high": "4.3",
+              "low": "4.21",
+              "close": "4.23"
+            },
+            {
+              "date": "2026-11-13",
+              "open": "4.21",
+              "high": "4.3",
+              "low": "4.2",
+              "close": "4.27"
+            },
+            {
+              "date": "2026-11-16",
+              "open": "4.26",
+              "high": "4.39",
+              "low": "4.25",
+              "close": "4.39"
+            },
+            {
+              "date": "2026-11-17",
+              "open": "4.39",
+              "high": "4.43",
+              "low": "4.37",
+              "close": "4.42"
+            }
+          ],
+          "601818": [
+            {
+              "date": "2026-11-09",
+              "open": "3.16",
+              "high": "3.19",
+              "low": "3.14",
+              "close": "3.18"
+            },
+            {
+              "date": "2026-11-10",
+              "open": "3.17",
+              "high": "3.2",
+              "low": "3.14",
+              "close": "3.19"
+            },
+            {
+              "date": "2026-11-11",
+              "open": "3.2",
+              "high": "3.2",
+              "low": "3.15",
+              "close": "3.15"
+            },
+            {
+              "date": "2026-11-12",
+              "open": "3.15",
+              "high": "3.17",
+              "low": "3.13",
+              "close": "3.16"
+            },
+            {
+              "date": "2026-11-13",
+              "open": "3.15",
+              "high": "3.22",
+              "low": "3.14",
+              "close": "3.22"
+            },
+            {
+              "date": "2026-11-16",
+              "open": "3.21",
+              "high": "3.28",
+              "low": "3.2",
+              "close": "3.27"
+            },
+            {
+              "date": "2026-11-17",
+              "open": "3.28",
+              "high": "3.29",
+              "low": "3.23",
+              "close": "3.27"
+            }
+          ]
+        },
+        "source_sha256": {
+          "510300": "65f5b4b2f9c0bdf848d2420b19663ec42ca64d3b1bbf8d88fe9f9c8503b882d7",
+          "600050": "99e51283a08a3821baae637efe69b70f263e5c00201ffd3e8a7edeec7b87d391",
+          "601818": "3673788ad8282223b6ba052362bc5548913831bbc8f8ad82804cab64581939e9"
+        },
+        "source_url": {
+          "510300": "https://quote.eastmoney.com/sh510300.html",
+          "600050": "https://finance.sina.com.cn/realstock/company/",
+          "601818": "https://finance.sina.com.cn/realstock/company/"
+        },
+        "errors": {},
+        "finalized_cutoff": "2026-11-17",
+        "source_range_shared_across_events": true
+      },
+      "source_new_ohlc_sha256": "023ca64bdfa69d4c28cfca35dc18165cecd9e796bdf0afbb473c517cc91ee8f0",
+      "trade_authorized": false,
+      "broker_orders": [],
+      "execution": "OHLC_OPEN_SCENARIO_NOT_BROKER_FILL"
+    },
+    {
+      "experiment_id": "EXP-0012",
+      "source_freeze_sha256": "6ee02424a00b696c069d4ce5c81c8f60715c58f2779d0f40721842660874226e",
+      "freeze_path": "records/national_team_left_entry_v5/2026-11-17/44023760407-a1.json",
+      "signal_session": "2026-11-16",
+      "cluster_anchor": "2026-11-16",
+      "extension_experiment_id": "EXP-0013",
+      "strategy_experiment_id": null,
+      "funding_stage": null,
+      "asof": "2026-11-18",
+      "first_observed_at": "2026-11-18T01:51:30.301883+08:00",
+      "policy_results": {
+        "SHALLOW_DIP": {
+          "F1_LEFT": [
+            {
+              "stock": "600050",
+              "status": "NEXT_ACTUAL_SESSION_PENDING",
+              "horizons": {}
+            },
+            {
+              "stock": "601668",
+              "status": "NEXT_ACTUAL_SESSION_PENDING",
+              "horizons": {}
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "600050",
+              "status": "WAIT_NEXT_OPEN_AFTER_CONFIRMATION",
+              "confirmation_day": "2026-11-17",
+              "horizons": {}
+            },
+            {
+              "stock": "601668",
+              "status": "WAIT_NEXT_OPEN_AFTER_CONFIRMATION",
+              "confirmation_day": "2026-11-17",
+              "horizons": {}
+            }
+          ],
+          "errors": {},
+          "source_new_ohlc_sha256": "3b68f17ac72d289afe110e5a779e713dfff532c61e5751e1b8f026d861644888"
+        },
+        "DEEP_DIP": {
+          "F1_LEFT": [
+            {
+              "stock": "002050",
+              "status": "NEXT_ACTUAL_SESSION_PENDING",
+              "horizons": {}
+            },
+            {
+              "stock": "600030",
+              "status": "NEXT_ACTUAL_SESSION_PENDING",
+              "horizons": {}
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "002050",
+              "status": "WAIT_CONFIRMATION",
+              "confirmation_day": null,
+              "horizons": {}
+            },
+            {
+              "stock": "600030",
+              "status": "WAIT_NEXT_OPEN_AFTER_CONFIRMATION",
+              "confirmation_day": "2026-11-17",
+              "horizons": {}
+            }
+          ],
+          "errors": {},
+          "source_new_ohlc_sha256": "3b68f17ac72d289afe110e5a779e713dfff532c61e5751e1b8f026d861644888"
+        },
+        "R_BOUNCE": {
+          "F1_LEFT": [
+            {
+              "stock": "000100",
+              "status": "NEXT_ACTUAL_SESSION_PENDING",
+              "horizons": {}
+            },
+            {
+              "stock": "601006",
+              "status": "NEXT_ACTUAL_SESSION_PENDING",
+              "horizons": {}
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "000100",
+              "status": "WAIT_NEXT_OPEN_AFTER_CONFIRMATION",
+              "confirmation_day": "2026-11-17",
+              "horizons": {}
+            },
+            {
+              "stock": "601006",
+              "status": "WAIT_NEXT_OPEN_AFTER_CONFIRMATION",
+              "confirmation_day": "2026-11-17",
+              "horizons": {}
+            }
+          ],
+          "errors": {},
+          "source_new_ohlc_sha256": "3b68f17ac72d289afe110e5a779e713dfff532c61e5751e1b8f026d861644888"
+        }
+      },
+      "source_new_ohlc": {
+        "first_observed_at": "2026-11-18T01:51:30.075876+08:00",
+        "capture_time": "2026-11-18T01:51:30.075876+08:00",
+        "bars_by_symbol": {
+          "510300": [
+            {
+              "date": "2026-11-17",
+              "open": "4.039",
+              "high": "4.061",
+              "low": "4.018",
+              "close": "4.042"
+            }
+          ],
+          "000100": [
+            {
+              "date": "2026-11-17",
+              "open": "4.56",
+              "high": "4.78",
+              "low": "4.54",
+              "close": "4.75"
+            }
+          ],
+          "600050": [
+            {
+              "date": "2026-11-17",
+              "open": "4.39",
+              "high": "4.43",
+              "low": "4.37",
+              "close": "4.42"
+            }
+          ],
+          "601668": [
+            {
+              "date": "2026-11-17",
+              "open": "4.68",
+              "high": "4.7",
+              "low": "4.64",
+              "close": "4.7"
+            }
+          ],
+          "002050": [
+            {
+              "date": "2026-11-17",
+              "open": "33.35",
+              "high": "34.07",
+              "low": "32.58",
+              "close": "32.88"
+            }
+          ],
+          "600030": [
+            {
+              "date": "2026-11-17",
+              "open": "25.1",
+              "high": "25.24",
+              "low": "24.93",
+              "close": "25.19"
+            }
+          ],
+          "601006": [
+            {
+              "date": "2026-11-17",
+              "open": "4.94",
+              "high": "4.96",
+              "low": "4.88",
+              "close": "4.95"
+            }
+          ]
+        },
+        "source_sha256": {
+          "510300": "65f5b4b2f9c0bdf848d2420b19663ec42ca64d3b1bbf8d88fe9f9c8503b882d7",
+          "000100": "60c2dae6a8a89fe9df849a47ee1ed0dfaba71bf6e2b1108790a77e4c5b1ffde8",
+          "600050": "99e51283a08a3821baae637efe69b70f263e5c00201ffd3e8a7edeec7b87d391",
+          "601668": "4e8ee7023ffc9ac362a96383e5283b8c8197226681f159138e995a0451a420e7",
+          "002050": "42b83b69838211bd3a67fe3034e02e408c55d4fb8d2910e72834b166c66b3a9b",
+          "600030": "b0b68adfa84244e4b4246fc6ddd869ed11b9b26d18ab7c925b6bf7fd667f0010",
+          "601006": "7194a5f141ba2b100e5898f2f2486409e49dd6da8358afe92f7747cda73594a0"
+        },
+        "source_url": {
+          "510300": "https://quote.eastmoney.com/sh510300.html",
+          "000100": "https://finance.sina.com.cn/realstock/company/",
+          "600050": "https://finance.sina.com.cn/realstock/company/",
+          "601668": "https://finance.sina.com.cn/realstock/company/",
+          "002050": "https://finance.sina.com.cn/realstock/company/",
+          "600030": "https://finance.sina.com.cn/realstock/company/",
+          "601006": "https://finance.sina.com.cn/realstock/company/"
+        },
+        "errors": {},
+        "finalized_cutoff": "2026-11-17",
+        "source_range_shared_across_events": true
+      },
+      "source_new_ohlc_sha256": "3b68f17ac72d289afe110e5a779e713dfff532c61e5751e1b8f026d861644888",
+      "trade_authorized": false,
+      "broker_orders": [],
+      "execution": "OHLC_OPEN_SCENARIO_NOT_BROKER_FILL"
+    },
+    {
+      "experiment_id": "EXP-0012",
+      "source_freeze_sha256": "3425d3e94acf5e2b76e61093097e9c725488850094fb49af34079c8ea4a5a474",
+      "freeze_path": "records/national_team_left_entry_v5/2026-11-18/44140691199-a1.json",
+      "signal_session": "2026-11-17",
+      "cluster_anchor": "2026-11-16",
+      "extension_experiment_id": "EXP-0013",
+      "strategy_experiment_id": "EXP-0017",
+      "funding_stage": "STANDARD_AND_EARLY",
+      "asof": "2026-11-18",
+      "first_observed_at": "2026-11-18T01:51:30.351621+08:00",
+      "policy_results": {
+        "SHALLOW_DIP": {
+          "F1_LEFT": [
+            {
+              "stock": "002352",
+              "status": "NEXT_ACTUAL_SESSION_PENDING",
+              "horizons": {}
+            },
+            {
+              "stock": "002648",
+              "status": "NEXT_ACTUAL_SESSION_PENDING",
+              "horizons": {}
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "002352",
+              "status": "WAIT_CONFIRMATION",
+              "confirmation_day": null,
+              "horizons": {}
+            },
+            {
+              "stock": "002648",
+              "status": "WAIT_CONFIRMATION",
+              "confirmation_day": null,
+              "horizons": {}
+            }
+          ],
+          "errors": {},
+          "source_new_ohlc_sha256": "9ce0a872c4e56015b29e9f7913a3d450f9c4fb3d3185a1da1925c74b09a80d2b"
+        },
+        "DEEP_DIP": {
+          "F1_LEFT": [
+            {
+              "stock": "601688",
+              "status": "NEXT_ACTUAL_SESSION_PENDING",
+              "horizons": {}
+            },
+            {
+              "stock": "600999",
+              "status": "NEXT_ACTUAL_SESSION_PENDING",
+              "horizons": {}
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "601688",
+              "status": "WAIT_CONFIRMATION",
+              "confirmation_day": null,
+              "horizons": {}
+            },
+            {
+              "stock": "600999",
+              "status": "WAIT_CONFIRMATION",
+              "confirmation_day": null,
+              "horizons": {}
+            }
+          ],
+          "errors": {},
+          "source_new_ohlc_sha256": "9ce0a872c4e56015b29e9f7913a3d450f9c4fb3d3185a1da1925c74b09a80d2b"
+        },
+        "R_BOUNCE": {
+          "F1_LEFT": [
+            {
+              "stock": "600000",
+              "status": "NEXT_ACTUAL_SESSION_PENDING",
+              "horizons": {}
+            },
+            {
+              "stock": "601825",
+              "status": "NEXT_ACTUAL_SESSION_PENDING",
+              "horizons": {}
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "600000",
+              "status": "WAIT_CONFIRMATION",
+              "confirmation_day": null,
+              "horizons": {}
+            },
+            {
+              "stock": "601825",
+              "status": "WAIT_CONFIRMATION",
+              "confirmation_day": null,
+              "horizons": {}
+            }
+          ],
+          "errors": {},
+          "source_new_ohlc_sha256": "9ce0a872c4e56015b29e9f7913a3d450f9c4fb3d3185a1da1925c74b09a80d2b"
+        },
+        "EARLY_ENTRY": {
+          "F1_LEFT": [
+            {
+              "stock": "600938",
+              "status": "NEXT_ACTUAL_SESSION_PENDING",
+              "horizons": {}
+            },
+            {
+              "stock": "600000",
+              "status": "NEXT_ACTUAL_SESSION_PENDING",
+              "horizons": {}
+            }
+          ],
+          "F2_WEAK": [
+            {
+              "stock": "600938",
+              "status": "WAIT_CONFIRMATION",
+              "confirmation_day": null,
+              "horizons": {}
+            },
+            {
+              "stock": "600000",
+              "status": "WAIT_CONFIRMATION",
+              "confirmation_day": null,
+              "horizons": {}
+            }
+          ],
+          "errors": {},
+          "source_new_ohlc_sha256": "9ce0a872c4e56015b29e9f7913a3d450f9c4fb3d3185a1da1925c74b09a80d2b"
+        }
+      },
+      "source_new_ohlc": {
+        "first_observed_at": "2026-11-18T01:51:30.075876+08:00",
+        "capture_time": "2026-11-18T01:51:30.075876+08:00",
+        "bars_by_symbol": {
+          "510300": [],
+          "002648": [],
+          "002352": [],
+          "601688": [],
+          "600999": [],
+          "600000": [],
+          "601825": [],
+          "600938": []
+        },
+        "source_sha256": {
+          "510300": "65f5b4b2f9c0bdf848d2420b19663ec42ca64d3b1bbf8d88fe9f9c8503b882d7",
+          "002648": "52b0931402aa4438a2ce309a9e25f8a15afde830590bbe64d0681aa93d6f94ec",
+          "002352": "e6acbf37df494c534eb59db4d6507d995de9c0245015eeb1228b5d839ca8263e",
+          "601688": "d95a280d514e51250f6ec6f14ebc6530e858d874cde95d107f4f706d79225e72",
+          "600999": "430fd33d9e58593569510b1c37aba8f217e5b49df84523b159dbb4cdbe5bdb2b",
+          "600000": "8dba3fb62bc04ff4c8e7b11fe5e23cab75d2e628debd798fd34611db4d3fa066",
+          "601825": "1961e629b7bd074b2e40f53f2ce34e3e70d55c9969e982bf4e548dc33671347f",
+          "600938": "4ba55b30c1b7181edb074ad7fd2110792719cbbe3bfc98514a798321f084a4f4"
+        },
+        "source_url": {
+          "510300": "https://quote.eastmoney.com/sh510300.html",
+          "002648": "https://finance.sina.com.cn/realstock/company/",
+          "002352": "https://finance.sina.com.cn/realstock/company/",
+          "601688": "https://finance.sina.com.cn/realstock/company/",
+          "600999": "https://finance.sina.com.cn/realstock/company/",
+          "600000": "https://finance.sina.com.cn/realstock/company/",
+          "601825": "https://finance.sina.com.cn/realstock/company/",
+          "600938": "https://finance.sina.com.cn/realstock/company/"
+        },
+        "errors": {},
+        "finalized_cutoff": "2026-11-17",
+        "source_range_shared_across_events": true
+      },
+      "source_new_ohlc_sha256": "9ce0a872c4e56015b29e9f7913a3d450f9c4fb3d3185a1da1925c74b09a80d2b",
+      "trade_authorized": false,
+      "broker_orders": [],
+      "execution": "OHLC_OPEN_SCENARIO_NOT_BROKER_FILL"
+    }
+  ],
+  "tracked_freeze_count": 6,
+  "paper_account_snapshot_sha256": "3580f7a7a98f064975968b1049ff88a256a12d3b3c44f50d6dd8c8c773c5f0f9",
+  "paper_account_summary": {
+    "SHALLOW_DIP": {
+      "cash_cny": "29992.31",
+      "equity_after_estimated_exit_cost_cny": "29992.31",
+      "net_pnl_cny": "-7.69",
+      "realized_pnl_cny": "-7.69",
+      "open_positions": 0,
+      "closed_trades": 3,
+      "win_rate": "0.3333333333333333333333333333",
+      "paired_s0_trades": 3,
+      "paired_s0_close_proxy_trades": 2,
+      "paired_s0_open_proxy_trades": 0,
+      "paired_s0_exact_intraday_trades": 0,
+      "pending_quote_sessions": 0,
+      "realized_excess_s0_cny": "-37.77",
+      "realized_excess_s0_equal_capital_cny": "-39.06",
+      "mark_status": "CASH_ONLY",
+      "market_session": "2026-11-17"
+    },
+    "DEEP_DIP": {
+      "cash_cny": "29935.99",
+      "equity_after_estimated_exit_cost_cny": "29935.99",
+      "net_pnl_cny": "-64.01",
+      "realized_pnl_cny": "-64.01",
+      "open_positions": 0,
+      "closed_trades": 3,
+      "win_rate": "0.3333333333333333333333333333",
+      "paired_s0_trades": 3,
+      "paired_s0_close_proxy_trades": 0,
+      "paired_s0_open_proxy_trades": 0,
+      "paired_s0_exact_intraday_trades": 0,
+      "pending_quote_sessions": 0,
+      "realized_excess_s0_cny": "-43.84",
+      "realized_excess_s0_equal_capital_cny": "-43.23",
+      "mark_status": "CASH_ONLY",
+      "market_session": "2026-11-17"
+    },
+    "R_BOUNCE": {
+      "cash_cny": "30037.16",
+      "equity_after_estimated_exit_cost_cny": "30037.16",
+      "net_pnl_cny": "37.16",
+      "realized_pnl_cny": "37.16",
+      "open_positions": 0,
+      "closed_trades": 3,
+      "win_rate": "0.6666666666666666666666666667",
+      "paired_s0_trades": 3,
+      "paired_s0_close_proxy_trades": 0,
+      "paired_s0_open_proxy_trades": 0,
+      "paired_s0_exact_intraday_trades": 0,
+      "pending_quote_sessions": 0,
+      "realized_excess_s0_cny": "7.07",
+      "realized_excess_s0_equal_capital_cny": "6.26",
+      "mark_status": "CASH_ONLY",
+      "market_session": "2026-11-17"
+    },
+    "EARLY_ENTRY": {
+      "cash_cny": "30000.00",
+      "equity_after_estimated_exit_cost_cny": "30000.00",
+      "net_pnl_cny": "0.00",
+      "realized_pnl_cny": "0.00",
+      "open_positions": 0,
+      "closed_trades": 0,
+      "win_rate": null,
+      "paired_s0_trades": 0,
+      "paired_s0_close_proxy_trades": 0,
+      "paired_s0_open_proxy_trades": 0,
+      "paired_s0_exact_intraday_trades": 0,
+      "pending_quote_sessions": 0,
+      "realized_excess_s0_cny": null,
+      "realized_excess_s0_equal_capital_cny": null,
+      "mark_status": "CASH_ONLY",
+      "market_session": "2026-11-17"
+    }
+  },
+  "trade_authorized": false,
+  "broker_orders": [],
+  "snapshot_sha256": "8ffb0d54ceef752205d57d7de9d77b95338797ff7625fb957899b4396e6f0f2f"
+}
