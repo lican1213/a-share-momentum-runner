@@ -12,6 +12,10 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-17 | [214f8e4c3e](https://github.com/lican1213/a-share-momentum-runner/commit/214f8e4c3ef9570b5e60369bdc00bf226a44b9e0) | github-actions[bot] | data: archive actual ETF provider attempt 44022983690 [skip ci] |
+| 2026-11-17 | [289a0a0fbd](https://github.com/lican1213/a-share-momentum-runner/commit/289a0a0fbd6f6a5ab0cf13539507712efb56e80e) | Can Li | test(v5): prevent EXP-0017 cohort selection bias and verify early-session routing |
+| 2026-11-17 | [45f729d9cc](https://github.com/lican1213/a-share-momentum-runner/commit/45f729d9cc2a506b4b37f38a8eb3a5a89433cd61) | Can Li | feat(v5): prospective early flow and active momentum paper research (EXP-0017) |
+| 2026-11-16 | [2ebfab0b61](https://github.com/lican1213/a-share-momentum-runner/commit/2ebfab0b61d07f2f63cd23397c79a3769e0798af) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-16 | [e7eaf61047](https://github.com/lican1213/a-share-momentum-runner/commit/e7eaf610475bb893fa7e923fd256d1b574314cfd) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-16 | [055125e35b](https://github.com/lican1213/a-share-momentum-runner/commit/055125e35b84bb7ec88fb6ea4c33e9426e859790) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 43952133039 [skip ci] |
 | 2026-11-16 | [16d9b9b3c1](https://github.com/lican1213/a-share-momentum-runner/commit/16d9b9b3c16fa6a0b058055b2fe7957c6dbe2a3f) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
