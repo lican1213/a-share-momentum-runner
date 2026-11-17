@@ -126,7 +126,7 @@ def freeze(v3, watch, prices, *, now, next_session, selected_policy):
     result["arm_comparison"] = {
         "funding_basis": basis,
         "left_identical": bool(symbols["SHALLOW_DIP"]) and symbols["SHALLOW_DIP"] == symbols["DEEP_DIP"],
-        "shared_symbols": sorted(set.intersection(*symbols.values())),
+        "shared_symbols": sorted(set.intersection(*(v for v in symbols.values() if v))) if any(symbols.values()) else [],
         "arm_sizes": {p: len(v) for p, v in symbols.items()},
         "interpretation": "Overlap is reported, not forced apart or counted as independent evidence",
     }

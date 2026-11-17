@@ -135,26 +135,46 @@ def paper_feedback(root):
                     and right_excess and len(right_excess) == len(right_entries)):
                 right_minus_left.append(sum(right_excess) / len(right_excess)
                                         - by_policy["SHALLOW_DIP"])
-    # Versioned new-arm results; never pool with the historical mild rebound.
+    # Each new arm is evaluated on its earliest eligible freeze in each
+    # funding cluster, even if that freeze never matures. No hindsight fallback.
     cohort = {}
+    def paired_value(entries, horizon):
+        values = [entry.get("horizons", {}).get(horizon, {}) for entry in entries]
+        if values and all(v.get("status") == "PAIRED" and v.get("excess_s0") is not None for v in values):
+            return sum(Decimal(str(v["excess_s0"])) for v in values) / len(values)
+        return None
+
     for policy in ("EARLY_ENTRY", "R_BOUNCE"):
+        first = {}
+        for item in sorted(latest.values(), key=lambda x: x.get("signal_session", "")):
+            if item.get("strategy_experiment_id") != "EXP-0017":
+                continue
+            anchor = item.get("cluster_anchor") or item.get("signal_session")
+            entries = item.get("policy_results", {}).get(policy, {}).get("F1_LEFT", [])
+            if anchor and entries:
+                first.setdefault(anchor, item)
         per_horizon = {}
         for h in ("3", "10"):
-            by_cluster = {}
-            for item in sorted(latest.values(), key=lambda x: x.get("signal_session", "")):
-                if item.get("strategy_experiment_id") != "EXP-0017":
+            values, differences = [], []
+            for item in first.values():
+                results = item["policy_results"]
+                entries = results[policy]["F1_LEFT"]
+                excess = paired_value(entries, h)
+                if excess is None:
                     continue
-                anchor = item.get("cluster_anchor") or item.get("signal_session")
-                if not anchor or anchor in by_cluster:
-                    continue
-                entries = item.get("policy_results", {}).get(policy, {}).get("F1_LEFT", [])
-                horizons = [entry.get("horizons", {}).get(h, {}) for entry in entries]
-                if horizons and all(v.get("status") == "PAIRED" and v.get("excess_s0") is not None for v in horizons):
-                    by_cluster[anchor] = sum(Decimal(str(v["excess_s0"])) for v in horizons) / len(horizons)
-            values = list(by_cluster.values())
-            per_horizon[h] = {"matured_clusters": len(values),
-                              "mean_excess_s0": format(sum(values)/len(values), "f") if values else None,
-                              "positive_clusters": sum(v > 0 for v in values)}
+                values.append(excess)
+                left = results.get("SHALLOW_DIP", {}).get("F1_LEFT", [])
+                left_excess = paired_value(left, h)
+                if left_excess is not None and {x.get("stock") for x in entries} != {x.get("stock") for x in left}:
+                    differences.append(excess - left_excess)
+            per_horizon[h] = {
+                "eligible_clusters": len(first),
+                "matured_clusters": len(values),
+                "mean_excess_s0": format(sum(values)/len(values), "f") if values else None,
+                "positive_clusters": sum(v > 0 for v in values),
+                "distinct_paired_vs_shallow_clusters": len(differences),
+                "mean_excess_difference_vs_shallow": format(sum(differences)/len(differences), "f") if differences else None,
+            }
         cohort[policy] = per_horizon
     count = len(paired)
     means = {policy: (sum(x[policy] for x in paired) / count if count else None)

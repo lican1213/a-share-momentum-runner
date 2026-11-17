@@ -301,9 +301,48 @@ def test_exp0017_momentum_not_capped_or_restricted_to_left_candidates():
     assert [x["stock"] for x in left_v5.momentum_rank(candidates)] == ["600002", "600001"]
 
 
-def test_exp0017_preauction_boundary(monkeypatch):
+def test_exp0017_preauction_boundary():
     from datetime import datetime
     from scripts import run_national_team_left_entry_v5 as runner
-    monkeypatch.setattr(runner, "next_exchange_session", lambda day: day.isoformat())
-    assert runner.planned_entry_session(datetime.fromisoformat("2026-11-17T09:14:59+08:00")) == "2026-11-16"
-    assert runner.planned_entry_session(datetime.fromisoformat("2026-11-17T09:15:00+08:00")) == "2026-11-17"
+    assert runner.planned_entry_session(datetime.fromisoformat("2026-11-17T09:14:59+08:00")) == "2026-11-17"
+    assert runner.planned_entry_session(datetime.fromisoformat("2026-11-17T09:15:00+08:00")) == "2026-11-18"
+    assert runner.planned_entry_session(datetime.fromisoformat("2026-11-21T08:30:00+08:00")) == "2026-11-23"
+
+
+def test_exp0017_early_only_routes_and_freezes_full_momentum_pool(tmp_path):
+    from datetime import datetime
+    from test_national_team_left_entry_v4 import fixtures, future_session
+    from national_team.left_entry_v4 import BJ
+    v3, watch, prices = fixtures()
+    row = v3["daily"][-1]
+    row["net_creation_5d_cny"] = None
+    row["share_proxy_event"] = False
+    frozen = left_v5.freeze(v3, watch, prices, now=datetime.now(BJ).isoformat(),
+                            next_session=future_session(), selected_policy="SHALLOW_DIP")
+    assert frozen["funding_stage"] == "EARLY_ONLY"
+    assert not frozen["paper_policies"]["SHALLOW_DIP"]["orders"]
+    assert frozen["paper_policies"]["EARLY_ENTRY"]["orders"]
+    assert frozen["paper_policies"]["R_BOUNCE"]["ranked_stocks"][0] == "601919"
+    assert frozen["paper_policies"]["R_BOUNCE"]["orders"]
+    roots = [tmp_path / k for k in ("v3", "watch", "freeze", "follow")]
+    write(roots[0], "v3.json", v3)
+    write(roots[1], "watch.json", watch)
+    result = route(*roots, now="2026-10-31T08:30:00+08:00")
+    assert result["status"] == "NEW_FUNDING_EVENT"
+    assert result["funding_stage"] == "EARLY_ONLY"
+
+
+def test_exp0017_no_cherry_pick_later_matured_event_or_old_right(tmp_path):
+    def event(sha, day, status, version="EXP-0017"):
+        return {"experiment_id": "EXP-0012", "strategy_experiment_id": version,
+                "source_freeze_sha256": sha, "signal_session": day,
+                "cluster_anchor": "2026-11-02", "asof": "2026-11-22",
+                "policy_results": {"R_BOUNCE": {"F1_LEFT": [{"stock": "600002",
+                    "horizons": {"10": {"status": status, "excess_s0": ".05" if status == "PAIRED" else None}}}]}}}
+    write(tmp_path, "1.json", event("a", "2026-11-02", "UNMATURED"))
+    write(tmp_path, "2.json", event("b", "2026-11-03", "PAIRED"))
+    write(tmp_path, "old.json", event("c", "2026-11-01", "PAIRED", "EXP-0013"))
+    cohort = paper_feedback(tmp_path)["exp0017_cohort"]["R_BOUNCE"]["10"]
+    assert cohort["eligible_clusters"] == 1
+    assert cohort["matured_clusters"] == 0
+    assert cohort["mean_excess_s0"] is None
