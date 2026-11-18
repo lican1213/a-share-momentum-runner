@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "experiment_id": "EXP-0015",
+  "version": "NT_OFFICIAL_POLICY_OVERLAY",
+  "captured_at_bj": "2026-11-19T02:42:27.796581+08:00",
+  "sources": [
+    {
+      "source": "PBC_RSS",
+      "tier": "T1_OFFICIAL",
+      "status": "FAILED",
+      "fetched": 0,
+      "relevant": 0,
+      "error": "HTTPError: HTTP Error 302: The HTTP server returned a redirect error that would lead to an infinite loop.\nThe last 30x error message was:\nMoved Temporarily"
+    },
+    {
+      "source": "CSRC_NEWS",
+      "tier": "T1_OFFICIAL",
+      "status": "OK",
+      "fetched": 20,
+      "relevant": 0,
+      "error": null
+    },
+    {
+      "source": "GOV_POLICY",
+      "tier": "T1_OFFICIAL",
+      "status": "OK",
+      "fetched": 30,
+      "relevant": 0,
+      "error": null
+    }
+  ],
+  "source_health": "PARTIAL",
+  "events": [],
+  "source_tier": "T1_OFFICIAL",
+  "no_broker_orders": true,
+  "snapshot_sha256": "9d0ae0d5b308dfbd9a40aba507cf66328ad6492e34a96b7b153d3342b6216518"
+}
