@@ -12,6 +12,11 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 
 | Source class | Trade/record date | Run ID | Recorded status | Evidence |
 | --- | --- | --- | --- | --- |
+| V5 independent horizon path | 2026-11-18 | 44240410581-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-18/44240410581-a1.json) |
+| V5 continuous paper ledger | 2026-11-18 | 44240410581-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-18/44240410581-a1.json) |
+| V5 dated event router | 2026-11-18 | 44240152569-a1 | ALREADY_FROZEN_FOR_SESSION | [JSON](../../records/national_team_router/2026-11-18/44240152569-a1.json) |
+| Official policy source observations | 2026-11-18 | 44240152569-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-18/44240152569-a1.json) |
+| V3 dated market and four-ETF replay | 2026-11-18 | 44240075516-a1 | UNVERIFIED | [JSON](../../records/national_team_v3/2026-11-18/44240075516-a1.json) |
 | ETF source attempts | 2026-11-18 | 44239504343 | ATTEMPTED_NO_COMPLETE_FACTOR | [JSON](../../records/national_team_etf/2026-11-18/44239504343-a1.json) |
 | Four-fund merged funding | 2026-11-18 | 44239504343 | FULL_FOUR_ETF_SHARES_NAV_OBSERVED_RESEARCH | [JSON](../../records/national_team_merged/2026-11-18/44239504343-a1.json) |
 | CSI300 stock research watches | 2026-11-17 | 44239504343 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-11-18/44239504343-a1.json) |
