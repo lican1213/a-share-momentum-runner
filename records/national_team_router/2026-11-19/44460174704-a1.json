@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "version": "NT_EVENT_ROUTER_V5",
+  "experiment_id": "EXP-0012",
+  "observed_at": "2026-11-19T12:43:16.217346+08:00",
+  "event_id": "ETF4_DOWNFLOW_2026-11-18",
+  "signal_session": "2026-11-18",
+  "signal_age_calendar_days": 1,
+  "latest_index_session": "2026-11-18",
+  "funding_lags_index": false,
+  "status": "ALREADY_FROZEN_FOR_SESSION",
+  "four_etfs": [
+    "510300",
+    "510310",
+    "510330",
+    "159919"
+  ],
+  "v3_path": "records/national_team_v3/2026-11-19/44460093903-a1.json",
+  "watch_path": null,
+  "selected_policy": "SHALLOW_DIP",
+  "strategy_experiment_id": "EXP-0017",
+  "funding_stage": "STANDARD_AND_EARLY",
+  "feedback": {
+    "paired_10d_events": 1,
+    "exp0017_cohort": {
+      "EARLY_ENTRY": {
+        "3": {
+          "eligible_clusters": 1,
+          "matured_clusters": 0,
+          "mean_excess_s0": null,
+          "positive_clusters": 0,
+          "distinct_paired_vs_shallow_clusters": 0,
+          "mean_excess_difference_vs_shallow": null
+        },
+        "10": {
+          "eligible_clusters": 1,
+          "matured_clusters": 0,
+          "mean_excess_s0": null,
+          "positive_clusters": 0,
+          "distinct_paired_vs_shallow_clusters": 0,
+          "mean_excess_difference_vs_shallow": null
+        }
+      },
+      "R_BOUNCE": {
+        "3": {
+          "eligible_clusters": 1,
+          "matured_clusters": 0,
+          "mean_excess_s0": null,
+          "positive_clusters": 0,
+          "distinct_paired_vs_shallow_clusters": 0,
+          "mean_excess_difference_vs_shallow": null
+        },
+        "10": {
+          "eligible_clusters": 1,
+          "matured_clusters": 0,
+          "mean_excess_s0": null,
+          "positive_clusters": 0,
+          "distinct_paired_vs_shallow_clusters": 0,
+          "mean_excess_difference_vs_shallow": null
+        }
+      }
+    },
+    "indistinguishable_left_clusters": 0,
+    "mean_10d_excess_s0": {
+      "SHALLOW_DIP": "0.002083849040333333333333333333",
+      "DEEP_DIP": "0.003178094802166666666666666667"
+    },
+    "selected_policy": "SHALLOW_DIP",
+    "right_side_reference": {
+      "paired_10d_clusters": 1,
+      "mean_R_minus_SHALLOW_excess_s0": "0.004397011435000000000000000002",
+      "not_used_to_gate_left_side_research": true
+    },
+    "policy_rule": "8 distinct event clusters with paired 10d outcomes; DEEP_DIP +0.2pct",
+    "not_a_calibrated_profit_probability": true
+  },
+  "funding": {
+    "net_creation_1d_cny_proxy": 10358330220.0,
+    "net_creation_5d_cny_proxy": 28147812660.0,
+    "ordinary_float_coverage_ratio": null,
+    "ratio_status": "DENOMINATOR_MISSING",
+    "index_ret5": -0.022558032833543074,
+    "funding_basis": "SHARE_PROXY",
+    "early_proxy_trigger": true,
+    "exchange_shares_complete": true,
+    "exchange_nav_complete": true,
+    "latest_session_evidence_missing": false,
+    "share_proxy_not_state_account_trade": true
+  },
+  "policy_overlay": {
+    "experiment_id": "EXP-0015",
+    "status": "ETF_FLOW_WITHOUT_POLICY_MATCH",
+    "source_health": "OK",
+    "snapshot_sha256": "735d620ece4ec839f8806b4aa658ddd12b569626badac02c95c0b654bd30451b",
+    "support_count": 0,
+    "matched_funding_event_ids": [],
+    "recent_event_ids": [],
+    "top_events": [],
+    "changes_admission": false,
+    "trade_authorized": false,
+    "not_a_policy_implied_etf_purchase": true
+  },
+  "dispatcher": "NO_NEW_PAPER_FREEZE",
+  "trade_authorized": false,
+  "broker_orders": [],
+  "github_run_id": "44460174704",
+  "github_source_commit": "0d6666803c5699097eb51598ad1b9bf91059f3ee",
+  "snapshot_sha256": "774762b0721e46ce46f41ed511b7123e88610864b6f2774dec835f84f9b88d3f"
+}
