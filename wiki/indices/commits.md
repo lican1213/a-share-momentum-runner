@@ -12,6 +12,10 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-19 | [5e048cf6d7](https://github.com/lican1213/a-share-momentum-runner/commit/5e048cf6d75677eb8f5f054fbeff647f89ffaf18) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 44460256838 [skip ci] |
+| 2026-11-19 | [1664764796](https://github.com/lican1213/a-share-momentum-runner/commit/16647647960895089ae89d30d7b713535c19878a) | github-actions[bot] | records(exp0012): route event and append paper evidence 44460174704 [skip ci] |
+| 2026-11-19 | [0d6666803c](https://github.com/lican1213/a-share-momentum-runner/commit/0d6666803c5699097eb51598ad1b9bf91059f3ee) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 44460093903-a1 |
+| 2026-11-19 | [ea74e60469](https://github.com/lican1213/a-share-momentum-runner/commit/ea74e60469381c3fb82b8f0a6c3c66bfbec0f9cd) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-19 | [6be7e97db7](https://github.com/lican1213/a-share-momentum-runner/commit/6be7e97db70dcc293275096699e8c4ccd67d700c) | github-actions[bot] | data: archive actual ETF provider attempt 44459347661 [skip ci] |
 | 2026-11-18 | [cf7a0dfe25](https://github.com/lican1213/a-share-momentum-runner/commit/cf7a0dfe2510a8f125bc0817973a00b2931f0a78) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-18 | [950b8256b2](https://github.com/lican1213/a-share-momentum-runner/commit/950b8256b2d2f32eb2673cf86595b754003de92d) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
