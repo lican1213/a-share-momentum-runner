@@ -12,6 +12,10 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 
 | Source class | Trade/record date | Run ID | Recorded status | Evidence |
 | --- | --- | --- | --- | --- |
+| V5 independent horizon path | 2026-11-20 | 44587422819-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-20/44587422819-a1.json) |
+| V5 continuous paper ledger | 2026-11-20 | 44587422819-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-20/44587422819-a1.json) |
+| V5 dated event router | 2026-11-20 | 44587322855-a1 | ALREADY_FROZEN_FOR_SESSION | [JSON](../../records/national_team_router/2026-11-20/44587322855-a1.json) |
+| Official policy source observations | 2026-11-20 | 44587322855-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-20/44587322855-a1.json) |
 | V5 independent horizon path | 2026-11-20 | 44578903181-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-20/44578903181-a1.json) |
 | V5 continuous paper ledger | 2026-11-20 | 44578903181-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-20/44578903181-a1.json) |
 | V5 dated event router | 2026-11-20 | 44578262173-a1 | NEW_FUNDING_EVENT | [JSON](../../records/national_team_router/2026-11-20/44578262173-a1.json) |
@@ -21,6 +25,7 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 | Four-fund merged funding | 2026-11-20 | 44577299242 | PARTIAL_LATEST_WITH_PRIOR_FULL_FOUR_FACTOR | [JSON](../../records/national_team_merged/2026-11-20/44577299242-a1.json) |
 | CSI300 stock research watches | 2026-11-19 | 44577299242 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-11-20/44577299242-a1.json) |
 | Official exchange PCF attempts | 2026-11-20 | 44577299242 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-11-20/44577299242-a1.json) |
+| V3 dated market and four-ETF replay | 2026-11-19 | 44587214580-a1 | UNVERIFIED | [JSON](../../records/national_team_v3/2026-11-19/44587214580-a1.json) |
 | V3 dated market and four-ETF replay | 2026-11-19 | 44578129938-a1 | UNVERIFIED | [JSON](../../records/national_team_v3/2026-11-19/44578129938-a1.json) |
 | V5 independent horizon path | 2026-11-19 | 44490808516-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-19/44490808516-a1.json) |
 | V5 continuous paper ledger | 2026-11-19 | 44490808516-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-19/44490808516-a1.json) |
