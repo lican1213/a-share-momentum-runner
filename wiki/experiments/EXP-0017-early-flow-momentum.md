@@ -21,3 +21,8 @@ updated: 2026-11-17
 - [PR #23](https://github.com/lican1213/a-share-momentum-runner/pull/23)沿用路由锁定版本`exchange-calendars==4.13.1`，仅改V5 outcomes既有工作流及测试/MOC；[同SHA main全库#44061816987](https://github.com/lican1213/a-share-momentum-runner/actions/runs/44061816987)329项+Wiki51页通过，业务[实际run #44061817000](https://github.com/lican1213/a-share-momentum-runner/actions/runs/44061817000)跑完test→真实OHLC→账本→归档；源码SHA`1825f6a829ae2bb5d7ac70b965044db0f6e3ef84`。
 - [11/17 18:07四账户原始快照](../../records/national_team_paper_accounts_v5/2026-11-17/44061817000-a1.json)：前三组现金、历史平仓、决策及仓位与[17:18原快照](../../records/national_team_paper_accounts_v5/2026-11-17/44054114642-a1.json)逐项一致；新EARLY_ENTRY为`CASH_ONLY`、现金30000元、0持仓/0决策；`trade_authorized=false`、`broker_orders=[]`。已证明迁移和持续写入，不代表未来新事件可获利。
 - 原11/16资金事件已在11/17 13:30冻结，参考原始SHA `a0c84975bfb0f1c64de9cea49029ecdd0d4ec3d7`，旧三组各2笔目标日11/18，11/17无开仓是正确时序。合并新策略不能将该旧冻结倒签为新增EARLY_ENTRY成交。下一独立新资金事件才检验早期组入场，后续按首次可得、同日期S0费后净收益和独立成熟簇做经济Gate。
+
+## 2026-11-20：新策略首单生产证据（以11/19收盘为止）
+- [11/18真实纸面账本](../../records/national_team_paper_accounts_v5/2026-11-18/44289144245-a1.json) 已出现EARLY_ENTRY的600000（400股）、600938（100股）两笔OHLC开盘情景，以及旧三组的新持仓。此前11/17“首单待验证”的G1因此只在**纸面入场连续性**层面关闭；分钟盘口可成交性仍未验证。
+- [11/20凌晨真实账本](../../records/national_team_paper_accounts_v5/2026-11-20/44595330756-a1.json) 市场日为11/19，四账户均两笔持仓，早期组仍0平仓；[路由](../../records/national_team_router/2026-11-20/44592790944-a1.json)显示EXP-0017早期/追涨3、10日成熟独立簇均为0，后续策略有效性G3未关闭。11/19资金日的[新冻结](../../records/national_team_left_entry_v5/2026-11-20/44578262173-a1.json)需等待11/20行情后的实际账户决策回读，不能以冻结冒充模拟成交。
+- 2026-11-20合并的[最小证据可见性修复 PR #24](https://github.com/lican1213/a-share-momentum-runner/pull/24)不更改任何信号、策略参数、账本或定时触发；自动简报已从真实源生成并核验。研究簇仍须满8个独立成熟配对后按原预注册阈值决策。
