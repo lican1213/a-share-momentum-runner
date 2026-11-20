@@ -148,6 +148,17 @@ def generate(root:Path,*,now:str, records:list[tuple[str,Path,dict]]|None=None)-
         info.append(f"- 资金观察交易日 {r.get('signal_session')}；路由 {r.get('status')}；"
                     f"资金模式 {f.get('funding_basis','SHARE_PROXY_LEGACY')}；"
                     f"同额成熟10日独立簇 {fb.get('paired_10d_events')}/8；默认组 {r.get('selected_policy')}。")
+        cohort = fb.get("exp0017_cohort") or {}
+        early = (cohort.get("EARLY_ENTRY") or {}).get("10") or {}
+        chase = (cohort.get("R_BOUNCE") or {}).get("10") or {}
+        info.append(f"- EXP-0017 新规则10日成熟簇：早期 {early.get('matured_clusters', 0)}、"
+                    f"追涨 {chase.get('matured_clusters', 0)}；"
+                    "未成熟不能当作策略学习或真实成交。")
+        complete = ((full[2].get("funding_event") or {}).get("four_etf_factor") or {}) if full else {}
+        if f.get("exchange_shares_complete") is False or f.get("exchange_nav_complete") is False:
+            info.append(f"- 资金证据降级：信号日 {r.get('signal_session')} 的交易所四ETF份额/NAV未齐；"
+                        f"最近源端完整日 {complete.get('trade_date', '未知')}；"
+                        "当前份额代理不是当日完整官方资金信号。")
     if ledger:
         _,_,r=ledger
         info.extend([f"- 账户市场日期 **{r.get('last_market_session')}**；捕获 {r.get('capture_time')}；纸面非券商成交。",
@@ -159,6 +170,25 @@ def generate(root:Path,*,now:str, records:list[tuple[str,Path,dict]]|None=None)-
                     summary.get("open_positions"),summary.get("closed_trades"),summary.get("net_pnl_cny"),
                     summary.get("realized_excess_s0_equal_capital_cny"),summary.get("mark_status")]
             info.append("| "+" | ".join(str(v) for v in values)+" |")
+        decisions = [d for account in r.get("accounts", {}).values()
+                     for d in account.get("decisions", [])]
+        fills = sum(d.get("status") == "PAPER_OPEN_PROXY_FILLED" for d in decisions)
+        skipped = [d for d in decisions if d.get("status") == "PAPER_ENTRY_SKIPPED"]
+        info.append(f"- 累计账户决策：纸面开盘入场 {fills}、合法跳过 {len(skipped)}；"
+                    f"累计源事件 {r.get('source_event_count', '未知')}；"
+                    "不把再次归档或 OHLC 开盘代理算新增实际交易。")
+        if intent:
+            _, _, frozen_intent = intent
+            next_session = (frozen_intent.get("measurement") or {}).get("next_session")
+            orders = sum(len(arm.get("orders") or [])
+                         for arm in (frozen_intent.get("paper_policies") or {}).values())
+            if next_session and r.get("last_market_session") and next_session > r["last_market_session"]:
+                info.append(f"- 最新冻结 {frozen_intent.get('signal_session')}：{orders}条纸面意向拟于"
+                            f" {next_session} 开盘研究；账户目前只更新到 {r['last_market_session']}，"
+                            "尚未证明这批意向已入场。")
+            else:
+                info.append(f"- 最新冻结 {frozen_intent.get('signal_session')}：{orders}条意向，"
+                            "需按账户决策与未来OHLC逐条核对，冻结本身不是成交。")
     info.extend(["","**历史归档（不作为当前新信号）：**"])
     info.append(bullet("最近四ETF独立V2前瞻选股",v2))
     if v2 is not None:
