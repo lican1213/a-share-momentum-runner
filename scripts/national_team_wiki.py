@@ -178,16 +178,16 @@ def generate(root:Path,*,now:str, records:list[tuple[str,Path,dict]]|None=None)-
                     f"累计源事件 {r.get('source_event_count', '未知')}；"
                     "不把再次归档或 OHLC 开盘代理算新增实际交易。")
         if intent:
-            _, _, frozen = intent
-            next_session = (frozen.get("measurement") or {}).get("next_session")
+            _, _, frozen_intent = intent
+            next_session = (frozen_intent.get("measurement") or {}).get("next_session")
             orders = sum(len(arm.get("orders") or [])
-                         for arm in (frozen.get("paper_policies") or {}).values())
+                         for arm in (frozen_intent.get("paper_policies") or {}).values())
             if next_session and r.get("last_market_session") and next_session > r["last_market_session"]:
-                info.append(f"- 最新冻结 {frozen.get('signal_session')}：{orders}条纸面意向拟于"
+                info.append(f"- 最新冻结 {frozen_intent.get('signal_session')}：{orders}条纸面意向拟于"
                             f" {next_session} 开盘研究；账户目前只更新到 {r['last_market_session']}，"
                             "尚未证明这批意向已入场。")
             else:
-                info.append(f"- 最新冻结 {frozen.get('signal_session')}：{orders}条意向，"
+                info.append(f"- 最新冻结 {frozen_intent.get('signal_session')}：{orders}条意向，"
                             "需按账户决策与未来OHLC逐条核对，冻结本身不是成交。")
     info.extend(["","**历史归档（不作为当前新信号）：**"])
     info.append(bullet("最近四ETF独立V2前瞻选股",v2))
