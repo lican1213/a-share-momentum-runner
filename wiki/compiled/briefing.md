@@ -21,13 +21,13 @@ updated: 2026-11-21
 - V3最新回放：[run 44787597233-a1](../../records/national_team_v3/2026-11-20/44787597233-a1.json)；状态 `UNVERIFIED`；日期 2026-11-20。
 - V5最新事件路由：[run 44792360723-a1](../../records/national_team_router/2026-11-21/44792360723-a1.json)；状态 `ALREADY_FROZEN_FOR_SESSION`；日期 2026-11-21。
 - V5最近不可回写冻结：[run 44780191671-a1](../../records/national_team_left_entry_v5/2026-11-21/44780191671-a1.json)；状态 `UNVERIFIED`；日期 2026-11-21。
-- V5最新独立前瞻路径：[run 44792460252-a1](../../records/national_team_left_outcomes_v5/2026-11-21/44792460252-a1.json)；状态 `UNVERIFIED`；日期 2026-11-21。
-- V5最新模拟账本：[run 44792460252-a1](../../records/national_team_paper_accounts_v5/2026-11-21/44792460252-a1.json)；状态 `UNVERIFIED`；日期 2026-11-21。
+- V5最新独立前瞻路径：[run 44796304848-a1](../../records/national_team_left_outcomes_v5/2026-11-21/44796304848-a1.json)；状态 `UNVERIFIED`；日期 2026-11-21。
+- V5最新模拟账本：[run 44796304848-a1](../../records/national_team_paper_accounts_v5/2026-11-21/44796304848-a1.json)；状态 `UNVERIFIED`；日期 2026-11-21。
 - 指数交易日 2026-11-20；最新完整四份额日 2026-11-20；普通覆盖率有效日 16，历史PIT核验日 0；最新分母采集 SOURCE_UNAVAILABLE；当前ratio=None。
 - 资金观察交易日 2026-11-20；路由 ALREADY_FROZEN_FOR_SESSION；资金模式 SHARE_PROXY；同额成熟10日独立簇 1/8；默认组 SHALLOW_DIP。
 - EXP-0017 新规则10日成熟簇：早期 0、追涨 0；未成熟不能当作策略学习或真实成交。
 - 资金证据降级：信号日 2026-11-20 的交易所四ETF份额/NAV未齐；最近源端完整日 2026-11-19；当前份额代理不是当日完整官方资金信号。
-- 账户市场日期 **2026-11-20**；捕获 2026-11-21T02:25:41.326857+08:00；纸面非券商成交。
+- 账户市场日期 **2026-11-20**；捕获 2026-11-21T02:50:16.860609+08:00；纸面非券商成交。
 
 | 组 | 现金 | 权益 | 持仓数 | 平仓数 | 扣费净盈亏 | 同额S0已实现超额 | mark_status |
 | --- | --- | --- | --- | --- | --- | --- | --- |
