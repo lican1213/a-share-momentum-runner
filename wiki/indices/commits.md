@@ -12,6 +12,10 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-20 | [8427f2610a](https://github.com/lican1213/a-share-momentum-runner/commit/8427f2610aeaf0763c5f77bade45891bace77392) | github-actions[bot] | data: archive actual ETF provider attempt 44674074980 [skip ci] |
+| 2026-11-20 | [a58526b085](https://github.com/lican1213/a-share-momentum-runner/commit/a58526b0852697c779130f514c9d5e68aefcc0e6) | Can Li | docs(moc): record full CI red-green and verified main Wiki readback |
+| 2026-11-20 | [ee1ba5f8d8](https://github.com/lican1213/a-share-momentum-runner/commit/ee1ba5f8d8a37d51f7e4d2877558602f9a8bc7c1) | Can Li | docs(v5): update EXP-0017 G1 actual first paper entries without inventing alpha |
+| 2026-11-20 | [8d1547e56b](https://github.com/lican1213/a-share-momentum-runner/commit/8d1547e56bac6baafb37d58c4cf73b13b3a84f0f) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-20 | [1aa0c1f16c](https://github.com/lican1213/a-share-momentum-runner/commit/1aa0c1f16c6196394c5bbfa850f26fb5507aa747) | Can Li | fix(v5): expose paper lifecycle and evidence maturity in existing wiki |
 | 2026-11-20 | [b32a96c88e](https://github.com/lican1213/a-share-momentum-runner/commit/b32a96c88ee1d78022a7659a4263e3fc6eb023f4) | Can Li | fix(wiki): preserve frozen event entry when rendering latest intent |
 | 2026-11-20 | [702bc07449](https://github.com/lican1213/a-share-momentum-runner/commit/702bc0744917032d09bbd2c8e4eb2ef2f6c7c855) | Can Li | docs(moc): record 20 Nov V5 lifecycle audit and open evidence gates |
