@@ -1,0 +1,32 @@
+{
+  "status": "SSE_PCF_FETCHED_BUT_NOT_VERIFIED",
+  "run_id": "44702861343",
+  "attempt": "1",
+  "captured_at": "2026-11-20T16:33:50.625479+08:00",
+  "exchange_url": "https://www.sse.com.cn/disclosure/fund/etflist/",
+  "sources": {
+    "510300": {
+      "status": "NO_DATED_OFFICIAL_PCF_IN_HTTP_RESPONSE",
+      "code": "510300",
+      "first_observed_at": "2026-11-20T16:33:52.466535+08:00",
+      "http_response_sha256": "f49eade3662fd829e1aa6b991e703587edb1cfc37fc1e813c356c247d297fc15"
+    },
+    "510310": {
+      "status": "NO_DATED_OFFICIAL_PCF_IN_HTTP_RESPONSE",
+      "code": "510310",
+      "first_observed_at": "2026-11-20T16:33:56.315667+08:00",
+      "http_response_sha256": "f49eade3662fd829e1aa6b991e703587edb1cfc37fc1e813c356c247d297fc15"
+    },
+    "510330": {
+      "status": "NO_DATED_OFFICIAL_PCF_IN_HTTP_RESPONSE",
+      "code": "510330",
+      "first_observed_at": "2026-11-20T16:33:59.053768+08:00",
+      "http_response_sha256": "f49eade3662fd829e1aa6b991e703587edb1cfc37fc1e813c356c247d297fc15"
+    }
+  },
+  "errors": [
+    "510330_ISSUER:ConnectionError:HTTPSConnectionPool(host='accountquery.chinaamc.com', port=443): Max retries exceeded with url: /jgb/zszq/etfssqd/?fundcode=510330&type=new (Caused by NewConnectionError("
+  ],
+  "source_kind": "ORIGINAL_EXCHANGE_HTTP_PCF_NOT_INDEX_WEIGHTS",
+  "usable_pcf_count": 0
+}
