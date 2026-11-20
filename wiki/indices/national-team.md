@@ -12,10 +12,16 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 
 | Source class | Trade/record date | Run ID | Recorded status | Evidence |
 | --- | --- | --- | --- | --- |
+| V5 independent horizon path | 2026-11-21 | 44781130126-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-21/44781130126-a1.json) |
+| V5 continuous paper ledger | 2026-11-21 | 44781130126-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-21/44781130126-a1.json) |
+| V5 dated event router | 2026-11-21 | 44780191671-a1 | NEW_FUNDING_EVENT | [JSON](../../records/national_team_router/2026-11-21/44780191671-a1.json) |
+| V5 prospective frozen intents | 2026-11-21 | 44780191671-a1 | UNVERIFIED | [JSON](../../records/national_team_left_entry_v5/2026-11-21/44780191671-a1.json) |
+| Official policy source observations | 2026-11-21 | 44780191671-a1 | UNVERIFIED | [JSON](../../records/national_team_policy/2026-11-21/44780191671-a1.json) |
 | ETF source attempts | 2026-11-21 | 44779216775 | PRIOR_FULL_FOUR_AND_LATEST_PARTIAL_OBSERVED | [JSON](../../records/national_team_etf/2026-11-21/44779216775-a1.json) |
 | Four-fund merged funding | 2026-11-21 | 44779216775 | PARTIAL_LATEST_WITH_PRIOR_FULL_FOUR_FACTOR | [JSON](../../records/national_team_merged/2026-11-21/44779216775-a1.json) |
 | CSI300 stock research watches | 2026-11-20 | 44779216775 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-11-21/44779216775-a1.json) |
 | Official exchange PCF attempts | 2026-11-21 | 44779216775 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-11-21/44779216775-a1.json) |
+| V3 dated market and four-ETF replay | 2026-11-20 | 44780092860-a1 | UNVERIFIED | [JSON](../../records/national_team_v3/2026-11-20/44780092860-a1.json) |
 | V5 independent horizon path | 2026-11-20 | 44703778123-a1 | UNVERIFIED | [JSON](../../records/national_team_left_outcomes_v5/2026-11-20/44703778123-a1.json) |
 | V5 continuous paper ledger | 2026-11-20 | 44703778123-a1 | UNVERIFIED | [JSON](../../records/national_team_paper_accounts_v5/2026-11-20/44703778123-a1.json) |
 | V5 dated event router | 2026-11-20 | 44703697497-a1 | ALREADY_FROZEN_FOR_SESSION | [JSON](../../records/national_team_router/2026-11-20/44703697497-a1.json) |
