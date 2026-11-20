@@ -12,6 +12,12 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-20 | [1aa0c1f16c](https://github.com/lican1213/a-share-momentum-runner/commit/1aa0c1f16c6196394c5bbfa850f26fb5507aa747) | Can Li | fix(v5): expose paper lifecycle and evidence maturity in existing wiki |
+| 2026-11-20 | [b32a96c88e](https://github.com/lican1213/a-share-momentum-runner/commit/b32a96c88ee1d78022a7659a4263e3fc6eb023f4) | Can Li | fix(wiki): preserve frozen event entry when rendering latest intent |
+| 2026-11-20 | [702bc07449](https://github.com/lican1213/a-share-momentum-runner/commit/702bc0744917032d09bbd2c8e4eb2ef2f6c7c855) | Can Li | docs(moc): record 20 Nov V5 lifecycle audit and open evidence gates |
+| 2026-11-20 | [b89f9c322a](https://github.com/lican1213/a-share-momentum-runner/commit/b89f9c322a9d2d2ef2a168e53e322923cf65db51) | Can Li | test(wiki): V5 pending, expired and proxy-source truth |
+| 2026-11-20 | [d3aa497045](https://github.com/lican1213/a-share-momentum-runner/commit/d3aa497045f49da9f5e2a336df959f7e1c504f95) | Can Li | fix(wiki): expose V5 lifecycle, maturity and degraded source evidence |
+| 2026-11-19 | [cc1dfbfa20](https://github.com/lican1213/a-share-momentum-runner/commit/cc1dfbfa2033a2ae40fb1eb5005748edffc72356) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-19 | [3ac850ff94](https://github.com/lican1213/a-share-momentum-runner/commit/3ac850ff946a1bb78a57fe87e587832d392491e3) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-19 | [b1d2f5588d](https://github.com/lican1213/a-share-momentum-runner/commit/b1d2f5588dffa46f4853573dd5b80dc3e697eee7) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 44595330756 [skip ci] |
 | 2026-11-19 | [70dcb78b2a](https://github.com/lican1213/a-share-momentum-runner/commit/70dcb78b2a7ff9fd54dea7673eac912953e839de) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
