@@ -18,16 +18,16 @@ updated: 2026-11-21
 - 最新实测股票样本数：**150**；指数权重覆盖约 **0.82681**；指数权重非ETF真实PCF，且未证明个股跟随收益。
 
 **当前研究执行主线：V3资金 → V5路由 → 连续模拟盘；旧V2/A2/B仅历史归档。**
-- V3最新回放：[run 44780092860-a1](../../records/national_team_v3/2026-11-20/44780092860-a1.json)；状态 `UNVERIFIED`；日期 2026-11-20。
-- V5最新事件路由：[run 44780191671-a1](../../records/national_team_router/2026-11-21/44780191671-a1.json)；状态 `NEW_FUNDING_EVENT`；日期 2026-11-21。
+- V3最新回放：[run 44787597233-a1](../../records/national_team_v3/2026-11-20/44787597233-a1.json)；状态 `UNVERIFIED`；日期 2026-11-20。
+- V5最新事件路由：[run 44787708415-a1](../../records/national_team_router/2026-11-21/44787708415-a1.json)；状态 `ALREADY_FROZEN_FOR_SESSION`；日期 2026-11-21。
 - V5最近不可回写冻结：[run 44780191671-a1](../../records/national_team_left_entry_v5/2026-11-21/44780191671-a1.json)；状态 `UNVERIFIED`；日期 2026-11-21。
-- V5最新独立前瞻路径：[run 44781130126-a1](../../records/national_team_left_outcomes_v5/2026-11-21/44781130126-a1.json)；状态 `UNVERIFIED`；日期 2026-11-21。
-- V5最新模拟账本：[run 44781130126-a1](../../records/national_team_paper_accounts_v5/2026-11-21/44781130126-a1.json)；状态 `UNVERIFIED`；日期 2026-11-21。
+- V5最新独立前瞻路径：[run 44788059970-a1](../../records/national_team_left_outcomes_v5/2026-11-21/44788059970-a1.json)；状态 `UNVERIFIED`；日期 2026-11-21。
+- V5最新模拟账本：[run 44788059970-a1](../../records/national_team_paper_accounts_v5/2026-11-21/44788059970-a1.json)；状态 `UNVERIFIED`；日期 2026-11-21。
 - 指数交易日 2026-11-20；最新完整四份额日 2026-11-20；普通覆盖率有效日 16，历史PIT核验日 0；最新分母采集 SOURCE_UNAVAILABLE；当前ratio=None。
-- 资金观察交易日 2026-11-20；路由 NEW_FUNDING_EVENT；资金模式 SHARE_PROXY；同额成熟10日独立簇 1/8；默认组 SHALLOW_DIP。
+- 资金观察交易日 2026-11-20；路由 ALREADY_FROZEN_FOR_SESSION；资金模式 SHARE_PROXY；同额成熟10日独立簇 1/8；默认组 SHALLOW_DIP。
 - EXP-0017 新规则10日成熟簇：早期 0、追涨 0；未成熟不能当作策略学习或真实成交。
 - 资金证据降级：信号日 2026-11-20 的交易所四ETF份额/NAV未齐；最近源端完整日 2026-11-19；当前份额代理不是当日完整官方资金信号。
-- 账户市场日期 **2026-11-20**；捕获 2026-11-21T01:14:21.868734+08:00；纸面非券商成交。
+- 账户市场日期 **2026-11-20**；捕获 2026-11-21T01:57:36.443418+08:00；纸面非券商成交。
 
 | 组 | 现金 | 权益 | 持仓数 | 平仓数 | 扣费净盈亏 | 同额S0已实现超额 | mark_status |
 | --- | --- | --- | --- | --- | --- | --- | --- |
