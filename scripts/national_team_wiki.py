@@ -51,6 +51,11 @@ def last_for(records:list[tuple[str,Path,dict]],folder:str,predicate=None):
 def relative_link(path:Path,reference_dir:Path)->str:
     return Path(os.path.relpath(path,reference_dir)).as_posix()
 
+def recorded_status(record:dict)->str:
+    # Missing status is not a failed source verification or a completed business gate.
+    return str(record.get("status") or
+               (record.get("funding_event") or {}).get("status") or "NO_STATUS_FIELD")
+
 def generate(root:Path,*,now:str, records:list[tuple[str,Path,dict]]|None=None)->dict:
     if records is None:records=enumerate_records(root)
     wiki=root/"wiki"
@@ -62,7 +67,8 @@ def generate(root:Path,*,now:str, records:list[tuple[str,Path,dict]]|None=None)-
         return f"---\nid: {ident}\ntype: {kind}\nstatus: maintained\nupdated: {now[:10]}\n---\n# {header}\n\n"
     lead=("Source-backed **captured observations**, not broker fills. "
           "Latest failed attempt does NOT invalidate prior historic source evidence; "
-          "prior positive data is not a newly observed today's inflow.\n\n"
+          "prior positive data is not a newly observed today's inflow. "
+          "NO_STATUS_FIELD means the record has no summary status, not that an Actions run failed.\n\n"
           "[根MOC](../../MOC.md) · [E2E红队审计](../audits/AUD-2026-10-28-e2e-release-gate.md)\n\n")
     lines=["| Source class | Trade/record date | Run ID | Recorded status | Evidence |",
            "| --- | --- | --- | --- | --- |"]
@@ -71,8 +77,7 @@ def generate(root:Path,*,now:str, records:list[tuple[str,Path,dict]]|None=None)-
         date=str(r.get("funding_date") or r.get("asof_requested") or
                  r.get("asof") or path.parent.name)
         run=str(r.get("run_id") or path.stem)
-        status=str(r.get("status") or
-                   (r.get("funding_event") or {}).get("status") or "UNVERIFIED")
+        status=recorded_status(r)
         label=relative_link(path,index.parent)
         lines.append(f"| {name} | {date} | {run} | {status.replace('|','/')} | [JSON]({label}) |")
     if not records:lines.append("| No national-team source record | — | — | unavailable | — |")
@@ -103,7 +108,7 @@ def generate(root:Path,*,now:str, records:list[tuple[str,Path,dict]]|None=None)-
         if entry is None:return f"- {label}：无可复核持久化记录。"
         folder,path,r=entry
         return (f"- {label}：[run {r.get('run_id',path.stem)}]({relative_link(path,briefing.parent)})；"
-                f"状态 `{r.get('status','UNVERIFIED')}`；"
+                f"状态 `{recorded_status(r)}`；"
                 f"日期 {r.get('funding_date') or r.get('asof_requested') or r.get('asof') or path.parent.name}。")
     info.append(bullet("最新ETF源采集尝试",attempt))
     info.append(bullet("最近可完整核验四ETF份额/NAV的历史记录",full))
@@ -179,16 +184,55 @@ def generate(root:Path,*,now:str, records:list[tuple[str,Path,dict]]|None=None)-
                     "不把再次归档或 OHLC 开盘代理算新增实际交易。")
         if intent:
             _, _, frozen_intent = intent
+            signal_day = frozen_intent.get("signal_session")
             next_session = (frozen_intent.get("measurement") or {}).get("next_session")
-            orders = sum(len(arm.get("orders") or [])
-                         for arm in (frozen_intent.get("paper_policies") or {}).values())
+            planned = [(f"{signal_day}:{arm}:{order['stock']}", arm)
+                       for arm, policy in (frozen_intent.get("paper_policies") or {}).items()
+                       for order in (policy.get("orders") or []) if order.get("stock")]
+            decisions_by_id = {d.get("id"): d for d in decisions if d.get("id")}
+            filled = sum(decisions_by_id.get(key, {}).get("status") == "PAPER_OPEN_PROXY_FILLED"
+                         for key, _ in planned)
+            rejected = sum(decisions_by_id.get(key, {}).get("status") == "PAPER_ENTRY_SKIPPED"
+                           for key, _ in planned)
+            undecided = sum(key not in decisions_by_id for key, _ in planned)
+            other = len(planned) - filled - rejected - undecided
+            info.append(f"- 最新冻结 {signal_day}：{len(planned)}条意向，"
+                        f"已纸面入场 {filled}、按规则跳过 {rejected}、"
+                        f"无账户决策 {undecided}、其他状态 {other}；"
+                        "按冻结日＋组别＋股票代码核对，冻结及独立OHLC情景都不等于实际账户入场。")
             if next_session and r.get("last_market_session") and next_session > r["last_market_session"]:
-                info.append(f"- 最新冻结 {frozen_intent.get('signal_session')}：{orders}条纸面意向拟于"
-                            f" {next_session} 开盘研究；账户目前只更新到 {r['last_market_session']}，"
-                            "尚未证明这批意向已入场。")
-            else:
-                info.append(f"- 最新冻结 {frozen_intent.get('signal_session')}：{orders}条意向，"
-                            "需按账户决策与未来OHLC逐条核对，冻结本身不是成交。")
+                info.append(f"- 最新冻结拟于 {next_session} 开盘研究；"
+                            f"账户市场日仍为 {r['last_market_session']}，"
+                            "尚未到执行判断日，不得把待处理意向写为已成交。")
+            elif undecided:
+                info.append("- 生产缺口：冻结拟执行日已到，但部分意向尚无账户决策；"
+                            "须等待后续真实账本或调查跳过记录，不准倒签成交。")
+    if outcomes:
+        _, _, outcome = outcomes
+        if ledger:
+            _, _, paper_account = ledger
+            linked = (bool(outcome.get("paper_account_snapshot_sha256"))
+                      and outcome.get("paper_account_snapshot_sha256") == paper_account.get("snapshot_sha256")
+                      and outcome.get("github_run_id") == paper_account.get("github_run_id")
+                      and bool(outcome.get("paper_account_summary"))
+                      and all(outcome["paper_account_summary"].get(arm) == account.get("summary")
+                              for arm, account in paper_account.get("accounts", {}).items()))
+            info.append(f"- OHLC反馈与连续账本读回：{'MATCHED_SNAPSHOT' if linked else 'NOT_VERIFIED'}；"
+                        f"反馈run {outcome.get('github_run_id')}、账户run {paper_account.get('github_run_id')}；"
+                        "只有同run、快照哈希与四账户汇总均一致才标记MATCHED。")
+        latest_result = (outcome.get("results") or [{}])[-1]
+        source_errors = sorted({code for policy in (latest_result.get("policy_results") or {}).values()
+                                for code in (policy.get("errors") or {})})
+        if source_errors:
+            info.append(f"- 最新前瞻OHLC行情接口异常：{', '.join(source_errors)}；"
+                        "须查看原始错误及替代行情证据，不能当成精确盘口成交。")
+        if router:
+            router_time = router[2].get("observed_at")
+            outcome_time = outcome.get("capture_time")
+            if router_time and outcome_time and datetime.fromisoformat(router_time) < datetime.fromisoformat(outcome_time):
+                info.append(f"- 后续路由反馈读回仍待验收：路由run "
+                            f"{router[2].get('github_run_id')}早于最新反馈run "
+                            f"{outcome.get('github_run_id')}；这次成功归档不能证明下一次路由已消费最新反馈。")
     info.extend(["","**历史归档（不作为当前新信号）：**"])
     info.append(bullet("最近四ETF独立V2前瞻选股",v2))
     if v2 is not None:
