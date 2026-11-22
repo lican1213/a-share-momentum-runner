@@ -2,7 +2,7 @@
 id: GENERATED-COMMITS
 type: log
 status: maintained
-updated: 2026-11-22
+updated: 2026-11-23
 ---
 # 全部Git提交历史（自动索引）
 
@@ -12,6 +12,12 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-22 | [f87ab88c4b](https://github.com/lican1213/a-share-momentum-runner/commit/f87ab88c4b5b369f274761a630d75735424c1849) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 45085625001 [skip ci] |
+| 2026-11-22 | [9eef7a6f41](https://github.com/lican1213/a-share-momentum-runner/commit/9eef7a6f413607df112608ed4f5803c533335219) | github-actions[bot] | records(exp0012): route event and append paper evidence 45085573563 [skip ci] |
+| 2026-11-22 | [a895d19b71](https://github.com/lican1213/a-share-momentum-runner/commit/a895d19b7173e80d262a42539a3c0b170e45c0fe) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 45085518668-a1 |
+| 2026-11-23 | [4e16467f0c](https://github.com/lican1213/a-share-momentum-runner/commit/4e16467f0c31ab1f9d4761e4e3277592fe280753) | Can Li | data(national-team): append verified CSI300 ordinary float daily reports 2026-11-16 to 19 |
+| 2026-11-22 | [cfec9db028](https://github.com/lican1213/a-share-momentum-runner/commit/cfec9db0281f2747abe9198baafde5fc1b7b0c08) | Can Li | docs(moc): close quant V5 live router source and Sunday paper-account idempotence gates |
+| 2026-11-22 | [bce2e4df4e](https://github.com/lican1213/a-share-momentum-runner/commit/bce2e4df4ea0eaae59a135378c0d3a5c18eb00a7) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-22 | [17bddb625f](https://github.com/lican1213/a-share-momentum-runner/commit/17bddb625fe7a811d080adffcce244c89098f8cb) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 45006773185 [skip ci] |
 | 2026-11-22 | [eff450fa51](https://github.com/lican1213/a-share-momentum-runner/commit/eff450fa51de8ba033479e9397670b277164cbe5) | github-actions[bot] | records(exp0012): route event and append paper evidence 45006724079 [skip ci] |
 | 2026-11-22 | [cc64a8c842](https://github.com/lican1213/a-share-momentum-runner/commit/cc64a8c84250b154779bfdcec0fc88d759aef6e0) | Can Li | fix(v5): persist verified source of the paper-feedback router decision |
