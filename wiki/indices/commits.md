@@ -12,6 +12,16 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-22 | [17bddb625f](https://github.com/lican1213/a-share-momentum-runner/commit/17bddb625fe7a811d080adffcce244c89098f8cb) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 45006773185 [skip ci] |
+| 2026-11-22 | [eff450fa51](https://github.com/lican1213/a-share-momentum-runner/commit/eff450fa51de8ba033479e9397670b277164cbe5) | github-actions[bot] | records(exp0012): route event and append paper evidence 45006724079 [skip ci] |
+| 2026-11-22 | [cc64a8c842](https://github.com/lican1213/a-share-momentum-runner/commit/cc64a8c84250b154779bfdcec0fc88d759aef6e0) | Can Li | fix(v5): persist verified source of the paper-feedback router decision |
+| 2026-11-22 | [84132cc645](https://github.com/lican1213/a-share-momentum-runner/commit/84132cc64533a89e41947b1bf3e1b2fa4f4eb638) | Can Li | test(router): verify published provenance links to accepted source without changing dispatch |
+| 2026-11-22 | [327dd9b758](https://github.com/lican1213/a-share-momentum-runner/commit/327dd9b75857bbd01b4881953060a0cbcbe36196) | Can Li | docs(agents): mark obsolete Oct30 A2/B status historical; route future audits to V5 evidence |
+| 2026-11-22 | [a296449cf2](https://github.com/lican1213/a-share-momentum-runner/commit/a296449cf2148ddf6f51c303bd50affd62408135) | Can Li | docs(moc): quantified V5 ledger audit and open router feedback-source production gate |
+| 2026-11-22 | [a4689fe442](https://github.com/lican1213/a-share-momentum-runner/commit/a4689fe4422283759cc4e54e50e667d2b9f44354) | Can Li | test(router): feedback snapshot source integrity and no policy changes across runs |
+| 2026-11-22 | [d59c982778](https://github.com/lican1213/a-share-momentum-runner/commit/d59c982778bfd81dec87e71a267d2fcb44cc07a7) | Can Li | fix(router): record verified OHLC feedback snapshot actually read before next decision |
+| 2026-11-22 | [e113d3e4e4](https://github.com/lican1213/a-share-momentum-runner/commit/e113d3e4e43c8874a9d977c7cbf4fc7f66378614) | Can Li | docs(moc): close PR26 software and verified production Wiki gates; keep market gates open |
+| 2026-11-22 | [0711d7d98f](https://github.com/lican1213/a-share-momentum-runner/commit/0711d7d98f7faa9fd9cddecc8ff5f45df477b22b) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-22 | [e2157c5acc](https://github.com/lican1213/a-share-momentum-runner/commit/e2157c5acc2379034ed515373dee28a60e34d6cc) | Can Li | fix(v5): adversarial evidence gates for stage 2/3 readback |
 | 2026-11-22 | [a6df64983c](https://github.com/lican1213/a-share-momentum-runner/commit/a6df64983c1c3063e1c66aa3da0849aa5fe44429) | Can Li | test(wiki): post-session missing-decisions assertion follows strict readback contract |
 | 2026-11-22 | [abe55c69e8](https://github.com/lican1213/a-share-momentum-runner/commit/abe55c69e82f2128002b09f000da087c2f0e4922) | Can Li | test(wiki): make historical fixture carry unique canonical decision IDs |
