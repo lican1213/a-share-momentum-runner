@@ -8,6 +8,7 @@ from __future__ import annotations
 import json,os
 from pathlib import Path
 from datetime import datetime
+from national_team.left_entry_v4 import digest
 
 CATEGORIES={
     "national_team_etf":"ETF source attempts",
@@ -175,64 +176,115 @@ def generate(root:Path,*,now:str, records:list[tuple[str,Path,dict]]|None=None)-
                     summary.get("open_positions"),summary.get("closed_trades"),summary.get("net_pnl_cny"),
                     summary.get("realized_excess_s0_equal_capital_cny"),summary.get("mark_status")]
             info.append("| "+" | ".join(str(v) for v in values)+" |")
-        decisions = [d for account in r.get("accounts", {}).values()
-                     for d in account.get("decisions", [])]
-        fills = sum(d.get("status") == "PAPER_OPEN_PROXY_FILLED" for d in decisions)
-        skipped = [d for d in decisions if d.get("status") == "PAPER_ENTRY_SKIPPED"]
-        info.append(f"- 累计账户决策：纸面开盘入场 {fills}、合法跳过 {len(skipped)}；"
-                    f"累计源事件 {r.get('source_event_count', '未知')}；"
-                    "不把再次归档或 OHLC 开盘代理算新增实际交易。")
+        decision_pairs = [(arm, d) for arm, account in r.get("accounts", {}).items()
+                          for d in account.get("decisions", [])]
+        decisions = [d for _, d in decision_pairs]
+        ids = [d.get("id") for d in decisions]
+        decision_conflict = (len(ids) != len(set(ids)) or
+                             any(not key or len(key.split(":")) != 3 or
+                                 key.split(":")[1] != arm
+                                 for arm, d in decision_pairs for key in [d.get("id")]))
+        if decision_conflict:
+            info.append("- EVIDENCE_CONFLICT：账户决策ID重复、缺失或所属组不符；"
+                        "累计入场与跳过数量不得当作已验证数据。")
+        else:
+            fills = sum(d.get("status") == "PAPER_OPEN_PROXY_FILLED" for d in decisions)
+            skipped = sum(d.get("status") == "PAPER_ENTRY_SKIPPED" for d in decisions)
+            info.append(f"- 累计账户决策：纸面开盘入场 {fills}、合法跳过 {skipped}；"
+                        f"累计源事件 {r.get('source_event_count', '未知')}；"
+                        "不把再次归档或 OHLC 开盘代理算新增实际交易。")
         if intent:
             _, _, frozen_intent = intent
             signal_day = frozen_intent.get("signal_session")
             next_session = (frozen_intent.get("measurement") or {}).get("next_session")
-            planned = [(f"{signal_day}:{arm}:{order['stock']}", arm)
+            planned = [f"{signal_day}:{arm}:{order['stock']}"
                        for arm, policy in (frozen_intent.get("paper_policies") or {}).items()
                        for order in (policy.get("orders") or []) if order.get("stock")]
-            decisions_by_id = {d.get("id"): d for d in decisions if d.get("id")}
-            filled = sum(decisions_by_id.get(key, {}).get("status") == "PAPER_OPEN_PROXY_FILLED"
-                         for key, _ in planned)
-            rejected = sum(decisions_by_id.get(key, {}).get("status") == "PAPER_ENTRY_SKIPPED"
-                           for key, _ in planned)
-            undecided = sum(key not in decisions_by_id for key, _ in planned)
-            other = len(planned) - filled - rejected - undecided
-            info.append(f"- 最新冻结 {signal_day}：{len(planned)}条意向，"
-                        f"已纸面入场 {filled}、按规则跳过 {rejected}、"
-                        f"无账户决策 {undecided}、其他状态 {other}；"
-                        "按冻结日＋组别＋股票代码核对，冻结及独立OHLC情景都不等于实际账户入场。")
-            if next_session and r.get("last_market_session") and next_session > r["last_market_session"]:
-                info.append(f"- 最新冻结拟于 {next_session} 开盘研究；"
-                            f"账户市场日仍为 {r['last_market_session']}，"
-                            "尚未到执行判断日，不得把待处理意向写为已成交。")
-            elif undecided:
-                info.append("- 生产缺口：冻结拟执行日已到，但部分意向尚无账户决策；"
-                            "须等待后续真实账本或调查跳过记录，不准倒签成交。")
+            if decision_conflict or len(planned) != len(set(planned)):
+                info.append("- EVIDENCE_CONFLICT：最新冻结意向重复或账户决策不唯一，"
+                            "不得推断本批已成交、跳过或完成。")
+            else:
+                decisions_by_id = {d["id"]: d for d in decisions}
+                filled = sum(decisions_by_id.get(key, {}).get("status") == "PAPER_OPEN_PROXY_FILLED"
+                             for key in planned)
+                skipped = sum(decisions_by_id.get(key, {}).get("status") == "PAPER_ENTRY_SKIPPED"
+                              for key in planned)
+                late = sum(decisions_by_id.get(key, {}).get("status") == "LATE_INTENT_NO_BACKFILL"
+                           for key in planned)
+                undecided = sum(key not in decisions_by_id for key in planned)
+                other = len(planned) - filled - skipped - late - undecided
+                info.append(f"- 最新冻结 {signal_day}：{len(planned)}条意向，"
+                            f"已纸面入场 {filled}、按规则跳过 {skipped}、"
+                            f"迟到不补单 {late}、无账户决策 {undecided}、其他状态 {other}；"
+                            "按冻结日＋组别＋股票代码核对；独立OHLC情景不是账户成交。")
+            last_session = r.get("last_market_session")
+            if next_session and (not last_session or last_session < next_session):
+                if now[:10] < next_session:
+                    info.append(f"- 最新冻结拟于 {next_session} 开盘研究；"
+                                f"账户市场日仍为 {last_session}，"
+                                "预定市场日尚未到达，不得把意向当成入场。")
+                elif now[:10] == next_session:
+                    info.append(f"- 执行日待读回：预定 {next_session}，"
+                                f"账户市场日仍为 {last_session}；"
+                                "不能在收盘归档前宣称已执行。")
+                else:
+                    info.append(f"- OVERDUE_MARKET_READBACK：预定执行日 {next_session} 已过去，"
+                                f"账本只到 {last_session}；检查真实源与Actions，禁止补写历史成交。")
+            elif not decision_conflict and len(planned) == len(set(planned)) and undecided:
+                info.append("- 生产缺口：账户市场日已达到预定执行日，但部分意向无账户决策；"
+                            "须查实际行情及不可回写账本，不能倒签成交。")
+    elif intent:
+        info.append("- NO_PAPER_LEDGER：存在最新冻结但无连续模拟账户快照，"
+                    "不得报告任何该批入场。")
     if outcomes:
         _, _, outcome = outcomes
         if ledger:
             _, _, paper_account = ledger
-            linked = (bool(outcome.get("paper_account_snapshot_sha256"))
+            arms = {"SHALLOW_DIP", "DEEP_DIP", "R_BOUNCE", "EARLY_ENTRY"}
+            actual_accounts = paper_account.get("accounts") or {}
+            summaries = outcome.get("paper_account_summary") or {}
+            linked = (set(actual_accounts) == arms and set(summaries) == arms
+                      and not decision_conflict
+                      and paper_account.get("trade_authorized") is False
+                      and outcome.get("trade_authorized") is False
+                      and paper_account.get("broker_orders") == []
+                      and outcome.get("broker_orders") == []
+                      and bool(outcome.get("paper_account_snapshot_sha256"))
                       and outcome.get("paper_account_snapshot_sha256") == paper_account.get("snapshot_sha256")
                       and outcome.get("github_run_id") == paper_account.get("github_run_id")
-                      and bool(outcome.get("paper_account_summary"))
-                      and all(outcome["paper_account_summary"].get(arm) == account.get("summary")
-                              for arm, account in paper_account.get("accounts", {}).items()))
+                      and digest({k: v for k, v in paper_account.items() if k != "snapshot_sha256"})
+                      == paper_account.get("snapshot_sha256")
+                      and digest({k: v for k, v in outcome.items() if k != "snapshot_sha256"})
+                      == outcome.get("snapshot_sha256")
+                      and all(summaries[arm] == actual_accounts[arm].get("summary")
+                              for arm in arms))
             info.append(f"- OHLC反馈与连续账本读回：{'MATCHED_SNAPSHOT' if linked else 'NOT_VERIFIED'}；"
                         f"反馈run {outcome.get('github_run_id')}、账户run {paper_account.get('github_run_id')}；"
-                        "只有同run、快照哈希与四账户汇总均一致才标记MATCHED。")
-        latest_result = (outcome.get("results") or [{}])[-1]
-        source_errors = sorted({code for policy in (latest_result.get("policy_results") or {}).values()
+                        "须四组完整、无决策ID冲突、非实盘授权、同run、原文哈希重算一致及四组汇总匹配。"
+                        "此为文件完整性，不代表独立真实成交或策略盈利。")
+        source_errors = sorted({code for result in (outcome.get("results") or [])
+                                for policy in (result.get("policy_results") or {}).values()
                                 for code in (policy.get("errors") or {})})
         if source_errors:
-            info.append(f"- 最新前瞻OHLC行情接口异常：{', '.join(source_errors)}；"
-                        "须查看原始错误及替代行情证据，不能当成精确盘口成交。")
+            info.append(f"- 本次OHLC跟踪来源异常（全批次）：{', '.join(source_errors)}；"
+                        "需查原始错误及替代行情证据，不得当成精确盘口成交。")
         if router:
             router_time = router[2].get("observed_at")
             outcome_time = outcome.get("capture_time")
-            if router_time and outcome_time and datetime.fromisoformat(router_time) < datetime.fromisoformat(outcome_time):
+            source_sha = router[2].get("feedback_source_outcomes_snapshot_sha256")
+            if (router_time and outcome_time and
+                    datetime.fromisoformat(router_time) >= datetime.fromisoformat(outcome_time)
+                    and source_sha and source_sha == outcome.get("snapshot_sha256")):
+                info.append("- 后续路由反馈输入：MATCHED_SOURCE_SNAPSHOT；"
+                            "路由明示消费的反馈哈希与最新结果一致，仍需核对策略选优与成熟样本。")
+            elif router_time and outcome_time and datetime.fromisoformat(router_time) < datetime.fromisoformat(outcome_time):
                 info.append(f"- 后续路由反馈读回仍待验收：路由run "
                             f"{router[2].get('github_run_id')}早于最新反馈run "
-                            f"{outcome.get('github_run_id')}；这次成功归档不能证明下一次路由已消费最新反馈。")
+                            f"{outcome.get('github_run_id')}；新反馈尚未证明被路由消费。")
+            else:
+                info.append("- 后续路由反馈输入：UNVERIFIED_SOURCE_SNAPSHOT；"
+                            "仅有较晚运行时间不能证明消费了最新OHLC反馈，"
+                            "路由需留存所用反馈快照哈希才能关闭该Gate。")
     info.extend(["","**历史归档（不作为当前新信号）：**"])
     info.append(bullet("最近四ETF独立V2前瞻选股",v2))
     if v2 is not None:
