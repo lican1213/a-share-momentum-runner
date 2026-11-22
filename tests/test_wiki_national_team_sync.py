@@ -75,8 +75,9 @@ def test_v5_briefing_reports_pending_intents_without_false_fills(tmp_path):
     generate(tmp_path, now="2026-11-20")
     brief = (tmp_path / "wiki/compiled/briefing.md").read_text()
     assert "纸面开盘入场 1、合法跳过 1" in brief
-    assert "8条纸面意向拟于 2026-11-20 开盘研究" in brief
-    assert "尚未证明这批意向已入场" in brief
+    assert "最新冻结 2026-11-19：8条意向，已纸面入场 0、按规则跳过 0、无账户决策 8" in brief
+    assert "最新冻结拟于 2026-11-20 开盘研究" in brief
+    assert "尚未到执行判断日" in brief
     assert "最近源端完整日 2026-11-18" in brief
     assert "早期 0、追涨 0" in brief
     assert "默认组 SHALLOW_DIP" in brief
@@ -88,5 +89,49 @@ def test_v5_briefing_reports_pending_intents_without_false_fills(tmp_path):
     path.write_text(json.dumps(obj))
     generate(tmp_path, now="2026-11-20")
     later = (tmp_path / "wiki/compiled/briefing.md").read_text()
-    assert "8条意向，需按账户决策与未来OHLC逐条核对" in later
-    assert "尚未证明这批意向已入场" not in later
+    assert "8条意向，已纸面入场 0、按规则跳过 0、无账户决策 8" in later
+    assert "生产缺口：冻结拟执行日已到" in later
+
+def test_v5_latest_intent_uses_exact_decision_ids_and_paper_feedback_hash(tmp_path):
+    save(tmp_path, "national_team_left_entry_v5", "902-a1.json", {
+        "signal_session": "2026-11-19",
+        "measurement": {"next_session": "2026-11-20"},
+        "paper_policies": {
+            "SHALLOW_DIP": {"orders": [{"stock": "600958"}, {"stock": "600999"}]},
+            "DEEP_DIP": {"orders": [{"stock": "000792"}]},
+        }})
+    summary = {"cash_cny": "25000", "open_positions": 2}
+    save(tmp_path, "national_team_paper_accounts_v5", "903-a1.json", {
+        "github_run_id": "903", "snapshot_sha256": "paper-sha",
+        "last_market_session": "2026-11-20",
+        "accounts": {"SHALLOW_DIP": {"summary": summary, "decisions": [
+            {"id": "2026-11-19:SHALLOW_DIP:600958", "status": "PAPER_OPEN_PROXY_FILLED"},
+            {"id": "2026-11-19:SHALLOW_DIP:600999", "status": "PAPER_OPEN_PROXY_FILLED"}]},
+            "DEEP_DIP": {"summary": summary, "decisions": [
+                {"id": "2026-11-19:DEEP_DIP:000792", "status": "PAPER_ENTRY_SKIPPED",
+                 "reason": "ENTRY_OHLC_MISSING_NO_RETROSPECTIVE_FILL"}]}}})
+    outcome = {"github_run_id": "903", "capture_time": "2026-11-21T02:50:00+08:00",
+               "paper_account_snapshot_sha256": "paper-sha",
+               "paper_account_summary": {"SHALLOW_DIP": summary, "DEEP_DIP": summary},
+               "results": [{"policy_results": {"DEEP_DIP": {
+                   "errors": {"510300": "rate limit"}}}}]}
+    path = save(tmp_path, "national_team_left_outcomes_v5", "903-a1.json", outcome)
+    save(tmp_path, "national_team_router", "901-a1.json", {
+        "github_run_id": "901", "observed_at": "2026-11-21T02:24:00+08:00",
+        "status": "ALREADY_FROZEN_FOR_SESSION"})
+    generate(tmp_path, now="2026-11-22")
+    brief = (tmp_path / "wiki/compiled/briefing.md").read_text()
+    assert "3条意向，已纸面入场 2、按规则跳过 1、无账户决策 0" in brief
+    assert "MATCHED_SNAPSHOT" in brief
+    assert "最新前瞻OHLC行情接口异常：510300" in brief
+    assert "后续路由反馈读回仍待验收" in brief
+    index = (tmp_path / "wiki/indices/national-team.md").read_text()
+    assert "NO_STATUS_FIELD" in index
+    assert "| UNVERIFIED |" not in index
+
+    outcome["paper_account_snapshot_sha256"] = "wrong-sha"
+    path.write_text(json.dumps(outcome), encoding="utf-8")
+    generate(tmp_path, now="2026-11-22")
+    brief = (tmp_path / "wiki/compiled/briefing.md").read_text()
+    assert "NOT_VERIFIED" in brief
+    assert "MATCHED_SNAPSHOT" not in brief
