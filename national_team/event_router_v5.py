@@ -84,8 +84,13 @@ def frozen_sessions(root, experiment_id="EXP-0012"):
 def paper_feedback(root):
     """Latest immutable snapshot per freeze; only genuinely paired 10d excess."""
     latest = {}
+    latest_batch = None
     for path in _files(root):
         batch = _read(path)
+        if batch.get("version") == "NT_EVENT_FOLLOWUP_V5":
+            key = (batch.get("capture_time", ""), str(path))
+            if latest_batch is None or key > latest_batch[0]:
+                latest_batch = (key, batch)
         for item in batch.get("results", [batch]):
             if item.get("experiment_id") != "EXP-0012":
                 continue
@@ -176,6 +181,10 @@ def paper_feedback(root):
                 "mean_excess_difference_vs_shallow": format(sum(differences)/len(differences), "f") if differences else None,
             }
         cohort[policy] = per_horizon
+    source = latest_batch[1] if latest_batch else {}
+    declared = source.get("snapshot_sha256")
+    source_verified = bool(declared and
+                           digest({k: v for k, v in source.items() if k != "snapshot_sha256"}) == declared)
     count = len(paired)
     means = {policy: (sum(x[policy] for x in paired) / count if count else None)
              for policy in POLICIES}
@@ -185,6 +194,13 @@ def paper_feedback(root):
         best = "DEEP_DIP"
     return {
         "paired_10d_events": count,
+        "feedback_source": {
+            "latest_outcomes_snapshot_sha256": declared if source_verified else None,
+            "latest_outcomes_run_id": source.get("github_run_id"),
+            "latest_outcomes_capture_time": source.get("capture_time"),
+            "integrity": ("MATCHED" if source_verified else
+                          "UNVERIFIED_OR_MISMATCHED_HASH" if source else "NO_VERSIONED_SNAPSHOT"),
+        },
         "exp0017_cohort": cohort,
         "indistinguishable_left_clusters": indistinguishable_clusters,
         "mean_10d_excess_s0": {k: (format(v, "f") if v is not None else None)
@@ -250,6 +266,8 @@ def route(v3_root, watch_root, freeze_root, followup_root, *, now,
         "strategy_experiment_id": "EXP-0017",
         "funding_stage": stage,
         "feedback": feedback,
+        "feedback_source_outcomes_snapshot_sha256": feedback["feedback_source"]["latest_outcomes_snapshot_sha256"],
+        "feedback_source_outcomes_run_id": feedback["feedback_source"]["latest_outcomes_run_id"],
         "funding": {
             "net_creation_1d_cny_proxy": signal.get("net_creation_1d_cny"),
             "net_creation_5d_cny_proxy": signal.get("net_creation_5d_cny"),

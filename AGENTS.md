@@ -1,3 +1,8 @@
+## 2026-11-22：当前V5主线与旧版指针
+- 当前主线是四ETF资金观察 → V5事件路由 → SHALLOW_DIP / DEEP_DIP / R_BOUNCE / EARLY_ENTRY四套独立纸面账户 → OHLC反馈与成熟样本评估；仓库最新事实以[根MOC](MOC.md)、[实跑简报](wiki/compiled/briefing.md)及对应不可覆盖JSON/Actions为准。
+- 下文2026-10-30的A2/B `wiki/current-status.md` 是**历史执行门**，不是2026-11-22 V5的当前验收状态。保持历史规则与记录，仅以新市场日真实账户/输入快照复验V5；CI绿灯不能当作获利或券商成交。
+- 第二/三阶段只使用可复现、真实成熟的事件簇与等额费后510300对照；追涨组继续独立研究，未经明确方案不得动规则/阈值/仓位/原cron。Ponytail只做已证实缺口的最小修复。
+
 ## 2026-11-17：EXP-0017 早期试仓与主动追涨（候选实现，待CI/生产验证）
 - 参见 [EXP-0017](wiki/experiments/EXP-0017-early-flow-momentum.md)。早期50亿元单日四ETF代理独立纸面试仓；R_BOUNCE主动追涨不设3%上限；新增EARLY_ENTRY账本保留前三组历史。09:15前合法冻结可研究当日开盘。原四ETF、cron、三时段、T+1/T+2及历史不改。新旧R收益分版本，阶段二/三依据新成熟样本，不把代码合入当作验收。
 
@@ -15,7 +20,7 @@
 
 **NEW controlling round-two audit (2026-10-30):** [AUD-R2](wiki/audits/AUD-2026-10-30-round2-independent-redteam.md) and [single status](wiki/current-status.md). Five independent red cases overturned the prior claim of full execution acceptance: undecided entry misallocated later capital, repeat partial funding event, duplicate recovered S1/S2, 14:50 interval timestamp order, V2 missing stock becoming profitable cash. Do not tune picks. Only trust new matched-SHA full pytest plus actual immutable G1, and distinguish future G2/G3/G4.
 
-**CURRENT CANONICAL STATUS (2026-10-30):** [wiki/current-status.md](wiki/current-status.md). Read the root MOC then that status page before any edits. Four immediate P0 execution defects (unknown-data freeze, exact minute completeness, T+1/T+2 late-session exits, cross-event account ledger) are tracked there. A2/B G1 actual Oct30 freeze exists; G2/G3/G4 are not proof of trades or profits. 2026-10-28 audits below are historical, not controlling the 2026-10-30 short execution gate. No trading authorization. 
+**HISTORICAL A2/B SHORT-ENGINE STATUS (2026-10-30):** [wiki/current-status.md](wiki/current-status.md). Read the root MOC then that status page before any edits. Four immediate P0 execution defects (unknown-data freeze, exact minute completeness, T+1/T+2 late-session exits, cross-event account ledger) are tracked there. A2/B G1 actual Oct30 freeze exists; G2/G3/G4 are not proof of trades or profits. 2026-10-28 audits below are historical, not controlling the 2026-10-30 short execution gate. No trading authorization. 
 
 **Read before any modification:** [MOC.md](MOC.md) → [KNOWLEDGE.md](KNOWLEDGE.md) → [wiki/compiled/briefing.md](wiki/compiled/briefing.md) → [wiki/index.md](wiki/index.md).
 
