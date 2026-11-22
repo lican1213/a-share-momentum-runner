@@ -81,8 +81,8 @@ def test_v5_briefing_reports_pending_intents_without_false_fills(tmp_path):
     brief = (tmp_path / "wiki/compiled/briefing.md").read_text()
     assert "纸面开盘入场 1、合法跳过 1" in brief
     assert "最新冻结 2026-11-19：8条意向，已纸面入场 0、按规则跳过 0、迟到不补单 0、无账户决策 8" in brief
-    assert "最新冻结拟于 2026-11-20 开盘研究" in brief
-    assert "预定市场日尚未到达" in brief
+    assert "执行日待读回：预定 2026-11-20" in brief
+    assert "不能在收盘归档前宣称已执行" in brief
     assert "最近源端完整日 2026-11-18" in brief
     assert "早期 0、追涨 0" in brief
     assert "默认组 SHALLOW_DIP" in brief
