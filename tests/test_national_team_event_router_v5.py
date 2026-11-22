@@ -93,6 +93,18 @@ def test_router_routes_real_session_once_and_never_old_weekend(tmp_path):
     assert fresh["watch_path"].endswith("watch.json")
     assert fresh["funding"]["ordinary_float_coverage_ratio"] is None
     assert fresh["feedback_source_outcomes_snapshot_sha256"] is None
+    from national_team.left_entry_v4 import digest
+    observed = {"version": "NT_EVENT_FOLLOWUP_V5", "experiment_id": "EXP-0012",
+                "github_run_id": "example-run",
+                "capture_time": "2026-11-02T17:00:00+08:00", "results": []}
+    observed["snapshot_sha256"] = digest(observed)
+    write(result_root, "feedback.json", observed)
+    after = route(*args, now="2026-11-02T18:10:00+08:00")
+    assert after["feedback_source_outcomes_snapshot_sha256"] == observed["snapshot_sha256"]
+    assert after["feedback_source_outcomes_run_id"] == "example-run"
+    assert after["selected_policy"] == fresh["selected_policy"]
+    assert after["status"] == fresh["status"]
+    assert after["broker_orders"] == [] and after["trade_authorized"] is False
     write(freeze_root, "freeze.json", {
         "experiment_id": "EXP-0012", "signal_session": "2026-11-02"})
     assert route(*args, now="2026-11-02T18:11:00+08:00")["status"] == (
