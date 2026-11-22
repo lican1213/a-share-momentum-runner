@@ -75,8 +75,9 @@ def test_v5_briefing_reports_pending_intents_without_false_fills(tmp_path):
     save(tmp_path, "national_team_paper_accounts_v5", "903-a1.json", {
         "last_market_session": "2026-11-19", "source_event_count": 8,
         "accounts": {"SHALLOW_DIP": {"decisions": [
-            {"status": "PAPER_OPEN_PROXY_FILLED"},
-            {"status": "PAPER_ENTRY_SKIPPED", "reason": "MAX_TWO_OPEN_POSITIONS"}]}}})
+            {"id": "2026-11-18:SHALLOW_DIP:600003", "status": "PAPER_OPEN_PROXY_FILLED"},
+            {"id": "2026-11-18:SHALLOW_DIP:600004", "status": "PAPER_ENTRY_SKIPPED",
+             "reason": "MAX_TWO_OPEN_POSITIONS"}]}}})
     generate(tmp_path, now="2026-11-20")
     brief = (tmp_path / "wiki/compiled/briefing.md").read_text()
     assert "纸面开盘入场 1、合法跳过 1" in brief
