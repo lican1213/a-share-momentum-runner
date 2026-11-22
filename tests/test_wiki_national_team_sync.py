@@ -96,7 +96,7 @@ def test_v5_briefing_reports_pending_intents_without_false_fills(tmp_path):
     generate(tmp_path, now="2026-11-20")
     later = (tmp_path / "wiki/compiled/briefing.md").read_text()
     assert "8条意向，已纸面入场 0、按规则跳过 0、迟到不补单 0、无账户决策 8" in later
-    assert "生产缺口：冻结拟执行日已到" in later
+    assert "生产缺口：账户市场日已达到预定执行日" in later
 
 def test_v5_provenance_readback_with_all_four_accounts(tmp_path):
     summary = {"cash_cny": "25000", "open_positions": 2}
