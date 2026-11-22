@@ -12,6 +12,15 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-22 | [e2157c5acc](https://github.com/lican1213/a-share-momentum-runner/commit/e2157c5acc2379034ed515373dee28a60e34d6cc) | Can Li | fix(v5): adversarial evidence gates for stage 2/3 readback |
+| 2026-11-22 | [a6df64983c](https://github.com/lican1213/a-share-momentum-runner/commit/a6df64983c1c3063e1c66aa3da0849aa5fe44429) | Can Li | test(wiki): post-session missing-decisions assertion follows strict readback contract |
+| 2026-11-22 | [abe55c69e8](https://github.com/lican1213/a-share-momentum-runner/commit/abe55c69e82f2128002b09f000da087c2f0e4922) | Can Li | test(wiki): make historical fixture carry unique canonical decision IDs |
+| 2026-11-22 | [fe68a17792](https://github.com/lican1213/a-share-momentum-runner/commit/fe68a177929724d59739f8ba54289c4c1d3fc3fc) | Can Li | test(wiki): due-day source readback is not pre-session future |
+| 2026-11-22 | [091a2aee7d](https://github.com/lican1213/a-share-momentum-runner/commit/091a2aee7d1248f8d74440119737c435785e1a82) | Can Li | docs(moc): phase2/3 red-team contracts and evidence-only acceptance gates |
+| 2026-11-22 | [dc47b61741](https://github.com/lican1213/a-share-momentum-runner/commit/dc47b617416d02cc220069ea72ac99f7383e015d) | Can Li | test(wiki): adversarial stale ledger, duplicate IDs, hash tamper and later-router gates |
+| 2026-11-22 | [54534aa913](https://github.com/lican1213/a-share-momentum-runner/commit/54534aa913d73577fe7b12a8873e19d86160e04b) | Can Li | fix(wiki): fail closed on stale execution day, contradictory IDs and invalid snapshots |
+| 2026-11-22 | [7dd30e7172](https://github.com/lican1213/a-share-momentum-runner/commit/7dd30e717286645c5281c8e51e22dec1933d2570) | Can Li | docs(moc): record PR25 matched-SHA CI and verified production Wiki readback |
+| 2026-11-22 | [51d56981b5](https://github.com/lican1213/a-share-momentum-runner/commit/51d56981b5e23ee41f12830d2d748e6b5765f13b) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-22 | [300a64c940](https://github.com/lican1213/a-share-momentum-runner/commit/300a64c940d60e503d7db98452c04c7cf0ee8ebf) | Can Li | fix(v5): reconcile frozen intents with paper decisions and provenance |
 | 2026-11-22 | [564766fed4](https://github.com/lican1213/a-share-momentum-runner/commit/564766fed42d66e2a78885db4282b3cb65777076) | Can Li | fix(v5): reconcile latest frozen intent with paper decisions in Wiki |
 | 2026-11-20 | [caf41a7796](https://github.com/lican1213/a-share-momentum-runner/commit/caf41a7796cf21386e28b53ce3fa700b298bd7dd) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
