@@ -2,7 +2,7 @@
 id: GENERATED-COMMITS
 type: log
 status: maintained
-updated: 2026-11-21
+updated: 2026-11-22
 ---
 # 全部Git提交历史（自动索引）
 
@@ -12,6 +12,9 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-22 | [300a64c940](https://github.com/lican1213/a-share-momentum-runner/commit/300a64c940d60e503d7db98452c04c7cf0ee8ebf) | Can Li | fix(v5): reconcile frozen intents with paper decisions and provenance |
+| 2026-11-22 | [564766fed4](https://github.com/lican1213/a-share-momentum-runner/commit/564766fed42d66e2a78885db4282b3cb65777076) | Can Li | fix(v5): reconcile latest frozen intent with paper decisions in Wiki |
+| 2026-11-20 | [caf41a7796](https://github.com/lican1213/a-share-momentum-runner/commit/caf41a7796cf21386e28b53ce3fa700b298bd7dd) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-20 | [7924ebed09](https://github.com/lican1213/a-share-momentum-runner/commit/7924ebed0910c650580108aff5236823e3e44c81) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-20 | [eee80e95f6](https://github.com/lican1213/a-share-momentum-runner/commit/eee80e95f6b4f5c7b3147826803e66e226162cd7) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 44796304848 [skip ci] |
 | 2026-11-20 | [c4cf397396](https://github.com/lican1213/a-share-momentum-runner/commit/c4cf397396ae2b31fee66696441ffe560491e117) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |

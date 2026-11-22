@@ -2,7 +2,7 @@
 id: COMPILED-BRIEFING
 type: overview
 status: maintained
-updated: 2026-11-21
+updated: 2026-11-22
 ---
 # 国家队资金→成分股研究 Agent 最新证据简报
 
@@ -18,11 +18,11 @@ updated: 2026-11-21
 - 最新实测股票样本数：**150**；指数权重覆盖约 **0.82681**；指数权重非ETF真实PCF，且未证明个股跟随收益。
 
 **当前研究执行主线：V3资金 → V5路由 → 连续模拟盘；旧V2/A2/B仅历史归档。**
-- V3最新回放：[run 44787597233-a1](../../records/national_team_v3/2026-11-20/44787597233-a1.json)；状态 `UNVERIFIED`；日期 2026-11-20。
+- V3最新回放：[run 44787597233-a1](../../records/national_team_v3/2026-11-20/44787597233-a1.json)；状态 `NO_STATUS_FIELD`；日期 2026-11-20。
 - V5最新事件路由：[run 44792360723-a1](../../records/national_team_router/2026-11-21/44792360723-a1.json)；状态 `ALREADY_FROZEN_FOR_SESSION`；日期 2026-11-21。
-- V5最近不可回写冻结：[run 44780191671-a1](../../records/national_team_left_entry_v5/2026-11-21/44780191671-a1.json)；状态 `UNVERIFIED`；日期 2026-11-21。
-- V5最新独立前瞻路径：[run 44796304848-a1](../../records/national_team_left_outcomes_v5/2026-11-21/44796304848-a1.json)；状态 `UNVERIFIED`；日期 2026-11-21。
-- V5最新模拟账本：[run 44796304848-a1](../../records/national_team_paper_accounts_v5/2026-11-21/44796304848-a1.json)；状态 `UNVERIFIED`；日期 2026-11-21。
+- V5最近不可回写冻结：[run 44780191671-a1](../../records/national_team_left_entry_v5/2026-11-21/44780191671-a1.json)；状态 `NO_STATUS_FIELD`；日期 2026-11-21。
+- V5最新独立前瞻路径：[run 44796304848-a1](../../records/national_team_left_outcomes_v5/2026-11-21/44796304848-a1.json)；状态 `NO_STATUS_FIELD`；日期 2026-11-21。
+- V5最新模拟账本：[run 44796304848-a1](../../records/national_team_paper_accounts_v5/2026-11-21/44796304848-a1.json)；状态 `NO_STATUS_FIELD`；日期 2026-11-21。
 - 指数交易日 2026-11-20；最新完整四份额日 2026-11-20；普通覆盖率有效日 16，历史PIT核验日 0；最新分母采集 SOURCE_UNAVAILABLE；当前ratio=None。
 - 资金观察交易日 2026-11-20；路由 ALREADY_FROZEN_FOR_SESSION；资金模式 SHARE_PROXY；同额成熟10日独立簇 1/8；默认组 SHALLOW_DIP。
 - EXP-0017 新规则10日成熟簇：早期 0、追涨 0；未成熟不能当作策略学习或真实成交。
@@ -36,7 +36,11 @@ updated: 2026-11-21
 | R_BOUNCE | 25849.55 | 30244.15 | 1 | 5 | 244.15 | 163.12 | CURRENT_CLOSE_PROXY |
 | EARLY_ENTRY | 25898.91 | 30053.75 | 1 | 2 | 53.75 | 136.29 | CURRENT_CLOSE_PROXY |
 - 累计账户决策：纸面开盘入场 22、合法跳过 32；累计源事件 9；不把再次归档或 OHLC 开盘代理算新增实际交易。
-- 最新冻结 2026-11-20：8条纸面意向拟于 2026-11-23 开盘研究；账户目前只更新到 2026-11-20，尚未证明这批意向已入场。
+- 最新冻结 2026-11-20：8条意向，已纸面入场 0、按规则跳过 0、无账户决策 8、其他状态 0；按冻结日＋组别＋股票代码核对，冻结及独立OHLC情景都不等于实际账户入场。
+- 最新冻结拟于 2026-11-23 开盘研究；账户市场日仍为 2026-11-20，尚未到执行判断日，不得把待处理意向写为已成交。
+- OHLC反馈与连续账本读回：MATCHED_SNAPSHOT；反馈run 44796304848、账户run 44796304848；只有同run、快照哈希与四账户汇总均一致才标记MATCHED。
+- 最新前瞻OHLC行情接口异常：510300；须查看原始错误及替代行情证据，不能当成精确盘口成交。
+- 后续路由反馈读回仍待验收：路由run 44792360723早于最新反馈run 44796304848；这次成功归档不能证明下一次路由已消费最新反馈。
 
 **历史归档（不作为当前新信号）：**
 - 最近四ETF独立V2前瞻选股：[run 41027617348-a1-v2](../../records/national_team_strategy/2026-10-30/41027617348-a1-v2.json)；状态 `FROZEN_PROSPECTIVE_RESEARCH`；日期 2026-10-30。
