@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "version": "NT_EVENT_ROUTER_V5",
+  "experiment_id": "EXP-0012",
+  "observed_at": "2026-11-23T12:13:18.899889+08:00",
+  "event_id": "ETF4_DOWNFLOW_2026-11-20",
+  "signal_session": "2026-11-20",
+  "signal_age_calendar_days": 3,
+  "latest_index_session": "2026-11-20",
+  "funding_lags_index": false,
+  "status": "ALREADY_FROZEN_FOR_SESSION",
+  "four_etfs": [
+    "510300",
+    "510310",
+    "510330",
+    "159919"
+  ],
+  "v3_path": "records/national_team_v3/2026-11-23/45110218254-a1.json",
+  "watch_path": null,
+  "selected_policy": "SHALLOW_DIP",
+  "strategy_experiment_id": "EXP-0017",
+  "funding_stage": "STANDARD_AND_EARLY",
+  "feedback": {
+    "paired_10d_events": 1,
+    "feedback_source": {
+      "latest_outcomes_snapshot_sha256": "08176104a7a925743af6085e8790b5f984051a736b67fae1d6f86af12c085578",
+      "latest_outcomes_run_id": "45085625001",
+      "latest_outcomes_capture_time": "2026-11-23T07:54:14.324827+08:00",
+      "integrity": "MATCHED"
+    },
+    "exp0017_cohort": {
+      "EARLY_ENTRY": {
+        "3": {
+          "eligible_clusters": 1,
+          "matured_clusters": 0,
+          "mean_excess_s0": null,
+          "positive_clusters": 0,
+          "distinct_paired_vs_shallow_clusters": 0,
+          "mean_excess_difference_vs_shallow": null
+        },
+        "10": {
+          "eligible_clusters": 1,
+          "matured_clusters": 0,
+          "mean_excess_s0": null,
+          "positive_clusters": 0,
+          "distinct_paired_vs_shallow_clusters": 0,
+          "mean_excess_difference_vs_shallow": null
+        }
+      },
+      "R_BOUNCE": {
+        "3": {
+          "eligible_clusters": 1,
+          "matured_clusters": 0,
+          "mean_excess_s0": null,
+          "positive_clusters": 0,
+          "distinct_paired_vs_shallow_clusters": 0,
+          "mean_excess_difference_vs_shallow": null
+        },
+        "10": {
+          "eligible_clusters": 1,
+          "matured_clusters": 0,
+          "mean_excess_s0": null,
+          "positive_clusters": 0,
+          "distinct_paired_vs_shallow_clusters": 0,
+          "mean_excess_difference_vs_shallow": null
+        }
+      }
+    },
+    "indistinguishable_left_clusters": 0,
+    "mean_10d_excess_s0": {
+      "SHALLOW_DIP": "0.002083849040333333333333333333",
+      "DEEP_DIP": "0.003178094802166666666666666667"
+    },
+    "selected_policy": "SHALLOW_DIP",
+    "right_side_reference": {
+      "paired_10d_clusters": 1,
+      "mean_R_minus_SHALLOW_excess_s0": "0.004397011435000000000000000002",
+      "not_used_to_gate_left_side_research": true
+    },
+    "policy_rule": "8 distinct event clusters with paired 10d outcomes; DEEP_DIP +0.2pct",
+    "not_a_calibrated_profit_probability": true
+  },
+  "feedback_source_outcomes_snapshot_sha256": "08176104a7a925743af6085e8790b5f984051a736b67fae1d6f86af12c085578",
+  "feedback_source_outcomes_run_id": "45085625001",
+  "funding": {
+    "net_creation_1d_cny_proxy": 42498474120.0,
+    "net_creation_5d_cny_proxy": 101941074720.0,
+    "ordinary_float_coverage_ratio": null,
+    "ratio_status": "DENOMINATOR_MISSING",
+    "index_ret5": -0.015367416197535455,
+    "funding_basis": "SHARE_PROXY",
+    "early_proxy_trigger": true,
+    "exchange_shares_complete": true,
+    "exchange_nav_complete": true,
+    "latest_session_evidence_missing": false,
+    "share_proxy_not_state_account_trade": true
+  },
+  "policy_overlay": {
+    "experiment_id": "EXP-0015",
+    "status": "ETF_FLOW_WITHOUT_POLICY_MATCH",
+    "source_health": "PARTIAL",
+    "snapshot_sha256": "38e2ba4163c17e38d4a18d963fecbeab54d8548a5af009bd86f5ae37830e8bed",
+    "support_count": 0,
+    "matched_funding_event_ids": [],
+    "recent_event_ids": [],
+    "top_events": [],
+    "changes_admission": false,
+    "trade_authorized": false,
+    "not_a_policy_implied_etf_purchase": true
+  },
+  "dispatcher": "NO_NEW_PAPER_FREEZE",
+  "trade_authorized": false,
+  "broker_orders": [],
+  "github_run_id": "45110309107",
+  "github_source_commit": "775167963e443b4935cf893840e6fec73b045b9e",
+  "snapshot_sha256": "6277dc9ddc3d469568894f736e452fdad4cde70caec73c66ea361137848ad75f"
+}
