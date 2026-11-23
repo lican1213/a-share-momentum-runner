@@ -1,0 +1,1087 @@
+{
+  "schema": 1,
+  "version": "NT_V5_PAPER_ACCOUNT_EXP0014",
+  "asof": "2026-11-24",
+  "capture_time": "2026-11-24T06:14:19.488087+08:00",
+  "last_market_session": "2026-11-23",
+  "accounts": {
+    "SHALLOW_DIP": {
+      "cash_cny": "22714.55",
+      "positions": [
+        {
+          "id": "2026-11-19:SHALLOW_DIP:600958",
+          "stock": "600958",
+          "freeze_sha256": "6c9eab2b7632e0c387964d9eff23c2ec8540482c32f4c9b6892099e6589bc7ad",
+          "strategy_experiment_id": "EXP-0017",
+          "entry_session": "2026-11-20",
+          "entry_open_raw": "8.1",
+          "shares": 500,
+          "buy_total_cny": "4057.02",
+          "held_sessions": 1,
+          "last_mark_close": "8.11",
+          "last_mark_session": "2026-11-23",
+          "s0_shares": 1000,
+          "s0_buy_total_cny": "4021.01"
+        },
+        {
+          "id": "2026-11-19:SHALLOW_DIP:600999",
+          "stock": "600999",
+          "freeze_sha256": "6c9eab2b7632e0c387964d9eff23c2ec8540482c32f4c9b6892099e6589bc7ad",
+          "strategy_experiment_id": "EXP-0017",
+          "entry_session": "2026-11-20",
+          "entry_open_raw": "15.67",
+          "shares": 200,
+          "buy_total_cny": "3140.57",
+          "held_sessions": 1,
+          "last_mark_close": "15.78",
+          "last_mark_session": "2026-11-23",
+          "s0_shares": 700,
+          "s0_buy_total_cny": "2816.20"
+        }
+      ],
+      "closed_trades": [
+        {
+          "id": "2026-11-02:SHALLOW_DIP:002648",
+          "stock": "002648",
+          "entry_session": "2026-11-04",
+          "exit_session": "2026-11-06",
+          "shares": 100,
+          "entry_open_raw": "25.26",
+          "exit_price_raw": "24.5022",
+          "exit_reason": "STOP_TOUCH_OHLC_STOP_FIRST",
+          "net_pnl_cny": "-89.49",
+          "s0_matched_net_pnl_cny": "10.33",
+          "excess_s0_cny": "-99.82",
+          "s0_equal_capital_pnl_cny": "10.65",
+          "excess_s0_equal_capital_cny": "-100.14",
+          "equal_capital_method": "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE",
+          "late_ohlc_reconciliation": true,
+          "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
+          "execution_confidence": "DAILY_OHLC_STOP_FIRST_AMBIGUOUS",
+          "benchmark_exit_method": "ETF_DAILY_CLOSE_PROXY_NOT_SAME_TIME",
+          "s0_intraday_excess_envelope_cny": {
+            "excess_if_etf_high_cny": "-126.81",
+            "excess_if_etf_low_cny": "-82.43",
+            "interpretation": "DAILY_BAR_BOUNDS_NOT_SYNCHRONIZED_EXECUTION"
+          },
+          "s0_notional_entry_cny": "2457.83",
+          "stock_notional_entry_cny": "2532.26"
+        },
+        {
+          "id": "2026-11-02:SHALLOW_DIP:002714",
+          "stock": "002714",
+          "entry_session": "2026-11-04",
+          "exit_session": "2026-11-06",
+          "shares": 100,
+          "entry_open_raw": "43.0",
+          "exit_price_raw": "44.290",
+          "exit_reason": "TARGET_TOUCH_OHLC",
+          "net_pnl_cny": "112.42",
+          "s0_matched_net_pnl_cny": "23.90",
+          "excess_s0_cny": "88.52",
+          "s0_equal_capital_pnl_cny": "25.15",
+          "excess_s0_equal_capital_cny": "87.27",
+          "equal_capital_method": "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE",
+          "late_ohlc_reconciliation": true,
+          "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
+          "execution_confidence": "DAILY_OHLC_INTRADAY_ORDER_UNKNOWN",
+          "benchmark_exit_method": "ETF_DAILY_CLOSE_PROXY_NOT_SAME_TIME",
+          "s0_intraday_excess_envelope_cny": {
+            "excess_if_etf_high_cny": "43.55",
+            "excess_if_etf_low_cny": "117.51",
+            "interpretation": "DAILY_BAR_BOUNDS_NOT_SYNCHRONIZED_EXECUTION"
+          },
+          "s0_notional_entry_cny": "4093.04",
+          "stock_notional_entry_cny": "4307.15"
+        },
+        {
+          "id": "2026-11-06:SHALLOW_DIP:601818",
+          "stock": "601818",
+          "entry_session": "2026-11-09",
+          "exit_session": "2026-11-11",
+          "shares": 1400,
+          "entry_open_raw": "3.16",
+          "exit_price_raw": "3.15",
+          "exit_reason": "T_PLUS_2_PLANNED_CLOSE_PROXY",
+          "net_pnl_cny": "-30.62",
+          "s0_matched_net_pnl_cny": "-4.14",
+          "excess_s0_cny": "-26.47",
+          "s0_equal_capital_pnl_cny": "-4.43",
+          "excess_s0_equal_capital_cny": "-26.19",
+          "equal_capital_method": "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE",
+          "late_ohlc_reconciliation": false,
+          "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
+          "execution_confidence": "DAILY_CLOSE_PROXY",
+          "benchmark_exit_method": "ETF_SAME_SESSION_CLOSE_PROXY",
+          "s0_intraday_excess_envelope_cny": null,
+          "s0_notional_entry_cny": "4147.07",
+          "stock_notional_entry_cny": "4431.21"
+        },
+        {
+          "id": "2026-11-16:SHALLOW_DIP:600050",
+          "stock": "600050",
+          "entry_session": "2026-11-18",
+          "strategy_experiment_id": "LEGACY_V5",
+          "exit_session": "2026-11-20",
+          "shares": 900,
+          "entry_open_raw": "4.46",
+          "exit_price_raw": "4.53",
+          "exit_reason": "T_PLUS_2_PLANNED_CLOSE_PROXY",
+          "net_pnl_cny": "46.91",
+          "s0_matched_net_pnl_cny": "-50.54",
+          "excess_s0_cny": "97.45",
+          "s0_equal_capital_pnl_cny": "-55.52",
+          "excess_s0_equal_capital_cny": "102.44",
+          "equal_capital_method": "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE",
+          "late_ohlc_reconciliation": false,
+          "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
+          "execution_confidence": "DAILY_CLOSE_PROXY",
+          "benchmark_exit_method": "ETF_SAME_SESSION_CLOSE_PROXY",
+          "s0_intraday_excess_envelope_cny": null,
+          "s0_notional_entry_cny": "3659.93",
+          "stock_notional_entry_cny": "4021.01"
+        },
+        {
+          "id": "2026-11-18:SHALLOW_DIP:600031",
+          "stock": "600031",
+          "entry_session": "2026-11-19",
+          "strategy_experiment_id": "EXP-0017",
+          "exit_session": "2026-11-20",
+          "shares": 200,
+          "entry_open_raw": "18.6",
+          "exit_price_raw": "18.042",
+          "exit_reason": "STOP_TOUCH_OHLC_STOP_FIRST",
+          "net_pnl_cny": "-127.07",
+          "s0_matched_net_pnl_cny": "-38.83",
+          "excess_s0_cny": "-88.24",
+          "s0_equal_capital_pnl_cny": "-39.67",
+          "excess_s0_equal_capital_cny": "-87.40",
+          "equal_capital_method": "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE",
+          "late_ohlc_reconciliation": false,
+          "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
+          "execution_confidence": "DAILY_OHLC_STOP_FIRST_AMBIGUOUS",
+          "benchmark_exit_method": "ETF_DAILY_CLOSE_PROXY_NOT_SAME_TIME",
+          "s0_intraday_excess_envelope_cny": {
+            "excess_if_etf_high_cny": "-103.53",
+            "excess_if_etf_low_cny": "-45.06",
+            "interpretation": "DAILY_BAR_BOUNDS_NOT_SYNCHRONIZED_EXECUTION"
+          },
+          "s0_notional_entry_cny": "3648.22",
+          "stock_notional_entry_cny": "3726.86"
+        }
+      ],
+      "decisions": [
+        {
+          "id": "2026-11-02:SHALLOW_DIP:002648",
+          "session": "2026-11-04",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 100,
+          "cash_cost_cny": "2532.26"
+        },
+        {
+          "id": "2026-11-02:SHALLOW_DIP:002714",
+          "session": "2026-11-04",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 100,
+          "cash_cost_cny": "4307.15"
+        },
+        {
+          "id": "2026-11-03:SHALLOW_DIP:600104",
+          "session": "2026-11-05",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "MAX_TWO_OPEN_POSITIONS"
+        },
+        {
+          "id": "2026-11-03:SHALLOW_DIP:601916",
+          "session": "2026-11-05",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "MAX_TWO_OPEN_POSITIONS"
+        },
+        {
+          "id": "2026-11-04:SHALLOW_DIP:002230",
+          "session": "2026-11-06",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "ENTRY_OHLC_MISSING_NO_RETROSPECTIVE_FILL"
+        },
+        {
+          "id": "2026-11-04:SHALLOW_DIP:601766",
+          "session": "2026-11-06",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "ENTRY_OHLC_MISSING_NO_RETROSPECTIVE_FILL"
+        },
+        {
+          "id": "2026-11-06:SHALLOW_DIP:600050",
+          "session": "2026-11-09",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "LOT_CASH_OR_RISK_BUDGET"
+        },
+        {
+          "id": "2026-11-06:SHALLOW_DIP:601818",
+          "session": "2026-11-09",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 1400,
+          "cash_cost_cny": "4431.21"
+        },
+        {
+          "id": "2026-11-16:SHALLOW_DIP:600050",
+          "session": "2026-11-18",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 900,
+          "cash_cost_cny": "4021.01"
+        },
+        {
+          "id": "2026-11-16:SHALLOW_DIP:601668",
+          "session": "2026-11-18",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "ENTRY_OHLC_MISSING_NO_RETROSPECTIVE_FILL"
+        },
+        {
+          "id": "2026-11-17:SHALLOW_DIP:002352",
+          "session": "2026-11-18",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "ENTRY_OHLC_MISSING_NO_RETROSPECTIVE_FILL"
+        },
+        {
+          "id": "2026-11-17:SHALLOW_DIP:002648",
+          "session": "2026-11-18",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "ENTRY_OHLC_MISSING_NO_RETROSPECTIVE_FILL"
+        },
+        {
+          "id": "2026-11-18:SHALLOW_DIP:600031",
+          "session": "2026-11-19",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 200,
+          "cash_cost_cny": "3726.86"
+        },
+        {
+          "id": "2026-11-18:SHALLOW_DIP:601688",
+          "session": "2026-11-19",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "MAX_TWO_OPEN_POSITIONS"
+        },
+        {
+          "id": "2026-11-19:SHALLOW_DIP:600958",
+          "session": "2026-11-20",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 500,
+          "cash_cost_cny": "4057.02"
+        },
+        {
+          "id": "2026-11-19:SHALLOW_DIP:600999",
+          "session": "2026-11-20",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 200,
+          "cash_cost_cny": "3140.57"
+        },
+        {
+          "id": "2026-11-20:SHALLOW_DIP:600958",
+          "session": "2026-11-23",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "ALREADY_HELD"
+        },
+        {
+          "id": "2026-11-20:SHALLOW_DIP:601916",
+          "session": "2026-11-23",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "MAX_TWO_OPEN_POSITIONS"
+        }
+      ],
+      "realized_pnl_cny": "-87.85",
+      "s0_realized_pnl_cny": "-59.29",
+      "summary": {
+        "cash_cny": "22714.55",
+        "equity_after_estimated_exit_cost_cny": "29908.34",
+        "net_pnl_cny": "-91.66",
+        "realized_pnl_cny": "-87.85",
+        "open_positions": 2,
+        "closed_trades": 5,
+        "win_rate": "0.4",
+        "paired_s0_trades": 5,
+        "paired_s0_close_proxy_trades": 3,
+        "paired_s0_open_proxy_trades": 0,
+        "paired_s0_exact_intraday_trades": 0,
+        "pending_quote_sessions": 0,
+        "realized_excess_s0_cny": "-28.56",
+        "realized_excess_s0_equal_capital_cny": "-24.02",
+        "mark_status": "CURRENT_CLOSE_PROXY",
+        "market_session": "2026-11-23"
+      }
+    },
+    "DEEP_DIP": {
+      "cash_cny": "21254.15",
+      "positions": [
+        {
+          "id": "2026-11-19:DEEP_DIP:600905",
+          "stock": "600905",
+          "freeze_sha256": "6c9eab2b7632e0c387964d9eff23c2ec8540482c32f4c9b6892099e6589bc7ad",
+          "strategy_experiment_id": "EXP-0017",
+          "entry_session": "2026-11-20",
+          "entry_open_raw": "3.21",
+          "shares": 1300,
+          "buy_total_cny": "4180.09",
+          "held_sessions": 1,
+          "last_mark_close": "3.2",
+          "last_mark_session": "2026-11-23",
+          "s0_shares": 1000,
+          "s0_buy_total_cny": "4021.01"
+        },
+        {
+          "id": "2026-11-20:DEEP_DIP:000425",
+          "stock": "000425",
+          "freeze_sha256": "3a442fe7d60b715124b5b659547a8a937d4023d61cee258c44d8f985ef969eee",
+          "strategy_experiment_id": "EXP-0017",
+          "entry_session": "2026-11-23",
+          "entry_open_raw": "6.35",
+          "shares": 700,
+          "buy_total_cny": "4452.22",
+          "held_sessions": 0,
+          "last_mark_close": "6.42",
+          "last_mark_session": "2026-11-23",
+          "s0_shares": 1100,
+          "s0_buy_total_cny": "4403.90"
+        }
+      ],
+      "closed_trades": [
+        {
+          "id": "2026-11-02:DEEP_DIP:601211",
+          "stock": "601211",
+          "entry_session": "2026-11-04",
+          "exit_session": "2026-11-06",
+          "shares": 200,
+          "entry_open_raw": "16.75",
+          "exit_price_raw": "16.46",
+          "exit_reason": "T_PLUS_2_PLANNED_CLOSE_PROXY",
+          "net_pnl_cny": "-72.97",
+          "s0_matched_net_pnl_cny": "17.12",
+          "excess_s0_cny": "-90.09",
+          "s0_equal_capital_pnl_cny": "17.55",
+          "excess_s0_equal_capital_cny": "-90.52",
+          "equal_capital_method": "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE",
+          "late_ohlc_reconciliation": true,
+          "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
+          "execution_confidence": "DAILY_CLOSE_PROXY",
+          "benchmark_exit_method": "ETF_SAME_SESSION_CLOSE_PROXY",
+          "s0_intraday_excess_envelope_cny": null,
+          "s0_notional_entry_cny": "3275.43",
+          "stock_notional_entry_cny": "3356.68"
+        },
+        {
+          "id": "2026-11-03:DEEP_DIP:600036",
+          "stock": "600036",
+          "entry_session": "2026-11-05",
+          "exit_session": "2026-11-09",
+          "shares": 100,
+          "entry_open_raw": "42.45",
+          "exit_price_raw": "43.01",
+          "exit_reason": "T_PLUS_2_PLANNED_CLOSE_PROXY",
+          "net_pnl_cny": "39.58",
+          "s0_matched_net_pnl_cny": "-33.14",
+          "excess_s0_cny": "72.72",
+          "s0_equal_capital_pnl_cny": "-33.90",
+          "excess_s0_equal_capital_cny": "73.48",
+          "equal_capital_method": "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE",
+          "late_ohlc_reconciliation": false,
+          "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
+          "execution_confidence": "DAILY_CLOSE_PROXY",
+          "benchmark_exit_method": "ETF_SAME_SESSION_CLOSE_PROXY",
+          "s0_intraday_excess_envelope_cny": null,
+          "s0_notional_entry_cny": "4156.07",
+          "stock_notional_entry_cny": "4252.12"
+        },
+        {
+          "id": "2026-11-06:DEEP_DIP:601818",
+          "stock": "601818",
+          "entry_session": "2026-11-09",
+          "exit_session": "2026-11-11",
+          "shares": 1400,
+          "entry_open_raw": "3.16",
+          "exit_price_raw": "3.15",
+          "exit_reason": "T_PLUS_2_PLANNED_CLOSE_PROXY",
+          "net_pnl_cny": "-30.62",
+          "s0_matched_net_pnl_cny": "-4.14",
+          "excess_s0_cny": "-26.47",
+          "s0_equal_capital_pnl_cny": "-4.43",
+          "excess_s0_equal_capital_cny": "-26.19",
+          "equal_capital_method": "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE",
+          "late_ohlc_reconciliation": false,
+          "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
+          "execution_confidence": "DAILY_CLOSE_PROXY",
+          "benchmark_exit_method": "ETF_SAME_SESSION_CLOSE_PROXY",
+          "s0_intraday_excess_envelope_cny": null,
+          "s0_notional_entry_cny": "4147.07",
+          "stock_notional_entry_cny": "4431.21"
+        },
+        {
+          "id": "2026-11-16:DEEP_DIP:600030",
+          "stock": "600030",
+          "entry_session": "2026-11-18",
+          "strategy_experiment_id": "LEGACY_V5",
+          "exit_session": "2026-11-20",
+          "shares": 100,
+          "entry_open_raw": "25.2",
+          "exit_price_raw": "25.39",
+          "exit_reason": "T_PLUS_2_PLANNED_CLOSE_PROXY",
+          "net_pnl_cny": "5.20",
+          "s0_matched_net_pnl_cny": "-37.03",
+          "excess_s0_cny": "42.23",
+          "s0_equal_capital_pnl_cny": "-38.31",
+          "excess_s0_equal_capital_cny": "43.51",
+          "equal_capital_method": "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE",
+          "late_ohlc_reconciliation": false,
+          "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
+          "execution_confidence": "DAILY_CLOSE_PROXY",
+          "benchmark_exit_method": "ETF_SAME_SESSION_CLOSE_PROXY",
+          "s0_intraday_excess_envelope_cny": null,
+          "s0_notional_entry_cny": "2441.62",
+          "stock_notional_entry_cny": "2526.26"
+        },
+        {
+          "id": "2026-11-17:DEEP_DIP:600999",
+          "stock": "600999",
+          "entry_session": "2026-11-18",
+          "strategy_experiment_id": "EXP-0017",
+          "exit_session": "2026-11-20",
+          "shares": 200,
+          "entry_open_raw": "15.88",
+          "exit_price_raw": "15.68",
+          "exit_reason": "T_PLUS_2_PLANNED_CLOSE_PROXY",
+          "net_pnl_cny": "-54.73",
+          "s0_matched_net_pnl_cny": "-41.53",
+          "excess_s0_cny": "-13.20",
+          "s0_equal_capital_pnl_cny": "-46.41",
+          "excess_s0_equal_capital_cny": "-8.32",
+          "equal_capital_method": "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE",
+          "late_ohlc_reconciliation": false,
+          "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
+          "execution_confidence": "DAILY_CLOSE_PROXY",
+          "benchmark_exit_method": "ETF_SAME_SESSION_CLOSE_PROXY",
+          "s0_intraday_excess_envelope_cny": null,
+          "s0_notional_entry_cny": "2847.72",
+          "stock_notional_entry_cny": "3182.59"
+        }
+      ],
+      "decisions": [
+        {
+          "id": "2026-11-02:DEEP_DIP:000100",
+          "session": "2026-11-04",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "LOT_CASH_OR_RISK_BUDGET"
+        },
+        {
+          "id": "2026-11-02:DEEP_DIP:601211",
+          "session": "2026-11-04",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 200,
+          "cash_cost_cny": "3356.68"
+        },
+        {
+          "id": "2026-11-03:DEEP_DIP:600010",
+          "session": "2026-11-05",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "LOT_CASH_OR_RISK_BUDGET"
+        },
+        {
+          "id": "2026-11-03:DEEP_DIP:600036",
+          "session": "2026-11-05",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 100,
+          "cash_cost_cny": "4252.12"
+        },
+        {
+          "id": "2026-11-04:DEEP_DIP:002230",
+          "session": "2026-11-06",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "ENTRY_OHLC_MISSING_NO_RETROSPECTIVE_FILL"
+        },
+        {
+          "id": "2026-11-04:DEEP_DIP:601766",
+          "session": "2026-11-06",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "ENTRY_OHLC_MISSING_NO_RETROSPECTIVE_FILL"
+        },
+        {
+          "id": "2026-11-06:DEEP_DIP:600050",
+          "session": "2026-11-09",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "LOT_CASH_OR_RISK_BUDGET"
+        },
+        {
+          "id": "2026-11-06:DEEP_DIP:601818",
+          "session": "2026-11-09",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 1400,
+          "cash_cost_cny": "4431.21"
+        },
+        {
+          "id": "2026-11-16:DEEP_DIP:002050",
+          "session": "2026-11-18",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "ENTRY_OHLC_MISSING_NO_RETROSPECTIVE_FILL"
+        },
+        {
+          "id": "2026-11-16:DEEP_DIP:600030",
+          "session": "2026-11-18",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 100,
+          "cash_cost_cny": "2526.26"
+        },
+        {
+          "id": "2026-11-17:DEEP_DIP:600999",
+          "session": "2026-11-18",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 200,
+          "cash_cost_cny": "3182.59"
+        },
+        {
+          "id": "2026-11-17:DEEP_DIP:601688",
+          "session": "2026-11-18",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "MAX_TWO_OPEN_POSITIONS"
+        },
+        {
+          "id": "2026-11-18:DEEP_DIP:000063",
+          "session": "2026-11-19",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "MAX_TWO_OPEN_POSITIONS"
+        },
+        {
+          "id": "2026-11-18:DEEP_DIP:601995",
+          "session": "2026-11-19",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "MAX_TWO_OPEN_POSITIONS"
+        },
+        {
+          "id": "2026-11-19:DEEP_DIP:000792",
+          "session": "2026-11-20",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "ENTRY_OHLC_MISSING_NO_RETROSPECTIVE_FILL"
+        },
+        {
+          "id": "2026-11-19:DEEP_DIP:600905",
+          "session": "2026-11-20",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 1300,
+          "cash_cost_cny": "4180.09"
+        },
+        {
+          "id": "2026-11-20:DEEP_DIP:000425",
+          "session": "2026-11-23",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 700,
+          "cash_cost_cny": "4452.22"
+        },
+        {
+          "id": "2026-11-20:DEEP_DIP:600999",
+          "session": "2026-11-23",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "MAX_TWO_OPEN_POSITIONS"
+        }
+      ],
+      "realized_pnl_cny": "-113.54",
+      "s0_realized_pnl_cny": "-98.72",
+      "summary": {
+        "cash_cny": "21254.15",
+        "equity_after_estimated_exit_cost_cny": "29889.50",
+        "net_pnl_cny": "-110.50",
+        "realized_pnl_cny": "-113.54",
+        "open_positions": 2,
+        "closed_trades": 5,
+        "win_rate": "0.4",
+        "paired_s0_trades": 5,
+        "paired_s0_close_proxy_trades": 0,
+        "paired_s0_open_proxy_trades": 0,
+        "paired_s0_exact_intraday_trades": 0,
+        "pending_quote_sessions": 0,
+        "realized_excess_s0_cny": "-14.81",
+        "realized_excess_s0_equal_capital_cny": "-8.04",
+        "mark_status": "CURRENT_CLOSE_PROXY",
+        "market_session": "2026-11-23"
+      }
+    },
+    "R_BOUNCE": {
+      "cash_cny": "23547.78",
+      "positions": [
+        {
+          "id": "2026-11-20:R_BOUNCE:600690",
+          "stock": "600690",
+          "freeze_sha256": "3a442fe7d60b715124b5b659547a8a937d4023d61cee258c44d8f985ef969eee",
+          "strategy_experiment_id": "EXP-0017",
+          "entry_session": "2026-11-23",
+          "entry_open_raw": "22.79",
+          "shares": 100,
+          "buy_total_cny": "2285.14",
+          "held_sessions": 0,
+          "last_mark_close": "22.72",
+          "last_mark_session": "2026-11-23",
+          "s0_shares": 500,
+          "s0_buy_total_cny": "2004.50"
+        },
+        {
+          "id": "2026-11-20:R_BOUNCE:601728",
+          "stock": "601728",
+          "freeze_sha256": "3a442fe7d60b715124b5b659547a8a937d4023d61cee258c44d8f985ef969eee",
+          "strategy_experiment_id": "EXP-0017",
+          "entry_session": "2026-11-23",
+          "entry_open_raw": "7.37",
+          "shares": 600,
+          "buy_total_cny": "4429.21",
+          "held_sessions": 0,
+          "last_mark_close": "7.03",
+          "last_mark_session": "2026-11-23",
+          "s0_shares": 1100,
+          "s0_buy_total_cny": "4403.90"
+        }
+      ],
+      "closed_trades": [
+        {
+          "id": "2026-11-02:R_BOUNCE:002142",
+          "stock": "002142",
+          "entry_session": "2026-11-04",
+          "exit_session": "2026-11-06",
+          "shares": 100,
+          "entry_open_raw": "34.0",
+          "exit_price_raw": "34.28",
+          "exit_reason": "T_PLUS_2_PLANNED_CLOSE_PROXY",
+          "net_pnl_cny": "12.87",
+          "s0_matched_net_pnl_cny": "17.12",
+          "excess_s0_cny": "-4.25",
+          "s0_equal_capital_pnl_cny": "17.81",
+          "excess_s0_equal_capital_cny": "-4.93",
+          "equal_capital_method": "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE",
+          "late_ohlc_reconciliation": true,
+          "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
+          "execution_confidence": "DAILY_CLOSE_PROXY",
+          "benchmark_exit_method": "ETF_SAME_SESSION_CLOSE_PROXY",
+          "s0_intraday_excess_envelope_cny": null,
+          "s0_notional_entry_cny": "3275.43",
+          "stock_notional_entry_cny": "3406.70"
+        },
+        {
+          "id": "2026-11-02:R_BOUNCE:600926",
+          "stock": "600926",
+          "entry_session": "2026-11-04",
+          "exit_session": "2026-11-06",
+          "shares": 200,
+          "entry_open_raw": "16.74",
+          "exit_price_raw": "17.09",
+          "exit_reason": "T_PLUS_2_PLANNED_CLOSE_PROXY",
+          "net_pnl_cny": "54.91",
+          "s0_matched_net_pnl_cny": "17.12",
+          "excess_s0_cny": "37.79",
+          "s0_equal_capital_pnl_cny": "17.53",
+          "excess_s0_equal_capital_cny": "37.38",
+          "equal_capital_method": "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE",
+          "late_ohlc_reconciliation": true,
+          "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
+          "execution_confidence": "DAILY_CLOSE_PROXY",
+          "benchmark_exit_method": "ETF_SAME_SESSION_CLOSE_PROXY",
+          "s0_intraday_excess_envelope_cny": null,
+          "s0_notional_entry_cny": "3275.43",
+          "stock_notional_entry_cny": "3354.67"
+        },
+        {
+          "id": "2026-11-06:R_BOUNCE:601818",
+          "stock": "601818",
+          "entry_session": "2026-11-09",
+          "exit_session": "2026-11-11",
+          "shares": 1400,
+          "entry_open_raw": "3.16",
+          "exit_price_raw": "3.15",
+          "exit_reason": "T_PLUS_2_PLANNED_CLOSE_PROXY",
+          "net_pnl_cny": "-30.62",
+          "s0_matched_net_pnl_cny": "-4.14",
+          "excess_s0_cny": "-26.47",
+          "s0_equal_capital_pnl_cny": "-4.43",
+          "excess_s0_equal_capital_cny": "-26.19",
+          "equal_capital_method": "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE",
+          "late_ohlc_reconciliation": false,
+          "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
+          "execution_confidence": "DAILY_CLOSE_PROXY",
+          "benchmark_exit_method": "ETF_SAME_SESSION_CLOSE_PROXY",
+          "s0_intraday_excess_envelope_cny": null,
+          "s0_notional_entry_cny": "4147.07",
+          "stock_notional_entry_cny": "4431.21"
+        },
+        {
+          "id": "2026-11-17:R_BOUNCE:600000",
+          "stock": "600000",
+          "entry_session": "2026-11-18",
+          "strategy_experiment_id": "EXP-0017",
+          "exit_session": "2026-11-20",
+          "shares": 400,
+          "entry_open_raw": "10.76",
+          "exit_price_raw": "10.87",
+          "exit_reason": "T_PLUS_2_PLANNED_CLOSE_PROXY",
+          "net_pnl_cny": "27.50",
+          "s0_matched_net_pnl_cny": "-55.04",
+          "excess_s0_cny": "82.54",
+          "s0_equal_capital_pnl_cny": "-58.36",
+          "excess_s0_equal_capital_cny": "85.86",
+          "equal_capital_method": "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE",
+          "late_ohlc_reconciliation": false,
+          "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
+          "execution_confidence": "DAILY_CLOSE_PROXY",
+          "benchmark_exit_method": "ETF_SAME_SESSION_CLOSE_PROXY",
+          "s0_intraday_excess_envelope_cny": null,
+          "s0_notional_entry_cny": "4066.03",
+          "stock_notional_entry_cny": "4311.15"
+        },
+        {
+          "id": "2026-11-16:R_BOUNCE:601006",
+          "stock": "601006",
+          "entry_session": "2026-11-18",
+          "strategy_experiment_id": "LEGACY_V5",
+          "exit_session": "2026-11-20",
+          "shares": 800,
+          "entry_open_raw": "4.97",
+          "exit_price_raw": "5.01",
+          "exit_reason": "T_PLUS_2_PLANNED_CLOSE_PROXY",
+          "net_pnl_cny": "16.00",
+          "s0_matched_net_pnl_cny": "-50.54",
+          "excess_s0_cny": "66.54",
+          "s0_equal_capital_pnl_cny": "-55.00",
+          "excess_s0_equal_capital_cny": "71.00",
+          "equal_capital_method": "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE",
+          "late_ohlc_reconciliation": true,
+          "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
+          "execution_confidence": "DAILY_CLOSE_PROXY",
+          "benchmark_exit_method": "ETF_SAME_SESSION_CLOSE_PROXY",
+          "s0_intraday_excess_envelope_cny": null,
+          "s0_notional_entry_cny": "3659.93",
+          "stock_notional_entry_cny": "3982.99"
+        },
+        {
+          "id": "2026-11-19:R_BOUNCE:601728",
+          "stock": "601728",
+          "entry_session": "2026-11-20",
+          "strategy_experiment_id": "EXP-0017",
+          "exit_session": "2026-11-23",
+          "shares": 600,
+          "entry_open_raw": "7.04",
+          "exit_price_raw": "7.37",
+          "exit_reason": "GAP_TARGET_AT_OPEN",
+          "net_pnl_cny": "181.47",
+          "s0_matched_net_pnl_cny": "-31.01",
+          "excess_s0_cny": "212.48",
+          "s0_equal_capital_pnl_cny": "-32.63",
+          "excess_s0_equal_capital_cny": "214.10",
+          "equal_capital_method": "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE",
+          "late_ohlc_reconciliation": false,
+          "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
+          "execution_confidence": "DAILY_OPEN_PROXY",
+          "benchmark_exit_method": "ETF_SAME_SESSION_OPEN_PROXY",
+          "s0_intraday_excess_envelope_cny": null,
+          "s0_notional_entry_cny": "4021.01",
+          "stock_notional_entry_cny": "4231.11"
+        }
+      ],
+      "decisions": [
+        {
+          "id": "2026-11-02:R_BOUNCE:002142",
+          "session": "2026-11-04",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 100,
+          "cash_cost_cny": "3406.70"
+        },
+        {
+          "id": "2026-11-02:R_BOUNCE:600926",
+          "session": "2026-11-04",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 200,
+          "cash_cost_cny": "3354.67"
+        },
+        {
+          "id": "2026-11-03:R_BOUNCE:600900",
+          "session": "2026-11-05",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "MAX_TWO_OPEN_POSITIONS"
+        },
+        {
+          "id": "2026-11-03:R_BOUNCE:600926",
+          "session": "2026-11-05",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "ALREADY_HELD"
+        },
+        {
+          "id": "2026-11-04:R_BOUNCE:002230",
+          "session": "2026-11-06",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "ENTRY_OHLC_MISSING_NO_RETROSPECTIVE_FILL"
+        },
+        {
+          "id": "2026-11-04:R_BOUNCE:601766",
+          "session": "2026-11-06",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "ENTRY_OHLC_MISSING_NO_RETROSPECTIVE_FILL"
+        },
+        {
+          "id": "2026-11-06:R_BOUNCE:600050",
+          "session": "2026-11-09",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "LOT_CASH_OR_RISK_BUDGET"
+        },
+        {
+          "id": "2026-11-06:R_BOUNCE:601818",
+          "session": "2026-11-09",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 1400,
+          "cash_cost_cny": "4431.21"
+        },
+        {
+          "id": "2026-11-16:R_BOUNCE:000100",
+          "session": "2026-11-18",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "ENTRY_OHLC_MISSING_NO_RETROSPECTIVE_FILL"
+        },
+        {
+          "id": "2026-11-16:R_BOUNCE:601006",
+          "session": "2026-11-18",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 800,
+          "cash_cost_cny": "3982.99"
+        },
+        {
+          "id": "2026-11-17:R_BOUNCE:600000",
+          "session": "2026-11-18",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 400,
+          "cash_cost_cny": "4311.15"
+        },
+        {
+          "id": "2026-11-17:R_BOUNCE:601825",
+          "session": "2026-11-18",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "MAX_TWO_OPEN_POSITIONS"
+        },
+        {
+          "id": "2026-11-18:R_BOUNCE:600690",
+          "session": "2026-11-19",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "MAX_TWO_OPEN_POSITIONS"
+        },
+        {
+          "id": "2026-11-18:R_BOUNCE:601825",
+          "session": "2026-11-19",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "MAX_TWO_OPEN_POSITIONS"
+        },
+        {
+          "id": "2026-11-19:R_BOUNCE:600690",
+          "session": "2026-11-20",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "ENTRY_OHLC_MISSING_NO_RETROSPECTIVE_FILL"
+        },
+        {
+          "id": "2026-11-19:R_BOUNCE:601728",
+          "session": "2026-11-20",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 600,
+          "cash_cost_cny": "4231.11"
+        },
+        {
+          "id": "2026-11-20:R_BOUNCE:600690",
+          "session": "2026-11-23",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 100,
+          "cash_cost_cny": "2285.14"
+        },
+        {
+          "id": "2026-11-20:R_BOUNCE:601728",
+          "session": "2026-11-23",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 600,
+          "cash_cost_cny": "4429.21"
+        }
+      ],
+      "realized_pnl_cny": "262.13",
+      "s0_realized_pnl_cny": "-106.49",
+      "summary": {
+        "cash_cny": "23547.78",
+        "equity_after_estimated_exit_cost_cny": "30021.29",
+        "net_pnl_cny": "21.29",
+        "realized_pnl_cny": "262.13",
+        "open_positions": 2,
+        "closed_trades": 6,
+        "win_rate": "0.8333333333333333333333333333",
+        "paired_s0_trades": 6,
+        "paired_s0_close_proxy_trades": 0,
+        "paired_s0_open_proxy_trades": 1,
+        "paired_s0_exact_intraday_trades": 0,
+        "pending_quote_sessions": 0,
+        "realized_excess_s0_cny": "368.63",
+        "realized_excess_s0_equal_capital_cny": "377.22",
+        "mark_status": "CURRENT_CLOSE_PROXY",
+        "market_session": "2026-11-23"
+      }
+    },
+    "EARLY_ENTRY": {
+      "cash_cny": "21614.77",
+      "positions": [
+        {
+          "id": "2026-11-19:EARLY_ENTRY:600016",
+          "stock": "600016",
+          "freeze_sha256": "6c9eab2b7632e0c387964d9eff23c2ec8540482c32f4c9b6892099e6589bc7ad",
+          "strategy_experiment_id": "EXP-0017",
+          "entry_session": "2026-11-20",
+          "entry_open_raw": "3.44",
+          "shares": 1200,
+          "buy_total_cny": "4135.06",
+          "held_sessions": 1,
+          "last_mark_close": "3.51",
+          "last_mark_session": "2026-11-23",
+          "s0_shares": 1000,
+          "s0_buy_total_cny": "4021.01"
+        },
+        {
+          "id": "2026-11-20:EARLY_ENTRY:600905",
+          "stock": "600905",
+          "freeze_sha256": "3a442fe7d60b715124b5b659547a8a937d4023d61cee258c44d8f985ef969eee",
+          "strategy_experiment_id": "EXP-0017",
+          "entry_session": "2026-11-23",
+          "entry_open_raw": "3.29",
+          "shares": 1300,
+          "buy_total_cny": "4284.14",
+          "held_sessions": 0,
+          "last_mark_close": "3.2",
+          "last_mark_session": "2026-11-23",
+          "s0_shares": 1000,
+          "s0_buy_total_cny": "4004.00"
+        }
+      ],
+      "closed_trades": [
+        {
+          "id": "2026-11-17:EARLY_ENTRY:600000",
+          "stock": "600000",
+          "entry_session": "2026-11-18",
+          "strategy_experiment_id": "EXP-0017",
+          "exit_session": "2026-11-20",
+          "shares": 400,
+          "entry_open_raw": "10.76",
+          "exit_price_raw": "10.87",
+          "exit_reason": "T_PLUS_2_PLANNED_CLOSE_PROXY",
+          "net_pnl_cny": "27.50",
+          "s0_matched_net_pnl_cny": "-55.04",
+          "excess_s0_cny": "82.54",
+          "s0_equal_capital_pnl_cny": "-58.36",
+          "excess_s0_equal_capital_cny": "85.86",
+          "equal_capital_method": "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE",
+          "late_ohlc_reconciliation": false,
+          "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
+          "execution_confidence": "DAILY_CLOSE_PROXY",
+          "benchmark_exit_method": "ETF_SAME_SESSION_CLOSE_PROXY",
+          "s0_intraday_excess_envelope_cny": null,
+          "s0_notional_entry_cny": "4066.03",
+          "stock_notional_entry_cny": "4311.15"
+        },
+        {
+          "id": "2026-11-17:EARLY_ENTRY:600938",
+          "stock": "600938",
+          "entry_session": "2026-11-18",
+          "strategy_experiment_id": "EXP-0017",
+          "exit_session": "2026-11-20",
+          "shares": 100,
+          "entry_open_raw": "30.08",
+          "exit_price_raw": "30.29",
+          "exit_reason": "T_PLUS_2_PLANNED_CLOSE_PROXY",
+          "net_pnl_cny": "6.47",
+          "s0_matched_net_pnl_cny": "-41.53",
+          "excess_s0_cny": "48.00",
+          "s0_equal_capital_pnl_cny": "-43.96",
+          "excess_s0_equal_capital_cny": "50.43",
+          "equal_capital_method": "NET_FEE_ADJUSTED_ETF_RETURN_ON_STOCK_COST_NOT_EXECUTABLE",
+          "late_ohlc_reconciliation": true,
+          "price_method": "DAILY_OHLC_BRACKET_OR_PRECOMMITTED_CLOSE_PROXY",
+          "execution_confidence": "DAILY_CLOSE_PROXY",
+          "benchmark_exit_method": "ETF_SAME_SESSION_CLOSE_PROXY",
+          "s0_intraday_excess_envelope_cny": null,
+          "s0_notional_entry_cny": "2847.72",
+          "stock_notional_entry_cny": "3014.50"
+        }
+      ],
+      "decisions": [
+        {
+          "id": "2026-11-17:EARLY_ENTRY:600000",
+          "session": "2026-11-18",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 400,
+          "cash_cost_cny": "4311.15"
+        },
+        {
+          "id": "2026-11-17:EARLY_ENTRY:600938",
+          "session": "2026-11-18",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 100,
+          "cash_cost_cny": "3014.50"
+        },
+        {
+          "id": "2026-11-18:EARLY_ENTRY:600690",
+          "session": "2026-11-19",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "MAX_TWO_OPEN_POSITIONS"
+        },
+        {
+          "id": "2026-11-18:EARLY_ENTRY:601825",
+          "session": "2026-11-19",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "MAX_TWO_OPEN_POSITIONS"
+        },
+        {
+          "id": "2026-11-19:EARLY_ENTRY:600016",
+          "session": "2026-11-20",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 1200,
+          "cash_cost_cny": "4135.06"
+        },
+        {
+          "id": "2026-11-19:EARLY_ENTRY:600938",
+          "session": "2026-11-20",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "ENTRY_OHLC_MISSING_NO_RETROSPECTIVE_FILL"
+        },
+        {
+          "id": "2026-11-20:EARLY_ENTRY:600905",
+          "session": "2026-11-23",
+          "status": "PAPER_OPEN_PROXY_FILLED",
+          "shares": 1300,
+          "cash_cost_cny": "4284.14"
+        },
+        {
+          "id": "2026-11-20:EARLY_ENTRY:601728",
+          "session": "2026-11-23",
+          "status": "PAPER_ENTRY_SKIPPED",
+          "reason": "MAX_TWO_OPEN_POSITIONS"
+        }
+      ],
+      "realized_pnl_cny": "33.97",
+      "s0_realized_pnl_cny": "-96.57",
+      "summary": {
+        "cash_cny": "21614.77",
+        "equity_after_estimated_exit_cost_cny": "29968.40",
+        "net_pnl_cny": "-31.60",
+        "realized_pnl_cny": "33.97",
+        "open_positions": 2,
+        "closed_trades": 2,
+        "win_rate": "1",
+        "paired_s0_trades": 2,
+        "paired_s0_close_proxy_trades": 0,
+        "paired_s0_open_proxy_trades": 0,
+        "paired_s0_exact_intraday_trades": 0,
+        "pending_quote_sessions": 0,
+        "realized_excess_s0_cny": "130.54",
+        "realized_excess_s0_equal_capital_cny": "136.29",
+        "mark_status": "CURRENT_CLOSE_PROXY",
+        "market_session": "2026-11-23"
+      }
+    }
+  },
+  "source_event_count": 10,
+  "source_errors": [],
+  "execution": "OHLC_PAPER_SCENARIO_NOT_BROKER_TRADE",
+  "trade_authorized": false,
+  "broker_orders": [],
+  "github_run_id": "45277527808",
+  "github_run_attempt": "1",
+  "github_source_commit": "15f6116bbb7fb3e54982c4874eee1a5e91e90831",
+  "snapshot_sha256": "91eea8fdf7273b6ab6eb7736fa07ab85464050053cff6216afa6fcbc25e787c9"
+}
