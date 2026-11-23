@@ -2,7 +2,7 @@
 id: COMPILED-BRIEFING
 type: overview
 status: maintained
-updated: 2026-11-23
+updated: 2026-11-24
 ---
 # 国家队资金→成分股研究 Agent 最新证据简报
 
@@ -10,11 +10,11 @@ updated: 2026-11-23
 
 **主线：中央汇金等法定主体披露（低频） × 固定四沪深300ETF资金份额（高频） → 指数/PCF对应股票 → S0 ETF基准 vs S1/S2选股组合。**
 
-- 最新ETF源采集尝试：[run 45142846471](../../records/national_team_etf/2026-11-23/45142846471-a1.json)；状态 `FOUR_ETF_FACTOR_OBSERVED_AFTER_CAPTURE_NOT_HISTORICAL_PIT`；日期 2026-11-23。
-- 最近可完整核验四ETF份额/NAV的历史记录：[run 45142846471](../../records/national_team_merged/2026-11-23/45142846471-a1.json)；状态 `FULL_FOUR_ETF_SHARES_NAV_OBSERVED_RESEARCH`；日期 2026-11-23。
+- 最新ETF源采集尝试：[run 45258493146](../../records/national_team_etf/2026-11-24/45258493146-a1.json)；状态 `PRIOR_FULL_FOUR_AND_LATEST_PARTIAL_OBSERVED`；日期 2026-11-24。
+- 最近可完整核验四ETF份额/NAV的历史记录：[run 45258493146](../../records/national_team_merged/2026-11-24/45258493146-a1.json)；状态 `PARTIAL_LATEST_WITH_PRIOR_FULL_FOUR_FACTOR`；日期 2026-11-24。
 - 最近完整基金资金研究日：**2026-11-20**；合计当日净份额×NAV代理 **42498474120.000000 元**；这不是汇金个人账户当日买入。
 - 最近完整5日资金强度：**0.2467288690293157768173783463**；基金NAV尚需发行人原件复核、份额拆并需独立验证；极值应标异常而非直接买点。
-- 最近真实指数权重代理股票观察名单：[run 45142846471](../../records/national_team_watch/2026-11-23/45142846471-a1.json)；状态 `INDEX_PROXY_RESEARCH_WATCHLIST`；日期 2026-11-20。
+- 最近真实指数权重代理股票观察名单：[run 45258493146](../../records/national_team_watch/2026-11-24/45258493146-a1.json)；状态 `INDEX_PROXY_RESEARCH_WATCHLIST`；日期 2026-11-23。
 - 最新实测股票样本数：**150**；指数权重覆盖约 **0.82681**；指数权重非ETF真实PCF，且未证明个股跟随收益。
 
 **当前研究执行主线：V3资金 → V5路由 → 连续模拟盘；旧V2/A2/B仅历史归档。**
@@ -36,7 +36,7 @@ updated: 2026-11-23
 | EARLY_ENTRY | 25898.91 | 30053.75 | 1 | 2 | 53.75 | 136.29 | CURRENT_CLOSE_PROXY |
 - 累计账户决策：纸面开盘入场 22、合法跳过 32；累计源事件 9；不把再次归档或 OHLC 开盘代理算新增实际交易。
 - 最新冻结 2026-11-20：8条意向，已纸面入场 0、按规则跳过 0、迟到不补单 0、无账户决策 8、其他状态 0；按冻结日＋组别＋股票代码核对；独立OHLC情景不是账户成交。
-- 执行日待读回：预定 2026-11-23，账户市场日仍为 2026-11-20；不能在收盘归档前宣称已执行。
+- OVERDUE_MARKET_READBACK：预定执行日 2026-11-23 已过去，账本只到 2026-11-20；检查真实源与Actions，禁止补写历史成交。
 - OHLC反馈与连续账本读回：MATCHED_SNAPSHOT；反馈run 45143864747、账户run 45143864747；须四组完整、无决策ID冲突、非实盘授权、同run、原文哈希重算一致及四组汇总匹配。此为文件完整性，不代表独立真实成交或策略盈利。
 - 本次OHLC跟踪来源异常（全批次）：510300, 600958；需查原始错误及替代行情证据，不得当成精确盘口成交。
 - 后续路由反馈读回仍待验收：路由run 45143763420早于最新反馈run 45143864747；新反馈尚未证明被路由消费。
@@ -45,7 +45,7 @@ updated: 2026-11-23
 - 最近四ETF独立V2前瞻选股：[run 41027617348-a1-v2](../../records/national_team_strategy/2026-10-30/41027617348-a1-v2.json)；状态 `FROZEN_PROSPECTIVE_RESEARCH`；日期 2026-10-30。
 - V2真实首次可得时刻：2026-10-30T16:36:55.609229+08:00，底层四ETF资金日：2026-10-29；S1资金/成交额研究组 **601825, 600000, 601229, 600519, 601166**；S2独立价格确认研究组 **002714, 600660, 002422, 688111, 601318**。
 - V2仅以资金为择时触发（CSI300代理权重跨ETF相同，不能辨识逐股票实际买盘）；5/10/20日净超额收益待未来真实行情成熟；旧V1组合不可替换初始冻结股单。
-- 最近PCF采集尝试：[run 45142846471](../../records/national_team_pcf/2026-11-23/45142846471-a1.json)；状态 `SSE_PCF_FETCHED_BUT_NOT_VERIFIED`；日期 2026-11-23。
+- 最近PCF采集尝试：[run 45258493146](../../records/national_team_pcf/2026-11-24/45258493146-a1.json)；状态 `SSE_PCF_FETCHED_BUT_NOT_VERIFIED`；日期 2026-11-24。
 - 最近纸面事件冻结：[run 41369083901-a1](../../records/national_team_events/2026-11-02/41369083901-a1.json)；状态 `ALL_EVENTS_DUPLICATE_PREVIOUSLY_FROZEN`；日期 2026-11-02。
 - 最近纸面收益观察：[run 41369083901-a1](../../records/national_team_paper/2026-11-02/41369083901-a1.json)；状态 `PAPER_EVALUATION_ATTEMPTED`；日期 2026-11-02。
 - 最近独立实跑红队审计：[run 41369083901-a1](../../records/national_team_audits/2026-11-02/41369083901-a1.json)；状态 `RESEARCH_DATA_AUDIT_PASS`；日期 2026-11-02。
