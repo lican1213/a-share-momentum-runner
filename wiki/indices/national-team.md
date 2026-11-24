@@ -12,6 +12,11 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 
 | Source class | Trade/record date | Run ID | Recorded status | Evidence |
 | --- | --- | --- | --- | --- |
+| V5 independent horizon path | 2026-11-24 | 45375365454-a1 | NO_STATUS_FIELD | [JSON](../../records/national_team_left_outcomes_v5/2026-11-24/45375365454-a1.json) |
+| V5 continuous paper ledger | 2026-11-24 | 45375365454-a1 | NO_STATUS_FIELD | [JSON](../../records/national_team_paper_accounts_v5/2026-11-24/45375365454-a1.json) |
+| V5 dated event router | 2026-11-24 | 45375267557-a1 | ALREADY_FROZEN_FOR_SESSION | [JSON](../../records/national_team_router/2026-11-24/45375267557-a1.json) |
+| Official policy source observations | 2026-11-24 | 45375267557-a1 | NO_STATUS_FIELD | [JSON](../../records/national_team_policy/2026-11-24/45375267557-a1.json) |
+| V3 dated market and four-ETF replay | 2026-11-24 | 45375159064-a1 | NO_STATUS_FIELD | [JSON](../../records/national_team_v3/2026-11-24/45375159064-a1.json) |
 | V5 independent horizon path | 2026-11-24 | 45346434011-a1 | NO_STATUS_FIELD | [JSON](../../records/national_team_left_outcomes_v5/2026-11-24/45346434011-a1.json) |
 | V5 continuous paper ledger | 2026-11-24 | 45346434011-a1 | NO_STATUS_FIELD | [JSON](../../records/national_team_paper_accounts_v5/2026-11-24/45346434011-a1.json) |
 | V5 dated event router | 2026-11-24 | 45346347272-a1 | ALREADY_FROZEN_FOR_SESSION | [JSON](../../records/national_team_router/2026-11-24/45346347272-a1.json) |
