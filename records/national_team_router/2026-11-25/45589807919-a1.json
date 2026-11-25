@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "version": "NT_EVENT_ROUTER_V5",
+  "experiment_id": "EXP-0012",
+  "observed_at": "2026-11-25T17:54:37.710986+08:00",
+  "event_id": "ETF4_DOWNFLOW_2026-11-25",
+  "signal_session": "2026-11-25",
+  "signal_age_calendar_days": 0,
+  "latest_index_session": "2026-11-25",
+  "funding_lags_index": false,
+  "status": "WAIT_LATEST_SESSION_EVIDENCE",
+  "four_etfs": [
+    "510300",
+    "510310",
+    "510330",
+    "159919"
+  ],
+  "v3_path": "records/national_team_v3/2026-11-25/45589669214-a1.json",
+  "watch_path": null,
+  "selected_policy": "SHALLOW_DIP",
+  "strategy_experiment_id": "EXP-0017",
+  "funding_stage": "NO_ACTIVE_FLOW",
+  "feedback": {
+    "paired_10d_events": 1,
+    "feedback_source": {
+      "latest_outcomes_snapshot_sha256": "9c050e357673b1251ce4dd97e3a8df331d2890be96759fc92fa0eea7f58db4a6",
+      "latest_outcomes_run_id": "45556230925",
+      "latest_outcomes_capture_time": "2026-11-25T13:50:50.040728+08:00",
+      "integrity": "MATCHED"
+    },
+    "exp0017_cohort": {
+      "EARLY_ENTRY": {
+        "3": {
+          "eligible_clusters": 1,
+          "matured_clusters": 1,
+          "mean_excess_s0": "0.000970976610083333333333333333",
+          "positive_clusters": 1,
+          "distinct_paired_vs_shallow_clusters": 1,
+          "mean_excess_difference_vs_shallow": "0.001955614605166666666666666666"
+        },
+        "10": {
+          "eligible_clusters": 1,
+          "matured_clusters": 0,
+          "mean_excess_s0": null,
+          "positive_clusters": 0,
+          "distinct_paired_vs_shallow_clusters": 0,
+          "mean_excess_difference_vs_shallow": null
+        }
+      },
+      "R_BOUNCE": {
+        "3": {
+          "eligible_clusters": 1,
+          "matured_clusters": 1,
+          "mean_excess_s0": "0.0001894635989166666666666666665",
+          "positive_clusters": 1,
+          "distinct_paired_vs_shallow_clusters": 1,
+          "mean_excess_difference_vs_shallow": "0.001174101594000000000000000000"
+        },
+        "10": {
+          "eligible_clusters": 1,
+          "matured_clusters": 0,
+          "mean_excess_s0": null,
+          "positive_clusters": 0,
+          "distinct_paired_vs_shallow_clusters": 0,
+          "mean_excess_difference_vs_shallow": null
+        }
+      }
+    },
+    "indistinguishable_left_clusters": 0,
+    "mean_10d_excess_s0": {
+      "SHALLOW_DIP": "0.002083849040333333333333333333",
+      "DEEP_DIP": "0.003178094802166666666666666667"
+    },
+    "selected_policy": "SHALLOW_DIP",
+    "right_side_reference": {
+      "paired_10d_clusters": 1,
+      "mean_R_minus_SHALLOW_excess_s0": "0.004397011435000000000000000002",
+      "not_used_to_gate_left_side_research": true
+    },
+    "policy_rule": "8 distinct event clusters with paired 10d outcomes; DEEP_DIP +0.2pct",
+    "not_a_calibrated_profit_probability": true
+  },
+  "feedback_source_outcomes_snapshot_sha256": "9c050e357673b1251ce4dd97e3a8df331d2890be96759fc92fa0eea7f58db4a6",
+  "feedback_source_outcomes_run_id": "45556230925",
+  "funding": {
+    "net_creation_1d_cny_proxy": null,
+    "net_creation_5d_cny_proxy": null,
+    "ordinary_float_coverage_ratio": null,
+    "ratio_status": "NAV_MISSING",
+    "index_ret5": -0.021469612954563178,
+    "funding_basis": "SHARE_PROXY",
+    "early_proxy_trigger": false,
+    "exchange_shares_complete": false,
+    "exchange_nav_complete": false,
+    "latest_session_evidence_missing": false,
+    "share_proxy_not_state_account_trade": true
+  },
+  "policy_overlay": {
+    "experiment_id": "EXP-0015",
+    "status": "NO_RECENT_SUPPORT_POLICY",
+    "source_health": "OK",
+    "snapshot_sha256": "b96a827f002c66e78ff60a19e4cf86c4d0cd6b6df1b692b531d2b05d17c34858",
+    "support_count": 0,
+    "matched_funding_event_ids": [],
+    "recent_event_ids": [],
+    "top_events": [],
+    "changes_admission": false,
+    "trade_authorized": false,
+    "not_a_policy_implied_etf_purchase": true
+  },
+  "dispatcher": "NO_NEW_PAPER_FREEZE",
+  "trade_authorized": false,
+  "broker_orders": [],
+  "github_run_id": "45589807919",
+  "github_source_commit": "2ad31b2f65e5f4d25c9e968597e3c52408f14b6c",
+  "snapshot_sha256": "c424484b42e821df50266ed81ad87aa4efe2bf140bf7dc6c7c9decd3e231f1fe"
+}
