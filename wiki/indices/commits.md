@@ -2,7 +2,7 @@
 id: GENERATED-COMMITS
 type: log
 status: maintained
-updated: 2026-11-25
+updated: 2026-11-26
 ---
 # 全部Git提交历史（自动索引）
 
@@ -12,6 +12,8 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-25 | [68be02692c](https://github.com/lican1213/a-share-momentum-runner/commit/68be02692caf8a6e742db88cf32159c1c14c2516) | github-actions[bot] | data: archive actual ETF provider attempt 45677832576 [skip ci] |
+| 2026-11-25 | [9c824e2932](https://github.com/lican1213/a-share-momentum-runner/commit/9c824e29320b0197331bf6c983cc53e6002d995b) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-25 | [ca7d0acdf5](https://github.com/lican1213/a-share-momentum-runner/commit/ca7d0acdf5c7da4b46b15ba3e2645c2c2aadb79e) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 45589907906 [skip ci] |
 | 2026-11-25 | [2afaec81f7](https://github.com/lican1213/a-share-momentum-runner/commit/2afaec81f73a98d8a1554636819e5e7ca009fd6a) | github-actions[bot] | records(exp0012): route event and append paper evidence 45589807919 [skip ci] |
 | 2026-11-25 | [4ccfdf037d](https://github.com/lican1213/a-share-momentum-runner/commit/4ccfdf037dd8c5fca2ef9176fc7db78590542a9c) | Can Li | research: diagnose ETF withdrawal proxy with point-in-time evidence guards |
