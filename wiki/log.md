@@ -2,8 +2,13 @@
 id: WIKI-LOG
 type: log
 status: maintained
-updated: 2026-11-17
+updated: 2026-11-25
 ---
+
+## 2026-11-25：EXP-0018 择时/选股分离研究（候选分支，未替换生产）
+
+- [实验协议与逐笔经济归因](experiments/EXP-0018-timing-alpha-validation.md)：11/24市场日24笔平仓费后净-541.52元，价格毛-163.88元、费用/滑点/舍入差额377.64元；新版EXP-0017的12笔净-575.09元，旧V5的12笔净+33.57元，均为描述性而非版本因果。基线 main `69f2b2d1fd0cf9cbeb7b129d916d7b56804279fb`，只读归因代码 `d2ae0c05c23a91c5a28cc154019281c5b99b4d31`；Python及同SHA CI待执行核验。先验证数据、ETF择时及个股独立Alpha，再决定是否引入新影子账户；现有策略、频率、历史原件及无券商订单约束不变。所有经济效果验收门保持OPEN。
+
 
 ## 2026-11-17：EXP-0017 已合并及合并后红队生产修复
 - [PR #22](https://github.com/lican1213/a-share-momentum-runner/pull/22)提交主体并在328项全库测试后合并；但真实生产账本[run#44061324220](https://github.com/lican1213/a-share-momentum-runner/actions/runs/44061324220)发现 `ModuleNotFoundError: exchange_calendars` 阻断跟踪。对抗式路径落在生产独立pip依赖而非策略模型。仅[PR #23](https://github.com/lican1213/a-share-momentum-runner/pull/23)给原outcomes工作流补与router相同的日历依赖、防回归合同测试和MOC，不扩展Runner/历史数据/cron。
