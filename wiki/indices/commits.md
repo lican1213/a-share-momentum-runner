@@ -12,6 +12,16 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-25 | [87014c30b5](https://github.com/lican1213/a-share-momentum-runner/commit/87014c30b55485fd22b0355acb8e5ad1187fff3f) | github-actions[bot] | data: archive actual ETF provider attempt 45588762638 [skip ci] |
+| 2026-11-25 | [df030f62d5](https://github.com/lican1213/a-share-momentum-runner/commit/df030f62d5c0a8c3b6d2326c54e527b66a24c471) | Can Li | EXP-0018: read-only economic attribution and timing/alpha research protocol |
+| 2026-11-25 | [e27da8e2fd](https://github.com/lican1213/a-share-momentum-runner/commit/e27da8e2fd0ca3c79e0cc2887adcfbbae60649a9) | Can Li | docs: link EXP-0018 research evidence in wiki/log.md |
+| 2026-11-25 | [cc24a7b99a](https://github.com/lican1213/a-share-momentum-runner/commit/cc24a7b99ac5b1142d210acc566a3b3fd376da4f) | Can Li | docs: link EXP-0018 research evidence in wiki/index.md |
+| 2026-11-25 | [3590489f81](https://github.com/lican1213/a-share-momentum-runner/commit/3590489f81ef64f8c222323c4c0beff23e6d4c09) | Can Li | docs: link EXP-0018 research evidence in wiki/models/registry.md |
+| 2026-11-25 | [ceebe800d8](https://github.com/lican1213/a-share-momentum-runner/commit/ceebe800d81764ee2ab494650836c0d760c419e4) | Can Li | docs: link EXP-0018 research evidence in MOC.md |
+| 2026-11-25 | [7500440ef4](https://github.com/lican1213/a-share-momentum-runner/commit/7500440ef45bbc702d7d4d4742a3feec9ca250fb) | Can Li | docs: preregister timing/alpha separation and real loss attribution |
+| 2026-11-25 | [9fc6094310](https://github.com/lican1213/a-share-momentum-runner/commit/9fc60943109fe67d46eb7f28a134479b82b4e01c) | Can Li | test: verify economic attribution on immutable V5 ledger and red cases |
+| 2026-11-25 | [d2ae0c05c2](https://github.com/lican1213/a-share-momentum-runner/commit/d2ae0c05c23a91c5a28cc154019281c5b99b4d31) | Can Li | research: add read-only V5 economic attribution |
+| 2026-11-25 | [69f2b2d1fd](https://github.com/lican1213/a-share-momentum-runner/commit/69f2b2d1fd0cf9cbeb7b129d916d7b56804279fb) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-25 | [2cdc9358b8](https://github.com/lican1213/a-share-momentum-runner/commit/2cdc9358b8aa64ebee1735d86f4317bc581e35eb) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 45556230925 [skip ci] |
 | 2026-11-25 | [dbc2c18250](https://github.com/lican1213/a-share-momentum-runner/commit/dbc2c18250163a9b29116a85c1d99d48ebc531e2) | github-actions[bot] | records(exp0012): route event and append paper evidence 45556142514 [skip ci] |
 | 2026-11-25 | [4f49aa500a](https://github.com/lican1213/a-share-momentum-runner/commit/4f49aa500ae11572a11f0799ac2d40428ee081bf) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 45556067578-a1 |
