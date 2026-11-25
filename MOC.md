@@ -1,3 +1,7 @@
+## 2026-11-25：EXP-0018 择时/选股分离研究（候选分支，未替换生产）
+
+- [实验协议与逐笔经济归因](wiki/experiments/EXP-0018-timing-alpha-validation.md)：11/24市场日24笔平仓费后净-541.52元，价格毛-163.88元、费用/滑点/舍入差额377.64元；新版EXP-0017的12笔净-575.09元，旧V5的12笔净+33.57元，均为描述性而非版本因果。基线 main `69f2b2d1fd0cf9cbeb7b129d916d7b56804279fb`，只读归因代码 `d2ae0c05c23a91c5a28cc154019281c5b99b4d31`；Python及同SHA CI待执行核验。先验证数据、ETF择时及个股独立Alpha，再决定是否引入新影子账户；现有策略、频率、历史原件及无券商订单约束不变。所有经济效果验收门保持OPEN。
+
 ## 2026-11-22：量化V5主线最终交付补充——同SHA生产与周日重复运行实证
 
 - **G0软件门 PASS**：[PR #27](https://github.com/lican1213/a-share-momentum-runner/pull/27) 最终head `84132cc64533a89e41947b1bf3e1b2fa4f4eb638`，[PR全库CI #45006601672](https://github.com/lican1213/a-share-momentum-runner/actions/runs/45006601672) 336项PASS、Wiki 51页PASS，squash合并main SHA `cc64a8c84250b154779bfdcec0fc88d759aef6e0`，同SHA [main全库 #45006724070](https://github.com/lican1213/a-share-momentum-runner/actions/runs/45006724070) 336项PASS、Wiki51页PASS；[原四ETF算术检查 #45006724065](https://github.com/lican1213/a-share-momentum-runner/actions/runs/45006724065) PASS、[MOC检查 #45006724043](https://github.com/lican1213/a-share-momentum-runner/actions/runs/45006724043) PASS。未引入新依赖或调度。
