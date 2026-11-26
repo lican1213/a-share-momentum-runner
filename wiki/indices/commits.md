@@ -12,6 +12,12 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-26 | [6a3771ea04](https://github.com/lican1213/a-share-momentum-runner/commit/6a3771ea04b8a1464a87bdc6c7c7301778501814) | github-actions[bot] | data: archive actual ETF provider attempt 45727685600 [skip ci] |
+| 2026-11-26 | [26861c6445](https://github.com/lican1213/a-share-momentum-runner/commit/26861c644566356190e5c046fcbc2fb9f78e5c3b) | Can Li | EXP-0018: recover actual public ETF vintages and harden shadow capture |
+| 2026-11-26 | [9c03119d2b](https://github.com/lican1213/a-share-momentum-runner/commit/9c03119d2ba9fdc6d4a708bcef6210c9a9cba4f4) | Can Li | red team: preserve all vintages, reject zero placeholders and later invalid corrections |
+| 2026-11-26 | [36b2b572eb](https://github.com/lican1213/a-share-momentum-runner/commit/36b2b572eb825c036dc502f00d3f6bc544f9d7e6) | Can Li | research: preserve remaining matched public release vintages |
+| 2026-11-26 | [68c88c764f](https://github.com/lican1213/a-share-momentum-runner/commit/68c88c764f23ddb72706c344b9128132c6c27d58) | Can Li | research: retain additional matched revision vintages |
+| 2026-11-26 | [07b267e840](https://github.com/lican1213/a-share-momentum-runner/commit/07b267e840cd2f54728f75c7b03e6a962bae2eb0) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-26 | [dcafa891b3](https://github.com/lican1213/a-share-momentum-runner/commit/dcafa891b3bc37e9216c4ec001ddfe4042a328f5) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 45726988368 [skip ci] |
 | 2026-11-26 | [2f619e1628](https://github.com/lican1213/a-share-momentum-runner/commit/2f619e16285635891cf7ae8ce961ff0ac268fcaf) | Can Li | research: reconstruct public ETF vintages and harden pinned collector fallback |
 | 2026-11-26 | [0d3bc9f5a4](https://github.com/lican1213/a-share-momentum-runner/commit/0d3bc9f5a416247a1251786c00d74d0d00dc6c40) | Can Li | research: archive earlier published ETF vintages and exact push evidence |
