@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - 'national_team/live_etf_sources.py'
+      - 'national_team/shadow_basket.py'
       - 'national_team/record_merge.py'
       - 'national_team/live_stock_watch.py'
       - 'national_team/akshare_compat.py'

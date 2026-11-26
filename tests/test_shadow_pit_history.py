@@ -14,10 +14,15 @@ from scripts.research_shadow_pit_history import BASKETS, load, report, select, v
 
 def test_real_vintage_coverage(capsys):
     result=report(load())
-    assert result["vintages"]==24
+    assert result["vintages"]==40
+    assert result["outside_study_window_vintages"]==2
     assert result["baskets"]["COMMON23"]["covered_sessions"]==19
     assert result["baskets"]["SHADOW34"]["covered_sessions"]==10
     assert result["baskets"]["SHADOW35"]["covered_sessions"]==2
+    assert result["baskets"]["COMMON23"]["numerically_complete_sessions"]==17
+    assert result["baskets"]["SHADOW34"]["numerically_complete_sessions"]==8
+    assert result["baskets"]["SHADOW35"]["numerically_complete_sessions"]==2
+    assert result["baskets"]["COMMON23"]["first_complete_observed_vintages"]["2026-11-02"]["next_open_session"]=="2026-11-04"
     assert result["baskets"]["SHADOW35"]["first_complete_observed_vintages"]["2026-11-24"]["next_open_session"]=="2026-11-26"
     assert result["trade_authorized"] is False
     with capsys.disabled():
@@ -64,3 +69,15 @@ def test_fallback_pins_commit_and_verifies_blob(monkeypatch):
     assert sha in calls[-1] and errors[0]["http_status"]==403
     monkeypatch.setattr(shadow,"_download",lambda url:(_ for _ in ()).throw(HTTPError(url,404,"missing",None,None)))
     assert shadow.fetch_snapshot()[1] is None
+
+
+def test_zero_placeholder_and_invalid_revisions_never_become_zero_flow():
+    vs=load()
+    row=select(vs,BASKETS["COMMON23"],"2026-11-02","2026-11-03T09:30:00+08:00")
+    assert row["net_100m_cny_rounded"] is None
+    assert len(row["invalid_members"])==14
+    assert not row["eligible_for_exploratory_replay"]
+    fixed=select(vs,BASKETS["COMMON23"],"2026-11-02","2026-11-03T10:36:00+08:00")
+    assert fixed["numerically_complete"]
+    later_bad=select(vs,BASKETS["COMMON23"],"2026-11-02","2026-11-03T10:40:00+08:00")
+    assert later_bad["net_100m_cny_rounded"] is None
