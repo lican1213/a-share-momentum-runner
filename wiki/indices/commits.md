@@ -12,6 +12,13 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-26 | [dcafa891b3](https://github.com/lican1213/a-share-momentum-runner/commit/dcafa891b3bc37e9216c4ec001ddfe4042a328f5) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 45726988368 [skip ci] |
+| 2026-11-26 | [2f619e1628](https://github.com/lican1213/a-share-momentum-runner/commit/2f619e16285635891cf7ae8ce961ff0ac268fcaf) | Can Li | research: reconstruct public ETF vintages and harden pinned collector fallback |
+| 2026-11-26 | [0d3bc9f5a4](https://github.com/lican1213/a-share-momentum-runner/commit/0d3bc9f5a416247a1251786c00d74d0d00dc6c40) | Can Li | research: archive earlier published ETF vintages and exact push evidence |
+| 2026-11-26 | [8a58b8ae58](https://github.com/lican1213/a-share-momentum-runner/commit/8a58b8ae589726ed7c8e7f17fe1467fe746cb11a) | Can Li | research: freeze recent published ETF vintages with deployment evidence |
+| 2026-11-26 | [048e45374f](https://github.com/lican1213/a-share-momentum-runner/commit/048e45374f971ae67a08ad97df3785072ad45a1f) | github-actions[bot] | records(exp0012): route event and append paper evidence 45726921146 [skip ci] |
+| 2026-11-26 | [4059d41cf2](https://github.com/lican1213/a-share-momentum-runner/commit/4059d41cf2d247b012a6f716660dfdc4be030095) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 45726847956-a1 |
+| 2026-11-26 | [c8e95e5099](https://github.com/lican1213/a-share-momentum-runner/commit/c8e95e5099c291ec503631b9723979bc3360d427) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-26 | [fcb3d17e02](https://github.com/lican1213/a-share-momentum-runner/commit/fcb3d17e024598139dc3e940a9329f83a6ea00e5) | github-actions[bot] | data: archive actual ETF provider attempt 45726251567 [skip ci] |
 | 2026-11-26 | [49ba13359b](https://github.com/lican1213/a-share-momentum-runner/commit/49ba13359bbeac1f796821de1dd5a4ac07c19b2c) | Can Li | EXP-0018: cross-index shadow basket and actual-clock ETF research replay |
 | 2026-11-26 | [e49b193d11](https://github.com/lican1213/a-share-momentum-runner/commit/e49b193d119c7b10b84128acb4d6e40edd3fb0cc) | Can Li | red-team: isolate baseline entries, count false exits and protect collector persistence |
