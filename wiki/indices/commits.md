@@ -12,6 +12,11 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-26 | [fcb3d17e02](https://github.com/lican1213/a-share-momentum-runner/commit/fcb3d17e024598139dc3e940a9329f83a6ea00e5) | github-actions[bot] | data: archive actual ETF provider attempt 45726251567 [skip ci] |
+| 2026-11-26 | [49ba13359b](https://github.com/lican1213/a-share-momentum-runner/commit/49ba13359bbeac1f796821de1dd5a4ac07c19b2c) | Can Li | EXP-0018: cross-index shadow basket and actual-clock ETF research replay |
+| 2026-11-26 | [e49b193d11](https://github.com/lican1213/a-share-momentum-runner/commit/e49b193d119c7b10b84128acb4d6e40edd3fb0cc) | Can Li | red-team: isolate baseline entries, count false exits and protect collector persistence |
+| 2026-11-26 | [ddf7740da3](https://github.com/lican1213/a-share-momentum-runner/commit/ddf7740da3b285c8837e89a21f0e3ef4fc140e20) | Can Li | research: freeze cross-index shadow basket and replay actual disclosure clocks |
+| 2026-11-25 | [78c392fc8e](https://github.com/lican1213/a-share-momentum-runner/commit/78c392fc8e5e83c9dca6547399dd033cfc4bb7f3) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-25 | [46a0f087bc](https://github.com/lican1213/a-share-momentum-runner/commit/46a0f087bc8b3e224d5877851b842208e670df38) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 45724066760 [skip ci] |
 | 2026-11-25 | [0c94db28df](https://github.com/lican1213/a-share-momentum-runner/commit/0c94db28dfb26f5730cae26c855a59a0dbbf3e9a) | github-actions[bot] | records(exp0012): route event and append paper evidence 45723988467 [skip ci] |
 | 2026-11-25 | [07ab43f5ac](https://github.com/lican1213/a-share-momentum-runner/commit/07ab43f5acf6b7ea4a7f76c40322091aea778912) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 45723906113-a1 |
