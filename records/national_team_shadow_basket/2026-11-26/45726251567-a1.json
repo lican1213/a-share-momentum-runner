@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "status": "SOURCE_UNAVAILABLE",
+  "basket": "SHADOW35_20261126_V1",
+  "first_observed_at": "2026-11-26T08:06:56.701200+08:00",
+  "error_type": "HTTPError",
+  "trade_authorized": false,
+  "broker_orders": [],
+  "snapshot_sha256": "d94827a412dec63223220fd9e097de8297cca63ca33773e7846ef3250f5e4810"
+}
