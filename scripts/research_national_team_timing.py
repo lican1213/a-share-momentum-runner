@@ -143,7 +143,15 @@ def select_entries(routes, core, days):
     return entries,excluded
 
 
-def replay(days, prices, entries, exits):
+def replay(days, prices, entries, exits, *, cost_multiplier=Decimal(1)):
+    if not cost_multiplier.is_finite() or cost_multiplier < 1:
+        raise ValueError("cost stress must be finite and >=1")
+    def buy_cost(price, qty):
+        gross=price*qty
+        return gross+(_buy(price,qty,etf=True)-gross)*cost_multiplier
+    def sell_value(price, qty):
+        gross=price*qty
+        return gross- (gross-_sell(price,qty,etf=True))*cost_multiplier
     # Matched non-overlapping entry windows; an early exit cannot create extra entries.
     cash={name:CAPITAL for name in ("S0","S1","S2")}
     shares={name:0 for name in cash}
@@ -158,15 +166,15 @@ def replay(days, prices, entries, exits):
     def buy(name,i):
         op=prices[days[i]][0]
         qty=int(cash[name]/(op*100))*100
-        while qty and _buy(op,qty,etf=True)>cash[name]:
+        while qty and buy_cost(op,qty)>cash[name]:
             qty-=100
         if qty:
-            cash[name]-=_buy(op,qty,etf=True)
+            cash[name]-=buy_cost(op,qty)
             shares[name]=qty
             trades[name].append({"side":"BUY","session":days[i],"price":str(op),"shares":qty})
     def sell(name,i,price,reason):
         if shares[name]:
-            cash[name]+=_sell(price,shares[name],etf=True)
+            cash[name]+=sell_value(price,shares[name])
             trades[name].append({"side":"SELL","session":days[i],"price":str(price),
                                  "shares":shares[name],"reason":reason})
             shares[name]=0
@@ -196,7 +204,7 @@ def replay(days, prices, entries, exits):
                                "false_exit":delta<0})
             active=None
         for name in cash:
-            equity[name].append(cash[name]+(_sell(cl,shares[name],etf=True) if shares[name] else 0))
+            equity[name].append(cash[name]+(sell_value(cl,shares[name]) if shares[name] else 0))
     result={}
     for name,curve in equity.items():
         peak=CAPITAL
