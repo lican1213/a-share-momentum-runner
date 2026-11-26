@@ -1,14 +1,17 @@
 """Fixed 35-fund third-party observation, not a core indicator or trade signal."""
 from __future__ import annotations
 
+import base64
 import hashlib
 import json
 import os
 import re
+import subprocess
 from datetime import datetime, time
 from decimal import Decimal
 from pathlib import Path
-from urllib.request import urlopen
+from urllib.error import HTTPError
+from urllib.request import Request, urlopen
 from zoneinfo import ZoneInfo
 
 from national_team.core_flow_factors import CORE_FOUR, utc_aware
@@ -71,7 +74,7 @@ def observe(payload, *, observed_at, source_commit, source_sha256):
                 "funds": len(codes)}
     result = {"schema": 1, "status": "THIRD_PARTY_OBSERVED_NOT_OFFICIAL_PIT",
               "basket": "SHADOW35_20261126_V1", "session": day.isoformat(),
-              "first_observed_at": clock.isoformat(), "upstream_generated_unverified": generated.isoformat(),
+              "first_observed_at": clock.isoformat(), "upstream_generated_unverified": payload["generated"], "upstream_generated_timezone_verified": False,
               "source_commit": source_commit, "source_sha256": source_sha256,
               "source_url": f"https://github.com/{UPSTREAM}/blob/{source_commit}/latest.json",
               "groups": {g: group(cs) for g,cs in GROUPS.items()},
@@ -83,22 +86,70 @@ def observe(payload, *, observed_at, source_commit, source_sha256):
     return result
 
 
-def capture(root=Path("records/national_team_shadow_basket")):
-    # One bounded external request chain; a provider failure is recorded, not a zero flow.
+def _download(url):
+    request = Request(url, headers={"User-Agent":"national-team-shadow-research/1",
+                                    "Accept":"application/vnd.github+json"})
+    with urlopen(request, timeout=12) as response:
+        raw = response.read(1000001)
+    if len(raw)>1000000:
+        raise ValueError("oversize source")
+    return raw
+
+
+def fetch_snapshot():
+    errors = []
+    def record(stage, exc):
+        errors.append({"stage":stage,"type":type(exc).__name__,
+                       "http_status":exc.code if isinstance(exc,HTTPError) else None})
     try:
-        with urlopen(f"https://api.github.com/repos/{UPSTREAM}/commits/main", timeout=12) as response:
-            sha = json.load(response)["sha"]
-        if not re.fullmatch(r"[0-9a-f]{40}", sha):
+        sha = json.loads(_download(f"https://api.github.com/repos/{UPSTREAM}/commits/main"))["sha"]
+        if not re.fullmatch(r"[0-9a-f]{40}",sha):
             raise ValueError("invalid upstream commit")
-        with urlopen(f"https://raw.githubusercontent.com/{UPSTREAM}/{sha}/latest.json", timeout=12) as response:
-            raw = response.read(1000000)
+    except (OSError,ValueError,KeyError,TypeError) as exc:
+        record("resolve_api",exc)
+        try:
+            out = subprocess.run(["git","ls-remote",f"https://github.com/{UPSTREAM}.git",
+                                  "refs/heads/main"],check=True,capture_output=True,
+                                 text=True,timeout=12,env={**os.environ,"GIT_TERMINAL_PROMPT":"0"})
+            fields=out.stdout.strip().split()
+            if len(fields)!=2 or fields[1]!="refs/heads/main" or not re.fullmatch(r"[0-9a-f]{40}",fields[0]):
+                raise ValueError("invalid pinned remote head")
+            sha=fields[0]
+        except (OSError,ValueError,subprocess.SubprocessError) as exc:
+            record("resolve_git",exc)
+            return None,None,errors
+    try:
+        raw=_download(f"https://raw.githubusercontent.com/{UPSTREAM}/{sha}/latest.json")
+        return sha,raw,errors
+    except (OSError,ValueError) as exc:
+        record("pinned_raw",exc)
+    try:
+        obj=json.loads(_download(f"https://api.github.com/repos/{UPSTREAM}/contents/latest.json?ref={sha}"))
+        raw=base64.b64decode(obj["content"].replace("\n",""),validate=True)
+        if len(raw)>1000000 or hashlib.sha1(b"blob "+str(len(raw)).encode()+b"\0"+raw).hexdigest()!=obj["sha"]:
+            raise ValueError("Git blob mismatch")
+        return sha,raw,errors
+    except (OSError,ValueError,KeyError,TypeError) as exc:
+        record("pinned_contents",exc)
+        return sha,None,errors
+
+
+def capture(root=Path("records/national_team_shadow_basket")):
+    # Same collector/cadence; a bounded public-provider fallback, no credentials.
+    sha,raw,errors=fetch_snapshot()
+    try:
+        if raw is None:
+            raise ValueError("no pinned source retrieved")
         result = observe(json.loads(raw), observed_at=datetime.now(BJ).isoformat(),
                          source_commit=sha, source_sha256=hashlib.sha256(raw).hexdigest())
+        result["source_attempt_errors"]=errors
     except (OSError, ValueError, KeyError, TypeError, ArithmeticError) as exc:
         result = {"schema":1,"status":"SOURCE_UNAVAILABLE","basket":"SHADOW35_20261126_V1",
                   "first_observed_at":datetime.now(BJ).isoformat(),"error_type":type(exc).__name__,
+                  "source_attempt_errors":errors,"source_commit":sha,
                   "trade_authorized":False,"broker_orders":[]}
-        result["snapshot_sha256"] = digest(result)
+    result.pop("snapshot_sha256",None)
+    result["snapshot_sha256"]=digest(result)
     run, attempt = os.environ["GITHUB_RUN_ID"], os.environ["GITHUB_RUN_ATTEMPT"]
     if not run.isdigit() or not attempt.isdigit():
         raise ValueError("invalid run identity")
