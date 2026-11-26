@@ -108,7 +108,8 @@ def core_events(merged, days, root):
                 raise ValueError("large share jump requires independent action/source review")
             observed=max([v[1] for v in old.values()]+[v[1] for v in new.values()])
             result[day]={"observed":observed,"flow":sum(flows.values()),
-                         "negative":sum(v<0 for v in flows.values())}
+                         "negative":sum(v<0 for v in flows.values()),
+                         "positive":sum(v>0 for v in flows.values())}
         except (ValueError,KeyError,OSError,ArithmeticError) as exc:
             unavailable[day]=str(exc)
     return result,unavailable
