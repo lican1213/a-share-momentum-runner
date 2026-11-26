@@ -48,6 +48,9 @@ jobs:
         run: python -m national_team.live_etf_sources
       - name: Reconcile previous immutable ETF source runs (no fake backdating)
         run: python -m national_team.record_merge
+      - name: Observe fixed cross-index ETF shadow basket (research only)
+        continue-on-error: true
+        run: python -m national_team.shadow_basket
       - name: Build real CSI300 index-weight stock watchlist (index proxy, not ETF PCF)
         shell: bash
         run: |
@@ -79,6 +82,9 @@ jobs:
           # otherwise rejects pull --rebase for unstaged derived file changes.
           git restore -- wiki/indices/ wiki/compiled/
           git add -- records/national_team_etf/ records/national_team_merged/ records/national_team_watch/ records/national_team_pcf/
+          if [ -d records/national_team_shadow_basket ]; then
+            git add -- records/national_team_shadow_basket/
+          fi
           if git diff --staged --quiet; then
             echo 'NO_ETF_EVIDENCE_GENERATED'; exit 0
           fi
@@ -102,5 +108,6 @@ jobs:
             records/national_team_merged/
             records/national_team_watch/
             records/national_team_pcf/
+            records/national_team_shadow_basket/
           if-no-files-found: warn
           retention-days: 90
