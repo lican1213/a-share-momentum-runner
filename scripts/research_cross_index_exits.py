@@ -160,6 +160,14 @@ def compare(days,prices,entries,exits,core,vintages,codes,*,cost=Decimal(1)):
     # These calls use identical source, entry opportunities and cash/fee assumptions.
     if base["accounts"]["S1"]!=overlay["accounts"]["S1"] or base["accounts"]["S0"]!=overlay["accounts"]["S0"]:
         raise ValueError("baseline contamination")
+    # Alphalens-style event paths include signals while flat, not simulated fills.
+    for row in decisions:
+        i=days.index(row["execution_session"])
+        op=prices[days[i]][0]
+        row["forward_open_to_close_return"]={
+            str(h):str(prices[days[i+h-1]][3]/op-1) if i+h-1<len(days) else None
+            for h in (1,3)}
+        row["event_path_is_not_a_trade"]=True
     effects=exit_effects(days,prices,base,overlay,decisions,cost)
     recoveries=recovery_pairs(days,prices,core,retained,overlay,vintages,codes,cost)
     s2=base["accounts"]["S2"];s3=overlay["accounts"]["S2"]

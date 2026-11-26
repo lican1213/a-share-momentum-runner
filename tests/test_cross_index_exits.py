@@ -36,6 +36,13 @@ def test_actual_history(capsys):
     for name,row in r["baskets"].items():
         assert row["base_cost"]["S2"]["net_pnl_cny"]=="-921.15"
         assert row["base_cost"]["economic_gate"]=="INSUFFICIENT_INDEPENDENT_OUT_OF_SAMPLE_EVIDENCE"
+    main=r["baskets"]["COMMON23"]["base_cost"]
+    assert main["S3_minus_S2_cny"]=="0.00"
+    assert len(main["effective_exit_veto_pairs"])==0
+    veto=[x for x in main["cross_decisions"] if x["decision"]=="VETO_ROTATION"]
+    assert len(veto)==1 and veto[0]["execution_session"]=="2026-11-13"
+    assert D(veto[0]["forward_open_to_close_return"]["3"])<0
+    assert main["S4_mature_pairs"]==0 and main["S4_mean_net_vs_cash_cny"] is None
     with capsys.disabled():
         print("CROSS_ABLATION_RESULT",json.dumps(r,ensure_ascii=False))
 
