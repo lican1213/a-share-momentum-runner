@@ -30,14 +30,15 @@ def original(positive=True):
                      "negative":0 if positive else 4}}
 
 
-def test_actual():
+def test_actual(capsys):
     r=run()
     for row in (r["base_cost"],r["double_cost"]):
         assert row["economic_gate"]=="EXPLORATORY_NO_INDEPENDENT_OOS"
         assert row["trade_authorized"] is False
         assert row["matched_dates"]==row["public_earlier_open"]+row["public_later_open"]+row["public_same_open"]
         assert all(x["known_at"]<x["execution_session"]+"T09:30:00+08:00" for x in row["events"])
-    print("FUND_CLOCK_RESULT",json.dumps(r,ensure_ascii=False))
+    with capsys.disabled():
+        print("FUND_CLOCK_RESULT",json.dumps(r,ensure_ascii=False))
 
 
 def test_late_or_invalid_revision_no_backdating():
