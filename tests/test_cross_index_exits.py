@@ -78,7 +78,12 @@ def test_prefix_and_future_spike():
     changed=prices(["4","4","3","30","30","30","30"])
     new=exp.compare(DAYS,changed,{0:{}},EXIT,{},[v,future],CODES)
     prefix=exp.compare(DAYS[:3],{d:p[d] for d in DAYS[:3]},{0:{}},EXIT,{},[v],CODES)
-    assert old["cross_decisions"]==new["cross_decisions"]==prefix["cross_decisions"]
+    def decision_only(result):
+        return [{k:v for k,v in row.items() if k!="forward_open_to_close_return"}
+                for row in result["cross_decisions"]]
+    assert decision_only(old)==decision_only(new)==decision_only(prefix)
+    assert old["cross_decisions"][0]["forward_open_to_close_return"]["3"]!=new["cross_decisions"][0]["forward_open_to_close_return"]["3"]
+    assert prefix["cross_decisions"][0]["forward_open_to_close_return"]["3"] is None
     assert old["S3"]["trades"]==new["S3"]["trades"]==prefix["S3"]["trades"]
     assert old["S3"]["net_pnl_cny"]==prefix["S3"]["net_pnl_cny"]
 
