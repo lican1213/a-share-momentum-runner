@@ -1,3 +1,9 @@
+## 2026-11-26：SHADOW35 历史公开时点恢复（研究PR）
+- 三问：更及时可得性可检验增量收益、避损、误退出；无证据不进入生产交易。外源44个latest.json历史提交中39匹配成功Pages部署；11/11额外匹配成功refresh日志git push 95c8689。已归档全部39个部署匹配版本与1个独立push日志版本共40个（另2个10/14陈旧版本排除研究窗），覆盖10/30—11/25；固定23/34/35篮子分别计算，成员不足则NULL，禁止事后补新基金。GitHub服务端run结束时间保守上界，不是交易所逐基金披露时间；源commit/文件blob/run ID均可追溯，未用作者时间或源未标时区的generated作为证据。外源所有历史为探索，不作为样本外收益证明。
+- [历史公开版本回放](scripts/research_shadow_pit_history.py)、[红队测试](tests/test_shadow_pit_history.py)；[较早归档](research/shadow_pit/vintages_early.json)、[近期归档](research/shadow_pit/vintages_recent.json)、[修订1](research/shadow_pit/vintages_revisions_1.json)、[修订2](research/shadow_pit/vintages_revisions_2.json)。数据为提取的公开观察数值，原始文件在固定source commit；未复制外部源码。未独立核验全部原始交易所文件/公司行动，标记异常份额与单位冲突。首轮CI #45727130090 373 PASS/1 FAIL 暴露11/2早期14只份额/NAV为0且dsh为NULL；保留缺失原件，后续修订只按真实公开时间生效；11/17与11/20算术不一致，不能作为有效净资金值。
+- [首轮生产](records/national_team_shadow_basket/2026-11-26/45726251567-a1.json)已读回SOURCE_UNAVAILABLE/HTTPError；未能区分原resolve与raw请求失败。最小修复：原collector加User-Agent、固定SHA的git ls-remote和contents API备选、blob核验及分阶段HTTP状态；不增加cron或授权、保留失败原件。后续同SHA CI与实际产物读回另验。
+- 阶段二：同一市场机会S1/S2/S3逐步比较四ETF退出与23/34/35共振/轮动（不拼接不同篮子）；历史只作规则筛选，真实未来独立簇、错失反弹/费后重入及回撤作为Gate；第三阶段才比较个股Alpha与独立可复现策略，未过门即不扩张。原V5与三时段不变。
+
 ## 2026-11-26：EXP-0018 跨指数资金观察与披露时点回放（PR研究门）
 
 - 三问：增量净收益、避免亏损/回撤、错误退出及重入成本。不能证明经济改善则不替换生产。固定35只/13类影子篮子与原四ETF分离，第三方数据只作观察，不用于历史回放；归档实际采集时间、固定源commit与原文SHA、完整成员与单位。复用原ETF采集workflow同一频率及源归档步骤；失败显式记录，不改变原交易/通知/账户/历史。
