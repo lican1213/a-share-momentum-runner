@@ -12,6 +12,16 @@ This file lists **every commit available in this checkout**, not merely curated 
 
 | Date | Commit | Author | Change |
 | --- | --- | --- | --- |
+| 2026-11-26 | [a8446aa7bc](https://github.com/lican1213/a-share-momentum-runner/commit/a8446aa7bc5ccc21611d24973dfd23dec9b4a60f) | github-actions[bot] | data: archive actual ETF provider attempt 45762068057 [skip ci] |
+| 2026-11-26 | [6f2a7e67ba](https://github.com/lican1213/a-share-momentum-runner/commit/6f2a7e67ba25e47109d1b6d3b71df0335b1b0399) | Can Li | EXP-0018: isolate the fund-flow recognition and timing edge |
+| 2026-11-26 | [031feb66ea](https://github.com/lican1213/a-share-momentum-runner/commit/031feb66eab041306b120a9ae4e7201dd85de766) | Can Li | test: expose actual funding-clock replay evidence in CI |
+| 2026-11-26 | [e14a8ad949](https://github.com/lican1213/a-share-momentum-runner/commit/e14a8ad9497d0a943a205fa0bfaae6c2afeda7e3) | Can Li | research: isolate fund-flow identification and actionable clock edge |
+| 2026-11-26 | [f9d544b863](https://github.com/lican1213/a-share-momentum-runner/commit/f9d544b8630b3b32439b5b45c6f7e2e076aa2a21) | Can Li | EXP-0018: matched cross-index exit and recovery ablations |
+| 2026-11-26 | [b0e8990434](https://github.com/lican1213/a-share-momentum-runner/commit/b0e89904340d18d2e5850a44c5288d75eb45147b) | Can Li | research: add fixed-window mechanical reentry control and separate outcome maturity |
+| 2026-11-26 | [9cb245b767](https://github.com/lican1213/a-share-momentum-runner/commit/9cb245b767617cc0b8fe78f25edc31e4db3af471) | Can Li | test: separate decision invariance from forward outcome changes |
+| 2026-11-26 | [86f8415f41](https://github.com/lican1213/a-share-momentum-runner/commit/86f8415f41bf00a00062502de72b10959660ec63) | Can Li | research: distinguish inactive signal paths from actual exit interventions |
+| 2026-11-26 | [7c52e483ca](https://github.com/lican1213/a-share-momentum-runner/commit/7c52e483ca51e506d876ac15bada0dfcf3368dfb) | Can Li | research: matched cross-index exit and recovery ablations with adversarial replay |
+| 2026-11-26 | [3d00be4ecc](https://github.com/lican1213/a-share-momentum-runner/commit/3d00be4ecca6b7f2c3f9b2325dccc4572214e702) | github-actions[bot] | docs(wiki): rebuild indexes from archived national-team evidence [skip ci] |
 | 2026-11-26 | [2d8d7e782a](https://github.com/lican1213/a-share-momentum-runner/commit/2d8d7e782a1d2d0ff3650fd210cbb83a3a1fd434) | github-actions[bot] | records(exp0014): append V5 three-arm cash ledger and OHLC feedback 45728394192 [skip ci] |
 | 2026-11-26 | [1fdd20bba8](https://github.com/lican1213/a-share-momentum-runner/commit/1fdd20bba83e6be754b71752ad14cd53a725b681) | github-actions[bot] | records(exp0012): route event and append paper evidence 45728324642 [skip ci] |
 | 2026-11-26 | [6204df7a07](https://github.com/lican1213/a-share-momentum-runner/commit/6204df7a07723ada5d823bacf719f9023a9899ce) | github-actions[bot] | records(v3): append source-hashed four-ETF replay 45728217841-a1 |
