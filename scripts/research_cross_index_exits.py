@@ -94,22 +94,39 @@ def exit_effects(days,prices,baseline,overlay,decisions,cost):
 
 
 def recovery_pairs(days,prices,core,exits,overlay,vintages,codes,cost):
-    """Separate conditional event study: re-entry vs cash, not a continuous S4 account.
+    """Fixed conditional event windows: signal re-entry vs cash vs mechanical re-entry.
 
-    Search at most two future session opens after an actual S3 early exit.
-    Keep event windows non-overlapping without using future prices to decide.
+    Reserve the same four-session evaluation horizon for every exit, independent of
+    signals. Both invested arms hold T+2 at most; remaining days are cash.
     """
     pairs=[];reserved_until=-1
+    def trade_at(j):
+        if j+2>=len(days):
+            return None
+        buy=prices[days[j]][0];sell=prices[days[j+2]][3]
+        def entry_cost(qty):
+            gross=buy*qty
+            return gross+(_buy(buy,qty,etf=True)-gross)*cost
+        qty=int(CAPITAL/(buy*100))*100
+        while qty and entry_cost(qty)>CAPITAL:
+            qty-=100
+        if not qty:
+            return None
+        gross=sell*qty
+        proceeds=gross-(gross-_sell(sell,qty,etf=True))*cost
+        return qty,(proceeds-entry_cost(qty)).quantize(Decimal(".01"))
+
     for sale in overlay["accounts"]["S2"]["trades"]:
         if sale.get("reason")!="EARLY_REDEMPTION_RESEARCH":
             continue
         i=days.index(sale["session"])
         if i<=reserved_until:
             continue
+        reserved_until=i+RECOVERY_SESSIONS+2
         withdrawal=exits[i]["signal_session"]
         item={"exit_session":days[i],"withdrawal_session":withdrawal,"status":"NO_RECOVERY",
-              "reentry_session":None,"net_vs_cash_cny":None}
-        # The research budget is fixed, independent of S3's actual capital path.
+              "reentry_session":None,"net_vs_cash_cny":None,"paired_window_mature":False,
+              "mechanical_reentry_net_cny":None,"policy_net_vs_mechanical_cny":None}
         for j in range(i+1,min(i+RECOVERY_SESSIONS+1,len(days))):
             if j in exits:
                 continue
@@ -127,28 +144,26 @@ def recovery_pairs(days,prices,core,exits,overlay,vintages,codes,cost):
                 continue
             item.update(status="PENDING_OUTCOME",reentry_session=days[j],recovery_session=day,
                         known_at=available.isoformat(),cross_commit=cross["commit"])
-            reserved_until=j+2
             if j+2>=len(days):
                 break
-            buy=prices[days[j]][0];sell=prices[days[j+2]][3]
-            def entry_cost(qty):
-                gross=buy*qty
-                return gross+(_buy(buy,qty,etf=True)-gross)*cost
-            qty=int(CAPITAL/(buy*100))*100
-            while qty and entry_cost(qty)>CAPITAL:
-                qty-=100
-            if not qty:
+            traded=trade_at(j)
+            if traded is None:
                 item["status"]="NO_AFFORDABLE_LOT"
                 break
-            gross=sell*qty
-            proceeds=gross-(gross-_sell(sell,qty,etf=True))*cost
-            delta=proceeds-entry_cost(qty)
+            qty,delta=traded
             item.update(status="MATURED",exit_after_reentry=days[j+2],shares=qty,
-                        net_vs_cash_cny=str(delta.quantize(Decimal(".01"))),
-                        harmful_reentry=delta<0)
+                        net_vs_cash_cny=str(delta),harmful_reentry=delta<0)
             break
         if item["status"]=="NO_RECOVERY" and i+RECOVERY_SESSIONS>=len(days):
             item["status"]="PENDING_RECOVERY_WINDOW"
+        if reserved_until<len(days):
+            mechanical=trade_at(i+1)
+            if mechanical is not None and item["status"] in ("MATURED","NO_RECOVERY","NO_AFFORDABLE_LOT"):
+                policy=Decimal(item["net_vs_cash_cny"]) if item["status"]=="MATURED" else Decimal(0)
+                item.update(paired_window_mature=True,window_end=days[reserved_until],
+                            mechanical_reentry_session=days[i+1],mechanical_exit_session=days[i+3],
+                            mechanical_reentry_net_cny=str(mechanical[1]),
+                            policy_net_vs_mechanical_cny=str(policy-mechanical[1]))
         pairs.append(item)
     return pairs
 
@@ -172,6 +187,7 @@ def compare(days,prices,entries,exits,core,vintages,codes,*,cost=Decimal(1)):
     recoveries=recovery_pairs(days,prices,core,retained,overlay,vintages,codes,cost)
     s2=base["accounts"]["S2"];s3=overlay["accounts"]["S2"]
     mature=[x for x in recoveries if x["status"]=="MATURED"]
+    matched=[x for x in recoveries if x["paired_window_mature"]]
     return {"cost_multiplier":str(cost),"S0":base["accounts"]["S0"],"S1":base["accounts"]["S1"],
             "S2":s2,"S3":s3,"S3_minus_S2_cny":str(Decimal(s3["net_pnl_cny"])-Decimal(s2["net_pnl_cny"])),
             "S3_minus_S2_drawdown":str(Decimal(s3["max_drawdown"])-Decimal(s2["max_drawdown"])),
@@ -179,6 +195,8 @@ def compare(days,prices,entries,exits,core,vintages,codes,*,cost=Decimal(1)):
             "blocked_entry_difference":base["blocked_entries"]-overlay["blocked_entries"],
             "S4_reentry_event_pairs":recoveries,
             "S4_mature_pairs":len(mature),
+            "S4_mature_mechanical_control_pairs":len(matched),
+            "S4_mean_net_vs_mechanical_cny":str(sum(Decimal(x["policy_net_vs_mechanical_cny"]) for x in matched)/len(matched)) if matched else None,
             "S4_mean_net_vs_cash_cny":str(sum(Decimal(x["net_vs_cash_cny"]) for x in mature)/len(mature)) if mature else None,
             "economic_gate":"INSUFFICIENT_INDEPENDENT_OUT_OF_SAMPLE_EVIDENCE"}
 

@@ -43,6 +43,8 @@ def test_actual_history(capsys):
     assert len(veto)==1 and veto[0]["execution_session"]=="2026-11-13"
     assert D(veto[0]["forward_open_to_close_return"]["3"])<0
     assert main["S4_mature_pairs"]==0 and main["S4_mean_net_vs_cash_cny"] is None
+    assert main["S4_mature_mechanical_control_pairs"]==1
+    assert D(main["S4_mean_net_vs_mechanical_cny"])>0
     with capsys.disabled():
         print("CROSS_ABLATION_RESULT",json.dumps(r,ensure_ascii=False))
 
@@ -101,8 +103,12 @@ def test_reentry_is_new_signal_and_costed_pair():
     assert D(b["S2"]["net_pnl_cny"])<D(a["S2"]["net_pnl_cny"])
     missing=exp.compare(DAYS,p,{0:{}},EXIT,core,[negative],CODES)
     assert missing["S4_mature_pairs"]==0 and missing["S4_mean_net_vs_cash_cny"] is None
+    assert missing["S4_mature_mechanical_control_pairs"]==1
+    assert missing["S4_reentry_event_pairs"][0]["policy_net_vs_mechanical_cny"] is not None
     loss=exp.compare(DAYS,prices(["4","4","4","4","3","3","3"]),{0:{}},EXIT,core,[negative,positive],CODES)
     assert loss["S4_reentry_event_pairs"][0]["harmful_reentry"]
     truncated=exp.compare(DAYS[:3],{d:p[d] for d in DAYS[:3]},{0:{}},EXIT,core,[negative,positive],CODES)
     assert truncated["S4_reentry_event_pairs"][0]["status"]=="PENDING_OUTCOME"
     assert truncated["S4_mean_net_vs_cash_cny"] is None
+    assert truncated["S4_mean_net_vs_mechanical_cny"] is None
+    assert a["S4_mature_mechanical_control_pairs"]==1
