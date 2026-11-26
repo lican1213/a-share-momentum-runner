@@ -5,7 +5,7 @@ import hashlib
 import json
 import os
 import re
-from datetime import datetime
+from datetime import datetime, time
 from decimal import Decimal
 from pathlib import Path
 from urllib.request import urlopen
@@ -42,7 +42,7 @@ def observe(payload, *, observed_at, source_commit, source_sha256):
     day = datetime.strptime(payload["asof"], "%Y-%m-%d").date()
     generated = datetime.strptime(payload["generated"], "%Y-%m-%d %H:%M").replace(tzinfo=BJ)
     if (day.weekday() >= 5 or generated.date() < day or generated > clock
-            or day > clock.date()):
+            or day > clock.date() or (day == clock.date() and clock.time() < time(15, 5))):
         raise ValueError("future or invalid upstream timestamp")
     entries = payload["etfs"]
     codes = [row["c"] for row in entries]

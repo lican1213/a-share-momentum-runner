@@ -81,7 +81,10 @@ jobs:
           # to validate them. Restore them before source-only rebase: Git
           # otherwise rejects pull --rebase for unstaged derived file changes.
           git restore -- wiki/indices/ wiki/compiled/
-          git add -- records/national_team_etf/ records/national_team_merged/ records/national_team_watch/ records/national_team_pcf/ records/national_team_shadow_basket/
+          git add -- records/national_team_etf/ records/national_team_merged/ records/national_team_watch/ records/national_team_pcf/
+          if [ -d records/national_team_shadow_basket ]; then
+            git add -- records/national_team_shadow_basket/
+          fi
           if git diff --staged --quiet; then
             echo 'NO_ETF_EVIDENCE_GENERATED'; exit 0
           fi

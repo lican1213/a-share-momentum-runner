@@ -150,6 +150,10 @@ def replay(days, prices, entries, exits):
     equity={name:[] for name in cash}
     trades={name:[] for name in cash}
     active=None
+    window_start=None
+    paired=[]
+    blocked_entries=0
+    early_in_window=False
     first=min(entries,default=None)
     def buy(name,i):
         op=prices[days[i]][0]
@@ -172,12 +176,24 @@ def replay(days, prices, entries, exits):
             buy("S0",i)
         if active is not None and active<i and i in exits and shares["S2"]:
             sell("S2",i,op,"EARLY_REDEMPTION_RESEARCH")
-        if active is None and i in entries and i not in exits:
+            early_in_window=True
+        if active is None and i in entries:
             active=i
-            buy("S1",i);buy("S2",i)
+            window_start={name:cash[name] for name in ("S1","S2")}
+            early_in_window=False
+            buy("S1",i)
+            if i in exits:
+                blocked_entries+=1
+            else:
+                buy("S2",i)
         if active is not None and i-active>=2:
             sell("S1",i,cl,"T_PLUS_2_CLOSE")
             sell("S2",i,cl,"T_PLUS_2_CLOSE")
+            if early_in_window:
+                delta=(cash["S2"]-window_start["S2"])-(cash["S1"]-window_start["S1"])
+                paired.append({"entry":days[active],"baseline_exit":day,
+                               "incremental_net_cny":str(delta.quantize(Decimal(".01"))),
+                               "false_exit":delta<0})
             active=None
         for name in cash:
             equity[name].append(cash[name]+(_sell(cl,shares[name],etf=True) if shares[name] else 0))
@@ -191,9 +207,10 @@ def replay(days, prices, entries, exits):
                       "max_drawdown":str(dd),"trades":trades[name],
                       "ending_shares":shares[name],"ending_mark_is_not_fill":True}
     early=[t for t in trades["S2"] if t.get("reason")=="EARLY_REDEMPTION_RESEARCH"]
-    return {"accounts":result,"early_exit_count":len(early),
+    return {"accounts":result,"early_exit_count":len(early),"blocked_entries":blocked_entries,
+            "mature_early_exit_pairs":paired,"false_exits":sum(p["false_exit"] for p in paired),
             "exit_incremental_pnl_cny":str(Decimal(result["S2"]["net_pnl_cny"])-Decimal(result["S1"]["net_pnl_cny"])),
-            "withdrawal_effect_status":"EXPLORATORY" if early else "NO_MATURE_EXECUTABLE_EARLY_EXIT"}
+            "withdrawal_effect_status":"EXPLORATORY" if paired else "NO_MATURE_EXECUTABLE_EARLY_EXIT"}
 
 
 def run(root=ROOT):
