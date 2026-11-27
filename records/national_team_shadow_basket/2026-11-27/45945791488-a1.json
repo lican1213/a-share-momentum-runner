@@ -1,0 +1,348 @@
+{
+  "schema": 1,
+  "status": "THIRD_PARTY_OBSERVED_NOT_OFFICIAL_PIT",
+  "basket": "SHADOW35_20261126_V1",
+  "session": "2026-11-26",
+  "first_observed_at": "2026-11-27T13:32:09.069596+08:00",
+  "upstream_generated_unverified": "2026-11-26 23:37",
+  "upstream_generated_timezone_verified": false,
+  "source_commit": "9d67621890b784495f2f3a42c7f40d3f30c50b46",
+  "source_sha256": "da0f5cb611cfaa9e0b62c8d649ce555daaa3f0fef5223b06521260500b26b1e0",
+  "source_url": "https://github.com/wj624/national-team-etf-flow/blob/9d67621890b784495f2f3a42c7f40d3f30c50b46/latest.json",
+  "groups": {
+    "沪深300": {
+      "net_100m_cny_rounded": "28.2",
+      "negative_funds": 0,
+      "funds": 5
+    },
+    "中证A500": {
+      "net_100m_cny_rounded": "-17.1",
+      "negative_funds": 7,
+      "funds": 8
+    },
+    "科创板50": {
+      "net_100m_cny_rounded": "4.0",
+      "negative_funds": 0,
+      "funds": 3
+    },
+    "中证1000": {
+      "net_100m_cny_rounded": "37.4",
+      "negative_funds": 4,
+      "funds": 5
+    },
+    "创业板": {
+      "net_100m_cny_rounded": "52.7",
+      "negative_funds": 0,
+      "funds": 3
+    },
+    "上证50": {
+      "net_100m_cny_rounded": "0.7",
+      "negative_funds": 1,
+      "funds": 2
+    },
+    "创业板50": {
+      "net_100m_cny_rounded": "3.6",
+      "negative_funds": 0,
+      "funds": 1
+    },
+    "中证500": {
+      "net_100m_cny_rounded": "1.8",
+      "negative_funds": 0,
+      "funds": 3
+    },
+    "深证100": {
+      "net_100m_cny_rounded": "-0.4",
+      "negative_funds": 1,
+      "funds": 1
+    },
+    "中证800": {
+      "net_100m_cny_rounded": "0.9",
+      "negative_funds": 0,
+      "funds": 1
+    },
+    "上证180": {
+      "net_100m_cny_rounded": "0.3",
+      "negative_funds": 0,
+      "funds": 1
+    },
+    "上证180金融": {
+      "net_100m_cny_rounded": "-0.1",
+      "negative_funds": 1,
+      "funds": 1
+    },
+    "MSCI中国A50": {
+      "net_100m_cny_rounded": "0.1",
+      "negative_funds": 0,
+      "funds": 1
+    }
+  },
+  "core_four": {
+    "net_100m_cny_rounded": "28.2",
+    "negative_funds": 0,
+    "funds": 4
+  },
+  "expanded_ex_core": {
+    "net_100m_cny_rounded": "83.9",
+    "negative_funds": 14,
+    "funds": 31
+  },
+  "all_funds": {
+    "net_100m_cny_rounded": "112.1",
+    "negative_funds": 14,
+    "funds": 35
+  },
+  "upstream_reported_total_100m_cny": "112.1",
+  "rows": {
+    "159915": {
+      "group": "创业板",
+      "shares_100m_rounded": "569.9",
+      "share_change_100m_rounded": "21.01",
+      "nav_cny": "2.2048",
+      "net_100m_cny_rounded": "46.3"
+    },
+    "512100": {
+      "group": "中证1000",
+      "shares_100m_rounded": "281.2",
+      "share_change_100m_rounded": "19.3",
+      "nav_cny": "2.2497",
+      "net_100m_cny_rounded": "43.4"
+    },
+    "510310": {
+      "group": "沪深300",
+      "shares_100m_rounded": "313.2",
+      "share_change_100m_rounded": "5.04",
+      "nav_cny": "3.8622",
+      "net_100m_cny_rounded": "19.5"
+    },
+    "510300": {
+      "group": "沪深300",
+      "shares_100m_rounded": "561.0",
+      "share_change_100m_rounded": "1.782",
+      "nav_cny": "3.9741",
+      "net_100m_cny_rounded": "7.1"
+    },
+    "159338": {
+      "group": "中证A500",
+      "shares_100m_rounded": "264.7",
+      "share_change_100m_rounded": "-6.99",
+      "nav_cny": "0.9899",
+      "net_100m_cny_rounded": "-6.9"
+    },
+    "159952": {
+      "group": "创业板",
+      "shares_100m_rounded": "152.9",
+      "share_change_100m_rounded": "3.689",
+      "nav_cny": "1.3392",
+      "net_100m_cny_rounded": "4.9"
+    },
+    "159352": {
+      "group": "中证A500",
+      "shares_100m_rounded": "304.1",
+      "share_change_100m_rounded": "-4.71",
+      "nav_cny": "1.0317",
+      "net_100m_cny_rounded": "-4.9"
+    },
+    "159949": {
+      "group": "创业板50",
+      "shares_100m_rounded": "255.8",
+      "share_change_100m_rounded": "3.69",
+      "nav_cny": "0.9829",
+      "net_100m_cny_rounded": "3.6"
+    },
+    "560010": {
+      "group": "中证1000",
+      "shares_100m_rounded": "24.0",
+      "share_change_100m_rounded": "-1.48",
+      "nav_cny": "2.306",
+      "net_100m_cny_rounded": "-3.4"
+    },
+    "563360": {
+      "group": "中证A500",
+      "shares_100m_rounded": "379.2",
+      "share_change_100m_rounded": "-2.28",
+      "nav_cny": "1.0459",
+      "net_100m_cny_rounded": "-2.4"
+    },
+    "588000": {
+      "group": "科创板50",
+      "shares_100m_rounded": "1055.2",
+      "share_change_100m_rounded": "1.86",
+      "nav_cny": "1.238",
+      "net_100m_cny_rounded": "2.3"
+    },
+    "510330": {
+      "group": "沪深300",
+      "shares_100m_rounded": "234.8",
+      "share_change_100m_rounded": "0.378",
+      "nav_cny": "4.1449",
+      "net_100m_cny_rounded": "1.6"
+    },
+    "159977": {
+      "group": "创业板",
+      "shares_100m_rounded": "67.3",
+      "share_change_100m_rounded": "1.3",
+      "nav_cny": "1.1442",
+      "net_100m_cny_rounded": "1.5"
+    },
+    "588080": {
+      "group": "科创板50",
+      "shares_100m_rounded": "505.7",
+      "share_change_100m_rounded": "1.14",
+      "nav_cny": "1.199",
+      "net_100m_cny_rounded": "1.4"
+    },
+    "512050": {
+      "group": "中证A500",
+      "shares_100m_rounded": "172.8",
+      "share_change_100m_rounded": "-1.38",
+      "nav_cny": "0.9867",
+      "net_100m_cny_rounded": "-1.4"
+    },
+    "159361": {
+      "group": "中证A500",
+      "shares_100m_rounded": "265.2",
+      "share_change_100m_rounded": "-1.26",
+      "nav_cny": "1.0102",
+      "net_100m_cny_rounded": "-1.3"
+    },
+    "510500": {
+      "group": "中证500",
+      "shares_100m_rounded": "136.9",
+      "share_change_100m_rounded": "0.164",
+      "nav_cny": "5.8939",
+      "net_100m_cny_rounded": "1.0"
+    },
+    "159845": {
+      "group": "中证1000",
+      "shares_100m_rounded": "23.3",
+      "share_change_100m_rounded": "-0.45",
+      "nav_cny": "2.3081",
+      "net_100m_cny_rounded": "-1.0"
+    },
+    "510050": {
+      "group": "上证50",
+      "shares_100m_rounded": "254.5",
+      "share_change_100m_rounded": "0.306",
+      "nav_cny": "2.871",
+      "net_100m_cny_rounded": "0.9"
+    },
+    "159633": {
+      "group": "中证1000",
+      "shares_100m_rounded": "11.6",
+      "share_change_100m_rounded": "-0.36",
+      "nav_cny": "2.3723",
+      "net_100m_cny_rounded": "-0.9"
+    },
+    "515800": {
+      "group": "中证800",
+      "shares_100m_rounded": "41.6",
+      "share_change_100m_rounded": "0.855",
+      "nav_cny": "1.0598",
+      "net_100m_cny_rounded": "0.9"
+    },
+    "159629": {
+      "group": "中证1000",
+      "shares_100m_rounded": "7.8",
+      "share_change_100m_rounded": "-0.3",
+      "nav_cny": "2.3168",
+      "net_100m_cny_rounded": "-0.7"
+    },
+    "512500": {
+      "group": "中证500",
+      "shares_100m_rounded": "20.3",
+      "share_change_100m_rounded": "0.176",
+      "nav_cny": "3.3361",
+      "net_100m_cny_rounded": "0.6"
+    },
+    "159901": {
+      "group": "深证100",
+      "shares_100m_rounded": "13.0",
+      "share_change_100m_rounded": "-0.154",
+      "nav_cny": "2.6366",
+      "net_100m_cny_rounded": "-0.4"
+    },
+    "588050": {
+      "group": "科创板50",
+      "shares_100m_rounded": "69.0",
+      "share_change_100m_rounded": "0.27",
+      "nav_cny": "1.2007",
+      "net_100m_cny_rounded": "0.3"
+    },
+    "510180": {
+      "group": "上证180",
+      "shares_100m_rounded": "44.6",
+      "share_change_100m_rounded": "0.075",
+      "nav_cny": "3.579",
+      "net_100m_cny_rounded": "0.3"
+    },
+    "510100": {
+      "group": "上证50",
+      "shares_100m_rounded": "9.5",
+      "share_change_100m_rounded": "-0.054",
+      "nav_cny": "2.8273",
+      "net_100m_cny_rounded": "-0.2"
+    },
+    "159922": {
+      "group": "中证500",
+      "shares_100m_rounded": "31.4",
+      "share_change_100m_rounded": "0.08",
+      "nav_cny": "2.391",
+      "net_100m_cny_rounded": "0.2"
+    },
+    "563800": {
+      "group": "中证A500",
+      "shares_100m_rounded": "112.2",
+      "share_change_100m_rounded": "-0.12",
+      "nav_cny": "0.9897",
+      "net_100m_cny_rounded": "-0.1"
+    },
+    "159351": {
+      "group": "中证A500",
+      "shares_100m_rounded": "85.6",
+      "share_change_100m_rounded": "-0.12",
+      "nav_cny": "0.9825",
+      "net_100m_cny_rounded": "-0.1"
+    },
+    "510230": {
+      "group": "上证180金融",
+      "shares_100m_rounded": "5.4",
+      "share_change_100m_rounded": "-0.08",
+      "nav_cny": "1.3955",
+      "net_100m_cny_rounded": "-0.1"
+    },
+    "560050": {
+      "group": "MSCI中国A50",
+      "shares_100m_rounded": "21.2",
+      "share_change_100m_rounded": "0.075",
+      "nav_cny": "0.9107",
+      "net_100m_cny_rounded": "0.1"
+    },
+    "159919": {
+      "group": "沪深300",
+      "shares_100m_rounded": "213.3",
+      "share_change_100m_rounded": "0.0",
+      "nav_cny": "4.1484",
+      "net_100m_cny_rounded": "0.0"
+    },
+    "515330": {
+      "group": "沪深300",
+      "shares_100m_rounded": "99.1",
+      "share_change_100m_rounded": "0.0",
+      "nav_cny": "1.1418",
+      "net_100m_cny_rounded": "0.0"
+    },
+    "563220": {
+      "group": "中证A500",
+      "shares_100m_rounded": "78.4",
+      "share_change_100m_rounded": "0.03",
+      "nav_cny": "1.032",
+      "net_100m_cny_rounded": "0.0"
+    }
+  },
+  "per_fund_official_dates_verified": false,
+  "investor_identity_attributable": false,
+  "trade_authorized": false,
+  "broker_orders": [],
+  "source_attempt_errors": [],
+  "snapshot_sha256": "f5e7006318b05d53321d5187089a204840da25d1d9e113027b3dea5baa1bb192"
+}

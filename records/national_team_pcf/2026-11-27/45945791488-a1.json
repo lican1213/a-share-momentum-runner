@@ -1,0 +1,23 @@
+{
+  "status": "SSE_PCF_FETCHED_BUT_NOT_VERIFIED",
+  "run_id": "45945791488",
+  "attempt": "1",
+  "captured_at": "2026-11-27T13:35:55.875335+08:00",
+  "exchange_url": "https://www.sse.com.cn/disclosure/fund/etflist/",
+  "sources": {
+    "510330_ISSUER": {
+      "status": "NO_DATED_OFFICIAL_PCF_IN_HTTP_RESPONSE",
+      "code": "510330",
+      "first_observed_at": "2026-11-27T13:36:51.225528+08:00",
+      "issuer_original": true,
+      "http_response_sha256": "8950ba49a38de62107141b2e669fb492d531b4c1a0e361c5afd41fc9aec801b3"
+    }
+  },
+  "errors": [
+    "510300:ConnectionError:HTTPSConnectionPool(host='www.sse.com.cn', port=443): Max retries exceeded with url: /disclosure/fund/etflist/detail.shtml?etfClass=03&fundid=510300&type=008 (Caused by NewConnectionError(\"HTTPSConnec",
+    "510310:ConnectionError:HTTPSConnectionPool(host='www.sse.com.cn', port=443): Max retries exceeded with url: /disclosure/fund/etflist/detail.shtml?etfClass=03&fundid=510310&type=008 (Caused by NewConnectionError(\"HTTPSConnec",
+    "510330:ConnectionError:HTTPSConnectionPool(host='www.sse.com.cn', port=443): Max retries exceeded with url: /disclosure/fund/etflist/detail.shtml?etfClass=03&fundid=510330&type=008 (Caused by NewConnectionError(\"HTTPSConnec"
+  ],
+  "source_kind": "ORIGINAL_EXCHANGE_HTTP_PCF_NOT_INDEX_WEIGHTS",
+  "usable_pcf_count": 0
+}
