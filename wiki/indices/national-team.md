@@ -12,6 +12,10 @@ Source-backed **captured observations**, not broker fills. Latest failed attempt
 
 | Source class | Trade/record date | Run ID | Recorded status | Evidence |
 | --- | --- | --- | --- | --- |
+| ETF source attempts | 2026-11-27 | 45945791488 | ATTEMPTED_NO_COMPLETE_FACTOR | [JSON](../../records/national_team_etf/2026-11-27/45945791488-a1.json) |
+| Four-fund merged funding | 2026-11-27 | 45945791488 | FULL_FOUR_ETF_SHARES_NAV_OBSERVED_RESEARCH | [JSON](../../records/national_team_merged/2026-11-27/45945791488-a1.json) |
+| CSI300 stock research watches | 2026-11-26 | 45945791488 | INDEX_PROXY_RESEARCH_WATCHLIST | [JSON](../../records/national_team_watch/2026-11-27/45945791488-a1.json) |
+| Official exchange PCF attempts | 2026-11-27 | 45945791488 | SSE_PCF_FETCHED_BUT_NOT_VERIFIED | [JSON](../../records/national_team_pcf/2026-11-27/45945791488-a1.json) |
 | V5 independent horizon path | 2026-11-27 | 45886456843-a1 | NO_STATUS_FIELD | [JSON](../../records/national_team_left_outcomes_v5/2026-11-27/45886456843-a1.json) |
 | V5 continuous paper ledger | 2026-11-27 | 45886456843-a1 | NO_STATUS_FIELD | [JSON](../../records/national_team_paper_accounts_v5/2026-11-27/45886456843-a1.json) |
 | V5 independent horizon path | 2026-11-27 | 45883731150-a1 | NO_STATUS_FIELD | [JSON](../../records/national_team_left_outcomes_v5/2026-11-27/45883731150-a1.json) |
